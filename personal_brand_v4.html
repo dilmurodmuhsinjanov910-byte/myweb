@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#070707" />
+  <title>Dilmurod Muhsinjonov — Personal Brand V4</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+
+  <style>
+    :root{
+      --bg:#070707;
+      --bg-soft:#0b0b0b;
+      --surface:#101010;
+      --surface-2:#141414;
+      --white:#f1f1ee;
+      --silver:#b9bdc2;
+      --muted:#767676;
+      --gold:#c9a86a;
+      --line:rgba(255,255,255,.095);
+      --line-strong:rgba(255,255,255,.16);
+      --serif:"Instrument Serif", Georgia, serif;
+      --sans:"DM Sans", Arial, sans-serif;
+      --pad:clamp(20px,4vw,68px);
+      --max:1440px;
+    }
+
+    *{box-sizing:border-box}
+    html{background:var(--bg);scroll-behavior:auto}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--white);
+      font-family:var(--sans);
+      overflow-x:hidden;
+      cursor:none;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    a,button{cursor:none}
+    ::selection{background:var(--gold);color:#090909}
+    .gold{color:var(--gold)}
+    .section-label{
+      font-size:9px;
+      letter-spacing:.24em;
+      text-transform:uppercase;
+      color:#6b6b6b;
+    }
+
+    .noise{
+      position:fixed;inset:0;z-index:9995;pointer-events:none;
+      opacity:.032;mix-blend-mode:soft-light;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.85'/%3E%3C/svg%3E");
+    }
+
+    .ambient{
+      position:fixed;inset:-25%;z-index:-1;pointer-events:none;
+      background:
+        radial-gradient(circle at 72% 18%,rgba(201,168,106,.045),transparent 26%),
+        radial-gradient(circle at 16% 76%,rgba(185,189,194,.028),transparent 24%);
+      filter:blur(54px);
+      animation:ambientDrift 16s ease-in-out infinite alternate;
+    }
+    @keyframes ambientDrift{
+      from{transform:translate3d(-1%,0,0) scale(1)}
+      to{transform:translate3d(1%,-1%,0) scale(1.03)}
+    }
+
+    #progress{
+      position:fixed;top:0;left:0;width:100%;height:1px;z-index:9999;
+      transform:scaleX(0);transform-origin:left center;
+      background:linear-gradient(90deg,var(--silver),var(--gold));
+    }
+
+    /* cursor */
+    .cursor-dot,.cursor-ring{
+      position:fixed;left:0;top:0;pointer-events:none;border-radius:50%;z-index:10000;
+    }
+    .cursor-dot{width:4px;height:4px;margin:-2px;background:var(--gold)}
+    .cursor-ring{
+      width:30px;height:30px;margin:-15px;border:1px solid rgba(255,255,255,.28);
+      transition:width .35s cubic-bezier(.16,1,.3,1),height .35s cubic-bezier(.16,1,.3,1),
+      margin .35s cubic-bezier(.16,1,.3,1),background .35s,border-color .35s;
+    }
+    .cursor-ring.active{
+      width:50px;height:50px;margin:-25px;border-color:rgba(201,168,106,.76);
+      background:rgba(201,168,106,.03);
+    }
+
+    /* preloader */
+    #preloader{
+      position:fixed;inset:0;background:#050505;z-index:12000;overflow:hidden;
+      display:grid;place-items:center;
+    }
+    .loader-center{position:relative;width:170px;height:170px;display:grid;place-items:center}
+    .loader-orb{
+      width:70px;aspect-ratio:1;border-radius:50%;opacity:0;transform:scale(.08);
+      background:radial-gradient(circle at 29% 24%,#f0f0ed 0,#8f9295 6%,#1b1b1b 25%,#030303 52%,#8e7349 73%,#121212 100%);
+      box-shadow:0 0 75px rgba(255,255,255,.06),0 0 110px rgba(201,168,106,.04);
+    }
+    .loader-ring{
+      position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.08);
+      opacity:0;transform:scale(.8);
+    }
+    .loader-word{
+      position:absolute;top:calc(50% + 61px);font-size:8px;letter-spacing:.35em;
+      text-transform:uppercase;color:#676767;white-space:nowrap;opacity:0;
+    }
+    .loader-meta{
+      position:absolute;left:var(--pad);right:var(--pad);bottom:29px;
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#575757;
+    }
+    .loader-line{
+      position:absolute;left:0;bottom:0;height:1px;width:0;background:linear-gradient(90deg,#777,var(--gold));
+    }
+    .curtain-top,.curtain-bottom{
+      position:absolute;left:0;width:100%;height:50%;background:#050505;pointer-events:none;
+    }
+    .curtain-top{top:0;transform-origin:top}
+    .curtain-bottom{bottom:0;transform-origin:bottom}
+
+    /* nav */
+    #nav{
+      position:fixed;left:0;top:0;width:100%;z-index:6000;padding:21px var(--pad);
+      display:flex;justify-content:space-between;align-items:center;
+      transition:transform .55s cubic-bezier(.16,1,.3,1),background .4s,backdrop-filter .4s,padding .4s;
+    }
+    #nav.scrolled{
+      padding-top:15px;padding-bottom:15px;background:rgba(7,7,7,.62);backdrop-filter:blur(14px);
+    }
+    #nav.hidden{transform:translateY(-115%)}
+    .brand{
+      color:var(--white);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:.15em;
+      display:flex;gap:10px;align-items:center;
+    }
+    .brand-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px rgba(201,168,106,.32)}
+    .nav-right{display:flex;gap:24px}
+    .nav-link{
+      position:relative;text-decoration:none;color:#878787;font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding-block:4px;
+    }
+    .nav-link::after{
+      content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);
+      transform:scaleX(0);transform-origin:right;transition:transform .45s cubic-bezier(.16,1,.3,1);
+    }
+    .nav-link:hover{color:#c6c6c6}
+    .nav-link:hover::after{transform:scaleX(1);transform-origin:left}
+
+    /* hero */
+    #hero{height:205vh}
+    .hero-pin{
+      position:sticky;top:0;height:100vh;overflow:hidden;
+      background:
+        radial-gradient(circle at 74% 42%,rgba(201,168,106,.04),transparent 22%),
+        linear-gradient(180deg,#080808,#060606);
+    }
+    #orb-canvas{
+      position:absolute;inset:0;z-index:1;width:100%;height:100%;
+    }
+
+    .hero-shell{
+      position:absolute;right:7vw;top:12vh;width:min(42vw,590px);aspect-ratio:1;border-radius:50%;
+      border:1px solid rgba(255,255,255,.06);z-index:0;opacity:.7;
+      background:radial-gradient(circle,rgba(255,255,255,.015),transparent 67%);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.015),
+        0 0 80px rgba(201,168,106,.03);
+    }
+    .hero-shell::before{
+      content:"";position:absolute;inset:11%;border-radius:50%;
+      border:1px solid rgba(201,168,106,.08);
+      opacity:.7;
+    }
+    .hero-shell::after{
+      content:"";position:absolute;inset:-14%;border-radius:50%;
+      border:1px solid rgba(255,255,255,.025);
+    }
+
+    .hero-grid-line{
+      position:absolute;right:0;top:50%;width:38vw;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+      transform:translateY(-50%);
+      z-index:0;
+    }
+
+    .hero-content{
+      position:absolute;inset:0;z-index:5;padding:0 var(--pad);display:flex;flex-direction:column;justify-content:center;
+      pointer-events:none;
+    }
+    .hero-kicker{
+      margin-bottom:18px;font-size:9px;letter-spacing:.29em;color:#6f6f6f;text-transform:uppercase;
+    }
+    .hero-name{
+      margin:0;width:min(980px,85vw);font-family:var(--serif);font-size:clamp(62px,8.5vw,145px);
+      line-height:.82;font-weight:400;letter-spacing:-.052em;text-transform:uppercase;
+    }
+    .mask-line{display:block;overflow:hidden}
+    .mask-inner{display:block;will-change:transform}
+    .hero-tagline{
+      margin-top:30px;margin-left:clamp(2px,10vw,150px);max-width:390px;color:#909090;
+      line-height:1.7;font-size:12px;letter-spacing:.01em;
+    }
+    .hero-meta{
+      position:absolute;right:var(--pad);bottom:30px;z-index:5;text-align:right;
+      font-size:8px;line-height:1.7;letter-spacing:.18em;color:#555;text-transform:uppercase;
+    }
+    .hero-scroll{
+      position:absolute;left:var(--pad);bottom:30px;z-index:5;display:flex;align-items:center;gap:12px;
+      font-size:8px;letter-spacing:.2em;color:#5e5e5e;text-transform:uppercase;
+    }
+    .scroll-line{position:relative;width:44px;height:1px;background:#2a2a2a;overflow:hidden}
+    .scroll-line::after{
+      content:"";position:absolute;inset:0;background:var(--gold);transform:translateX(-110%);
+      animation:scrollLine 1.9s ease-in-out infinite;
+    }
+    @keyframes scrollLine{
+      0%{transform:translateX(-110%)}
+      55%,100%{transform:translateX(110%)}
+    }
+
+    /* statement */
+    #statement{min-height:125vh;padding:18vh var(--pad);display:flex;align-items:center}
+    .statement-inner{width:min(1180px,94%);margin-inline:auto}
+    .statement-copy{
+      font-family:var(--serif);font-size:clamp(42px,6.5vw,104px);line-height:.99;letter-spacing:-.034em;
+    }
+    .statement-word{
+      display:inline-block;opacity:.12;transform:translateY(14px);filter:blur(5px);
+      will-change:opacity,transform,filter;
+    }
+    .statement-foot{
+      margin-top:60px;max-width:360px;margin-left:auto;color:#6e6e6e;font-size:11px;line-height:1.7;
+    }
+
+    /* about */
+    #about{padding:10vh var(--pad) 18vh}
+    .about-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;align-items:start}
+    .about-image-wrap{
+      grid-column:1/span 5;position:sticky;top:13vh;height:70vh;overflow:hidden;background:#101010;
+      clip-path:inset(0 0 0 0);
+    }
+    .about-image{
+      position:absolute;inset:-6%;
+      background:
+        radial-gradient(circle at 35% 30%,rgba(255,255,255,.14),transparent 16%),
+        linear-gradient(145deg,#1d1d1d,#0c0c0c 45%,#101010 68%,#1b1b1b);
+      transform:scale(1.08);
+    }
+    .about-image::before{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(118deg,transparent 34%,rgba(255,255,255,.05),transparent 63%);
+      transform:translateX(-32%);
+    }
+    .about-image::after{
+      content:"";position:absolute;left:16%;top:14%;width:55%;height:66%;
+      border:1px solid rgba(255,255,255,.055);
+      background:radial-gradient(circle at 60% 40%,rgba(201,168,106,.06),transparent 34%);
+    }
+    .portrait-tag{
+      position:absolute;z-index:2;left:19px;bottom:18px;font-size:8px;text-transform:uppercase;letter-spacing:.2em;color:#6d6d6d
+    }
+    .about-content{grid-column:7/span 6;padding-top:2vh}
+    .about-title{
+      margin:30px 0 58px;font-family:var(--serif);font-size:clamp(46px,5.4vw,80px);
+      font-weight:400;line-height:.96;letter-spacing:-.036em;
+    }
+    .about-copy{max-width:620px;color:#909090;font-size:clamp(16px,1.45vw,21px);line-height:1.68;font-weight:300}
+    .facts{margin-top:75px;border-top:1px solid var(--line)}
+    .fact{
+      display:grid;grid-template-columns:1fr 2fr;padding:17px 0;border-bottom:1px solid var(--line);font-size:10px;
+      transition:background .35s,padding .35s;
+    }
+    .fact:hover{background:rgba(255,255,255,.015);padding-left:8px}
+    .fact-label{color:#5d5d5d;text-transform:uppercase;letter-spacing:.14em}
+    .fact-value{color:#a2a2a2}
+
+    /* journey */
+    #journey{padding:15vh var(--pad);border-top:1px solid var(--line)}
+    .journey-header{display:grid;grid-template-columns:1fr 3fr;margin-bottom:13vh}
+    .journey-heading{
+      font-family:var(--serif);font-size:clamp(54px,6.7vw,100px);font-weight:400;line-height:.86;margin:0;letter-spacing:-.04em;
+    }
+    .milestone{
+      min-height:76vh;display:grid;grid-template-columns:repeat(12,1fr);gap:18px;border-top:1px solid var(--line);padding-top:28px;
+    }
+    .milestone-year{
+      grid-column:1/span 3;position:sticky;top:20vh;align-self:start;
+      font-family:var(--serif);font-size:clamp(58px,7.4vw,115px);line-height:1;color:#242424;
+      transition:color .45s,text-shadow .45s,transform .45s;
+    }
+    .milestone.active .milestone-year{
+      color:var(--gold);
+      transform:translateX(6px);
+      text-shadow:0 0 45px rgba(201,168,106,.08);
+    }
+    .milestone-copy{grid-column:6/span 6;padding-top:9vh}
+    .milestone-copy h3{
+      font-family:var(--serif);font-weight:400;font-size:clamp(35px,3.7vw,60px);margin:0 0 22px
+    }
+    .milestone-copy p{color:#898989;font-size:14px;line-height:1.75;max-width:560px}
+
+    /* work */
+    #work{background:#060606;border-top:1px solid var(--line)}
+    .work-intro{min-height:65vh;padding:14vh var(--pad);display:flex;flex-direction:column;justify-content:flex-end}
+    .work-intro h2{
+      margin:22px 0 0;font-family:var(--serif);font-size:clamp(62px,8.8vw,145px);line-height:.84;font-weight:400;letter-spacing:-.052em;
+    }
+
+    .project{position:relative;height:145vh;border-top:1px solid var(--line)}
+    .project-stage{
+      position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;background:#070707;
+    }
+    .project-visual{
+      position:absolute;inset:6vh var(--pad);overflow:hidden;
+      background:
+        radial-gradient(circle at 72% 34%,rgba(201,168,106,.11),transparent 22%),
+        linear-gradient(135deg,#171717,#080808 52%,#191919);
+      clip-path:inset(12% 8% 12% 8%);
+      transform:scale(.985);
+    }
+    .project:nth-of-type(even) .project-visual{
+      background:
+        radial-gradient(circle at 28% 64%,rgba(185,189,194,.075),transparent 23%),
+        linear-gradient(135deg,#101010,#050505 54%,#161616);
+    }
+    .project-light{
+      position:absolute;inset:-20%;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.045),transparent 54%);
+      transform:translateX(-32%) rotate(2deg);
+    }
+    .project-orb-art{
+      position:absolute;width:min(42vw,570px);aspect-ratio:1;border-radius:50%;right:8%;top:50%;
+      transform:translateY(-50%);
+      background:radial-gradient(circle at 30% 26%,#e2e2df 0,#777 6%,#181818 25%,#030303 53%,#8d7249 72%,#101010 100%);
+      box-shadow:0 0 120px rgba(201,168,106,.035);
+      filter:blur(.15px);
+    }
+    .project-content{position:relative;z-index:2;padding:0 calc(var(--pad)*1.25);width:100%}
+    .project-number{font-size:8px;color:#656565;letter-spacing:.21em;margin-bottom:17px}
+    .project-title{
+      margin:0;font-family:var(--serif);font-size:clamp(58px,8.8vw,145px);line-height:.82;font-weight:400;
+      letter-spacing:-.05em;mix-blend-mode:difference;
+    }
+    .project-meta{margin-top:44px;display:grid;grid-template-columns:repeat(3,minmax(110px,170px));gap:24px}
+    .meta-item small{display:block;margin-bottom:8px;color:#575757;font-size:7px;letter-spacing:.18em;text-transform:uppercase}
+    .meta-item span{font-size:10px;color:#aaa}
+    .impact{margin-top:46px;font-family:var(--serif);font-size:clamp(23px,2.5vw,40px);max-width:570px}
+    .project-progress{
+      position:absolute;right:calc(var(--pad) + 4px);top:50%;transform:translateY(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:9px;z-index:4;
+    }
+    .project-progress span{font-size:7px;letter-spacing:.2em;color:#515151;writing-mode:vertical-rl}
+    .project-progress i{
+      display:block;width:1px;height:80px;background:#272727;position:relative;overflow:hidden
+    }
+    .project-progress i::after{
+      content:"";position:absolute;left:0;top:0;width:1px;height:100%;background:var(--gold);
+      transform:scaleY(var(--p,0));transform-origin:top
+    }
+
+    /* stats */
+    #stats{padding:18vh var(--pad)}
+    .stats-title{
+      max-width:680px;font-family:var(--serif);font-weight:400;font-size:clamp(48px,5.7vw,88px);
+      line-height:.96;margin:28px 0 12vh;letter-spacing:-.035em;
+    }
+    .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line)}
+    .stat{padding:58px 3vw 64px 0;min-height:300px;border-bottom:1px solid var(--line);position:relative}
+    .stat:nth-child(odd){border-right:1px solid var(--line)}
+    .stat:nth-child(even){padding-left:4vw}
+    .stat-num{
+      display:flex;align-items:flex-start;font-family:var(--serif);font-size:clamp(75px,9.4vw,145px);
+      line-height:.78;letter-spacing:-.04em;transition:color .4s,text-shadow .4s,transform .4s;
+    }
+    .stat-num.flash{color:var(--gold);text-shadow:0 0 44px rgba(201,168,106,.13);transform:translateY(-2px)}
+    .suffix{font-size:.3em;margin-top:.15em;color:var(--gold)}
+    .stat-description{margin-top:34px;color:#737373;max-width:360px;line-height:1.65;font-size:11px}
+
+    /* closing */
+    #closing{
+      min-height:150vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:var(--pad);
+      background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.018),transparent 35%);
+    }
+    .closing-orb{
+      position:absolute;width:min(40vw,580px);aspect-ratio:1;border-radius:50%;opacity:.28;
+      background:radial-gradient(circle at 30% 25%,#ddd 0,#6c6c6c 6%,#161616 27%,#020202 55%,#8b7146 74%,#101010);
+      filter:blur(.4px);
+    }
+    .closing-text{
+      position:relative;z-index:2;max-width:1150px;text-align:center;font-family:var(--serif);
+      font-size:clamp(50px,7.5vw,118px);line-height:.9;letter-spacing:-.045em;
+    }
+    .closing-word{display:inline-block;opacity:.12;filter:blur(5px);transform:translateY(12px)}
+
+    /* contact */
+    #contact{
+      min-height:100vh;padding:13vh var(--pad) 30px;display:flex;flex-direction:column;justify-content:space-between;
+      border-top:1px solid var(--line);overflow:hidden;
+    }
+    .contact-orb-line{
+      position:absolute;right:-10vw;top:10%;width:45vw;aspect-ratio:1;border-radius:50%;
+      border:1px solid rgba(201,168,106,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);opacity:.7;
+    }
+    .contact-heading{
+      margin:40px 0;max-width:1080px;font-family:var(--serif);font-size:clamp(58px,8.4vw,135px);
+      line-height:.84;font-weight:400;letter-spacing:-.045em;
+    }
+    .cta-row{display:flex;justify-content:flex-end}
+    .contact-button{
+      position:relative;width:clamp(145px,16vw,215px);aspect-ratio:1;border:1px solid rgba(201,168,106,.42);
+      border-radius:50%;background:transparent;color:var(--white);font-family:var(--sans);text-transform:uppercase;
+      letter-spacing:.16em;font-size:9px;overflow:hidden;isolation:isolate;
+    }
+    .contact-button::before{
+      content:"";position:absolute;inset:-1px;border-radius:50%;background:var(--gold);
+      transform:translateY(103%);transition:transform .68s cubic-bezier(.16,1,.3,1);z-index:-1;
+    }
+    .contact-button::after{
+      content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(255,255,255,.06);
+      animation:halo 5s ease-in-out infinite;pointer-events:none;
+    }
+    @keyframes halo{
+      0%,100%{transform:scale(.96);opacity:.35}
+      50%{transform:scale(1.06);opacity:.8}
+    }
+    .contact-button:hover::before{transform:translateY(0)}
+    .contact-button:hover{color:#080808}
+    .footer{
+      margin-top:11vh;padding-top:22px;border-top:1px solid var(--line);
+      display:flex;justify-content:space-between;color:#505050;font-size:8px;letter-spacing:.14em;text-transform:uppercase;
+    }
+
+    /* sheet */
+    .sheet-backdrop{
+      position:fixed;inset:0;z-index:7000;background:rgba(0,0,0,.68);backdrop-filter:blur(0);opacity:0;visibility:hidden;
+    }
+    .contact-sheet{
+      position:fixed;left:0;bottom:0;z-index:7001;width:100%;background:#0b0b0b;border-top:1px solid var(--line);
+      padding:28px var(--pad) 34px;transform:translateY(105%);
+    }
+    .sheet-head{
+      display:flex;justify-content:space-between;align-items:center;padding-bottom:21px;border-bottom:1px solid var(--line)
+    }
+    .sheet-title{color:#6f6f6f;font-size:8px;text-transform:uppercase;letter-spacing:.2em}
+    .sheet-close{
+      border:0;background:transparent;color:#7d7d7d;font-family:var(--sans);font-size:9px;letter-spacing:.15em;text-transform:uppercase
+    }
+    .channel{
+      position:relative;display:flex;align-items:center;justify-content:space-between;color:var(--white);text-decoration:none;
+      padding:15px 0;border-bottom:1px solid var(--line);overflow:hidden;
+    }
+    .channel::before{
+      content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);
+      transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.16,1,.3,1);
+    }
+    .channel:hover::before{transform:scaleX(1);transform-origin:left}
+    .channel-name{
+      font-family:var(--serif);font-size:clamp(34px,4.5vw,60px);line-height:1;
+      transition:transform .5s,color .4s
+    }
+    .channel-preview{
+      font-size:9px;color:#626262;text-transform:uppercase;letter-spacing:.14em;opacity:0;transform:translateX(10px);transition:.45s
+    }
+    .channel:hover .channel-name{transform:translateX(12px);color:var(--gold)}
+    .channel:hover .channel-preview{opacity:1;transform:none}
+
+    @media (max-width:1100px){
+      .hero-shell{right:4vw;width:min(48vw,520px)}
+      .hero-name{width:min(740px,75vw)}
+    }
+
+    @media (max-width:850px){
+      body,a,button{cursor:auto}
+      .cursor-dot,.cursor-ring{display:none}
+      .nav-right{gap:14px}
+      .nav-link:nth-child(2),.nav-link:nth-child(3){display:none}
+      #hero{height:175vh}
+      .hero-name{font-size:clamp(56px,16vw,94px);width:95vw}
+      .hero-shell{width:80vw;right:-14vw;top:15vh;opacity:.7}
+      .hero-tagline{margin-left:0;max-width:300px}
+      .hero-meta{display:none}
+      .statement-copy{font-size:clamp(38px,11vw,65px)}
+      .about-grid{display:block}
+      .about-image-wrap{position:relative;top:auto;height:60vh;margin-bottom:64px}
+      .journey-header{display:block}
+      .journey-heading{margin-top:27px}
+      .milestone{display:block;min-height:auto;padding:52px 0 100px}
+      .milestone-year{position:static;font-size:70px}
+      .milestone-copy{padding-top:30px}
+      .project{height:120vh}
+      .project-stage{height:100svh}
+      .project-visual{inset:4vh 14px}
+      .project-content{padding:0 30px}
+      .project-title{font-size:clamp(52px,16vw,94px)}
+      .project-meta{grid-template-columns:1fr 1fr}
+      .project-progress{display:none}
+      .stats-grid{display:block}
+      .stat,.stat:nth-child(even){padding:52px 0;border-right:0}
+      .contact-heading{font-size:clamp(54px,15vw,90px)}
+      .footer{flex-direction:column;gap:17px}
+      .channel-preview{display:none}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient"></div>
+  <div class="noise"></div>
+  <div id="progress"></div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <div id="preloader">
+    <div class="loader-center">
+      <div class="loader-ring"></div>
+      <div class="loader-orb"></div>
+      <div class="loader-word">Forming identity</div>
+    </div>
+    <div class="loader-meta">
+      <span>Personal Archive / 2026</span>
+      <span id="loader-percent">00%</span>
+    </div>
+    <div class="loader-line"></div>
+    <div class="curtain-top"></div>
+    <div class="curtain-bottom"></div>
+  </div>
+
+  <nav id="nav">
+    <a href="#hero" class="brand magnetic"><span class="brand-dot"></span>DM / 26</a>
+    <div class="nav-right">
+      <a class="nav-link magnetic" href="#about">About</a>
+      <a class="nav-link magnetic" href="#work">Work</a>
+      <a class="nav-link magnetic" href="#journey">Journey</a>
+      <a class="nav-link magnetic" href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="hero">
+      <div class="hero-pin">
+        <div class="hero-shell"></div>
+        <div class="hero-grid-line"></div>
+        <canvas id="orb-canvas"></canvas>
+
+        <div class="hero-content">
+          <div class="hero-kicker">Personal Brand / Uzbekistan</div>
+          <h1 class="hero-name">
+            <span class="mask-line"><span class="mask-inner">Dilmurod</span></span>
+            <span class="mask-line"><span class="mask-inner gold">Muhsinjonov</span></span>
+          </h1>
+          <p class="hero-tagline">
+            [Your professional identity]. Turning ideas into deliberate,
+            memorable digital experiences.
+          </p>
+        </div>
+
+        <div class="hero-scroll"><span>Scroll to explore</span><span class="scroll-line"></span></div>
+        <div class="hero-meta">Independent / Selected collaborations<br>Built with intention</div>
+      </div>
+    </section>
+
+    <section id="statement">
+      <div class="statement-inner">
+        <div class="section-label">01 / Point of view</div>
+        <div class="statement-copy" id="statement-copy">
+          I believe meaningful work begins where <span class="gold">clarity</span>,
+          ambition and craftsmanship meet. I don't want to simply follow what comes next.
+          I want to help <span class="gold">shape it.</span>
+        </div>
+        <div class="statement-foot">
+          Not more noise. Not more decoration. Work with direction, purpose and presence.
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="about-grid">
+        <div class="about-image-wrap">
+          <div class="about-image"></div>
+          <div class="portrait-tag">Portrait / 01</div>
+        </div>
+
+        <div class="about-content">
+          <div class="section-label">02 / About</div>
+          <h2 class="about-title reveal">More than a résumé.<br><span class="gold">A point of view.</span></h2>
+
+          <p class="about-copy reveal">
+            [Write your 80–150 word biography here.] This section should explain not only
+            what you do, but how you think, what you care about and why someone should want
+            to build something with you.
+          </p>
+
+          <div class="facts reveal">
+            <div class="fact"><span class="fact-label">Based</span><span class="fact-value">Uzbekistan</span></div>
+            <div class="fact"><span class="fact-label">Discipline</span><span class="fact-value">[Your profession]</span></div>
+            <div class="fact"><span class="fact-label">Experience</span><span class="fact-value">[X years]</span></div>
+            <div class="fact"><span class="fact-label">Focus</span><span class="fact-value">Digital / AI / Creative Systems</span></div>
+            <div class="fact"><span class="fact-label">Availability</span><span class="fact-value">Open to selected collaborations</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey">
+      <div class="journey-header">
+        <span class="section-label">03 / Journey</span>
+        <h2 class="journey-heading">The path<br><span class="gold">so far.</span></h2>
+      </div>
+
+      <article class="milestone">
+        <div class="milestone-year">01</div>
+        <div class="milestone-copy reveal">
+          <span class="section-label">[Year]</span>
+          <h3>Where it started.</h3>
+          <p>[First important professional milestone. What changed here? What did you learn? Keep it concise and story-driven.]</p>
+        </div>
+      </article>
+
+      <article class="milestone">
+        <div class="milestone-year">02</div>
+        <div class="milestone-copy reveal">
+          <span class="section-label">[Year]</span>
+          <h3>Building momentum.</h3>
+          <p>[Second important stage: work, business, major project or professional transition.]</p>
+        </div>
+      </article>
+
+      <article class="milestone">
+        <div class="milestone-year">03</div>
+        <div class="milestone-copy reveal">
+          <span class="section-label">[Year]</span>
+          <h3>A different level.</h3>
+          <p>[The stage where your approach matured, your responsibilities increased or your direction became clearer.]</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="work">
+      <div class="work-intro">
+        <span class="section-label">04 / Selected Work</span>
+        <h2>Work that<br><span class="gold">left a mark.</span></h2>
+      </div>
+
+      <article class="project">
+        <div class="project-stage">
+          <div class="project-visual">
+            <div class="project-light"></div>
+            <div class="project-orb-art"></div>
+          </div>
+          <div class="project-content">
+            <div class="project-number">PROJECT / 01</div>
+            <h3 class="project-title">Project<br>One</h3>
+            <div class="project-meta">
+              <div class="meta-item"><small>Role</small><span>[Your role]</span></div>
+              <div class="meta-item"><small>Category</small><span>[Category]</span></div>
+              <div class="meta-item"><small>Year</small><span>[2026]</span></div>
+            </div>
+            <div class="impact">[One powerful measurable result or outcome.]</div>
+          </div>
+          <div class="project-progress"><span>01 / 03</span><i></i></div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-stage">
+          <div class="project-visual">
+            <div class="project-light"></div>
+            <div class="project-orb-art"></div>
+          </div>
+          <div class="project-content">
+            <div class="project-number">PROJECT / 02</div>
+            <h3 class="project-title">Project<br>Two</h3>
+            <div class="project-meta">
+              <div class="meta-item"><small>Role</small><span>[Your role]</span></div>
+              <div class="meta-item"><small>Category</small><span>[Category]</span></div>
+              <div class="meta-item"><small>Year</small><span>[2026]</span></div>
+            </div>
+            <div class="impact">[Why this project matters.]</div>
+          </div>
+          <div class="project-progress"><span>02 / 03</span><i></i></div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-stage">
+          <div class="project-visual">
+            <div class="project-light"></div>
+            <div class="project-orb-art"></div>
+          </div>
+          <div class="project-content">
+            <div class="project-number">PROJECT / 03</div>
+            <h3 class="project-title">Project<br>Three</h3>
+            <div class="project-meta">
+              <div class="meta-item"><small>Role</small><span>[Your role]</span></div>
+              <div class="meta-item"><small>Category</small><span>[Category]</span></div>
+              <div class="meta-item"><small>Year</small><span>[2026]</span></div>
+            </div>
+            <div class="impact">[Impact statement.]</div>
+          </div>
+          <div class="project-progress"><span>03 / 03</span><i></i></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="stats">
+      <span class="section-label">05 / In Numbers</span>
+      <h2 class="stats-title">Proof lives in <span class="gold">the work.</span></h2>
+
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-num"><span class="counter" data-target="5">0</span><span class="suffix">+</span></div>
+          <p class="stat-description">[Years building, creating or working in your professional field.]</p>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span class="counter" data-target="24">0</span><span class="suffix">+</span></div>
+          <p class="stat-description">[Selected completed projects or major works.]</p>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span class="counter" data-target="10">0</span><span class="suffix">+</span></div>
+          <p class="stat-description">[AI systems, workflows, products or another relevant achievement.]</p>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span class="counter" data-target="100">0</span><span class="suffix">%</span></div>
+          <p class="stat-description">[Replace this with a real measurable result.]</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="closing">
+      <div class="closing-orb"></div>
+      <div class="closing-text" id="closing-text">
+        The future is not something to stand back and watch.
+        It is something we can <span class="gold">shape together.</span>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-orb-line"></div>
+      <div>
+        <span class="section-label">07 / Contact</span>
+        <h2 class="contact-heading reveal">
+          Bring the idea.<br>We'll give it <span class="gold">a presence.</span>
+        </h2>
+
+        <div class="cta-row">
+          <button class="contact-button magnetic" id="open-sheet"><span>Choose<br>a channel</span></button>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span>© 2026 Dilmurod Muhsinjonov</span>
+        <span>Built with intention.</span>
+        <span>Uzbekistan</span>
+      </footer>
+    </section>
+  </main>
+
+  <div class="sheet-backdrop" id="sheet-backdrop"></div>
+  <aside class="contact-sheet" id="contact-sheet">
+    <div class="sheet-head">
+      <span class="sheet-title">Choose how we start</span>
+      <button class="sheet-close magnetic" id="close-sheet">Close</button>
+    </div>
+
+    <a href="mailto:YOURMAIL@example.com" class="channel magnetic">
+      <span class="channel-name">Email</span><span class="channel-preview">YOURMAIL@example.com</span>
+    </a>
+    <a href="#" class="channel magnetic">
+      <span class="channel-name">Telegram</span><span class="channel-preview">@YOUR_USERNAME</span>
+    </a>
+    <a href="#" class="channel magnetic">
+      <span class="channel-name">LinkedIn</span><span class="channel-preview">Professional network</span>
+    </a>
+    <a href="#" class="channel magnetic">
+      <span class="channel-name">GitHub</span><span class="channel-preview">Selected code & projects</span>
+    </a>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js";
+
+    gsap.registerPlugin(ScrollTrigger);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* Lenis */
+    let lenis;
+    if(!reduced){
+      lenis = new Lenis({
+        duration:1.08,
+        smoothWheel:true,
+        wheelMultiplier:.92
+      });
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time)=>lenis.raf(time*1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    /* Three.js orb */
+    const canvas = document.querySelector("#orb-canvas");
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias:true,
+      alpha:true,
+      powerPreference:"high-performance"
+    });
+    renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));
+    renderer.setSize(innerWidth,innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(34,innerWidth/innerHeight,.1,100);
+    camera.position.z = 5.3;
+
+    const geometry = new THREE.IcosahedronGeometry(1.04,64);
+
+    const uniforms = {
+      uTime:{value:0},
+      uScroll:{value:0},
+      uDistortion:{value:.09},
+      uMouse:{value:new THREE.Vector2(0,0)}
+    };
+
+    const material = new THREE.ShaderMaterial({
+      transparent:true,
+      uniforms,
+      vertexShader:`
+        uniform float uTime;
+        uniform float uScroll;
+        uniform float uDistortion;
+        uniform vec2 uMouse;
+        varying vec3 vNormal;
+        varying vec3 vWorld;
+
+        float hash(vec3 p){
+          p = fract(p*.3183099 + vec3(.1,.2,.3));
+          p *= 17.0;
+          return fract(p.x*p.y*p.z*(p.x+p.y+p.z));
+        }
+
+        float noise(vec3 x){
+          vec3 i=floor(x);
+          vec3 f=fract(x);
+          f=f*f*(3.0-2.0*f);
+          return mix(
+            mix(mix(hash(i+vec3(0,0,0)),hash(i+vec3(1,0,0)),f.x),
+                mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+            mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),
+                mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);
+        }
+
+        float fbm(vec3 p){
+          float v=0.0;
+          float a=.5;
+          for(int i=0;i<4;i++){
+            v += a*noise(p);
+            p = p*2.03 + 17.7;
+            a *= .5;
+          }
+          return v;
+        }
+
+        void main(){
+          vNormal = normalize(normalMatrix*normal);
+
+          vec3 p = position;
+          float n = fbm(normalize(position)*2.35 + uTime*.16);
+          float wave = sin(position.y*4.0 + uTime*.65)*.012;
+          float mousePush = (uMouse.x*position.x + uMouse.y*position.y)*.014;
+
+          p += normal*((n-.5)*uDistortion*2.0 + wave + mousePush);
+          p.y *= 1.0 + uScroll*.24;
+          p.x *= 1.0 - uScroll*.05;
+
+          vec4 world = modelMatrix*vec4(p,1.0);
+          vWorld = world.xyz;
+          gl_Position = projectionMatrix*viewMatrix*world;
+        }
+      `,
+      fragmentShader:`
+        uniform float uTime;
+        varying vec3 vNormal;
+        varying vec3 vWorld;
+
+        void main(){
+          vec3 n = normalize(vNormal);
+          vec3 v = normalize(cameraPosition - vWorld);
+
+          float fresnel = pow(1.0-max(dot(n,v),0.0),2.4);
+          float rim = pow(max(dot(n,normalize(vec3(-.5,.8,1.0))),0.0),5.0);
+          float goldHit = pow(max(dot(n,normalize(vec3(.85,-.25,.55))),0.0),9.0);
+
+          vec3 base = vec3(.028,.03,.032);
+          vec3 silver = vec3(.74,.77,.80);
+          vec3 gold = vec3(.79,.63,.35);
+
+          vec3 c = mix(base,silver,fresnel*.84);
+          c += rim*vec3(.62);
+          c += goldHit*gold*.42;
+
+          float pulse = .985 + sin(uTime*.30)*.015;
+          gl_FragColor = vec4(c*pulse,.86);
+        }
+      `
+    });
+
+    const orb = new THREE.Mesh(geometry,material);
+    orb.position.set(1.45,0.05,-0.25);
+    orb.scale.set(1.16,1.16,1.16);
+    scene.add(orb);
+
+    const mouse = {x:0,y:0,tx:0,ty:0};
+    addEventListener("mousemove",(e)=>{
+      mouse.tx = (e.clientX/innerWidth-.5)*2;
+      mouse.ty = -(e.clientY/innerHeight-.5)*2;
+    });
+
+    function render(t){
+      mouse.x += (mouse.tx-mouse.x)*.045;
+      mouse.y += (mouse.ty-mouse.y)*.045;
+
+      uniforms.uMouse.value.set(mouse.x,mouse.y);
+      uniforms.uTime.value = t * .001;
+
+      orb.rotation.y += .00095;
+      orb.rotation.x += .00023;
+
+      orb.position.y += ((mouse.y * .10) - (orb.position.y - 0.05)) * .018;
+      orb.position.x += (((1.45 + mouse.x * .18)) - orb.position.x) * .018;
+      camera.position.x += ((mouse.x*.045)-camera.position.x)*.022;
+      camera.position.y += ((mouse.y*.026)-camera.position.y)*.022;
+      camera.lookAt(0,0,0);
+
+      renderer.render(scene,camera);
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    /* Preloader */
+    const load = {v:0};
+    const loaderTl = gsap.timeline({defaults:{ease:"power3.out"}});
+    loaderTl
+      .to(".loader-orb",{scale:1,opacity:1,duration:.88})
+      .to(".loader-ring",{scale:1,opacity:1,duration:.8},"<.05")
+      .to(".loader-word",{opacity:1,y:-4,duration:.52},"<.08")
+      .to(load,{
+        v:100,duration:1.15,ease:"power2.inOut",
+        onUpdate(){
+          const v=Math.round(load.v);
+          document.querySelector("#loader-percent").textContent=String(v).padStart(2,"0")+"%";
+          gsap.set(".loader-line",{width:v+"%"});
+          gsap.set(".loader-ring",{rotation:v*1.2});
+        }
+      },"<")
+      .to(".loader-orb",{scale:6.5,opacity:.1,duration:1,ease:"expo.inOut"})
+      .to(".loader-word,.loader-meta",{opacity:0,duration:.35},"<")
+      .to(".curtain-top",{scaleY:0,duration:.9,ease:"expo.inOut"},"<.12")
+      .to(".curtain-bottom",{scaleY:0,duration:.9,ease:"expo.inOut"},"<")
+      .to("#preloader",{autoAlpha:0,duration:.05})
+      .from(".hero-name .mask-inner",{yPercent:112,duration:1.1,stagger:.075,ease:"expo.out"},"-=.03")
+      .from(".hero-kicker",{opacity:0,y:10,duration:.68},"-=.8")
+      .from(".hero-tagline",{opacity:0,filter:"blur(12px)",y:12,duration:1.02},"-=.6")
+      .from(".hero-meta,.hero-scroll",{opacity:0,duration:.65},"-=.72")
+      .from(".hero-shell",{scale:.92,opacity:0,duration:1.2,ease:"expo.out"},"-=.82");
+
+    /* Hero motion */
+    if(!reduced){
+      const heroTl = gsap.timeline({
+        scrollTrigger:{
+          trigger:"#hero",
+          start:"top top",
+          end:"bottom bottom",
+          scrub:1.25
+        }
+      });
+
+      heroTl
+        .to(".hero-content",{yPercent:-10,opacity:.08},0)
+        .to(".hero-shell",{yPercent:-6,scale:1.04,opacity:.92},0)
+        .to(".hero-grid-line",{xPercent:-10,opacity:.3},0)
+        .to(orb.position,{x:1.72,y:.10},0)
+        .to(orb.scale,{x:1.34,y:1.34,z:1.34},0)
+        .to(uniforms.uScroll,{value:1},0)
+        .to(uniforms.uDistortion,{value:.145},0);
+    }
+
+    /* Text wrappers */
+    function wrapText(selector, className){
+      const el=document.querySelector(selector);
+      [...el.childNodes].forEach(node=>{
+        if(node.nodeType===Node.TEXT_NODE){
+          const frag=document.createDocumentFragment();
+          node.textContent.split(/(\s+)/).forEach(part=>{
+            if(part.trim()){
+              const s=document.createElement("span");
+              s.className=className;
+              s.textContent=part;
+              frag.appendChild(s);
+            } else {
+              frag.appendChild(document.createTextNode(part));
+            }
+          });
+          node.replaceWith(frag);
+        }
+      });
+    }
+    wrapText("#statement-copy","statement-word");
+    wrapText("#closing-text","closing-word");
+
+    /* Statement reveal */
+    if(!reduced){
+      gsap.utils.toArray("#statement-copy .statement-word").forEach((word,i)=>{
+        gsap.to(word,{
+          opacity:1,
+          y:0,
+          filter:"blur(0px)",
+          scrollTrigger:{
+            trigger:"#statement",
+            start:`${8+i*.8}% 72%`,
+            end:`${18+i*.8}% 54%`,
+            scrub:true
+          }
+        });
+      });
+
+      gsap.fromTo(".about-image-wrap",
+        {clipPath:"inset(7% 0 7% 0)"},
+        {
+          clipPath:"inset(0% 0 0% 0)",
+          scrollTrigger:{trigger:"#about",start:"top 80%",end:"top 20%",scrub:1}
+        }
+      );
+
+      gsap.to(".about-image",{
+        scale:1.01,
+        yPercent:-3,
+        scrollTrigger:{trigger:"#about",start:"top bottom",end:"bottom top",scrub:1.1}
+      });
+
+      gsap.to(".about-image::before",{});
+
+      gsap.utils.toArray(".milestone").forEach(m=>{
+        ScrollTrigger.create({
+          trigger:m,
+          start:"top 42%",
+          end:"bottom 42%",
+          onEnter:()=>m.classList.add("active"),
+          onEnterBack:()=>m.classList.add("active"),
+          onLeave:()=>m.classList.remove("active"),
+          onLeaveBack:()=>m.classList.remove("active")
+        });
+      });
+
+      gsap.utils.toArray(".project").forEach(project=>{
+        const visual=project.querySelector(".project-visual");
+        const art=project.querySelector(".project-orb-art");
+        const light=project.querySelector(".project-light");
+        const title=project.querySelector(".project-title");
+        const meta=project.querySelector(".project-meta");
+        const impact=project.querySelector(".impact");
+        const progress=project.querySelector(".project-progress i");
+
+        const tl=gsap.timeline({
+          scrollTrigger:{
+            trigger:project,
+            start:"top bottom",
+            end:"bottom top",
+            scrub:1.12,
+            onUpdate:self=>progress.style.setProperty("--p",self.progress.toFixed(3))
+          }
+        });
+
+        tl
+          .fromTo(visual,
+            {clipPath:"inset(12% 8% 12% 8%)",scale:.985},
+            {clipPath:"inset(0% 0% 0% 0%)",scale:1,duration:.32,ease:"none"},0
+          )
+          .fromTo(art,
+            {yPercent:14,scale:.82},
+            {yPercent:-12,scale:1.09,duration:1,ease:"none"},0
+          )
+          .fromTo(light,
+            {xPercent:-25},
+            {xPercent:55,duration:1,ease:"none"},0
+          );
+
+        gsap.from(title,{
+          yPercent:34,
+          opacity:0,
+          duration:1.02,
+          ease:"expo.out",
+          scrollTrigger:{trigger:project,start:"top 56%"}
+        });
+
+        gsap.from([meta,impact],{
+          y:24,
+          opacity:0,
+          filter:"blur(7px)",
+          duration:.88,
+          stagger:.10,
+          ease:"power3.out",
+          scrollTrigger:{trigger:project,start:"top 48%"}
+        });
+      });
+
+    } else {
+      gsap.set(".statement-word,.closing-word",{opacity:1,y:0,filter:"blur(0px)"});
+    }
+
+    /* Generic reveals */
+    gsap.utils.toArray(".reveal").forEach(el=>{
+      gsap.from(el,{
+        y:reduced?0:28,
+        opacity:0,
+        filter:reduced?"blur(0px)":"blur(7px)",
+        duration:1.08,
+        ease:"power3.out",
+        scrollTrigger:{trigger:el,start:"top 84%"}
+      });
+    });
+
+    /* Stats */
+    document.querySelectorAll(".counter").forEach(counter=>{
+      const target=Number(counter.dataset.target);
+      const state={value:0};
+
+      ScrollTrigger.create({
+        trigger:counter,
+        start:"top 84%",
+        once:true,
+        onEnter(){
+          gsap.to(state,{
+            value:target,
+            duration:1.62,
+            ease:"expo.out",
+            onUpdate(){counter.textContent=Math.floor(state.value)},
+            onComplete(){
+              const p=counter.closest(".stat-num");
+              p.classList.add("flash");
+              setTimeout(()=>p.classList.remove("flash"),520);
+            }
+          });
+        }
+      });
+    });
+
+    /* Closing */
+    if(!reduced){
+      const closingWords=gsap.utils.toArray(".closing-word");
+      gsap.to(closingWords,{
+        opacity:1,
+        y:0,
+        filter:"blur(0px)",
+        stagger:.05,
+        scrollTrigger:{
+          trigger:"#closing",
+          start:"top 66%",
+          end:"bottom 56%",
+          scrub:1
+        }
+      });
+
+      gsap.fromTo(".closing-orb",
+        {scale:.48,opacity:0,filter:"blur(18px)"},
+        {
+          scale:1.14,
+          opacity:.32,
+          filter:"blur(.4px)",
+          scrollTrigger:{trigger:"#closing",start:"top bottom",end:"center center",scrub:1.35}
+        }
+      );
+    }
+
+    /* Nav + progress */
+    let previousScroll = 0;
+    addEventListener("scroll",()=>{
+      const y=scrollY;
+      const max=document.documentElement.scrollHeight-innerHeight;
+      gsap.set("#progress",{scaleX:max?y/max:0});
+
+      const nav=document.querySelector("#nav");
+      nav.classList.toggle("scrolled",y>38);
+
+      if(y>previousScroll && y>220) nav.classList.add("hidden");
+      else nav.classList.remove("hidden");
+
+      previousScroll=y;
+    },{passive:true});
+
+    /* Bottom sheet */
+    const sheet=document.querySelector("#contact-sheet");
+    const backdrop=document.querySelector("#sheet-backdrop");
+
+    function openSheet(){
+      lenis?.stop();
+      gsap.set(backdrop,{visibility:"visible"});
+      gsap.to(backdrop,{opacity:1,backdropFilter:"blur(10px)",duration:.42});
+      gsap.to(sheet,{y:0,duration:.76,ease:"expo.out"});
+      gsap.from(".channel",{
+        y:24,opacity:0,stagger:.06,delay:.15,duration:.62,ease:"power3.out"
+      });
+    }
+
+    function closeSheet(){
+      gsap.to(sheet,{y:"105%",duration:.56,ease:"power3.inOut"});
+      gsap.to(backdrop,{
+        opacity:0,
+        backdropFilter:"blur(0px)",
+        duration:.34,
+        onComplete(){
+          gsap.set(backdrop,{visibility:"hidden"});
+          lenis?.start();
+        }
+      });
+    }
+
+    document.querySelector("#open-sheet").addEventListener("click",openSheet);
+    document.querySelector("#close-sheet").addEventListener("click",closeSheet);
+    backdrop.addEventListener("click",closeSheet);
+
+    /* Cursor + magnetic */
+    const dot=document.querySelector(".cursor-dot");
+    const ring=document.querySelector(".cursor-ring");
+    let mx=0,my=0,rx=0,ry=0;
+
+    addEventListener("mousemove",e=>{
+      mx=e.clientX; my=e.clientY;
+      gsap.set(dot,{x:mx,y:my});
+    });
+
+    function cursorLoop(){
+      rx += (mx-rx)*.12;
+      ry += (my-ry)*.12;
+      gsap.set(ring,{x:rx,y:ry});
+      requestAnimationFrame(cursorLoop);
+    }
+    cursorLoop();
+
+    document.querySelectorAll("a,button,.magnetic").forEach(el=>{
+      el.addEventListener("mouseenter",()=>ring.classList.add("active"));
+      el.addEventListener("mouseleave",()=>{
+        ring.classList.remove("active");
+        gsap.to(el,{x:0,y:0,duration:.65,ease:"elastic.out(1,.42)"});
+      });
+      el.addEventListener("mousemove",e=>{
+        const r=el.getBoundingClientRect();
+        const x=e.clientX-r.left-r.width/2;
+        const y=e.clientY-r.top-r.height/2;
+        gsap.to(el,{x:x*.12,y:y*.12,duration:.30,ease:"power3.out"});
+      });
+    });
+
+    /* Resize */
+    addEventListener("resize",()=>{
+      camera.aspect=innerWidth/innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth,innerHeight);
+      ScrollTrigger.refresh();
+    });
+  </script>
+</body>
+</html>

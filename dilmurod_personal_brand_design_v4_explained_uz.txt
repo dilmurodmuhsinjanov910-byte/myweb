@@ -1,0 +1,480 @@
+DILMUROD MUHSINJONOV — PERSONAL BRAND WEBSITE
+TO‘LIQ DIZAYN VA ANIMATSIYA TUSHUNTIRISH HUJJATI
+Versiya: V4
+
+1. LOYIHANING MAQSADI
+
+Bu sayt oddiy CV yoki portfolio emas. Asosiy vazifa — Dilmurod Muhsinjonovni mustaqil shaxsiy brend sifatida ko‘rsatish. Foydalanuvchi sahifaga kirgan birinchi soniyalardanoq "premium, nazoratli, zamonaviy va o‘z qarashiga ega inson" taassurotini olishi kerak.
+
+Saytning umumiy formulasi:
+Dark Luxury × Cinematic Storytelling × Editorial Typography × Swiss Precision × Controlled WebGL Motion.
+
+Brendning asosiy xarakteri "Quiet Authority" — ya’ni ortiqcha baqirmaydigan, lekin o‘ziga e’tibor tortadigan kuchli vizual til.
+
+2. ASOSIY VIZUAL YO‘NALISH
+
+Tanlangan uslublar:
+- Dark Luxury Minimalism
+- Editorial Portfolio
+- Swiss Minimalism
+- Cinematic Fullscreen Storytelling
+
+Sahifada katta bo‘sh joylar, kuchli tipografiya, juda kam rang, nozik borderlar va silliq animatsiyalar ishlatiladi. Vizual elementlar ko‘p bo‘lmaydi. Har bir element o‘z vazifasiga ega.
+
+Hero’da odam figurasi V4’dan olib tashlangan. Hozir saytning asosiy vizual ramzi — suyuq metalga o‘xshash 3D orb.
+
+3. RANGLAR
+
+Asosiy fon: #070707
+Ikkinchi fon: #0B0B0B
+Surface: #101010
+Asosiy matn: #F1F1EE
+Silver: #B9BDC2
+Muted text: #767676
+Champagne gold: #C9A86A
+
+Gold rang asosiy rang emas. U faqat accent sifatida 5–8% darajada ishlatiladi. Masalan:
+- ismning ikkinchi qismi,
+- aktiv timeline yili,
+- stats tugagandagi flash,
+- hover chiziqlari,
+- CTA border,
+- orb reflekslari.
+
+Bu qoida premium hissini saqlaydi.
+
+4. TIPOGRAFIYA
+
+Display shrift:
+Instrument Serif
+
+UI va body shrift:
+DM Sans
+
+Instrument Serif katta statementlar, hero ism, section title, project title, closing statement va raqamlarda ishlatiladi.
+
+DM Sans navigatsiya, body copy, metadata, label, kontakt ma’lumotlarida ishlatiladi.
+
+Hero ism:
+clamp(62px, 8.5vw, 145px)
+line-height: 0.82
+letter-spacing: -0.052em
+
+Bu kombinatsiya editorial va Swiss uslubini birlashtiradi.
+
+5. GRID VA SPACING
+
+Desktop:
+12-column editorial grid
+
+Asosiy horizontal padding:
+clamp(20px, 4vw, 68px)
+
+Sectionlar orasidagi masofa odatda:
+10–18vh
+
+Vizual zichlik:
+Low
+
+Kartalarning radiusi katta emas. UI elementlar asosan 0–6px radiusli. Faqat orb va CTA ataylab to‘liq yumaloq.
+
+6. PRELOADER
+
+Preloader konsepti:
+3D Orb Formation + Cinematic Curtain Reveal
+
+Ketma-ketlik:
+1) Orb juda kichik holatdan paydo bo‘ladi.
+2) Nozik ring ochiladi.
+3) 00% dan 100% gacha progress yuradi.
+4) Orb kattalashadi.
+5) Yuqori va pastki curtain ikki tomonga ochiladi.
+6) Hero sahnasi ko‘rinadi.
+7) Ism mask ichidan chiqadi.
+8) Kicker va tagline yumshoq reveal bo‘ladi.
+
+Preloader "show" uchun emas, sahifaga kirish atmosferasini yaratish uchun ishlaydi.
+
+7. HERO SECTION
+
+Hero umumiy scroll maydoni:
+205vh
+
+Sticky sahna:
+100vh
+
+Chap tomonda:
+- Personal Brand / Uzbekistan
+- Dilmurod Muhsinjonov
+- professional identity / tagline
+- Scroll to explore
+
+O‘ng tomonda:
+- liquid metallic orb
+- orbital rings
+- nozik horizontal geometry line
+
+Odam figurasi ishlatilmaydi.
+
+Hero markaziy g‘oyasi:
+ism + abstrakt premium obyekt.
+
+8. 3D ORB
+
+Orb Three.js orqali ishlaydi.
+
+Geometry:
+IcosahedronGeometry
+
+Material:
+Custom ShaderMaterial
+
+Ko‘rinishi:
+black mirror + chrome + silver + champagne gold reflection.
+
+Orb animatsiyalari:
+- FBM noise distortion
+- juda sekin rotation
+- mouse yaqinlashganda mikro deformatsiya
+- mouse bilan kamera juda oz siljishi
+- scroll davomida orb biroz cho‘zilishi
+- scroll bilan scale va position o‘zgarishi
+- fresnel rim light
+- gold reflection
+
+Muhim qoida:
+Orb kursorni quvib yurmasligi kerak. U faqat "tirik" ekanini his qildiradigan darajada javob beradi.
+
+9. NAVIGATSIYA
+
+Navbar minimal.
+
+Chap:
+DM / 26 + gold dot
+
+O‘ng:
+About
+Work
+Journey
+Contact
+
+Behavior:
+- sahifa boshida transparent,
+- scroll bo‘lganda dark blur background,
+- pastga scroll qilganda yashirinadi,
+- tepaga scroll qilganda qaytadi.
+
+Eng tepada 1px progress line mavjud.
+
+10. CURSOR
+
+Desktop:
+Dot + Ring Cursor
+
+Dot:
+4px gold
+
+Ring:
+30px
+
+Interactive element ustida:
+50px gacha kattalashadi.
+
+Cursor LERP bilan yuradi. Ya’ni cursor ring sichqonning o‘zini qattiq quvlamaydi, balki biroz kechikish bilan silliq yetib boradi.
+
+CTA va linklarda magnetic effect bor.
+
+Mobile’da custom cursor o‘chiriladi.
+
+11. INTRO STATEMENT
+
+Hero’dan keyingi section foydalanuvchiga brendning asosiy dunyoqarashini beradi.
+
+Matn:
+"I believe meaningful work begins where clarity, ambition and craftsmanship meet. I don't want to simply follow what comes next. I want to help shape it."
+
+Animatsiya:
+Scroll Text Reveal.
+
+Har so‘z boshida:
+- opacity 0.12
+- blur 5px
+- translateY 14px
+
+Scroll davomida:
+- opacity 1
+- blur 0
+- translateY 0
+
+"clarity" va "shape it" gold rang bilan ajratiladi.
+
+12. ABOUT SECTION
+
+Layout:
+Sticky visual left + scrolling content right.
+
+Chap tomonda editorial visual turadi.
+Keyinchalik xohlansa haqiqiy portret qo‘yiladi.
+
+O‘ng tomonda:
+- section label
+- katta heading
+- 80–150 so‘z bio
+- facts grid
+
+Facts:
+Based
+Discipline
+Experience
+Focus
+Availability
+
+Animatsiyalar:
+- clip-path reveal
+- image scale correction
+- subtle parallax
+- blur reveal
+
+13. JOURNEY / TIMELINE
+
+Oddiy CV timeline emas.
+
+Har bosqichda:
+- chap tomonda katta sticky raqam,
+- o‘ng tomonda yil, title va qisqa hikoya.
+
+Active bosqich:
+raqam champagne gold bo‘ladi va 6px yon tomonga siljiydi.
+
+Tavsiya:
+4–6 ta eng muhim milestone.
+
+14. SELECTED WORK
+
+Bu saytning eng muhim bo‘limlaridan biri.
+
+Tavsiya:
+3–5 ta eng kuchli loyiha.
+
+Har project:
+145vh
+
+Ichidagi sticky stage:
+100vh
+
+Har loyiha elementlari:
+- Project number
+- Project title
+- Role
+- Category
+- Year
+- Impact
+
+Animatsiyalar:
+Mask Reveal
+Clip-path
+Scale Parallax
+Light Sweep
+Title Reveal
+Meta Blur Reveal
+Impact Reveal
+Vertical progress
+
+Project copy uzun bo‘lmasligi kerak. Har bir slide’da faqat eng kuchli ma’lumot.
+
+15. STATS / ACHIEVEMENTS
+
+Desktop:
+2×2 grid
+
+Mobile:
+1 column
+
+Tavsiya:
+4 ta real metric.
+
+Raqamlar katta serif typography bilan chiqadi.
+
+Animatsiya:
+Count Up → Gold Flash.
+
+Muhim:
+Faqat real isbotlanadigan raqamlar qo‘yiladi.
+
+16. FINAL STATEMENT
+
+Yakuniy statement:
+"The future is not something to stand back and watch. It is something we can shape together."
+
+Animatsiya:
+- word-by-word reveal
+- blur to clear
+- orb return
+- slow scale
+- crossfade to Contact
+
+Bu Hero’dagi orb’ni yana qaytarib, saytning vizual siklini yopadi.
+
+17. CONTACT
+
+Heading:
+"Bring the idea. We'll give it a presence."
+
+CTA:
+Choose a channel
+
+CTA katta circular magnetic button.
+
+Bosilganda Bottom Sheet ochiladi.
+
+Variantlar:
+Email
+Telegram
+LinkedIn
+GitHub
+
+Bottom sheet:
+- dark backdrop
+- backdrop blur
+- slide-up
+- staggered link reveal
+
+Hover:
+- text gold bo‘ladi
+- 12px yon tomonga siljiydi
+- metadata ko‘rinadi
+- gold hairline chizig‘i chiqadi
+
+18. ANIMATSIYA FILOSOFIYASI
+
+Asosiy qoida:
+"Controlled, cinematic, deliberate."
+
+Animatsiyalar kontentdan kuchli bo‘lmasligi kerak.
+
+Asosiy easinglar:
+expo.out
+expo.inOut
+power3.out
+power3.inOut
+
+Avoid:
+- ko‘p bounce,
+- tez rotation,
+- ortiqcha neon,
+- bir vaqtda juda ko‘p animatsiya,
+- hard scroll snapping.
+
+Micro interaction:
+0.30–0.65s
+
+Text reveal:
+0.70–1.15s
+
+Section reveal:
+0.90–1.35s
+
+19. TEXNOLOGIYA
+
+GSAP 3.13
+ScrollTrigger 3.13
+Lenis 1.3.26
+Three.js 0.186
+
+Lenis:
+smooth scrolling
+
+GSAP:
+timing va interaction
+
+ScrollTrigger:
+scroll-driven motion
+
+Three.js:
+hero liquid orb
+
+20. SMOOTHNESS QOIDALARI
+
+- Mouse koordinatalari to‘g‘ridan-to‘g‘ri ishlatilmaydi; LERP bilan yumshatiladi.
+- Scroll scrub odatda 1.0–1.35 oralig‘ida.
+- WebGL pixelRatio 1.7 atrofida cheklanadi.
+- Layout properties o‘rniga transform va opacity animatsiya qilinadi.
+- Katta videolar default holatda qo‘yilmaydi.
+- Project media lazy-load qilinadi.
+- Hero ko‘rinmay qolganda WebGL ishini kamaytirish tavsiya qilinadi.
+
+21. MOBILE
+
+Mobile’da sayt desktop nusxasi bo‘lmaydi.
+
+Mobile:
+- custom cursor yo‘q,
+- magnetic interaction yo‘q,
+- hero motion kamayadi,
+- orb motion soddalashadi,
+- sticky scene qisqaradi,
+- stats 1 column bo‘ladi,
+- hover preview olib tashlanadi.
+
+Desktop motion intensity:
+7/10
+
+Mobile motion intensity:
+4/10
+
+22. ACCESSIBILITY
+
+prefers-reduced-motion qo‘llab-quvvatlanadi.
+
+Reduced Motion’da:
+- katta scrub animatsiyalar o‘chiriladi,
+- matn final holatda ko‘rinadi,
+- keskin transformlar yo‘q.
+
+Production versiyada qo‘shilishi kerak:
+- focus-visible states
+- keyboard navigation
+- ARIA labels
+- semantic headings
+- haqiqiy link labels
+- rang kontrasti tekshiruvi
+
+23. HALI TO‘LDIRILISHI KERAK BO‘LGAN KONTENT
+
+Professional title / discipline
+Hero tagline
+80–150 so‘z bio
+4–6 timeline milestone
+3–5 real loyiha
+Har project uchun real impact
+4 real statistic
+Email
+Telegram
+LinkedIn
+GitHub
+
+24. KEYINGI ENG MUHIM ISHLAR
+
+1) Placeholder matnlarni real ma’lumotga almashtirish.
+2) Selected Work uchun real media tayyorlash.
+3) About visualga real editorial portret qo‘yish yoki abstract ko‘rinishni saqlash.
+4) Final SEO title va description yozish.
+5) Open Graph cover tayyorlash.
+6) Favicon / personal mark yaratish.
+7) Performance profiling qilish.
+8) WebGL hero viewportdan chiqqanda render’ni kamaytirish.
+9) Accessibility focus states qo‘shish.
+10) Production deployment.
+
+YAKUNIY DIZAYN DNA
+
+Dark Luxury
+Editorial
+Swiss Precision
+Cinematic Motion
+Minimal UI
+Champagne Gold Accent
+Liquid Metallic Orb
+Quiet Authority
+
+Bu saytning asosiy kuchi effektlar sonida emas. Asosiy kuch — barcha elementlar bitta vizual tilga bo‘ysunishida.

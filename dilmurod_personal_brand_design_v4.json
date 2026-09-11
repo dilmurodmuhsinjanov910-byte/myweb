@@ -1,0 +1,407 @@
+{
+  "document": {
+    "title": "Dilmurod Muhsinjonov — Personal Brand Website Design Specification",
+    "version": "4.0",
+    "language": "uz",
+    "type": "one-page personal brand / cinematic portfolio",
+    "status": "design direction locked; content placeholders remain",
+    "source_prototype": "personal_brand_v4.html"
+  },
+  "brand_direction": {
+    "primary_goal": "Shaxsiy brendni premium, esda qoladigan va hamkorlikka undaydigan tarzda ko‘rsatish.",
+    "brand_personality": [
+      "Quiet Authority",
+      "Premium",
+      "Cinematic",
+      "Editorial",
+      "Precise",
+      "Minimal",
+      "Forward-looking"
+    ],
+    "style_mix": {
+      "dark_luxury_minimalism": 0.38,
+      "editorial_portfolio": 0.32,
+      "swiss_minimalism": 0.2,
+      "cinematic_storytelling": 0.1
+    },
+    "visual_formula": "Dark Luxury × Cinematic Storytelling × Editorial Typography × Swiss Precision × Controlled WebGL Motion",
+    "light_mode": false,
+    "human_figure_in_hero": false
+  },
+  "design_tokens": {
+    "colors": {
+      "background_primary": "#070707",
+      "background_secondary": "#0B0B0B",
+      "surface_primary": "#101010",
+      "surface_secondary": "#141414",
+      "text_primary": "#F1F1EE",
+      "text_secondary": "#B9BDC2",
+      "text_muted": "#767676",
+      "accent_gold": "#C9A86A",
+      "border_default": "rgba(255,255,255,0.095)",
+      "border_strong": "rgba(255,255,255,0.16)",
+      "gold_usage_rule": "5–8% of the total visual field; only for emphasis, active states, highlights, and rewards"
+    },
+    "typography": {
+      "display_family": "Instrument Serif",
+      "body_family": "DM Sans",
+      "display_role": "Hero name, section titles, project titles, statements, large stats",
+      "body_role": "Navigation, metadata, labels, body copy, UI controls",
+      "hero_size": "clamp(62px, 8.5vw, 145px)",
+      "hero_line_height": 0.82,
+      "hero_letter_spacing": "-0.052em",
+      "section_title_size": "clamp(46px, 5.4vw, 80px)",
+      "statement_size": "clamp(42px, 6.5vw, 104px)",
+      "small_label_size": "9px",
+      "small_label_tracking": "0.24em"
+    },
+    "spacing": {
+      "page_padding": "clamp(20px, 4vw, 68px)",
+      "section_vertical_spacing": "10–18vh depending on section",
+      "layout_grid": "12-column editorial grid",
+      "visual_density": "low",
+      "corner_radius": "0–6px for UI; circles reserved for orb and CTA",
+      "border_style": "1px hairline"
+    }
+  },
+  "layout": {
+    "page_type": "single page",
+    "scroll_model": "continuous smooth scroll with sticky cinematic scenes",
+    "section_order": [
+      "Hero",
+      "Point of View / Intro Statement",
+      "About",
+      "Journey / Timeline",
+      "Selected Work",
+      "Numbers / Achievements",
+      "Final Statement",
+      "Contact"
+    ],
+    "desktop": {
+      "grid_columns": 12,
+      "max_content_width": "1440px",
+      "motion_intensity": "7/10"
+    },
+    "mobile": {
+      "motion_intensity": "4/10",
+      "custom_cursor": false,
+      "reduce_sticky_duration": true,
+      "simplify_webgl_motion": true
+    }
+  },
+  "hero": {
+    "height": "205vh",
+    "sticky_stage": "100vh",
+    "composition": {
+      "left": "name + tagline + metadata",
+      "right": "liquid metallic orb with orbital rings",
+      "background": "near-black with subtle radial glow and hairline geometry",
+      "human_subject": "removed"
+    },
+    "content": {
+      "kicker": "PERSONAL BRAND / UZBEKISTAN",
+      "name": "DILMUROD MUHSINJONOV",
+      "tagline_placeholder": "[Your professional identity]. Turning ideas into deliberate, memorable digital experiences.",
+      "scroll_cue": "SCROLL TO EXPLORE",
+      "meta": [
+        "Independent / Selected collaborations",
+        "Built with intention"
+      ]
+    },
+    "orb": {
+      "engine": "Three.js",
+      "geometry": "IcosahedronGeometry, high subdivision",
+      "material": "custom ShaderMaterial",
+      "look": "liquid chrome / black mirror / silver with champagne-gold reflection",
+      "effects": [
+        "FBM noise deformation",
+        "slow continuous rotation",
+        "mouse-responsive micro deformation",
+        "mouse-responsive camera drift",
+        "scroll morph / elongation",
+        "subtle pulse",
+        "fresnel rim lighting",
+        "gold directional highlight"
+      ],
+      "mouse_response": "very subtle; the orb follows the pointer without becoming playful",
+      "scroll_response": "scale + position shift + distortion increase",
+      "decorative_layers": [
+        "large circular shell",
+        "inner gold hairline ring",
+        "outer faint ring",
+        "horizontal hairline"
+      ]
+    }
+  },
+  "preloader": {
+    "type": "3D Orb Formation + Cinematic Curtain Reveal",
+    "sequence": [
+      "orb scales from 0.08 to 1",
+      "ring fades and rotates",
+      "percentage progresses 00 → 100",
+      "orb expands dramatically",
+      "top and bottom curtains split",
+      "hero typography enters"
+    ],
+    "text": "FORMING IDENTITY",
+    "easing": [
+      "power3.out",
+      "power2.inOut",
+      "expo.inOut",
+      "expo.out"
+    ],
+    "rule": "Keep duration short enough to feel intentional, not decorative."
+  },
+  "navigation": {
+    "type": "minimal top bar",
+    "brand_mark": "DM / 26 + gold dot",
+    "links": [
+      "About",
+      "Work",
+      "Journey",
+      "Contact"
+    ],
+    "behavior": [
+      "transparent at top",
+      "blurred dark background after scroll",
+      "hide on downward scroll",
+      "reveal on upward scroll",
+      "animated gold underline on hover"
+    ],
+    "page_progress": "1px silver-to-gold line at top"
+  },
+  "cursor": {
+    "desktop_only": true,
+    "type": "dot + ring",
+    "dot": "4px gold",
+    "ring": "30px hairline circle",
+    "hover_state": "ring expands to 50px and turns gold",
+    "motion": "lerp-follow",
+    "magnetic_targets": [
+      "navigation links",
+      "CTA button",
+      "contact links",
+      "brand mark"
+    ],
+    "magnetic_strength": 0.12
+  },
+  "sections": {
+    "intro_statement": {
+      "purpose": "Brendning dunyoqarashini bir katta fikr orqali yetkazish.",
+      "layout": "large editorial statement centered in wide column",
+      "copy": "I believe meaningful work begins where clarity, ambition and craftsmanship meet. I don't want to simply follow what comes next. I want to help shape it.",
+      "animation": "word-by-word scroll scrub",
+      "word_states": {
+        "initial": "opacity 0.12 + blur 5px + translateY 14px",
+        "final": "opacity 1 + blur 0 + translateY 0"
+      },
+      "highlight_words": [
+        "clarity",
+        "shape it."
+      ]
+    },
+    "about": {
+      "purpose": "CV faktlaridan ko‘ra kuchliroq shaxsiy pozitsiya va ish uslubini ko‘rsatish.",
+      "layout": "sticky visual left / scrolling content right",
+      "image_style": "abstract editorial placeholder, film-grain atmosphere; replace later with real cropped editorial portrait if desired",
+      "animation": [
+        "clip-path reveal",
+        "slow image scale correction",
+        "subtle vertical parallax",
+        "blur-to-clear content reveal"
+      ],
+      "facts_grid": [
+        "Based",
+        "Discipline",
+        "Experience",
+        "Focus",
+        "Availability"
+      ]
+    },
+    "journey": {
+      "purpose": "Muhim professional bosqichlarni storytelling shaklida berish.",
+      "layout": "sticky large milestone number + scrolling description",
+      "recommended_entries": "4–6 major milestones",
+      "active_state": "year turns champagne gold and shifts 6px",
+      "animation": "ScrollTrigger-based active state + reveal"
+    },
+    "selected_work": {
+      "purpose": "3–5 ta eng kuchli loyihani fullscreen cinematic case-study preview sifatida ko‘rsatish.",
+      "layout": "145vh project container with 100vh sticky stage",
+      "project_fields": [
+        "Project number",
+        "Project title",
+        "Role",
+        "Category",
+        "Year",
+        "Impact / result"
+      ],
+      "motion": [
+        "mask reveal via clip-path",
+        "slow scale",
+        "light sweep",
+        "orb-art parallax",
+        "title rise-in",
+        "meta blur reveal",
+        "impact reveal",
+        "side progress bar"
+      ],
+      "copy_rule": "Short, outcome-oriented, no long paragraphs on the fullscreen slide."
+    },
+    "stats": {
+      "purpose": "Qiymatni raqamlar orqali tez va ishonchli ko‘rsatish.",
+      "layout": "2×2 editorial grid on desktop; stacked on mobile",
+      "recommended_stat_count": 4,
+      "animation": "count-up with gold flash at completion",
+      "style": "very large serif number + small explanatory text",
+      "data_rule": "Only real, defensible metrics should replace placeholders."
+    },
+    "closing": {
+      "purpose": "Emotsional yakun va hero orb’ga vizual callback.",
+      "statement": "The future is not something to stand back and watch. It is something we can shape together.",
+      "animation": [
+        "word-by-word blur reveal",
+        "orb scale-in",
+        "orb blur-to-sharp",
+        "slow crossfade into contact"
+      ]
+    },
+    "contact": {
+      "purpose": "Foydalanuvchini bevosita aloqaga olib kirish.",
+      "headline": "Bring the idea. We'll give it a presence.",
+      "cta_type": "large circular magnetic CTA",
+      "cta_label": "Choose a channel",
+      "channels": [
+        "Email",
+        "Telegram",
+        "LinkedIn",
+        "GitHub"
+      ],
+      "bottom_sheet": {
+        "opening": "slide-up with expo easing",
+        "backdrop": "dark overlay + 10px blur",
+        "links": "large serif text",
+        "hover": "gold underline + slight text shift + metadata reveal"
+      }
+    }
+  },
+  "animation_system": {
+    "principle": "Controlled, cinematic, deliberate. Motion supports hierarchy; it never competes with content.",
+    "core_libraries": {
+      "GSAP": "3.13.0",
+      "ScrollTrigger": "3.13.0",
+      "Lenis": "1.3.26",
+      "Three.js": "0.186.0"
+    },
+    "preferred_eases": [
+      "expo.out",
+      "expo.inOut",
+      "power3.out",
+      "power3.inOut"
+    ],
+    "avoid": [
+      "excessive bounce",
+      "random rotations",
+      "fast neon effects",
+      "too many simultaneous animations",
+      "hard scroll snapping"
+    ],
+    "timing_guidelines": {
+      "micro_interactions": "0.30–0.65s",
+      "text_reveal": "0.70–1.15s",
+      "section_reveal": "0.90–1.35s",
+      "bottom_sheet": "0.56–0.76s",
+      "preloader_total_target": "about 2.5–3.5s"
+    },
+    "smoothness_rules": [
+      "Use lerp instead of direct pointer mapping.",
+      "Use scrub values around 1.0–1.35 for major scroll-linked motion.",
+      "Limit pointer displacement to subtle values.",
+      "Keep WebGL pixel ratio capped around 1.7.",
+      "Do not animate layout properties when transform/opacity can be used."
+    ]
+  },
+  "responsive_behavior": {
+    "desktop": {
+      "custom_cursor": true,
+      "magnetic_interactions": true,
+      "sticky_project_scenes": true,
+      "full_webgl_motion": true
+    },
+    "tablet": {
+      "keep_orb": true,
+      "reduce_orb_scale": true,
+      "simplify_navigation": true,
+      "reduce_project_motion": true
+    },
+    "mobile": {
+      "custom_cursor": false,
+      "magnetic_interactions": false,
+      "hero_height": "175vh",
+      "project_height": "120vh",
+      "navigation": "only About + Contact visible in current prototype",
+      "stats_layout": "single column",
+      "contact_preview_metadata": "hidden"
+    }
+  },
+  "accessibility": {
+    "prefers_reduced_motion": true,
+    "reduced_motion_behavior": [
+      "disable major scrub effects",
+      "show text in final readable state",
+      "disable custom cursor on small devices",
+      "avoid forced scroll snapping"
+    ],
+    "contrast": "high contrast light text on near-black background",
+    "interaction_note": "All clickable controls should retain keyboard focus styling in production.",
+    "future_requirement": "Add semantic landmarks, ARIA labels where needed, focus-visible states, and proper form/link labels."
+  },
+  "performance": {
+    "priority": "Keep cinematic feel without making the page feel heavy.",
+    "rules": [
+      "Cap WebGL pixel ratio.",
+      "Use transform and opacity for most motion.",
+      "Avoid large uncompressed video backgrounds.",
+      "Lazy-load project imagery/video.",
+      "Use responsive image sources.",
+      "Pause or reduce WebGL work when hero is outside viewport in production.",
+      "Prefer 3–5 selected projects rather than a long gallery."
+    ]
+  },
+  "content_requirements": {
+    "still_needed": {
+      "professional_identity": "Short title / discipline",
+      "tagline": "One sentence",
+      "bio": "80–150 words",
+      "timeline": "4–6 milestones with years",
+      "projects": "3–5 selected works with role/category/year/impact",
+      "stats": "4 real metrics",
+      "email": "real address",
+      "telegram": "real username/link",
+      "linkedin": "profile link",
+      "github": "profile link if relevant"
+    },
+    "copy_tone": [
+      "confident but not loud",
+      "mission-driven",
+      "short",
+      "precise",
+      "inviting",
+      "premium"
+    ]
+  },
+  "production_notes": {
+    "current_prototype": "V4",
+    "hero_human_removed": true,
+    "current_visual_anchor": "liquid metallic orb",
+    "next_best_steps": [
+      "Replace all placeholder content with real personal information.",
+      "Add real project imagery/video.",
+      "Add real editorial portrait in About if desired.",
+      "Refine focus-visible accessibility states.",
+      "Optimize WebGL to pause outside hero viewport.",
+      "Add SEO metadata and Open Graph image.",
+      "Add favicon and final personal brand mark."
+    ]
+  }
+}
