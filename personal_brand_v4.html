@@ -503,6 +503,12 @@
       position:absolute;inset:0;width:100%;height:100%;
       display:block;
     }
+    .portal-threads-canvas{
+      position:absolute;inset:0;width:100%;height:100%;
+      display:block;
+      pointer-events:none;
+      z-index:4;
+    }
     .portal-runes-svg{
       position:absolute;inset:-6%;width:112%;height:112%;
       pointer-events:none;
@@ -1067,6 +1073,9 @@
                       <line x1="14" y1="100" x2="27" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
                       <line x1="173" y1="100" x2="186" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
                     </svg>
+
+                    <!-- Hanging Golden Telemetry Threads (Silk / Hair Physics & Crystal Bell Chimes) -->
+                    <canvas id="portal-threads-canvas" class="portal-threads-canvas"></canvas>
 
                     <!-- Anamorphic Quantum Flare -->
                     <div class="portal-singularity-flare"></div>
@@ -2174,6 +2183,8 @@
       const gateWrap = document.getElementById("portal-gate-wrap");
       const singularityCanvas = document.getElementById("portal-singularity-canvas");
       const singularityCtx = singularityCanvas ? singularityCanvas.getContext("2d") : null;
+      const threadsCanvas = document.getElementById("portal-threads-canvas");
+      const threadsCtx = threadsCanvas ? threadsCanvas.getContext("2d") : null;
       
       const runesSvg = document.getElementById("portal-runes-svg");
       const runesGroup = document.getElementById("portal-runes-group");
@@ -2375,6 +2386,62 @@
         } catch (_) {}
       }
 
+      // ----------------------------------------------------
+      // Delicate Crystal Bell / Metallic Wind Chime Synthesizer
+      // ("mayin qo'ng'iroq ovozi" - Shimmering overtones & pentatonic decay)
+      // ----------------------------------------------------
+      const CHIME_PENTATONIC = [1046.50, 1174.66, 1318.51, 1567.98, 1760.00, 2093.00, 2349.32];
+
+      function playThreadChime(stringIndex, strength = 0.5) {
+        if (!soundEnabled) return;
+        initAudioContext();
+        if (!audioCtx) return;
+        try {
+          const now = audioCtx.currentTime;
+          const freq = CHIME_PENTATONIC[stringIndex % CHIME_PENTATONIC.length];
+          const vol = Math.max(0.015, Math.min(0.06, 0.02 + strength * 0.035));
+
+          // 1. Fundamental Pure Crystal Tone
+          const osc1 = audioCtx.createOscillator();
+          const gain1 = audioCtx.createGain();
+          osc1.type = "sine";
+          osc1.frequency.setValueAtTime(freq, now);
+          gain1.gain.setValueAtTime(0.0001, now);
+          gain1.gain.linearRampToValueAtTime(vol, now + 0.003);
+          gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
+          osc1.connect(gain1);
+          gain1.connect(audioCtx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.9);
+
+          // 2. Metallic Tubular Bell Harmonic Overtone (f * 2.756)
+          const osc2 = audioCtx.createOscillator();
+          const gain2 = audioCtx.createGain();
+          osc2.type = "sine";
+          osc2.frequency.setValueAtTime(freq * 2.756, now);
+          gain2.gain.setValueAtTime(0.0001, now);
+          gain2.gain.linearRampToValueAtTime(vol * 0.38, now + 0.002);
+          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+          osc2.connect(gain2);
+          gain2.connect(audioCtx.destination);
+          osc2.start(now);
+          osc2.stop(now + 0.45);
+
+          // 3. Shimmering High Crystal Sparkle (f * 5.404)
+          const osc3 = audioCtx.createOscillator();
+          const gain3 = audioCtx.createGain();
+          osc3.type = "sine";
+          osc3.frequency.setValueAtTime(freq * 5.404, now);
+          gain3.gain.setValueAtTime(0.0001, now);
+          gain3.gain.linearRampToValueAtTime(vol * 0.14, now + 0.002);
+          gain3.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+          osc3.connect(gain3);
+          gain3.connect(audioCtx.destination);
+          osc3.start(now);
+          osc3.stop(now + 0.28);
+        } catch (_) {}
+      }
+
       if (soundBtn) {
         soundBtn.classList.add("active");
         soundBtn.addEventListener("click", () => {
@@ -2387,12 +2454,9 @@
         });
       }
 
-      // Preload World 1 Landscape Image
-      const monumentImg = new Image();
-      monumentImg.src = "world_monument_valley.jpg";
-
       // ----------------------------------------------------
-      // 6 Distinct S-Tier Destinations Definition
+      // 6 Authentic S-Tier Photographic Destinations Definition
+      // With real ultra-high-res landscape photography for ALL 6 destinations
       // ----------------------------------------------------
       const destinations = [
         {
@@ -2407,9 +2471,16 @@
           horizonY: 0.64,
           glowColor: "rgba(240, 140, 70, 0.55)",
           singularityColors: ["#fff2d0", "#ff9922", "rgba(255, 120, 30, 0.9)"],
+          cosmicColors: {
+            nebulaPrimary: "rgba(255, 120, 30, 0.62)",
+            nebulaSecondary: "rgba(180, 40, 90, 0.52)",
+            cosmicCyan: "rgba(255, 205, 90, 0.85)",
+            rayColor: "rgba(255, 175, 50, 0.75)"
+          },
           particleType: "dust",
           particleCount: 65,
           particleColor: "rgba(255, 195, 130, 0.85)",
+          imageSrc: "world_monument_valley.jpg",
           useImage: true
         },
         {
@@ -2424,10 +2495,17 @@
           horizonY: 0.62,
           glowColor: "rgba(220, 130, 160, 0.50)",
           singularityColors: ["#ffeef8", "#df75cc", "rgba(255, 130, 180, 0.9)"],
+          cosmicColors: {
+            nebulaPrimary: "rgba(240, 90, 180, 0.62)",
+            nebulaSecondary: "rgba(130, 50, 210, 0.55)",
+            cosmicCyan: "rgba(255, 190, 140, 0.85)",
+            rayColor: "rgba(245, 130, 195, 0.8)"
+          },
           particleType: "balloons",
           particleCount: 50,
           particleColor: "rgba(255, 215, 185, 0.75)",
-          useImage: false
+          imageSrc: "world_cappadocia.jpg",
+          useImage: true
         },
         {
           kicker: "03 OF 06",
@@ -2441,10 +2519,17 @@
           horizonY: 0.66,
           glowColor: "rgba(95, 205, 145, 0.50)",
           singularityColors: ["#e0fff0", "#38e096", "rgba(40, 230, 150, 0.9)"],
+          cosmicColors: {
+            nebulaPrimary: "rgba(40, 230, 160, 0.62)",
+            nebulaSecondary: "rgba(20, 140, 210, 0.55)",
+            cosmicCyan: "rgba(180, 255, 220, 0.85)",
+            rayColor: "rgba(60, 240, 180, 0.75)"
+          },
           particleType: "fireflies",
           particleCount: 70,
           particleColor: "rgba(170, 255, 180, 0.90)",
-          useImage: false
+          imageSrc: "world_kyoto.jpg",
+          useImage: true
         },
         {
           kicker: "04 OF 06",
@@ -2458,10 +2543,17 @@
           horizonY: 0.58,
           glowColor: "rgba(75, 185, 245, 0.55)",
           singularityColors: ["#e6f7ff", "#3bb7ff", "rgba(50, 170, 255, 0.9)"],
+          cosmicColors: {
+            nebulaPrimary: "rgba(20, 180, 255, 0.65)",
+            nebulaSecondary: "rgba(110, 60, 255, 0.6)",
+            cosmicCyan: "rgba(220, 250, 255, 0.9)",
+            rayColor: "rgba(50, 210, 255, 0.8)"
+          },
           particleType: "stars",
           particleCount: 95,
           particleColor: "rgba(215, 245, 255, 0.95)",
-          useImage: false
+          imageSrc: "world_salar_de_uyuni.jpg",
+          useImage: true
         },
         {
           kicker: "05 OF 06",
@@ -2475,10 +2567,17 @@
           horizonY: 0.65,
           glowColor: "rgba(235, 145, 85, 0.50)",
           singularityColors: ["#fff0e6", "#ff733b", "rgba(255, 80, 40, 0.9)"],
+          cosmicColors: {
+            nebulaPrimary: "rgba(255, 80, 50, 0.65)",
+            nebulaSecondary: "rgba(180, 20, 60, 0.55)",
+            cosmicCyan: "rgba(255, 200, 120, 0.85)",
+            rayColor: "rgba(255, 110, 50, 0.8)"
+          },
           particleType: "embers",
           particleCount: 60,
           particleColor: "rgba(255, 185, 95, 0.85)",
-          useImage: false
+          imageSrc: "world_petra.jpg",
+          useImage: true
         },
         {
           kicker: "06 OF 06",
@@ -2492,12 +2591,26 @@
           horizonY: 0.60,
           glowColor: "rgba(130, 205, 255, 0.55)",
           singularityColors: ["#f0fbff", "#7de5ff", "rgba(100, 230, 255, 0.9)"],
+          cosmicColors: {
+            nebulaPrimary: "rgba(60, 220, 255, 0.65)",
+            nebulaSecondary: "rgba(160, 70, 255, 0.55)",
+            cosmicCyan: "rgba(240, 250, 255, 0.95)",
+            rayColor: "rgba(120, 230, 255, 0.8)"
+          },
           particleType: "snow",
           particleCount: 85,
           particleColor: "rgba(240, 248, 255, 0.90)",
-          useImage: false
+          imageSrc: "world_matterhorn.jpg",
+          useImage: true
         }
       ];
+
+      // Preload All 6 Authentic Photographic Destination Images
+      const destinationImages = destinations.map(d => {
+        const img = new Image();
+        img.src = d.imageSrc;
+        return img;
+      });
 
       let currentIndex = 0;
       let isTeleporting = false;
@@ -2530,6 +2643,21 @@
           mouse.targetX = Math.max(-1, Math.min(1, nx));
           mouse.targetY = Math.max(-1, Math.min(1, ny));
 
+          // Track cursor for hanging golden threads inside gate arch
+          if (threadsCanvas) {
+            const tRect = threadsCanvas.getBoundingClientRect();
+            if (e.clientX >= tRect.left - 20 && e.clientX <= tRect.right + 20 &&
+                e.clientY >= tRect.top - 20 && e.clientY <= tRect.bottom + 20) {
+              threadMouse.x = (e.clientX - tRect.left) * (threadsCanvas.width / tRect.width);
+              threadMouse.y = (e.clientY - tRect.top) * (threadsCanvas.height / tRect.height);
+              threadMouse.active = true;
+            } else if (!isGateHovered) {
+              threadMouse.active = false;
+              threadMouse.lastX = -9999;
+              threadMouse.lastY = -9999;
+            }
+          }
+
           // Proximity to gate center (0, 0)
           const dist = Math.sqrt(mouse.targetX * mouse.targetX + mouse.targetY * mouse.targetY);
           const prox = Math.max(0, 1 - dist / 1.15);
@@ -2544,6 +2672,9 @@
             targetVortexSpeed = 1.0;
             targetRuneSpeed = 0.28;
           }
+          threadMouse.active = false;
+          threadMouse.lastX = -9999;
+          threadMouse.lastY = -9999;
           stopGateHum();
         });
 
@@ -2555,12 +2686,26 @@
             const ny = ((e.touches[0].clientY - rect.top) / rect.height) * 2 - 1;
             mouse.targetX = Math.max(-1, Math.min(1, nx * 0.75));
             mouse.targetY = Math.max(-1, Math.min(1, ny * 0.75));
+
+            if (threadsCanvas) {
+              const tRect = threadsCanvas.getBoundingClientRect();
+              const tx = e.touches[0].clientX;
+              const ty = e.touches[0].clientY;
+              if (tx >= tRect.left && tx <= tRect.right && ty >= tRect.top && ty <= tRect.bottom) {
+                threadMouse.x = (tx - tRect.left) * (threadsCanvas.width / tRect.width);
+                threadMouse.y = (ty - tRect.top) * (threadsCanvas.height / tRect.height);
+                threadMouse.active = true;
+              }
+            }
           }
         }, { passive: true });
 
         viewport.addEventListener("touchend", () => {
           mouse.targetX = 0;
           mouse.targetY = 0;
+          threadMouse.active = false;
+          threadMouse.lastX = -9999;
+          threadMouse.lastY = -9999;
           stopGateHum();
         });
       }
@@ -2573,10 +2718,39 @@
           targetDisplacementScale = 6.0; // Trigger liquid ripple on runes
         });
 
+        gateWrap.addEventListener("mousemove", (e) => {
+          if (threadsCanvas) {
+            const tRect = threadsCanvas.getBoundingClientRect();
+            threadMouse.x = (e.clientX - tRect.left) * (threadsCanvas.width / tRect.width);
+            threadMouse.y = (e.clientY - tRect.top) * (threadsCanvas.height / tRect.height);
+            threadMouse.active = true;
+          }
+        });
+
         gateWrap.addEventListener("mouseleave", () => {
           isGateHovered = false;
           targetVortexSpeed = 1.0;
           targetRuneSpeed = 0.28;
+          threadMouse.active = false;
+          threadMouse.lastX = -9999;
+          threadMouse.lastY = -9999;
+        });
+
+        gateWrap.addEventListener("touchmove", (e) => {
+          if (threadsCanvas && e.touches && e.touches[0]) {
+            const tRect = threadsCanvas.getBoundingClientRect();
+            const tx = e.touches[0].clientX;
+            const ty = e.touches[0].clientY;
+            threadMouse.x = (tx - tRect.left) * (threadsCanvas.width / tRect.width);
+            threadMouse.y = (ty - tRect.top) * (threadsCanvas.height / tRect.height);
+            threadMouse.active = true;
+          }
+        }, { passive: true });
+
+        gateWrap.addEventListener("touchend", () => {
+          threadMouse.active = false;
+          threadMouse.lastX = -9999;
+          threadMouse.lastY = -9999;
         });
       }
 
@@ -2600,6 +2774,248 @@
             hueShift: Math.random() * 0.2 - 0.1
           });
         }
+      }
+
+      // ----------------------------------------------------
+      // Celestial Cosmic Stars Definition
+      // ----------------------------------------------------
+      const COSMIC_STARS_COUNT = 110;
+      const cosmicStars = [];
+
+      function initCosmicStars(w, h) {
+        cosmicStars.length = 0;
+        const maxR = Math.min(w, h) * 0.50;
+        for (let i = 0; i < COSMIC_STARS_COUNT; i++) {
+          const r = Math.pow(Math.random(), 0.65) * maxR;
+          const theta = Math.random() * Math.PI * 2;
+          cosmicStars.push({
+            r,
+            theta,
+            orbitSpeed: (Math.random() * 0.006 + 0.002) * (Math.random() > 0.5 ? 1 : -1),
+            size: Math.random() * 1.6 + 0.5,
+            twinkleSpeed: Math.random() * 0.05 + 0.02,
+            phase: Math.random() * Math.PI * 2,
+            hasDiamondSpike: i < 14,
+            color: i % 4 === 0 ? "#00f0ff" : i % 4 === 1 ? "#ff55d4" : i % 4 === 2 ? "#ffd700" : "#ffffff"
+          });
+        }
+      }
+
+      // ----------------------------------------------------
+      // Golden Telemetry Threads (Fluid Hair/Silk Cloth Dynamics)
+      // Floating in gate archway with upcoming destination data
+      // ----------------------------------------------------
+      const NUM_THREADS = 7;
+      const NODES_PER_THREAD = 16;
+      let hangingThreads = [];
+      const threadMouse = {
+        x: -9999,
+        y: -9999,
+        lastX: -9999,
+        lastY: -9999,
+        vx: 0,
+        vy: 0,
+        active: false
+      };
+      const threadChimeCooldown = new Array(NUM_THREADS).fill(0);
+
+      function initHangingThreads(w, h) {
+        hangingThreads = [];
+        for (let i = 0; i < NUM_THREADS; i++) {
+          const normX = 0.18 + (i / (NUM_THREADS - 1)) * 0.64; // Spaced across arch opening
+          const anchorX = w * normX;
+          // Arch ceiling curve (catenary/ellipse arch approximation)
+          const archCenterDist = Math.abs((normX - 0.5) / 0.36);
+          const archHeight = Math.sqrt(Math.max(0, 1 - archCenterDist * archCenterDist * 0.72));
+          const topY = (1 - archHeight) * (h * 0.19) + h * 0.04;
+          const totalLength = h * 0.80;
+
+          const nodes = [];
+          for (let j = 0; j < NODES_PER_THREAD; j++) {
+            const restX = anchorX;
+            const restY = topY + (j / (NODES_PER_THREAD - 1)) * totalLength;
+            nodes.push({
+              x: restX,
+              y: restY,
+              restX: restX,
+              restY: restY,
+              vx: 0,
+              vy: 0,
+              pinned: (j === 0)
+            });
+          }
+          hangingThreads.push({
+            nodes,
+            anchorX,
+            topY,
+            displacedIntensity: 0
+          });
+        }
+      }
+
+      function getThreadGlyphs(threadIndex) {
+        const nextIdx = (currentIndex + 1) % destinations.length;
+        const next = destinations[nextIdx];
+        const stringData = [
+          `▲ NEXT DEST: ${next.name.toUpperCase()}`,
+          `COORD: ${next.coords.replace(" ", "")}`,
+          `ALTITUDE: ${next.altitude} // ATMO`,
+          `ATMOSPHERE: ${next.atmosphere.split("·")[0].trim().toUpperCase()}`,
+          `TEMPORAL: ${next.temporal} // WARP`,
+          `ᛟ ᚱ ᛒ ᛁ ᛏ ᚐ ᛚ // ᛋ ᛁ ᚾ ᚷ ᚢ ᛚ ᚐ`,
+          `QUANTUM STARGATE READY 99.9%`
+        ];
+        return stringData[threadIndex % stringData.length];
+      }
+
+      function updateHangingThreadsPhysics(tick) {
+        // Calculate cursor velocity
+        if (threadMouse.active && threadMouse.lastX > -1000) {
+          threadMouse.vx = (threadMouse.x - threadMouse.lastX) * 0.8;
+          threadMouse.vy = (threadMouse.y - threadMouse.lastY) * 0.8;
+        } else {
+          threadMouse.vx = 0;
+          threadMouse.vy = 0;
+        }
+        threadMouse.lastX = threadMouse.x;
+        threadMouse.lastY = threadMouse.y;
+
+        const cursorSpeed = Math.hypot(threadMouse.vx, threadMouse.vy);
+        const nowMs = performance.now();
+
+        hangingThreads.forEach((th, i) => {
+          let threadDisplacedThisFrame = false;
+
+          th.nodes.forEach((node, j) => {
+            if (node.pinned) return;
+
+            // 1. Natural ambient air sway (fluid breathing of silk threads)
+            const sway = Math.sin(tick * 0.024 + i * 0.85 + j * 0.24) * (0.16 + (j / NODES_PER_THREAD) * 0.32);
+            node.vx += sway;
+
+            // 2. Spring-tension restoration to vertical resting position
+            const springK = 0.048 - (j / NODES_PER_THREAD) * 0.016;
+            node.vx += (node.restX - node.x) * springK;
+            node.vy += (node.restY - node.y) * (springK * 1.6);
+
+            // 3. Neighbor constraint (hair/string elasticity & smooth bend continuity)
+            if (j > 0) {
+              const prev = th.nodes[j - 1];
+              node.vx += (prev.x - node.x) * 0.14;
+            }
+            if (j < NODES_PER_THREAD - 1) {
+              const next = th.nodes[j + 1];
+              node.vx += (next.x - node.x) * 0.14;
+            }
+
+            // 4. Hand brushing dynamics ("huddi sochni qo'l bilan harakatlantirgandek")
+            if (threadMouse.active) {
+              const dx = node.x - threadMouse.x;
+              const dy = node.y - threadMouse.y;
+              const dist = Math.hypot(dx, dy);
+              const brushRadius = 42; // Width of brush interaction
+
+              if (dist < brushRadius) {
+                const brushFactor = Math.pow(1 - dist / brushRadius, 1.4);
+                const nx = dist > 0.1 ? (dx / dist) : (threadMouse.vx >= 0 ? 1 : -1);
+                
+                // Displace strand away from finger and along movement vector
+                const pushX = (nx * 3.4 + threadMouse.vx * 0.65) * brushFactor;
+                const pushY = (threadMouse.vy * 0.35 + 0.8) * brushFactor;
+                
+                node.vx += pushX;
+                node.vy += pushY;
+                threadDisplacedThisFrame = true;
+                th.displacedIntensity = Math.min(1.0, th.displacedIntensity + 0.35);
+              }
+            }
+
+            // 5. Viscous air damping
+            node.vx *= 0.91;
+            node.vy *= 0.87;
+
+            // Clamp velocity
+            node.vx = Math.max(-14, Math.min(14, node.vx));
+            node.vy = Math.max(-10, Math.min(10, node.vy));
+
+            node.x += node.vx;
+            node.y += node.vy;
+          });
+
+          // Trigger delicate bell chime if brushed with enough movement
+          if (threadDisplacedThisFrame && cursorSpeed > 0.8) {
+            if (nowMs - threadChimeCooldown[i] > 140) {
+              threadChimeCooldown[i] = nowMs;
+              playThreadChime(i, Math.min(1.0, cursorSpeed / 6));
+            }
+          }
+
+          th.displacedIntensity *= 0.94; // Fade displacement glow
+        });
+      }
+
+      function renderHangingThreads() {
+        if (!threadsCtx || !threadsCanvas) return;
+        const w = threadsCanvas.width;
+        const h = threadsCanvas.height;
+        threadsCtx.clearRect(0, 0, w, h);
+
+        hangingThreads.forEach((th, i) => {
+          const text = getThreadGlyphs(i);
+          const isGlowing = th.displacedIntensity > 0.15;
+
+          // 1. Draw subtle golden silk filament line
+          threadsCtx.beginPath();
+          th.nodes.forEach((node, j) => {
+            if (j === 0) threadsCtx.moveTo(node.x, node.y);
+            else {
+              const prev = th.nodes[j - 1];
+              const xc = (prev.x + node.x) * 0.5;
+              const yc = (prev.y + node.y) * 0.5;
+              threadsCtx.quadraticCurveTo(prev.x, prev.y, xc, yc);
+            }
+          });
+          threadsCtx.strokeStyle = isGlowing
+            ? `rgba(255, 243, 209, ${0.45 + th.displacedIntensity * 0.45})`
+            : "rgba(223, 183, 108, 0.28)";
+          threadsCtx.lineWidth = isGlowing ? 1.4 : 0.85;
+          threadsCtx.stroke();
+
+          // 2. Draw tiny luxury golden letters & glyphs along the hanging thread
+          threadsCtx.font = "600 8px 'DM Sans', monospace";
+          threadsCtx.textAlign = "center";
+          threadsCtx.textBaseline = "middle";
+
+          th.nodes.forEach((node, j) => {
+            const char = text[j % text.length];
+            if (!char || char === " ") {
+              // Draw delicate golden micro bead / nodule
+              threadsCtx.fillStyle = isGlowing ? "#fff3d1" : "#dfb76c";
+              threadsCtx.beginPath();
+              threadsCtx.arc(node.x, node.y, isGlowing ? 1.4 : 0.9, 0, Math.PI * 2);
+              threadsCtx.fill();
+              return;
+            }
+
+            // Golden luxury lettering with shimmering glow
+            threadsCtx.save();
+            threadsCtx.translate(node.x, node.y);
+
+            // Subtle letter tilt aligned with thread slope
+            if (j > 0 && j < th.nodes.length - 1) {
+              const slope = (th.nodes[j + 1].x - th.nodes[j - 1].x) / (th.nodes[j + 1].y - th.nodes[j - 1].y + 0.001);
+              const angle = Math.atan(slope) * 0.6;
+              threadsCtx.rotate(angle);
+            }
+
+            threadsCtx.shadowColor = isGlowing ? "rgba(255, 235, 170, 0.95)" : "rgba(223, 183, 108, 0.55)";
+            threadsCtx.shadowBlur = isGlowing ? 8 : 3.5;
+            threadsCtx.fillStyle = isGlowing ? "#fff8e6" : "#dfb76c";
+            threadsCtx.fillText(char, 0, 0);
+
+            threadsCtx.restore();
+          });
+        });
       }
 
       // ----------------------------------------------------
@@ -2719,6 +3135,16 @@
           singularityCanvas.width = sw;
           singularityCanvas.height = sh;
           initSingularityParticles(sw, sh);
+          initCosmicStars(sw, sh);
+        }
+
+        if (threadsCanvas) {
+          const rect = threadsCanvas.getBoundingClientRect();
+          const tw = Math.max(rect.width * dpr, 240);
+          const th = Math.max(rect.height * dpr, 280);
+          threadsCanvas.width = tw;
+          threadsCanvas.height = th;
+          initHangingThreads(tw, th);
         }
 
         initWorldParticles();
@@ -2760,117 +3186,158 @@
       }
 
       // ----------------------------------------------------
-      // S-Tier High-End Singularity Vortex Renderer
-      // With Chromatic Aberration & 4 Undulating Plasma Ribbons
+      // Persistent Neon Cosmic Nebula & Celestial Deep Space Portal Visual
+      // ("darvoza ichidagi partalni orniga neon kosmik tasvir doimiy qoshimcha")
       // ----------------------------------------------------
-      let singularityTick = 0;
-      function renderSingularityVortex() {
+      let cosmicTick = 0;
+      function renderNeonCosmicPortal() {
         if (!singularityCtx || !singularityCanvas) return;
-        singularityTick++;
-
+        cosmicTick++;
         vortexSpeedMultiplier += (targetVortexSpeed - vortexSpeedMultiplier) * 0.08;
 
         const w = singularityCanvas.width;
         const h = singularityCanvas.height;
         const cx = w * 0.5;
         const cy = h * 0.5;
+        const maxRadius = Math.min(w, h) * 0.49;
+        const coreRadius = maxRadius * 0.22;
         const d = destinations[currentIndex];
-        const [coreCol, spiralCol, partCol] = d.singularityColors;
+        const cosmic = d.cosmicColors || {
+          nebulaPrimary: "rgba(160, 40, 255, 0.6)",
+          nebulaSecondary: "rgba(0, 220, 255, 0.55)",
+          cosmicCyan: "rgba(0, 240, 255, 0.85)",
+          rayColor: "rgba(255, 215, 100, 0.75)"
+        };
 
-        // Semi-transparent fade for motion persistence trails
-        singularityCtx.fillStyle = "rgba(1, 2, 5, 0.26)";
+        // 1. Deep Space Ultraviolet/Astral Void Base
+        const spaceGrad = singularityCtx.createRadialGradient(cx, cy, 0, cx, cy, maxRadius * 1.05);
+        spaceGrad.addColorStop(0, "#080214");
+        spaceGrad.addColorStop(0.35, "#0d0322");
+        spaceGrad.addColorStop(0.75, "#05010c");
+        spaceGrad.addColorStop(1, "#010004");
+        singularityCtx.fillStyle = spaceGrad;
         singularityCtx.fillRect(0, 0, w, h);
 
         singularityCtx.save();
         singularityCtx.translate(cx, cy);
 
-        const eventHorizonRadius = Math.min(w, h) * 0.22;
-        const photonSphereRadius = eventHorizonRadius * 1.34;
-        const maxRadius = Math.min(w, h) * 0.49;
-
-        // 1. Chromatic Aberration Dispersion Passes (Additive Screen Blend)
+        // 2. Swirling Volumetric Neon Nebula Clouds (Multi-octave rotating plasma eddies)
         singularityCtx.globalCompositeOperation = "screen";
-        const caOffset = (2.0 + Math.sin(singularityTick * 0.08) * 0.7) * vortexSpeedMultiplier;
+        const numPuffs = 5;
+        for (let p = 0; p < numPuffs; p++) {
+          const puffAngle = cosmicTick * 0.009 * vortexSpeedMultiplier + (p * (Math.PI * 2 / numPuffs));
+          const puffDist = coreRadius * 0.8 + Math.sin(cosmicTick * 0.02 + p) * (maxRadius * 0.28);
+          const px = Math.cos(puffAngle) * puffDist;
+          const py = Math.sin(puffAngle) * puffDist;
+          const puffRadius = maxRadius * (0.42 + Math.sin(cosmicTick * 0.03 + p * 1.5) * 0.1);
 
-        // Red channel dispersion (displaced left/up)
-        singularityCtx.save();
-        singularityCtx.translate(-caOffset, -caOffset * 0.5);
-        const rGrad = singularityCtx.createRadialGradient(0, 0, eventHorizonRadius * 0.85, 0, 0, maxRadius * 0.95);
-        rGrad.addColorStop(0, "rgba(255, 60, 40, 0.4)");
-        rGrad.addColorStop(0.4, "rgba(255, 120, 20, 0.2)");
-        rGrad.addColorStop(1, "rgba(0,0,0,0)");
-        singularityCtx.fillStyle = rGrad;
-        singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, maxRadius * 0.95, 0, Math.PI * 2);
-        singularityCtx.fill();
-        singularityCtx.restore();
+          const puffGrad = singularityCtx.createRadialGradient(px, py, 2, px, py, puffRadius);
+          const col1 = p % 2 === 0 ? cosmic.nebulaPrimary : cosmic.nebulaSecondary;
+          puffGrad.addColorStop(0, col1);
+          puffGrad.addColorStop(0.45, p % 2 === 0 ? "rgba(255, 60, 180, 0.3)" : "rgba(30, 200, 255, 0.25)");
+          puffGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
 
-        // Blue/Cyan channel dispersion (displaced right/down)
-        singularityCtx.save();
-        singularityCtx.translate(caOffset, caOffset * 0.5);
-        const bGrad = singularityCtx.createRadialGradient(0, 0, eventHorizonRadius * 0.85, 0, 0, maxRadius * 0.95);
-        bGrad.addColorStop(0, "rgba(40, 180, 255, 0.4)");
-        bGrad.addColorStop(0.4, "rgba(70, 220, 255, 0.2)");
-        bGrad.addColorStop(1, "rgba(0,0,0,0)");
-        singularityCtx.fillStyle = bGrad;
-        singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, maxRadius * 0.95, 0, Math.PI * 2);
-        singularityCtx.fill();
-        singularityCtx.restore();
-
-        // 2. Central Accretion Glow Disc
-        const discGrad = singularityCtx.createRadialGradient(0, 0, eventHorizonRadius * 0.8, 0, 0, maxRadius);
-        discGrad.addColorStop(0, "rgba(255, 255, 255, 0.75)");
-        discGrad.addColorStop(0.22, spiralCol);
-        discGrad.addColorStop(0.65, d.glowColor);
-        discGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-        singularityCtx.fillStyle = discGrad;
-        singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, maxRadius, 0, Math.PI * 2);
-        singularityCtx.fill();
-
-        // 3. 4 Intertwined Plasma Energy Ribbons (Harmonic Wave Modulation)
-        const ribbonCount = 4;
-        for (let r = 0; r < ribbonCount; r++) {
-          const baseAngle = singularityTick * 0.024 * vortexSpeedMultiplier + (r * (Math.PI * 2 / ribbonCount));
+          singularityCtx.fillStyle = puffGrad;
           singularityCtx.beginPath();
-          const steps = 55;
+          singularityCtx.arc(px, py, puffRadius, 0, Math.PI * 2);
+          singularityCtx.fill();
+        }
+
+        // 3. Luminous Outward-Radiating Cosmic Rays & Pulsar Light Beams
+        const rayCount = 12;
+        for (let r = 0; r < rayCount; r++) {
+          const rayAngle = cosmicTick * 0.012 * vortexSpeedMultiplier + (r * (Math.PI * 2 / rayCount));
+          const rayPulse = 0.5 + 0.5 * Math.sin(cosmicTick * 0.08 + r * 1.4);
+          const rayLen = maxRadius * (0.65 + rayPulse * 0.35);
+
+          singularityCtx.save();
+          singularityCtx.rotate(rayAngle);
+          const rayGrad = singularityCtx.createLinearGradient(0, 0, rayLen, 0);
+          rayGrad.addColorStop(0, cosmic.rayColor);
+          rayGrad.addColorStop(0.3, "rgba(255, 230, 140, 0.45)");
+          rayGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          singularityCtx.fillStyle = rayGrad;
+          singularityCtx.beginPath();
+          singularityCtx.moveTo(coreRadius * 0.6, -1.8 * vortexSpeedMultiplier);
+          singularityCtx.lineTo(rayLen, -0.6);
+          singularityCtx.lineTo(rayLen, 0.6);
+          singularityCtx.lineTo(coreRadius * 0.6, 1.8 * vortexSpeedMultiplier);
+          singularityCtx.closePath();
+          singularityCtx.fill();
+          singularityCtx.restore();
+        }
+
+        // 4. Logarithmic Spiral Quantum Energy Filaments
+        const spiralCount = 4;
+        for (let sp = 0; sp < spiralCount; sp++) {
+          const baseSpAngle = -cosmicTick * 0.022 * vortexSpeedMultiplier + (sp * (Math.PI * 2 / spiralCount));
+          singularityCtx.beginPath();
+          const steps = 45;
           for (let s = 0; s <= steps; s++) {
             const t = s / steps;
-            const rad = eventHorizonRadius * 0.92 + Math.pow(t, 1.35) * (maxRadius - eventHorizonRadius * 0.92);
-            const harmonic = Math.sin(t * 9 - singularityTick * 0.07 + r * 1.5) * (4.2 * (1 - t * 0.35));
-            const ang = baseAngle + t * 4.6 + harmonic * 0.08;
+            const rad = coreRadius * 0.8 + Math.pow(t, 1.4) * (maxRadius - coreRadius * 0.8);
+            const harmonic = Math.sin(t * 8 - cosmicTick * 0.06 + sp * 1.7) * (3.5 * (1 - t * 0.3));
+            const ang = baseSpAngle + t * 4.8 + harmonic * 0.07;
             const rx = Math.cos(ang) * (rad + harmonic);
             const ry = Math.sin(ang) * (rad + harmonic);
             if (s === 0) singularityCtx.moveTo(rx, ry);
             else singularityCtx.lineTo(rx, ry);
           }
-          singularityCtx.strokeStyle = r % 2 === 0 ? coreCol : spiralCol;
-          singularityCtx.lineWidth = (3.2 - (r % 2) * 1.2) * vortexSpeedMultiplier;
-          singularityCtx.shadowColor = spiralCol;
-          singularityCtx.shadowBlur = 10 * vortexSpeedMultiplier;
+          singularityCtx.strokeStyle = sp % 2 === 0 ? cosmic.cosmicCyan : cosmic.nebulaPrimary;
+          singularityCtx.lineWidth = (2.6 - (sp % 2) * 1.0) * vortexSpeedMultiplier;
+          singularityCtx.shadowColor = sp % 2 === 0 ? "#00f0ff" : "#dfb76c";
+          singularityCtx.shadowBlur = 12 * vortexSpeedMultiplier;
           singularityCtx.stroke();
           singularityCtx.shadowBlur = 0;
         }
 
-        // 4. Relativistic Infalling Particles with Motion Blur Streaks
+        // 5. Twinkling Celestial Starfield & Diamond Spikes
+        cosmicStars.forEach(st => {
+          st.theta += st.orbitSpeed * vortexSpeedMultiplier;
+          const sx = Math.cos(st.theta) * st.r;
+          const sy = Math.sin(st.theta) * st.r;
+          const twinkle = 0.35 + 0.65 * Math.sin(cosmicTick * st.twinkleSpeed + st.phase);
+          const currentSize = st.size * (0.8 + twinkle * 0.4);
+
+          singularityCtx.fillStyle = st.color;
+          singularityCtx.globalAlpha = Math.max(0.1, Math.min(1.0, twinkle));
+          singularityCtx.beginPath();
+          singularityCtx.arc(sx, sy, currentSize, 0, Math.PI * 2);
+          singularityCtx.fill();
+
+          // 4-point anamorphic diamond diffraction spike for brightest celestial stars
+          if (st.hasDiamondSpike && twinkle > 0.6) {
+            const spikeLen = currentSize * 5.5 * twinkle;
+            singularityCtx.strokeStyle = st.color;
+            singularityCtx.lineWidth = 0.65;
+            singularityCtx.beginPath();
+            singularityCtx.moveTo(sx - spikeLen, sy);
+            singularityCtx.lineTo(sx + spikeLen, sy);
+            singularityCtx.moveTo(sx, sy - spikeLen);
+            singularityCtx.lineTo(sx, sy + spikeLen);
+            singularityCtx.stroke();
+          }
+        });
+        singularityCtx.globalAlpha = 1.0;
+
+        // 6. Relativistic Infalling Cosmic Particles with Motion Streaks
         singularityParticles.forEach(p => {
-          const angVel = (p.speed * (maxRadius / (p.r + 16))) * vortexSpeedMultiplier;
+          const angVel = (p.speed * (maxRadius / (p.r + 14))) * vortexSpeedMultiplier;
           p.theta += angVel;
           p.r -= p.inwardSpeed * vortexSpeedMultiplier;
 
-          if (p.r < eventHorizonRadius * 0.48) {
-            p.r = maxRadius * (0.84 + Math.random() * 0.16);
+          if (p.r < coreRadius * 0.4) {
+            p.r = maxRadius * (0.82 + Math.random() * 0.18);
             p.theta = Math.random() * Math.PI * 2;
           }
 
           const px = Math.cos(p.theta) * p.r;
           const py = Math.sin(p.theta) * p.r;
-          const tailLen = Math.min(p.r * 0.13, 11) * vortexSpeedMultiplier;
-          const tx = Math.cos(p.theta - angVel * 1.85) * (p.r + tailLen * 0.5);
-          const ty = Math.sin(p.theta - angVel * 1.85) * (p.r + tailLen * 0.5);
+          const tailLen = Math.min(p.r * 0.14, 12) * vortexSpeedMultiplier;
+          const tx = Math.cos(p.theta - angVel * 1.8) * (p.r + tailLen * 0.5);
+          const ty = Math.sin(p.theta - angVel * 1.8) * (p.r + tailLen * 0.5);
 
-          singularityCtx.strokeStyle = partCol;
+          singularityCtx.strokeStyle = cosmic.cosmicCyan;
           singularityCtx.lineWidth = p.size;
           singularityCtx.globalAlpha = p.alpha;
           singularityCtx.beginPath();
@@ -2878,28 +3345,48 @@
           singularityCtx.lineTo(px, py);
           singularityCtx.stroke();
 
-          singularityCtx.fillStyle = coreCol;
+          singularityCtx.fillStyle = "#ffffff";
           singularityCtx.beginPath();
-          singularityCtx.arc(px, py, p.size * 0.85, 0, Math.PI * 2);
+          singularityCtx.arc(px, py, p.size * 0.9, 0, Math.PI * 2);
           singularityCtx.fill();
         });
+        singularityCtx.globalAlpha = 1.0;
 
-        // 5. Pulsing Photon Sphere Ring
+        // 7. Radiant Galactic Singularity Core (Vibrant Neon Portal Heart)
         singularityCtx.globalCompositeOperation = "source-over";
-        const pulseRing = photonSphereRadius * (1.0 + 0.04 * Math.sin(singularityTick * 0.085));
-        singularityCtx.strokeStyle = coreCol;
-        singularityCtx.lineWidth = 2.2;
-        singularityCtx.shadowColor = spiralCol;
-        singularityCtx.shadowBlur = 16;
+        const pulseCore = coreRadius * (0.95 + 0.06 * Math.sin(cosmicTick * 0.08));
+
+        // Core Radiant Glow
+        const coreGrad = singularityCtx.createRadialGradient(0, 0, 0, 0, 0, pulseCore * 1.8);
+        coreGrad.addColorStop(0, "#ffffff");
+        coreGrad.addColorStop(0.25, "#e0f7ff");
+        coreGrad.addColorStop(0.55, cosmic.cosmicCyan);
+        coreGrad.addColorStop(0.85, cosmic.nebulaPrimary);
+        coreGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        singularityCtx.fillStyle = coreGrad;
         singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, pulseRing, 0, Math.PI * 2);
+        singularityCtx.arc(0, 0, pulseCore * 1.8, 0, Math.PI * 2);
+        singularityCtx.fill();
+
+        // Pulsing Neon Photon Horizon Ring
+        singularityCtx.strokeStyle = "#fff7d6";
+        singularityCtx.lineWidth = 2.4 * vortexSpeedMultiplier;
+        singularityCtx.shadowColor = cosmic.cosmicCyan;
+        singularityCtx.shadowBlur = 18 * vortexSpeedMultiplier;
+        singularityCtx.beginPath();
+        singularityCtx.arc(0, 0, pulseCore, 0, Math.PI * 2);
         singularityCtx.stroke();
         singularityCtx.shadowBlur = 0;
 
-        // 6. Pitch-Black Schwarzschild Event Horizon Void
-        singularityCtx.fillStyle = "#010204";
+        // Luminous Core Eye (Cosmic Micro-Singularity)
+        const innerCoreGrad = singularityCtx.createRadialGradient(0, 0, 0, 0, 0, pulseCore * 0.6);
+        innerCoreGrad.addColorStop(0, "#ffffff");
+        innerCoreGrad.addColorStop(0.45, "#80eeff");
+        innerCoreGrad.addColorStop(0.9, "#1a0033");
+        innerCoreGrad.addColorStop(1, "rgba(5, 1, 15, 0.9)");
+        singularityCtx.fillStyle = innerCoreGrad;
         singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, eventHorizonRadius, 0, Math.PI * 2);
+        singularityCtx.arc(0, 0, pulseCore * 0.6, 0, Math.PI * 2);
         singularityCtx.fill();
 
         singularityCtx.restore();
@@ -3016,7 +3503,7 @@
           skyCtx.beginPath();
           skyCtx.moveTo(0, horizonY - 9);
           for (let ax = 0; ax <= w; ax += 30) {
-            skyCtx.lineTo(ax, horizonY - 15 + Math.sin(ax * 0.02 + singularityTick * 0.02) * 12);
+            skyCtx.lineTo(ax, horizonY - 15 + Math.sin(ax * 0.02 + cosmicTick * 0.02) * 12);
           }
           skyCtx.stroke();
 
@@ -3038,7 +3525,7 @@
             skyCtx.beginPath();
             skyCtx.moveTo(0, auroraY);
             for (let x = 0; x <= w; x += 32) {
-              const wav = Math.sin(x * 0.014 + singularityTick * 0.015 + a * 1.5) * 24;
+              const wav = Math.sin(x * 0.014 + cosmicTick * 0.015 + a * 1.5) * 24;
               skyCtx.lineTo(x, auroraY + wav);
             }
             skyCtx.stroke();
@@ -3054,16 +3541,34 @@
         worldCtx.clearRect(0, 0, w, h);
 
         const horizonY = h * d.horizonY;
+        const curImg = destinationImages[currentIndex];
+        const hasRealImg = curImg && curImg.complete && curImg.naturalWidth > 0;
+
+        // Render authentic photographic high-resolution landscape for ALL 6 destinations
+        if (hasRealImg) {
+          worldCtx.save();
+          worldCtx.globalAlpha = 0.94;
+          const bleed = 0.05;
+          worldCtx.drawImage(
+            curImg,
+            -bleed * w + midOffX * 0.45,
+            -bleed * h + midOffY * 0.45,
+            w * (1 + bleed * 2),
+            h * (1 + bleed * 2)
+          );
+          // Destination-specific subtle atmospheric light grading
+          const atmoGrad = worldCtx.createLinearGradient(0, 0, 0, h);
+          atmoGrad.addColorStop(0, "rgba(5, 7, 10, 0.2)");
+          atmoGrad.addColorStop(0.68, "transparent");
+          atmoGrad.addColorStop(1, "rgba(4, 5, 7, 0.72)");
+          worldCtx.fillStyle = atmoGrad;
+          worldCtx.fillRect(0, 0, w, h);
+          worldCtx.restore();
+        }
 
         if (d.particleType === "dust") {
-          // Destination 1: Monument Valley Midground Sandstone Formations
-          if (d.useImage && monumentImg.complete && monumentImg.naturalWidth > 0) {
-            worldCtx.save();
-            worldCtx.globalAlpha = 0.88;
-            worldCtx.drawImage(monumentImg, -0.04 * w + midOffX * 0.5, -0.04 * h + midOffY * 0.5, w * 1.08, h * 1.08);
-            worldCtx.restore();
-          } else {
-            // Procedural Mittens & Scree Slopes
+          // Destination 1: Monument Valley
+          if (!hasRealImg) {
             worldCtx.fillStyle = "rgba(24, 7, 11, 0.92)";
             worldCtx.beginPath();
             worldCtx.moveTo(0, h);
@@ -3072,7 +3577,7 @@
             worldCtx.lineTo(w * 0.22 + midOffX, horizonY + 8 + midOffY);
             worldCtx.lineTo(w * 0.26 + midOffX, horizonY - 52 + midOffY);
             worldCtx.lineTo(w * 0.28 + midOffX, horizonY - 52 + midOffY);
-            worldCtx.lineTo(w * 0.29 + midOffX, horizonY - 88 + midOffY); // thumb spire
+            worldCtx.lineTo(w * 0.29 + midOffX, horizonY - 88 + midOffY);
             worldCtx.lineTo(w * 0.31 + midOffX, horizonY - 88 + midOffY);
             worldCtx.lineTo(w * 0.32 + midOffX, horizonY - 52 + midOffY);
             worldCtx.lineTo(w * 0.36 + midOffX, horizonY - 52 + midOffY);
@@ -3089,13 +3594,13 @@
           }
 
         } else if (d.particleType === "balloons") {
-          // Destination 2: Cappadocia Floating Hot Air Balloons & Fairy Chimneys
+          // Destination 2: Cappadocia Floating Hot Air Balloons over the real photograph
           balloons.forEach(bal => {
             bal.x += bal.driftSpeed;
             if (bal.x < -bal.size) bal.x = w + bal.size;
             if (bal.x > w + bal.size) bal.x = -bal.size;
 
-            const bob = Math.sin(singularityTick * bal.bobSpeed + bal.bobPhase) * 10;
+            const bob = Math.sin(cosmicTick * bal.bobSpeed + bal.bobPhase) * 10;
             const bx = bal.x + midOffX;
             const by = bal.baseY + bob + midOffY;
             const rad = bal.size;
@@ -3118,7 +3623,7 @@
             worldCtx.fill();
 
             // Burner Flame Glow
-            if (bal.hasFlame && Math.sin(singularityTick * 0.12 + bal.bobPhase) > 0.2) {
+            if (bal.hasFlame && Math.sin(cosmicTick * 0.12 + bal.bobPhase) > 0.2) {
               worldCtx.fillStyle = "#fff4cc";
               worldCtx.beginPath();
               worldCtx.arc(0, rad * 1.62, rad * 0.26, 0, Math.PI * 2);
@@ -3141,89 +3646,79 @@
             worldCtx.restore();
           });
 
-          // Fairy Chimneys with glowing troglodyte cave windows
-          worldCtx.fillStyle = "rgba(18, 12, 28, 0.94)";
-          worldCtx.beginPath();
-          worldCtx.moveTo(0, h);
-          worldCtx.lineTo(0, horizonY + 15 + midOffY);
-          for (let cx = 0; cx <= w; cx += 40) {
-            const hVar = Math.sin(cx * 0.04) * 26 + Math.cos(cx * 0.08) * 16;
-            worldCtx.lineTo(cx + 10 + midOffX, horizonY - 48 + hVar + midOffY);
-            worldCtx.lineTo(cx + 26 + midOffX, horizonY - 54 + hVar + midOffY);
-            worldCtx.lineTo(cx + 36 + midOffX, horizonY + 15 + midOffY);
-          }
-          worldCtx.lineTo(w, horizonY + 15 + midOffY);
-          worldCtx.lineTo(w, h);
-          worldCtx.closePath();
-          worldCtx.fill();
-
-          // Warm cave dwelling windows
-          for (let cx = 30; cx < w; cx += 80) {
-            const winX = cx + midOffX;
-            const winY = horizonY - 15 + midOffY;
-            worldCtx.fillStyle = "rgba(255, 215, 140, 0.85)";
+          if (!hasRealImg) {
+            worldCtx.fillStyle = "rgba(18, 12, 28, 0.94)";
             worldCtx.beginPath();
-            worldCtx.arc(winX, winY, 2.5, 0, Math.PI * 2);
+            worldCtx.moveTo(0, h);
+            worldCtx.lineTo(0, horizonY + 15 + midOffY);
+            for (let cx = 0; cx <= w; cx += 40) {
+              const hVar = Math.sin(cx * 0.04) * 26 + Math.cos(cx * 0.08) * 16;
+              worldCtx.lineTo(cx + 10 + midOffX, horizonY - 48 + hVar + midOffY);
+              worldCtx.lineTo(cx + 26 + midOffX, horizonY - 54 + hVar + midOffY);
+              worldCtx.lineTo(cx + 36 + midOffX, horizonY + 15 + midOffY);
+            }
+            worldCtx.lineTo(w, horizonY + 15 + midOffY);
+            worldCtx.lineTo(w, h);
+            worldCtx.closePath();
             worldCtx.fill();
           }
 
         } else if (d.particleType === "fireflies") {
-          // Destination 3: Kyoto Arashiyama Bamboo Grove & Stone Lanterns
-          worldCtx.strokeStyle = "rgba(6, 22, 15, 0.95)";
-          worldCtx.fillStyle = "rgba(6, 22, 15, 0.95)";
-          const stalkCount = 28;
-          for (let s = 0; s < stalkCount; s++) {
-            const bx = (s / stalkCount) * w + (s % 3) * 8 + midOffX;
-            const sway = Math.sin(singularityTick * 0.02 + s * 0.7) * 13;
-            worldCtx.lineWidth = 4.5 + (s % 3);
-            worldCtx.beginPath();
-            worldCtx.moveTo(bx, h);
-            worldCtx.quadraticCurveTo(bx + sway * 0.4, horizonY - 30, bx + sway, horizonY - 145 - (s % 5) * 20);
-            worldCtx.stroke();
+          // Destination 3: Kyoto Arashiyama Bioluminescent Fireflies over the real photograph
+          if (!hasRealImg) {
+            worldCtx.strokeStyle = "rgba(6, 22, 15, 0.95)";
+            worldCtx.fillStyle = "rgba(6, 22, 15, 0.95)";
+            const stalkCount = 28;
+            for (let s = 0; s < stalkCount; s++) {
+              const bx = (s / stalkCount) * w + (s % 3) * 8 + midOffX;
+              const sway = Math.sin(cosmicTick * 0.02 + s * 0.7) * 13;
+              worldCtx.lineWidth = 4.5 + (s % 3);
+              worldCtx.beginPath();
+              worldCtx.moveTo(bx, h);
+              worldCtx.quadraticCurveTo(bx + sway * 0.4, horizonY - 30, bx + sway, horizonY - 145 - (s % 5) * 20);
+              worldCtx.stroke();
 
-            // Leaf clusters
-            const tipX = bx + sway;
-            const tipY = horizonY - 145 - (s % 5) * 20;
-            worldCtx.beginPath();
-            worldCtx.ellipse(tipX - 10, tipY + 10, 13, 3, Math.PI / 4, 0, Math.PI * 2);
-            worldCtx.ellipse(tipX + 10, tipY + 15, 13, 3, -Math.PI / 4, 0, Math.PI * 2);
-            worldCtx.fill();
+              const tipX = bx + sway;
+              const tipY = horizonY - 145 - (s % 5) * 20;
+              worldCtx.beginPath();
+              worldCtx.ellipse(tipX - 10, tipY + 10, 13, 3, Math.PI / 4, 0, Math.PI * 2);
+              worldCtx.ellipse(tipX + 10, tipY + 15, 13, 3, -Math.PI / 4, 0, Math.PI * 2);
+              worldCtx.fill();
+            }
+
+            [w * 0.18 + midOffX, w * 0.82 + midOffX].forEach((lx) => {
+              const ly = horizonY + 30;
+              const glow = worldCtx.createRadialGradient(lx, ly, 2, lx, ly, 40);
+              glow.addColorStop(0, "rgba(255, 225, 135, 0.95)");
+              glow.addColorStop(0.45, "rgba(255, 160, 50, 0.38)");
+              glow.addColorStop(1, "rgba(0, 0, 0, 0)");
+              worldCtx.fillStyle = glow;
+              worldCtx.beginPath();
+              worldCtx.arc(lx, ly, 40, 0, Math.PI * 2);
+              worldCtx.fill();
+
+              worldCtx.fillStyle = "#050d09";
+              worldCtx.fillRect(lx - 12, ly + 6, 24, 22);
+              worldCtx.fillRect(lx - 8, ly - 8, 16, 14);
+              worldCtx.beginPath();
+              worldCtx.moveTo(lx - 18, ly - 8);
+              worldCtx.lineTo(lx, ly - 22);
+              worldCtx.lineTo(lx + 18, ly - 8);
+              worldCtx.closePath();
+              worldCtx.fill();
+            });
           }
-
-          // Carved Stone Lanterns (Tōrō) with warm flickering fire
-          [w * 0.18 + midOffX, w * 0.82 + midOffX].forEach((lx) => {
-            const ly = horizonY + 30;
-            const glow = worldCtx.createRadialGradient(lx, ly, 2, lx, ly, 40);
-            glow.addColorStop(0, "rgba(255, 225, 135, 0.95)");
-            glow.addColorStop(0.45, "rgba(255, 160, 50, 0.38)");
-            glow.addColorStop(1, "rgba(0, 0, 0, 0)");
-            worldCtx.fillStyle = glow;
-            worldCtx.beginPath();
-            worldCtx.arc(lx, ly, 40, 0, Math.PI * 2);
-            worldCtx.fill();
-
-            // Stone Silhouette
-            worldCtx.fillStyle = "#050d09";
-            worldCtx.fillRect(lx - 12, ly + 6, 24, 22);
-            worldCtx.fillRect(lx - 8, ly - 8, 16, 14);
-            worldCtx.beginPath();
-            worldCtx.moveTo(lx - 18, ly - 8);
-            worldCtx.lineTo(lx, ly - 22);
-            worldCtx.lineTo(lx + 18, ly - 8);
-            worldCtx.closePath();
-            worldCtx.fill();
-          });
 
           // Bioluminescent Fireflies
           fireflies.forEach(f => {
-            f.x += f.vx + Math.sin(singularityTick * 0.04 + f.glowPhase) * 0.55;
-            f.y += f.vy + Math.cos(singularityTick * 0.03 + f.glowPhase) * 0.45;
+            f.x += f.vx + Math.sin(cosmicTick * 0.04 + f.glowPhase) * 0.55;
+            f.y += f.vy + Math.cos(cosmicTick * 0.03 + f.glowPhase) * 0.45;
             if (f.x < 0) f.x = w;
             if (f.x > w) f.x = 0;
             if (f.y < h * 0.22) f.y = h * 0.82;
             if (f.y > h * 0.88) f.y = h * 0.32;
 
-            const pulse = 0.5 + 0.5 * Math.sin(singularityTick * f.glowSpeed + f.glowPhase);
+            const pulse = 0.5 + 0.5 * Math.sin(cosmicTick * f.glowSpeed + f.glowPhase);
             worldCtx.fillStyle = `rgba(180, 255, 190, ${pulse * 0.92})`;
             worldCtx.shadowColor = "rgba(125, 255, 165, 0.95)";
             worldCtx.shadowBlur = 12 * pulse;
@@ -3234,28 +3729,29 @@
           });
 
         } else if (d.particleType === "stars") {
-          // Destination 4: Salar de Uyuni Razor Water Mirror & Hexagonal Tessellation
-          worldCtx.strokeStyle = "rgba(185, 235, 255, 0.38)";
-          worldCtx.lineWidth = 1.0;
-          worldCtx.beginPath();
-          worldCtx.moveTo(0, horizonY);
-          worldCtx.lineTo(w, horizonY);
-          worldCtx.stroke();
-
-          // Hexagonal salt tessellation
-          worldCtx.strokeStyle = "rgba(145, 205, 245, 0.14)";
-          worldCtx.lineWidth = 0.9;
-          for (let row = 0; row < 6; row++) {
-            const ry = horizonY + 20 + row * 26;
+          // Destination 4: Salar de Uyuni Shooting Stars & Mirror Reflections over the real photograph
+          if (!hasRealImg) {
+            worldCtx.strokeStyle = "rgba(185, 235, 255, 0.38)";
+            worldCtx.lineWidth = 1.0;
             worldCtx.beginPath();
-            for (let col = 0; col <= w; col += 60) {
-              const shift = (row % 2) * 30;
-              worldCtx.moveTo(col + shift - 15, ry);
-              worldCtx.lineTo(col + shift, ry - 8);
-              worldCtx.lineTo(col + shift + 15, ry);
-              worldCtx.lineTo(col + shift + 15, ry + 12);
-            }
+            worldCtx.moveTo(0, horizonY);
+            worldCtx.lineTo(w, horizonY);
             worldCtx.stroke();
+
+            worldCtx.strokeStyle = "rgba(145, 205, 245, 0.14)";
+            worldCtx.lineWidth = 0.9;
+            for (let row = 0; row < 6; row++) {
+              const ry = horizonY + 20 + row * 26;
+              worldCtx.beginPath();
+              for (let col = 0; col <= w; col += 60) {
+                const shift = (row % 2) * 30;
+                worldCtx.moveTo(col + shift - 15, ry);
+                worldCtx.lineTo(col + shift, ry - 8);
+                worldCtx.lineTo(col + shift + 15, ry);
+                worldCtx.lineTo(col + shift + 15, ry + 12);
+              }
+              worldCtx.stroke();
+            }
           }
 
           // Shooting Stars
@@ -3293,63 +3789,58 @@
           });
 
         } else if (d.particleType === "embers") {
-          // Destination 5: Petra Treasury Facade & Siq Canyon Gorge
-          worldCtx.fillStyle = "rgba(18, 6, 8, 0.95)";
-          // Left Canyon Wall
-          worldCtx.beginPath();
-          worldCtx.moveTo(0, 0);
-          worldCtx.lineTo(w * 0.32 + midOffX, 0);
-          worldCtx.bezierCurveTo(w * 0.28 + midOffX, h * 0.4, w * 0.35 + midOffX, h * 0.7, w * 0.30 + midOffX, h);
-          worldCtx.lineTo(0, h);
-          worldCtx.closePath();
-          worldCtx.fill();
-
-          // Right Canyon Wall
-          worldCtx.beginPath();
-          worldCtx.moveTo(w, 0);
-          worldCtx.lineTo(w * 0.68 + midOffX, 0);
-          worldCtx.bezierCurveTo(w * 0.72 + midOffX, h * 0.4, w * 0.65 + midOffX, h * 0.7, w * 0.70 + midOffX, h);
-          worldCtx.lineTo(w, h);
-          worldCtx.closePath();
-          worldCtx.fill();
-
-          // Al-Khazneh (Treasury) Facade
-          const tx = w * 0.5 + midOffX * 0.4;
-          const ty = horizonY - 15 + midOffY * 0.4;
-          worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
-
-          // Portico
-          worldCtx.beginPath();
-          worldCtx.moveTo(tx - 68, ty);
-          worldCtx.lineTo(tx, ty - 58);
-          worldCtx.lineTo(tx + 68, ty);
-          worldCtx.lineTo(tx + 62, ty + 68);
-          worldCtx.lineTo(tx - 62, ty + 68);
-          worldCtx.closePath();
-          worldCtx.fill();
-
-          // Columns
-          worldCtx.strokeStyle = "rgba(75, 26, 30, 0.88)";
-          worldCtx.lineWidth = 3.2;
-          for (let c = -48; c <= 48; c += 19) {
+          // Destination 5: Petra Treasury Living Candlelight Pools over the real photograph
+          if (!hasRealImg) {
+            worldCtx.fillStyle = "rgba(18, 6, 8, 0.95)";
             worldCtx.beginPath();
-            worldCtx.moveTo(tx + c, ty + 10);
-            worldCtx.lineTo(tx + c, ty + 68);
-            worldCtx.stroke();
-          }
+            worldCtx.moveTo(0, 0);
+            worldCtx.lineTo(w * 0.32 + midOffX, 0);
+            worldCtx.bezierCurveTo(w * 0.28 + midOffX, h * 0.4, w * 0.35 + midOffX, h * 0.7, w * 0.30 + midOffX, h);
+            worldCtx.lineTo(0, h);
+            worldCtx.closePath();
+            worldCtx.fill();
 
-          // Upper Tholos & Urn
-          worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
-          worldCtx.fillRect(tx - 24, ty - 105, 48, 48);
-          worldCtx.beginPath();
-          worldCtx.arc(tx, ty - 114, 9, 0, Math.PI * 2);
-          worldCtx.fill();
+            worldCtx.beginPath();
+            worldCtx.moveTo(w, 0);
+            worldCtx.lineTo(w * 0.68 + midOffX, 0);
+            worldCtx.bezierCurveTo(w * 0.72 + midOffX, h * 0.4, w * 0.65 + midOffX, h * 0.7, w * 0.70 + midOffX, h);
+            worldCtx.lineTo(w, h);
+            worldCtx.closePath();
+            worldCtx.fill();
+
+            const tx = w * 0.5 + midOffX * 0.4;
+            const ty = horizonY - 15 + midOffY * 0.4;
+            worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
+            worldCtx.beginPath();
+            worldCtx.moveTo(tx - 68, ty);
+            worldCtx.lineTo(tx, ty - 58);
+            worldCtx.lineTo(tx + 68, ty);
+            worldCtx.lineTo(tx + 62, ty + 68);
+            worldCtx.lineTo(tx - 62, ty + 68);
+            worldCtx.closePath();
+            worldCtx.fill();
+
+            worldCtx.strokeStyle = "rgba(75, 26, 30, 0.88)";
+            worldCtx.lineWidth = 3.2;
+            for (let c = -48; c <= 48; c += 19) {
+              worldCtx.beginPath();
+              worldCtx.moveTo(tx + c, ty + 10);
+              worldCtx.lineTo(tx + c, ty + 68);
+              worldCtx.stroke();
+            }
+
+            worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
+            worldCtx.fillRect(tx - 24, ty - 105, 48, 48);
+            worldCtx.beginPath();
+            worldCtx.arc(tx, ty - 114, 9, 0, Math.PI * 2);
+            worldCtx.fill();
+          }
 
           // Living Candlelight Pools on Canyon Floor
           for (let c = 0; c < 20; c++) {
             const cx = (w * 0.33) + (c / 19) * (w * 0.34) + (Math.sin(c * 2.2) * 14);
             const cy = horizonY + 36 + (c % 4) * 18;
-            const flicker = 0.7 + 0.3 * Math.sin(singularityTick * 0.12 + c);
+            const flicker = 0.7 + 0.3 * Math.sin(cosmicTick * 0.12 + c);
             const cGlow = worldCtx.createRadialGradient(cx, cy, 1, cx, cy, 24 * flicker);
             cGlow.addColorStop(0, "rgba(255, 225, 145, 0.95)");
             cGlow.addColorStop(0.35, "rgba(240, 115, 45, 0.48)");
@@ -3361,29 +3852,29 @@
           }
 
         } else if (d.particleType === "snow") {
-          // Destination 6: Matterhorn Iconic Summit & Couloirs
+          // Destination 6: Matterhorn Summit Spindrift over the real photograph
           const peakX = w * 0.5 + midOffX * 0.5;
           const peakY = horizonY - 155 + midOffY * 0.5;
 
-          // North Face Shadow
-          worldCtx.fillStyle = "rgba(8, 15, 26, 0.96)";
-          worldCtx.beginPath();
-          worldCtx.moveTo(peakX, peakY);
-          worldCtx.lineTo(peakX - 115, horizonY + 22);
-          worldCtx.lineTo(peakX + 135, horizonY + 22);
-          worldCtx.closePath();
-          worldCtx.fill();
+          if (!hasRealImg) {
+            worldCtx.fillStyle = "rgba(8, 15, 26, 0.96)";
+            worldCtx.beginPath();
+            worldCtx.moveTo(peakX, peakY);
+            worldCtx.lineTo(peakX - 115, horizonY + 22);
+            worldCtx.lineTo(peakX + 135, horizonY + 22);
+            worldCtx.closePath();
+            worldCtx.fill();
 
-          // Snow-covered Couloirs
-          worldCtx.fillStyle = "rgba(220, 242, 255, 0.90)";
-          worldCtx.beginPath();
-          worldCtx.moveTo(peakX, peakY);
-          worldCtx.lineTo(peakX - 10, peakY + 46);
-          worldCtx.lineTo(peakX + 38, horizonY - 32);
-          worldCtx.lineTo(peakX + 120, horizonY + 22);
-          worldCtx.lineTo(peakX, horizonY + 22);
-          worldCtx.closePath();
-          worldCtx.fill();
+            worldCtx.fillStyle = "rgba(220, 242, 255, 0.90)";
+            worldCtx.beginPath();
+            worldCtx.moveTo(peakX, peakY);
+            worldCtx.lineTo(peakX - 10, peakY + 46);
+            worldCtx.lineTo(peakX + 38, horizonY - 32);
+            worldCtx.lineTo(peakX + 120, horizonY + 22);
+            worldCtx.lineTo(peakX, horizonY + 22);
+            worldCtx.closePath();
+            worldCtx.fill();
+          }
 
           // Summit Spindrift Snow Banner
           worldCtx.strokeStyle = "rgba(240, 248, 255, 0.48)";
@@ -3405,7 +3896,7 @@
           if (p.y < 0) p.y = h;
           if (p.y > h) p.y = 0;
 
-          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(singularityTick * p.pulseSpeed + p.pulsePhase));
+          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(cosmicTick * p.pulseSpeed + p.pulsePhase));
           worldCtx.fillStyle = d.particleColor;
           worldCtx.globalAlpha = Math.max(0, Math.min(1, currentAlpha));
           worldCtx.beginPath();
@@ -3512,7 +4003,7 @@
           runeDisplacement.setAttribute("scale", runeDisplacementScale.toFixed(2));
         }
         if (runeTurbulence && runeDisplacementScale > 0.1) {
-          runeTurbulence.setAttribute("baseFrequency", (0.04 + Math.sin(singularityTick * 0.08) * 0.012).toFixed(4));
+          runeTurbulence.setAttribute("baseFrequency", (0.04 + Math.sin(cosmicTick * 0.08) * 0.012).toFixed(4));
         }
 
         const d = destinations[currentIndex];
@@ -3529,7 +4020,9 @@
         renderSky(w, h, d, farOffX, farOffY);
         renderWorld(w, h, d, midOffX, midOffY);
         renderForeground(w, h, d, fgOffX, fgOffY);
-        renderSingularityVortex();
+        renderNeonCosmicPortal();
+        updateHangingThreadsPhysics(cosmicTick);
+        renderHangingThreads();
 
         requestAnimationFrame(animLoop);
       }
