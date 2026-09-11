@@ -887,15 +887,141 @@
     const camera = new THREE.PerspectiveCamera(34, innerWidth / innerHeight, 0.1, 100);
     camera.position.z = 5.3;
 
-    // Root container with axial tilt (23.4 degrees)
-    const globeGroup = new THREE.Group();
-    globeGroup.position.set(1.45, 0.05, -0.25);
-    globeGroup.scale.set(1.16, 1.16, 1.16);
-    globeGroup.rotation.z = THREE.MathUtils.degToRad(23.4);
-    globeGroup.rotation.y = 1.20;
-    scene.add(globeGroup);
+    // Responsive configuration for multi-device harmony (desktop, tablet, mobile)
+    function getResponsiveConfig() {
+      const w = window.innerWidth;
+      const isMobile = w < 768;
+      const isTablet = w >= 768 && w < 1024;
+      let baseX, baseY, baseZ, scale;
+      if (isMobile) {
+        // Positioned gracefully behind headline as a luxury celestial watermark
+        baseX = 0.22;
+        baseY = -0.10;
+        baseZ = -0.10;
+        scale = 0.90;
+      } else if (isTablet) {
+        baseX = 0.85;
+        baseY = 0.02;
+        baseZ = -0.20;
+        scale = 1.05;
+      } else {
+        baseX = 1.45;
+        baseY = 0.05;
+        baseZ = -0.25;
+        scale = 1.16;
+      }
+      return { baseX, baseY, baseZ, scale, isMobile, isTablet };
+    }
 
-    // Earth Texture loading (Base64 data URI fallback for 100% offline & local file:// compatibility)
+    let config = getResponsiveConfig();
+
+    // Scene Hierarchy:
+    // globeRoot: responsive positioning and GSAP scroll transitions
+    //   ├── stars: celestial stardust particles (independent subtle drift)
+    //   ├── orbitRing: celestial astrolabe ring (independent slow axial rotation)
+    //   └── tiltGroup: 23.4 deg Earth axial tilt container
+    //         ├── eqRing: equatorial astrolabe ring
+    //         ├── atmosphere: atmospheric corona rim glow mesh
+    //         └── earthSpinGroup: Earth polar spin container
+    //               ├── globeMesh: obsidian core + brushed gold continents
+    //               ├── beaconGroup: Tashkent primary hub + world business centers
+    //               └── arcGroup: geodesic Great-Circle flight arcs + light packets
+
+    const globeRoot = new THREE.Group();
+    globeRoot.position.set(config.baseX, config.baseY, config.baseZ);
+    globeRoot.scale.setScalar(config.scale);
+    scene.add(globeRoot);
+
+    const tiltGroup = new THREE.Group();
+    tiltGroup.rotation.z = THREE.MathUtils.degToRad(23.4);
+    globeRoot.add(tiltGroup);
+
+    const earthSpinGroup = new THREE.Group();
+    // 3.65 rad (~209 deg) showcases Eurasia, Central Asia, Tashkent, Europe and Asia
+    earthSpinGroup.rotation.y = 3.65;
+    tiltGroup.add(earthSpinGroup);
+
+    // Floating Celestial Stardust in outer space (drifts independently from Earth rotation)
+    const starCount = 95;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    for(let i = 0; i < starCount; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      const rad = 1.40 + Math.random() * 1.25;
+      starPos[i*3]   = rad * Math.sin(phi) * Math.cos(theta);
+      starPos[i*3+1] = rad * Math.sin(phi) * Math.sin(theta);
+      starPos[i*3+2] = rad * Math.cos(phi);
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({
+      color: 0xdfb76c,
+      size: 0.022,
+      transparent: true,
+      opacity: 0.45,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const stars = new THREE.Points(starGeo, starMat);
+    globeRoot.add(stars);
+
+    // Celestial Tilted Astrolabe Ring
+    const orbitRingGeo = new THREE.RingGeometry(1.56, 1.572, 128);
+    const orbitRingMat = new THREE.MeshBasicMaterial({
+      color: 0xd8dbe0,
+      transparent: true,
+      opacity: 0.12,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    });
+    const orbitRing = new THREE.Mesh(orbitRingGeo, orbitRingMat);
+    orbitRing.rotation.set(0.35, 0.15, 0);
+    globeRoot.add(orbitRing);
+
+    // Equatorial Astrolabe Coordinate Ring (inside tiltGroup)
+    const eqRingGeo = new THREE.RingGeometry(1.42, 1.436, 128);
+    const eqRingMat = new THREE.MeshBasicMaterial({
+      color: 0xdfb76c,
+      transparent: true,
+      opacity: 0.22,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    });
+    const eqRing = new THREE.Mesh(eqRingGeo, eqRingMat);
+    eqRing.rotation.x = Math.PI / 2;
+    tiltGroup.add(eqRing);
+
+    // Atmospheric Corona Glow Mesh (with NaN-safe clamp)
+    const atmGeo = new THREE.SphereGeometry(1.23, 48, 48);
+    const atmMat = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
+      uniforms: {
+        uTime: { value: 0 }
+      },
+      vertexShader: `
+        varying vec3 vNormal;
+        void main(){
+          vNormal = normalize(normalMatrix * normal);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vNormal;
+        void main(){
+          float val = clamp(0.70 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0, 1.0);
+          float intensity = pow(val, 2.4);
+          vec3 atmColor = mix(vec3(0.92, 0.78, 0.48), vec3(0.65, 0.78, 0.95), intensity * 0.35);
+          gl_FragColor = vec4(atmColor * intensity * 1.6, intensity * 0.75);
+        }
+      `
+    });
+    const atmosphere = new THREE.Mesh(atmGeo, atmMat);
+    tiltGroup.add(atmosphere);
+
+    // Earth Texture Loading (Base64 data URI fallback for 100% offline & local file:// compatibility)
     const textureLoader = new THREE.TextureLoader();
     const textureSource = (typeof window !== "undefined" && window.EARTH_TEXTURE_BASE64)
       ? window.EARTH_TEXTURE_BASE64
@@ -907,8 +1033,9 @@
     earthTexture.minFilter = THREE.LinearMipmapLinearFilter;
     earthTexture.magFilter = THREE.LinearFilter;
 
-    // Core Globe Mesh with Custom Dark Luxury Shader
-    const globeGeo = new THREE.SphereGeometry(1.15, 64, 64);
+    // Core Globe Mesh with Custom Dark Luxury GLSL Shader
+    const R = 1.15;
+    const globeGeo = new THREE.SphereGeometry(R, 64, 64);
     const uniforms = {
       uEarthMap: { value: earthTexture },
       uTime: { value: 0 },
@@ -932,12 +1059,13 @@
 
         void main(){
           vUv = uv;
-          vNormal = normalize(normalMatrix * normal);
+          // Mathematically consistent World Space Normal for true lighting and reflections
+          vNormal = normalize(mat3(modelMatrix) * normal);
           vec3 p = position;
 
           // Subtle responsive stretch on scroll
-          p.y *= 1.0 + uScroll * 0.08;
-          p.x *= 1.0 - uScroll * 0.02;
+          p.y *= 1.0 + uScroll * 0.05;
+          p.x *= 1.0 - uScroll * 0.012;
 
           vec4 world = modelMatrix * vec4(p, 1.0);
           vWorld = world.xyz;
@@ -966,27 +1094,27 @@
           float grat = map.b;
 
           // Specular highlights from dual key & rim lights
-          float specGold = pow(max(dot(r, uLightDir1), 0.0), 30.0);
-          float specSilver = pow(max(dot(r, uLightDir2), 0.0), 22.0);
+          float specGold = pow(max(dot(r, uLightDir1), 0.0), 32.0);
+          float specSilver = pow(max(dot(r, uLightDir2), 0.0), 24.0);
           float diffGold = max(dot(n, uLightDir1), 0.0);
-          float fresnel = pow(1.0 - max(dot(n, v), 0.0), 2.5);
+          float fresnel = pow(clamp(1.0 - max(dot(n, v), 0.0), 0.0, 1.0), 2.5);
 
           // Swiss luxury precision dot matrix across landmasses
-          vec2 gridUv = fract(vUv * vec2(170.0, 85.0)) - 0.5;
+          vec2 gridUv = fract(vUv * vec2(180.0, 90.0)) - 0.5;
           float dotD = length(gridUv);
-          float dotMask = smoothstep(0.32, 0.18, dotD);
+          float dotMask = smoothstep(0.32, 0.16, dotD);
 
           // 1. Deep Obsidian Ocean (glossy black mirror with champagne/silver reflections)
-          vec3 deepObsidian = vec3(0.015, 0.017, 0.022);
-          vec3 oceanFresnel = vec3(0.045, 0.055, 0.075);
+          vec3 deepObsidian = vec3(0.012, 0.014, 0.018);
+          vec3 oceanFresnel = vec3(0.040, 0.050, 0.070);
           vec3 oceanColor = mix(deepObsidian, oceanFresnel, fresnel * 0.75);
-          oceanColor += specSilver * vec3(0.88, 0.92, 0.98) * 0.95;
-          oceanColor += specGold * vec3(0.96, 0.82, 0.48) * 0.55;
+          oceanColor += specSilver * vec3(0.88, 0.92, 0.98) * 0.90;
+          oceanColor += specGold * vec3(0.96, 0.82, 0.48) * 0.50;
           // Subtle gold coordinate lines in the ocean
-          oceanColor += grat * vec3(0.85, 0.72, 0.40) * 0.22;
+          oceanColor += grat * vec3(0.85, 0.72, 0.40) * 0.20;
 
           // 2. Continents: Brushed Champagne Gold & Burnished Obsidian Metal
-          vec3 continentDark = vec3(0.24, 0.18, 0.08);
+          vec3 continentDark = vec3(0.22, 0.17, 0.08);
           vec3 continentGold = vec3(0.88, 0.73, 0.42);
           vec3 continentHighlight = vec3(1.0, 0.88, 0.58);
 
@@ -1003,74 +1131,21 @@
           vec3 finalCol = mix(oceanColor, continentColor, smoothstep(0.25, 0.55, land));
 
           // 4. Outer rim champagne gold atmosphere gleam
-          float rim = pow(1.0 - max(dot(n, v), 0.0), 3.4);
+          float rim = pow(clamp(1.0 - max(dot(n, v), 0.0), 0.0, 1.0), 3.4);
           vec3 champagneGold = vec3(0.96, 0.82, 0.48);
           finalCol += rim * champagneGold * 1.25;
 
           // 5. Subtle living breathing pulse
-          float pulse = 0.988 + sin(uTime * 0.5) * 0.012;
+          float pulse = 0.99 + sin(uTime * 0.6) * 0.01;
           gl_FragColor = vec4(finalCol * pulse, 1.0);
         }
       `
     });
 
     const globeMesh = new THREE.Mesh(globeGeo, globeMat);
-    globeGroup.add(globeMesh);
+    earthSpinGroup.add(globeMesh);
 
-    // Atmosphere Corona Glow Mesh
-    const atmGeo = new THREE.SphereGeometry(1.23, 48, 48);
-    const atmMat = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      side: THREE.BackSide,
-      uniforms: {
-        uTime: { value: 0 }
-      },
-      vertexShader: `
-        varying vec3 vNormal;
-        void main(){
-          vNormal = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vNormal;
-        void main(){
-          float intensity = pow(0.68 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.6);
-          vec3 atmColor = mix(vec3(0.88, 0.74, 0.42), vec3(0.62, 0.74, 0.92), intensity * 0.45);
-          gl_FragColor = vec4(atmColor * intensity * 1.5, intensity * 0.75);
-        }
-      `
-    });
-    const atmosphere = new THREE.Mesh(atmGeo, atmMat);
-    globeGroup.add(atmosphere);
-
-    // Equatorial Astrolabe Coordinate Ring
-    const eqRingGeo = new THREE.RingGeometry(1.42, 1.436, 128);
-    const eqRingMat = new THREE.MeshBasicMaterial({
-      color: 0xdfb76c,
-      transparent: true,
-      opacity: 0.22,
-      side: THREE.DoubleSide
-    });
-    const eqRing = new THREE.Mesh(eqRingGeo, eqRingMat);
-    eqRing.rotation.x = Math.PI / 2;
-    globeGroup.add(eqRing);
-
-    // Tilted Orbital Coordinate Ring
-    const orbitRingGeo = new THREE.RingGeometry(1.56, 1.572, 128);
-    const orbitRingMat = new THREE.MeshBasicMaterial({
-      color: 0xd8dbe0,
-      transparent: true,
-      opacity: 0.12,
-      side: THREE.DoubleSide
-    });
-    const orbitRing = new THREE.Mesh(orbitRingGeo, orbitRingMat);
-    orbitRing.rotation.set(0.35, 0.15, 0);
-    globeGroup.add(orbitRing);
-
-    // Global Hub Beacons & 3D Connection Arcs (Tashkent Center)
+    // Coordinate conversion (matching Three.js SphereGeometry UV projection)
     function latLonToVec3(lat, lon, radius) {
       const phi = (90 - lat) * (Math.PI / 180);
       const theta = (lon + 180) * (Math.PI / 180);
@@ -1080,7 +1155,7 @@
       return new THREE.Vector3(x, y, z);
     }
 
-    const R = 1.15;
+    // Global Hub Beacons (Tashkent Center)
     const hubs = [
       { name: "Tashkent", lat: 41.30, lon: 69.24, isPrimary: true },
       { name: "Dubai", lat: 25.20, lon: 55.27 },
@@ -1096,21 +1171,23 @@
       color: 0xdfb76c,
       transparent: true,
       opacity: 0.95,
-      blending: THREE.AdditiveBlending
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
     });
     const beaconRingMat = new THREE.MeshBasicMaterial({
       color: 0xfff0c8,
       transparent: true,
       opacity: 0.75,
       side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
     });
 
     let tashkentPos = null;
     const tashkentRings = [];
 
     hubs.forEach(h => {
-      const pos = latLonToVec3(h.lat, h.lon, R);
+      const pos = latLonToVec3(h.lat, h.lon, R * 1.008);
       if (h.isPrimary) tashkentPos = pos;
 
       const dotGeo = new THREE.SphereGeometry(h.isPrimary ? 0.022 : 0.014, 16, 16);
@@ -1120,7 +1197,7 @@
 
       const ringGeo = new THREE.RingGeometry(h.isPrimary ? 0.025 : 0.018, h.isPrimary ? 0.042 : 0.028, 24);
       const ringMesh = new THREE.Mesh(ringGeo, beaconRingMat);
-      ringMesh.position.copy(pos.clone().multiplyScalar(1.002));
+      ringMesh.position.copy(pos.clone().multiplyScalar(1.003));
       ringMesh.lookAt(pos.clone().multiplyScalar(2.0));
       beaconGroup.add(ringMesh);
 
@@ -1132,7 +1209,8 @@
           color: 0xdfb76c,
           transparent: true,
           opacity: 0.85,
-          blending: THREE.AdditiveBlending
+          blending: THREE.AdditiveBlending,
+          depthWrite: false
         });
         const pillar = new THREE.Mesh(pillarGeo, pillarMat);
         pillar.position.copy(pos);
@@ -1140,72 +1218,70 @@
         beaconGroup.add(pillar);
       }
     });
-    globeGroup.add(beaconGroup);
+    earthSpinGroup.add(beaconGroup);
 
-    // 3D Connection Arcs
+    // Geodesic Great-Circle 3D Connection Arcs
+    function getGreatCirclePoint(v1, v2, t, altMultiplier) {
+      const angle = v1.angleTo(v2);
+      const sinAngle = Math.sin(angle);
+      let dir;
+      if (sinAngle < 0.001) {
+        dir = v1.clone().lerp(v2, t).normalize();
+      } else {
+        const a = Math.sin((1 - t) * angle) / sinAngle;
+        const b = Math.sin(t * angle) / sinAngle;
+        dir = v1.clone().multiplyScalar(a).add(v2.clone().multiplyScalar(b)).normalize();
+      }
+      const altitude = R * (1.008 + Math.sin(t * Math.PI) * altMultiplier);
+      return dir.multiplyScalar(altitude);
+    }
+
     const arcPackets = [];
     const packetGeo = new THREE.SphereGeometry(0.014, 12, 12);
     const packetMat = new THREE.MeshBasicMaterial({
       color: 0xfff2d0,
       transparent: true,
       opacity: 0.95,
-      blending: THREE.AdditiveBlending
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
     });
 
     hubs.filter(h => !h.isPrimary).forEach((h, idx) => {
-      const destPos = latLonToVec3(h.lat, h.lon, R);
+      const destPos = latLonToVec3(h.lat, h.lon, R * 1.008);
       const dist = tashkentPos.distanceTo(destPos);
-      const mid = tashkentPos.clone().add(destPos).multiplyScalar(0.5);
-      const alt = R * (1.12 + dist * 0.16);
-      mid.normalize().multiplyScalar(alt);
+      const altMult = 0.12 + Math.min(dist * 0.12, 0.28);
 
-      const curve = new THREE.QuadraticBezierCurve3(tashkentPos, mid, destPos);
-      const pts = curve.getPoints(48);
-      const arcGeo = new THREE.BufferGeometry().setFromPoints(pts);
+      const curvePoints = [];
+      const numSegments = 48;
+      for (let s = 0; s <= numSegments; s++) {
+        const tVal = s / numSegments;
+        curvePoints.push(getGreatCirclePoint(tashkentPos, destPos, tVal, altMult));
+      }
+
+      const arcGeo = new THREE.BufferGeometry().setFromPoints(curvePoints);
       const arcMat = new THREE.LineBasicMaterial({
         color: 0xdfb76c,
         transparent: true,
-        opacity: 0.32,
-        blending: THREE.AdditiveBlending
+        opacity: 0.35,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
       });
       const arcLine = new THREE.Line(arcGeo, arcMat);
-      globeGroup.add(arcLine);
+      earthSpinGroup.add(arcLine);
 
       const packet = new THREE.Mesh(packetGeo, packetMat);
-      packet.position.copy(tashkentPos);
-      globeGroup.add(packet);
+      packet.position.copy(curvePoints[0]);
+      earthSpinGroup.add(packet);
+
       arcPackets.push({
         mesh: packet,
-        curve,
+        points: curvePoints,
         offset: (idx / 6.0),
         speed: 0.18 + (idx % 3) * 0.04
       });
     });
 
-    // Floating Stardust Particles
-    const starCount = 85;
-    const starGeo = new THREE.BufferGeometry();
-    const starPos = new Float32Array(starCount * 3);
-    for(let i = 0; i < starCount; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-      const rad = 1.45 + Math.random() * 1.1;
-      starPos[i*3]   = rad * Math.sin(phi) * Math.cos(theta);
-      starPos[i*3+1] = rad * Math.sin(phi) * Math.sin(theta);
-      starPos[i*3+2] = rad * Math.cos(phi);
-    }
-    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-    const starMat = new THREE.PointsMaterial({
-      color: 0xdfb76c,
-      size: 0.022,
-      transparent: true,
-      opacity: 0.45,
-      blending: THREE.AdditiveBlending
-    });
-    const stars = new THREE.Points(starGeo, starMat);
-    globeGroup.add(stars);
-
-    // Interaction State (Drag + Hover Parallax + Smooth Momentum)
+    // Interactive Drag + Momentum + Mouse Parallax
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
     let isDragging = false;
     let prevPointerX = 0, prevPointerY = 0;
@@ -1217,6 +1293,10 @@
       prevPointerY = e.clientY;
       dragVelX = 0;
       dragVelY = 0;
+      if (canvas.setPointerCapture) {
+        try { canvas.setPointerCapture(e.pointerId); } catch(_) {}
+      }
+      canvas.style.cursor = "grabbing";
     });
 
     addEventListener("pointermove", (e) => {
@@ -1229,15 +1309,22 @@
         prevPointerX = e.clientX;
         prevPointerY = e.clientY;
 
-        dragVelX = dx * 0.0045;
-        dragVelY = dy * 0.0045;
+        dragVelX = dx * 0.0038;
+        dragVelY = dy * 0.0038;
 
-        globeGroup.rotation.y += dragVelX;
-        globeGroup.rotation.x += dragVelY;
+        earthSpinGroup.rotation.y += dragVelX;
+        tiltGroup.rotation.x = Math.max(-0.48, Math.min(0.48, tiltGroup.rotation.x + dragVelY));
       }
     });
 
-    const stopDrag = () => { isDragging = false; };
+    const stopDrag = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      canvas.style.cursor = "grab";
+      if (e && canvas.releasePointerCapture && e.pointerId) {
+        try { canvas.releasePointerCapture(e.pointerId); } catch(_) {}
+      }
+    };
     addEventListener("pointerup", stopDrag);
     addEventListener("pointercancel", stopDrag);
 
@@ -1247,6 +1334,9 @@
     }, { threshold: 0.02 });
     const heroEl = document.querySelector("#hero");
     if(heroEl) heroObserver.observe(heroEl);
+
+    // Scroll state decoupled from render loop to eliminate frame fighting
+    const scrollState = { progress: 0 };
 
     function render(t){
       requestAnimationFrame(render);
@@ -1262,22 +1352,30 @@
       atmMat.uniforms.uTime.value = sec;
 
       if(!isDragging) {
-        dragVelX *= 0.93;
-        dragVelY *= 0.93;
-        globeGroup.rotation.y += dragVelX;
-        globeGroup.rotation.x += dragVelY;
+        dragVelX *= 0.94;
+        dragVelY *= 0.94;
+        if (Math.abs(dragVelX) < 0.00002) dragVelX = 0;
+        if (Math.abs(dragVelY) < 0.00002) dragVelY = 0;
+
+        earthSpinGroup.rotation.y += dragVelX;
+        tiltGroup.rotation.x = Math.max(-0.48, Math.min(0.48, tiltGroup.rotation.x + dragVelY));
 
         // Majestic slow axial rotation
-        globeGroup.rotation.y += 0.0011;
+        earthSpinGroup.rotation.y += 0.0010;
       }
 
+      // Celestial coordinate rings and stars drift independently
       orbitRing.rotation.z += 0.0006;
+      stars.rotation.y += 0.00018;
 
-      // Pulse packets along 3D arcs
+      // Pulse packets along 3D geodesic arcs
       arcPackets.forEach(p => {
         const progress = (sec * p.speed + p.offset) % 1.0;
-        const pt = p.curve.getPointAt(progress);
-        p.mesh.position.copy(pt);
+        const fIdx = progress * (p.points.length - 1);
+        const idx0 = Math.floor(fIdx);
+        const idx1 = Math.min(idx0 + 1, p.points.length - 1);
+        const frac = fIdx - idx0;
+        p.mesh.position.lerpVectors(p.points[idx0], p.points[idx1], frac);
       });
 
       // Pulsing beacon ring at Tashkent
@@ -1286,11 +1384,19 @@
         ring.scale.set(scale, scale, 1);
       });
 
-      // Smooth floating parallax
-      globeGroup.position.y += ((mouse.y * 0.10) - (globeGroup.position.y - 0.05)) * 0.018;
-      globeGroup.position.x += (((1.45 + mouse.x * 0.18)) - globeGroup.position.x) * 0.018;
-      camera.position.x += ((mouse.x * 0.045) - camera.position.x) * 0.022;
-      camera.position.y += ((mouse.y * 0.026) - camera.position.y) * 0.022;
+      // Seamless responsive position interpolation with scroll & gentle mouse parallax
+      const scrollShiftX = config.isMobile ? 0.06 : 0.27;
+      const scrollShiftY = 0.05;
+      const targetX = config.baseX + scrollState.progress * scrollShiftX + (isDragging ? 0 : mouse.x * (config.isMobile ? 0.05 : 0.16));
+      const targetY = config.baseY + scrollState.progress * scrollShiftY + (isDragging ? 0 : mouse.y * (config.isMobile ? 0.03 : 0.08));
+      const targetScale = config.scale * (1.0 + scrollState.progress * 0.15);
+
+      globeRoot.position.x += (targetX - globeRoot.position.x) * 0.035;
+      globeRoot.position.y += (targetY - globeRoot.position.y) * 0.035;
+      globeRoot.scale.setScalar(globeRoot.scale.x + (targetScale - globeRoot.scale.x) * 0.035);
+
+      camera.position.x += ((mouse.x * 0.035) - camera.position.x) * 0.022;
+      camera.position.y += ((mouse.y * 0.020) - camera.position.y) * 0.022;
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
@@ -1339,8 +1445,7 @@
         .to(".hero-content",{yPercent:-10,opacity:.08},0)
         .to(".hero-shell",{yPercent:-6,scale:1.04,opacity:.92},0)
         .to(".hero-grid-line",{xPercent:-10,opacity:.3},0)
-        .to(globeGroup.position,{x:1.72,y:.10},0)
-        .to(globeGroup.scale,{x:1.34,y:1.34,z:1.34},0)
+        .to(scrollState,{progress:1},0)
         .to(uniforms.uScroll,{value:1},0);
     }
 
@@ -1620,9 +1725,11 @@
 
     /* Resize */
     addEventListener("resize",()=>{
-      camera.aspect=innerWidth/innerHeight;
+      camera.aspect = innerWidth / innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(innerWidth,innerHeight);
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 1.35));
+      config = getResponsiveConfig();
       ScrollTrigger.refresh();
     });
   </script>
