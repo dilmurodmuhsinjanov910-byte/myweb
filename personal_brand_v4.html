@@ -422,7 +422,7 @@
     .portal-sound-btn:hover{color:var(--white);border-color:rgba(223,183,108,.5)}
     .portal-sound-btn.active{color:var(--gold);border-color:rgba(223,183,108,.6);background:rgba(223,183,108,.08)}
 
-    /* Viewport with 3D Perspective */
+    /* Viewport with 3D Perspective & Depth Layers */
     .portal-viewport{
       position:relative;flex:1;overflow:hidden;
       display:flex;align-items:center;justify-content:center;
@@ -431,21 +431,29 @@
       transform-style:preserve-3d;
       user-select:none;
     }
-    .portal-canvas{
-      position:absolute;inset:-6%;width:112%;height:112%;z-index:1;
+    /* Layer 1: Distant Sky Canvas (Z: -60px) */
+    .portal-sky-canvas{
+      position:absolute;inset:-8%;width:116%;height:116%;z-index:1;
+      pointer-events:none;
+      transform-origin:center center;
+      will-change:transform;
+    }
+    /* Layer 2: Midground Landmarks Canvas (Z: -15px) */
+    .portal-world-canvas{
+      position:absolute;inset:-8%;width:116%;height:116%;z-index:2;
       pointer-events:none;
       transform-origin:center center;
       will-change:transform;
     }
     .portal-backdrop{
-      position:absolute;inset:0;z-index:2;pointer-events:none;
+      position:absolute;inset:0;z-index:3;pointer-events:none;
       background:radial-gradient(circle at 50% 50%, transparent 35%, rgba(4,5,8,.85) 100%);
       mix-blend-mode:multiply;
     }
 
     /* Left Overlay */
     .portal-overlay-left{
-      position:absolute;left:26px;top:26px;z-index:15;pointer-events:none;
+      position:absolute;left:26px;top:26px;z-index:16;pointer-events:none;
       max-width:240px;transform-style:preserve-3d;
       will-change:transform;
     }
@@ -461,7 +469,7 @@
     .portal-index-fill{height:100%;background:var(--gold-grad);width:16.66%;transition:width .6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 8px rgba(223,183,108,.8)}
     .portal-index-total{font-size:9px;color:#555}
 
-    /* Center Archway with 3D Depth */
+    /* Layer 3: Center Archway with 3D Depth (Z: +40px) */
     .portal-gate-wrap{
       position:relative;z-index:12;width:min(285px,38%);aspect-ratio:350/410;
       cursor:pointer;transform-origin:center center;
@@ -470,7 +478,7 @@
       transition:filter .4s;
     }
     .portal-gate-wrap:hover{
-      filter:drop-shadow(0 0 35px rgba(223,183,108,.45)) drop-shadow(0 0 65px rgba(223,183,108,.25));
+      filter:drop-shadow(0 0 38px rgba(223,183,108,.5)) drop-shadow(0 0 70px rgba(223,183,108,.28));
     }
     .portal-gate-wrap:active{transform:scale(.97)}
     .portal-gate-img{
@@ -481,15 +489,15 @@
       transform-style:preserve-3d;
     }
 
-    /* Singularity Aperture Container */
+    /* Singularity Aperture Container (Accurately sized to inner arch cutout) */
     .portal-singularity-container{
-      position:absolute;left:20.5%;top:19.5%;width:59%;height:65.5%;
-      border-radius:50% 50% 10% 10% / 44% 44% 10% 10%;
+      position:absolute;left:14%;top:14.5%;width:72%;height:71.5%;
+      border-radius:50% 50% 12% 12% / 46% 46% 12% 12%;
       overflow:hidden;
       z-index:3;pointer-events:none;
       transform:translateZ(6px);
       background:#010204;
-      box-shadow:inset 0 0 30px rgba(0,0,0,0.95), 0 0 25px rgba(223,183,108,0.25);
+      box-shadow:inset 0 0 35px rgba(0,0,0,0.95), 0 0 30px rgba(223,183,108,0.3);
     }
     .portal-singularity-canvas{
       position:absolute;inset:0;width:100%;height:100%;
@@ -499,16 +507,14 @@
       position:absolute;inset:-6%;width:112%;height:112%;
       pointer-events:none;
       transform-origin:center center;
-      animation:runeOrbit 26s linear infinite;
-      opacity:0.75;
+      opacity:0.82;
       mix-blend-mode:screen;
-      filter:drop-shadow(0 0 5px rgba(223,183,108,0.5));
+      filter:drop-shadow(0 0 6px rgba(223,183,108,0.6));
       transition:opacity .4s, filter .4s;
     }
     .portal-gate-wrap:hover .portal-runes-svg{
       opacity:1;
-      filter:drop-shadow(0 0 10px rgba(255,225,140,0.9));
-      animation-duration:8s;
+      filter:drop-shadow(0 0 14px rgba(255,225,140,0.95));
     }
     .portal-runes-text{
       font-family:monospace;
@@ -517,51 +523,59 @@
       fill:#ffd78a;
       text-transform:uppercase;
     }
-    @keyframes runeOrbit{
-      0%{transform:rotate(0deg)}
-      100%{transform:rotate(360deg)}
-    }
     .portal-singularity-flare{
       position:absolute;left:0;top:46%;width:100%;height:2px;
       background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.95) 50%,transparent 100%);
-      box-shadow:0 0 14px 3px rgba(223,183,108,0.85);
+      box-shadow:0 0 16px 4px rgba(223,183,108,0.85);
       mix-blend-mode:screen;
       pointer-events:none;
-      opacity:0.65;
+      opacity:0.75;
       animation:flareBreathe 3s ease-in-out infinite alternate;
     }
     @keyframes flareBreathe{
       0%{transform:scaleX(0.7);opacity:0.45}
-      100%{transform:scaleX(1.15);opacity:0.85}
+      100%{transform:scaleX(1.15);opacity:0.9}
+    }
+
+    /* Layer 4: Foreground Obsidian Dunes Canvas (Z: +75px) */
+    .portal-foreground-canvas{
+      position:absolute;inset:-6%;width:112%;height:112%;z-index:14;
+      pointer-events:none;
+      transform-origin:center center;
+      will-change:transform;
     }
 
     /* Shockwave / Warp Flash FX */
     .portal-warp-fx{
-      position:absolute;inset:0;z-index:20;background:#fff;pointer-events:none;opacity:0;
+      position:absolute;inset:0;z-index:22;background:#fff;pointer-events:none;opacity:0;
       mix-blend-mode:overlay;
     }
     .portal-ripple-fx{
       position:absolute;left:50%;top:50%;width:200%;height:200%;
       margin-left:-100%;margin-top:-100%;
-      z-index:18;pointer-events:none;opacity:0;
+      z-index:20;pointer-events:none;opacity:0;
       border-radius:50%;
       background:radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(223,183,108,0.45) 30%, transparent 70%);
       mix-blend-mode:screen;
       transform:scale(0.1);
     }
 
-    /* Floating Cue Badge */
+    /* Floating Cue Badge (Z: +90px, floating above dunes) */
     .portal-cue{
-      position:absolute;bottom:-18px;left:50%;transform:translateX(-50%) translateZ(46px);
+      position:absolute;bottom:22px;left:50%;
       white-space:nowrap;display:flex;align-items:center;gap:7px;
       background:rgba(12,14,18,.92);border:1px solid rgba(223,183,108,.4);
       border-radius:20px;padding:6px 14px;z-index:25;box-shadow:0 8px 25px rgba(0,0,0,.75);
-      pointer-events:none;
-      transition:transform .3s, border-color .3s;
+      cursor:pointer;pointer-events:auto;
+      transform-origin:center center;
+      transform-style:preserve-3d;
+      transition:border-color .3s, box-shadow .3s, background .3s;
     }
-    .portal-gate-wrap:hover .portal-cue{
+    .portal-cue:hover,
+    .portal-gate-wrap:hover ~ .portal-cue{
       border-color:rgba(255,243,209,.85);
-      box-shadow:0 8px 25px rgba(223,183,108,.35);
+      background:rgba(18,22,28,.95);
+      box-shadow:0 8px 28px rgba(223,183,108,.45);
     }
     .portal-cue-ring{
       width:6px;height:6px;border-radius:50%;background:#dfb76c;
@@ -575,7 +589,7 @@
 
     /* Right Overlay */
     .portal-overlay-right{
-      position:absolute;right:26px;top:26px;bottom:26px;z-index:15;
+      position:absolute;right:26px;top:26px;bottom:26px;z-index:16;
       width:min(235px,30%);display:flex;flex-direction:column;justify-content:space-between;
       pointer-events:auto;transform-style:preserve-3d;
       will-change:transform;
@@ -1003,8 +1017,11 @@
 
               <!-- Portal Viewport with 3D Perspective & Depth Layers -->
               <div class="portal-viewport" id="portal-viewport">
-                <!-- World Canvas Background (Parallax Depth Layer 1) -->
-                <canvas id="portal-world-canvas" class="portal-canvas"></canvas>
+                <!-- Layer 1: Distant Sky / Cosmos / Horizon Canvas (Z: -60px) -->
+                <canvas id="portal-sky-canvas" class="portal-sky-canvas"></canvas>
+
+                <!-- Layer 2: Midground Landmarks & Dynamic World Canvas (Z: -15px) -->
+                <canvas id="portal-world-canvas" class="portal-world-canvas"></canvas>
                 
                 <!-- Atmospheric Vignette -->
                 <div class="portal-backdrop" id="portal-backdrop"></div>
@@ -1020,29 +1037,35 @@
                   </div>
                 </div>
 
-                <!-- Center 3D Archway Stage (Parallax Depth Layer 2) -->
+                <!-- Layer 3: Center 3D Archway Stage (Z: +40px) -->
                 <div class="portal-gate-wrap" id="portal-gate-wrap" title="Click the Gate to Teleport">
                   <!-- Singularity Aperture Container & Real-time Canvas Vortex -->
                   <div class="portal-singularity-container" id="portal-singularity-container">
                     <canvas id="portal-singularity-canvas" class="portal-singularity-canvas"></canvas>
                     
-                    <!-- Ancient Orbital Celestial Runes Ring -->
+                    <!-- Ancient Orbital Celestial Runes Ring with interactive ripple filter -->
                     <svg class="portal-runes-svg" id="portal-runes-svg" viewBox="0 0 200 200">
                       <defs>
                         <path id="runeCirclePath" d="M 100, 100 m -76, 0 a 76,76 0 1,1 152,0 a 76,76 0 1,1 -152,0" />
+                        <filter id="runeRippleFilter" x="-20%" y="-20%" width="140%" height="140%">
+                          <feTurbulence id="runeTurbulence" type="fractalNoise" baseFrequency="0.04" numOctaves="2" result="noise" />
+                          <feDisplacementMap id="runeDisplacement" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+                        </filter>
                       </defs>
-                      <circle cx="100" cy="100" r="84" fill="none" stroke="rgba(223,183,108,0.22)" stroke-width="0.8" stroke-dasharray="3 5" />
-                      <circle cx="100" cy="100" r="76" fill="none" stroke="rgba(223,183,108,0.45)" stroke-width="1.2" />
-                      <circle cx="100" cy="100" r="68" fill="none" stroke="rgba(223,183,108,0.22)" stroke-width="0.8" stroke-dasharray="8 4 2 4" />
-                      <text class="portal-runes-text">
-                        <textPath href="#runeCirclePath" startOffset="0%">
-                          ᚛ ᚛ ᛟ ᚱ ᛒ ᛁ ᛏ ᚐ ᛚ // ᛋ ᛁ ᚾ ᚷ ᚢ ᛚ ᚐ ᚱ ᛁ ᛏ ᚤ // ᚲ ᚑ ᚑ ᚱ ᛞ ᛁ ᚾ ᚐ ᛏ ᛖ ᛋ // ᚦ ᚢ ᚱ ᛁ ᛋ ᚐ ᛉ ᚛ ᚛
-                        </textPath>
-                      </text>
-                      <line x1="100" y1="16" x2="100" y2="28" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
-                      <line x1="100" y1="172" x2="100" y2="184" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
-                      <line x1="16" y1="100" x2="28" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
-                      <line x1="172" y1="100" x2="184" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                      <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(223,183,108,0.22)" stroke-width="0.8" stroke-dasharray="3 5" />
+                      <circle cx="100" cy="100" r="76" fill="none" stroke="rgba(223,183,108,0.55)" stroke-width="1.2" />
+                      <circle cx="100" cy="100" r="67" fill="none" stroke="rgba(223,183,108,0.25)" stroke-width="0.8" stroke-dasharray="8 4 2 4" />
+                      <g id="portal-runes-group" filter="url(#runeRippleFilter)">
+                        <text class="portal-runes-text">
+                          <textPath href="#runeCirclePath" startOffset="0%">
+                            ᚛ ᚛ ᛟ ᚱ ᛒ ᛁ ᛏ ᚐ ᛚ // ᛋ ᛁ ᚾ ᚷ ᚢ ᛚ ᚐ ᛱ ᛁ ᛏ ᚤ // ᚲ ᚑ ᚑ ᚱ ᛞ ᛁ ᚾ ᚐ ᛏ ᛖ ᛋ // ᚦ ᚢ ᚱ ᛁ ᛋ ᚐ ᛉ ᚛ ᚛
+                          </textPath>
+                        </text>
+                      </g>
+                      <line x1="100" y1="14" x2="100" y2="27" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                      <line x1="100" y1="173" x2="100" y2="186" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                      <line x1="14" y1="100" x2="27" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                      <line x1="173" y1="100" x2="186" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
                     </svg>
 
                     <!-- Anamorphic Quantum Flare -->
@@ -1051,12 +1074,15 @@
 
                   <!-- Authentic S-Tier Photo-Real Cutout Stone Archway -->
                   <img src="gate_arch_transparent.png" alt="Ancient Stone Gate Arch" class="portal-gate-img" id="portal-gate-img" />
+                </div>
 
-                  <!-- Gate Pulse Cue Badge -->
-                  <div class="portal-cue">
-                    <div class="portal-cue-ring"></div>
-                    <span class="portal-cue-text">CLICK THE GATE TO TELEPORT</span>
-                  </div>
+                <!-- Layer 4: Foreground Obsidian Dunes Canvas (Z: +75px) -->
+                <canvas id="portal-foreground-canvas" class="portal-foreground-canvas"></canvas>
+
+                <!-- Floating Cue Badge (Z: +90px, floating above dunes) -->
+                <div class="portal-cue" id="portal-cue" title="Click to Teleport">
+                  <div class="portal-cue-ring"></div>
+                  <span class="portal-cue-text">CLICK THE GATE TO TELEPORT</span>
                 </div>
 
                 <!-- Quantum Flash & Shockwave Ripple Layer -->
@@ -2136,18 +2162,29 @@
       const portalApp = document.getElementById("portal-app");
       if (!portalApp) return;
 
-      // Viewport & Layers
+      // 4-Layer Viewport & Canvases
       const viewport = document.getElementById("portal-viewport");
+      const skyCanvas = document.getElementById("portal-sky-canvas");
+      const skyCtx = skyCanvas ? skyCanvas.getContext("2d") : null;
       const worldCanvas = document.getElementById("portal-world-canvas");
       const worldCtx = worldCanvas ? worldCanvas.getContext("2d") : null;
+      const foregroundCanvas = document.getElementById("portal-foreground-canvas");
+      const fgCtx = foregroundCanvas ? foregroundCanvas.getContext("2d") : null;
+      
       const gateWrap = document.getElementById("portal-gate-wrap");
       const singularityCanvas = document.getElementById("portal-singularity-canvas");
       const singularityCtx = singularityCanvas ? singularityCanvas.getContext("2d") : null;
+      
       const runesSvg = document.getElementById("portal-runes-svg");
+      const runesGroup = document.getElementById("portal-runes-group");
+      const runeDisplacement = document.getElementById("runeDisplacement");
+      const runeTurbulence = document.getElementById("runeTurbulence");
+      
       const warpFx = document.getElementById("portal-warp-fx");
       const rippleFx = document.getElementById("portal-ripple-fx");
       const overlayLeft = document.getElementById("portal-overlay-left");
       const overlayRight = document.getElementById("portal-overlay-right");
+      const portalCue = document.getElementById("portal-cue");
 
       // Telemetry & UI
       const statusPill = portalApp.querySelector(".portal-status");
@@ -2189,27 +2226,34 @@
         }
       }
 
-      function startGateHum() {
-        if (!soundEnabled) return;
-        initAudioContext();
+      // Unlock AudioContext on any initial user gesture
+      ["click", "touchstart", "mousemove"].forEach(evt => {
+        window.addEventListener(evt, () => {
+          if (audioCtx && audioCtx.state === "suspended") {
+            audioCtx.resume().catch(() => {});
+          }
+        }, { once: true, passive: true });
+      });
+
+      function ensureGateHumNodes() {
         if (!audioCtx) return;
-        try {
-          const now = audioCtx.currentTime;
-          if (!gateHumOsc1) {
+        const now = audioCtx.currentTime;
+        if (!gateHumOsc1) {
+          try {
             gateHumOsc1 = audioCtx.createOscillator();
             gateHumOsc2 = audioCtx.createOscillator();
             gateHumFilter = audioCtx.createBiquadFilter();
             gateHumGain = audioCtx.createGain();
 
             gateHumOsc1.type = "sine";
-            gateHumOsc1.frequency.setValueAtTime(55, now); // Sub-bass A1
+            gateHumOsc1.frequency.setValueAtTime(55, now); // 55Hz sub A1
 
             gateHumOsc2.type = "triangle";
-            gateHumOsc2.frequency.setValueAtTime(110, now); // Harmonic A2
+            gateHumOsc2.frequency.setValueAtTime(110, now); // 110Hz harmonic A2
 
             gateHumFilter.type = "lowpass";
-            gateHumFilter.frequency.setValueAtTime(160, now);
-            gateHumFilter.Q.setValueAtTime(4.0, now);
+            gateHumFilter.frequency.setValueAtTime(140, now);
+            gateHumFilter.Q.setValueAtTime(4.5, now);
 
             gateHumGain.gain.setValueAtTime(0.0001, now);
 
@@ -2220,9 +2264,22 @@
 
             gateHumOsc1.start(now);
             gateHumOsc2.start(now);
-          }
-          gateHumFilter.frequency.setTargetAtTime(380, now, 0.25);
-          gateHumGain.gain.setTargetAtTime(0.07, now, 0.2);
+          } catch (_) {}
+        }
+      }
+
+      function updateGateHumProximity(proximityNorm) {
+        if (!soundEnabled) return;
+        initAudioContext();
+        if (!audioCtx) return;
+        ensureGateHumNodes();
+        if (!gateHumFilter || !gateHumGain) return;
+        try {
+          const now = audioCtx.currentTime;
+          const targetFreq = 130 + proximityNorm * 260;
+          const targetGain = proximityNorm > 0.05 ? (0.01 + proximityNorm * 0.065) : 0.0001;
+          gateHumFilter.frequency.setTargetAtTime(targetFreq, now, 0.15);
+          gateHumGain.gain.setTargetAtTime(targetGain, now, 0.15);
         } catch (_) {}
       }
 
@@ -2230,7 +2287,6 @@
         if (!audioCtx || !gateHumGain) return;
         try {
           const now = audioCtx.currentTime;
-          gateHumFilter.frequency.setTargetAtTime(120, now, 0.25);
           gateHumGain.gain.setTargetAtTime(0.0001, now, 0.2);
         } catch (_) {}
       }
@@ -2262,59 +2318,59 @@
         try {
           const now = audioCtx.currentTime;
 
-          // 1. Sub Implosion
+          // 1. Sub Implosion (Gravity Collapse)
           const subOsc = audioCtx.createOscillator();
           const subGain = audioCtx.createGain();
           subOsc.type = "sine";
-          subOsc.frequency.setValueAtTime(140, now);
-          subOsc.frequency.exponentialRampToValueAtTime(36, now + 0.38);
+          subOsc.frequency.setValueAtTime(170, now);
+          subOsc.frequency.exponentialRampToValueAtTime(32, now + 0.42);
           subGain.gain.setValueAtTime(0.001, now);
-          subGain.gain.linearRampToValueAtTime(0.24, now + 0.09);
-          subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
+          subGain.gain.linearRampToValueAtTime(0.26, now + 0.08);
+          subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.98);
           subOsc.connect(subGain);
           subGain.connect(audioCtx.destination);
           subOsc.start(now);
-          subOsc.stop(now + 0.96);
+          subOsc.stop(now + 1.0);
 
-          // 2. Quantum Resonant Warp Sweep
+          // 2. Quantum Resonant Warp Sweep with FM Modulation
           const warpOsc = audioCtx.createOscillator();
           const warpFilter = audioCtx.createBiquadFilter();
           const warpGain = audioCtx.createGain();
           warpOsc.type = "sawtooth";
-          warpOsc.frequency.setValueAtTime(160, now);
-          warpOsc.frequency.exponentialRampToValueAtTime(1050, now + 0.24);
-          warpOsc.frequency.exponentialRampToValueAtTime(240, now + 0.75);
+          warpOsc.frequency.setValueAtTime(180, now);
+          warpOsc.frequency.exponentialRampToValueAtTime(1350, now + 0.26);
+          warpOsc.frequency.exponentialRampToValueAtTime(280, now + 0.78);
 
           warpFilter.type = "bandpass";
-          warpFilter.frequency.setValueAtTime(350, now);
-          warpFilter.frequency.exponentialRampToValueAtTime(2800, now + 0.28);
-          warpFilter.frequency.exponentialRampToValueAtTime(450, now + 0.8);
-          warpFilter.Q.setValueAtTime(5.5, now);
+          warpFilter.frequency.setValueAtTime(380, now);
+          warpFilter.frequency.exponentialRampToValueAtTime(3200, now + 0.28);
+          warpFilter.frequency.exponentialRampToValueAtTime(450, now + 0.85);
+          warpFilter.Q.setValueAtTime(6.0, now);
 
           warpGain.gain.setValueAtTime(0.001, now);
-          warpGain.gain.linearRampToValueAtTime(0.15, now + 0.14);
-          warpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
+          warpGain.gain.linearRampToValueAtTime(0.18, now + 0.15);
+          warpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
 
           warpOsc.connect(warpFilter);
           warpFilter.connect(warpGain);
           warpGain.connect(audioCtx.destination);
           warpOsc.start(now);
-          warpOsc.stop(now + 0.82);
+          warpOsc.stop(now + 0.88);
 
-          // 3. Crystalline Arrival Chime Chord (E5, G#5, B5, E6)
-          const chord = [659.25, 830.61, 987.77, 1318.51];
+          // 3. Shimmering Celestial Pentatonic Chord (E5, G#5, B5, D#6, E6)
+          const chord = [659.25, 830.61, 987.77, 1244.51, 1318.51];
           chord.forEach((freq, idx) => {
             const chimeOsc = audioCtx.createOscillator();
             const chimeGain = audioCtx.createGain();
             chimeOsc.type = "sine";
-            chimeOsc.frequency.setValueAtTime(freq, now + 0.16 + idx * 0.035);
-            chimeGain.gain.setValueAtTime(0.001, now + 0.16 + idx * 0.035);
-            chimeGain.gain.linearRampToValueAtTime(0.07 / (idx + 1), now + 0.2 + idx * 0.035);
-            chimeGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2 + idx * 0.08);
+            chimeOsc.frequency.setValueAtTime(freq, now + 0.15 + idx * 0.035);
+            chimeGain.gain.setValueAtTime(0.001, now + 0.15 + idx * 0.035);
+            chimeGain.gain.linearRampToValueAtTime(0.065 / (idx + 1), now + 0.22 + idx * 0.035);
+            chimeGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.35 + idx * 0.09);
             chimeOsc.connect(chimeGain);
             chimeGain.connect(audioCtx.destination);
-            chimeOsc.start(now + 0.16 + idx * 0.035);
-            chimeOsc.stop(now + 1.35);
+            chimeOsc.start(now + 0.15 + idx * 0.035);
+            chimeOsc.stop(now + 1.45);
           });
         } catch (_) {}
       }
@@ -2449,6 +2505,7 @@
       let balloons = [];
       let fireflies = [];
       let meteors = [];
+      let foregroundParticles = [];
 
       // ----------------------------------------------------
       // Multi-Layer 3D Perspective & Physics Parallax State
@@ -2458,6 +2515,13 @@
       let vortexSpeedMultiplier = 1.0;
       let targetVortexSpeed = 1.0;
 
+      // Runes Ring Programmatic Orbit & Dynamic Ripple State
+      let runeRotation = 0;
+      let runeSpeed = 0.28;
+      let targetRuneSpeed = 0.28;
+      let runeDisplacementScale = 0;
+      let targetDisplacementScale = 0;
+
       if (viewport) {
         viewport.addEventListener("mousemove", (e) => {
           const rect = viewport.getBoundingClientRect();
@@ -2465,6 +2529,11 @@
           const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1; // -1 to 1
           mouse.targetX = Math.max(-1, Math.min(1, nx));
           mouse.targetY = Math.max(-1, Math.min(1, ny));
+
+          // Proximity to gate center (0, 0)
+          const dist = Math.sqrt(mouse.targetX * mouse.targetX + mouse.targetY * mouse.targetY);
+          const prox = Math.max(0, 1 - dist / 1.15);
+          updateGateHumProximity(prox);
         });
 
         viewport.addEventListener("mouseleave", () => {
@@ -2473,24 +2542,26 @@
           if (isGateHovered) {
             isGateHovered = false;
             targetVortexSpeed = 1.0;
-            stopGateHum();
+            targetRuneSpeed = 0.28;
           }
+          stopGateHum();
         });
 
-        // Touch support for tablets / mobile
+        // Touch support for tablets & mobile
         viewport.addEventListener("touchmove", (e) => {
           if (e.touches && e.touches[0]) {
             const rect = viewport.getBoundingClientRect();
             const nx = ((e.touches[0].clientX - rect.left) / rect.width) * 2 - 1;
             const ny = ((e.touches[0].clientY - rect.top) / rect.height) * 2 - 1;
-            mouse.targetX = Math.max(-1, Math.min(1, nx * 0.7));
-            mouse.targetY = Math.max(-1, Math.min(1, ny * 0.7));
+            mouse.targetX = Math.max(-1, Math.min(1, nx * 0.75));
+            mouse.targetY = Math.max(-1, Math.min(1, ny * 0.75));
           }
         }, { passive: true });
 
         viewport.addEventListener("touchend", () => {
           mouse.targetX = 0;
           mouse.targetY = 0;
+          stopGateHum();
         });
       }
 
@@ -2498,13 +2569,14 @@
         gateWrap.addEventListener("mouseenter", () => {
           isGateHovered = true;
           targetVortexSpeed = 2.4;
-          startGateHum();
+          targetRuneSpeed = 1.6;
+          targetDisplacementScale = 6.0; // Trigger liquid ripple on runes
         });
 
         gateWrap.addEventListener("mouseleave", () => {
           isGateHovered = false;
           targetVortexSpeed = 1.0;
-          stopGateHum();
+          targetRuneSpeed = 0.28;
         });
       }
 
@@ -2512,7 +2584,7 @@
       // Singularity Particles (Relativistic Accretion Infall)
       // ----------------------------------------------------
       const singularityParticles = [];
-      const SINGULARITY_PARTICLE_COUNT = 130;
+      const SINGULARITY_PARTICLE_COUNT = 140;
 
       function initSingularityParticles(w, h) {
         singularityParticles.length = 0;
@@ -2566,48 +2638,67 @@
             ["#4fc3e8", "#1c2445"],
             ["#a3e84f", "#1c3d25"],
             ["#e84f88", "#38182d"],
-            ["#e8c84f", "#442118"]
+            ["#e8c84f", "#442118"],
+            ["#e66a38", "#223b52"],
+            ["#9c5fe8", "#2c1c38"]
           ];
-          for (let b = 0; b < 7; b++) {
+          for (let b = 0; b < 8; b++) {
             balloons.push({
-              x: (w * 0.12) + (b / 6) * (w * 0.76) + (Math.random() - 0.5) * (w * 0.1),
-              baseY: (h * 0.28) + (b % 3) * (h * 0.12) + (Math.random() - 0.5) * (h * 0.08),
-              size: 14 + (b % 4) * 6,
+              x: (w * 0.08) + (b / 7) * (w * 0.84) + (Math.random() - 0.5) * (w * 0.08),
+              baseY: (h * 0.24) + (b % 4) * (h * 0.11) + (Math.random() - 0.5) * (h * 0.06),
+              size: 15 + (b % 4) * 5.5,
               bobPhase: Math.random() * Math.PI * 2,
-              bobSpeed: 0.015 + Math.random() * 0.01,
-              driftSpeed: (Math.random() - 0.5) * 0.15,
+              bobSpeed: 0.014 + Math.random() * 0.01,
+              driftSpeed: (Math.random() - 0.5) * 0.16,
               colors: palette[b % palette.length],
-              hasFlame: Math.random() > 0.3
+              hasFlame: Math.random() > 0.25
             });
           }
         }
 
-        // Organic Bioluminescent Fireflies for Kyoto
+        // Bioluminescent Fireflies for Kyoto
         fireflies = [];
         if (d.particleType === "fireflies") {
-          for (let f = 0; f < 35; f++) {
+          for (let f = 0; f < 45; f++) {
             fireflies.push({
               x: Math.random() * w,
-              y: (h * 0.35) + Math.random() * (h * 0.55),
-              vx: (Math.random() - 0.5) * 0.6,
-              vy: (Math.random() - 0.5) * 0.4,
+              y: (h * 0.32) + Math.random() * (h * 0.58),
+              vx: (Math.random() - 0.5) * 0.65,
+              vy: (Math.random() - 0.5) * 0.45,
               glowPhase: Math.random() * Math.PI * 2,
-              glowSpeed: 0.03 + Math.random() * 0.04,
-              radius: Math.random() * 2.5 + 1.2,
-              tail: []
+              glowSpeed: 0.03 + Math.random() * 0.045,
+              radius: Math.random() * 2.4 + 1.2
             });
           }
         }
 
-        // Shooting Stars for Salar de Uyuni
+        // Foreground Atmospheric Dust Motes
+        foregroundParticles = [];
+        for (let fp = 0; fp < 30; fp++) {
+          foregroundParticles.push({
+            x: Math.random() * w,
+            y: (h * 0.72) + Math.random() * (h * 0.28),
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: -0.15 - Math.random() * 0.35,
+            radius: Math.random() * 1.8 + 0.6,
+            alpha: Math.random() * 0.6 + 0.2
+          });
+        }
+
         meteors = [];
       }
 
       // ----------------------------------------------------
-      // Canvas Resizing with High-DPR Support
+      // Canvas Resizing with High-DPR Support (4 Canvases)
       // ----------------------------------------------------
       function resizeAllCanvases() {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        if (skyCanvas) {
+          const rect = skyCanvas.getBoundingClientRect();
+          skyCanvas.width = Math.max(rect.width * dpr, 400);
+          skyCanvas.height = Math.max(rect.height * dpr, 300);
+        }
 
         if (worldCanvas) {
           const rect = worldCanvas.getBoundingClientRect();
@@ -2615,10 +2706,16 @@
           worldCanvas.height = Math.max(rect.height * dpr, 300);
         }
 
+        if (foregroundCanvas) {
+          const rect = foregroundCanvas.getBoundingClientRect();
+          foregroundCanvas.width = Math.max(rect.width * dpr, 400);
+          foregroundCanvas.height = Math.max(rect.height * dpr, 300);
+        }
+
         if (singularityCanvas) {
           const rect = singularityCanvas.getBoundingClientRect();
-          const sw = Math.max(rect.width * dpr, 200);
-          const sh = Math.max(rect.height * dpr, 260);
+          const sw = Math.max(rect.width * dpr, 240);
+          const sh = Math.max(rect.height * dpr, 280);
           singularityCanvas.width = sw;
           singularityCanvas.height = sh;
           initSingularityParticles(sw, sh);
@@ -2663,14 +2760,14 @@
       }
 
       // ----------------------------------------------------
-      // High-End Real-time Singularity Vortex Renderer
+      // S-Tier High-End Singularity Vortex Renderer
+      // With Chromatic Aberration & 4 Undulating Plasma Ribbons
       // ----------------------------------------------------
       let singularityTick = 0;
       function renderSingularityVortex() {
         if (!singularityCtx || !singularityCanvas) return;
         singularityTick++;
 
-        // Smoothly lerp vortex speed multiplier on hover
         vortexSpeedMultiplier += (targetVortexSpeed - vortexSpeedMultiplier) * 0.08;
 
         const w = singularityCanvas.width;
@@ -2680,22 +2777,51 @@
         const d = destinations[currentIndex];
         const [coreCol, spiralCol, partCol] = d.singularityColors;
 
-        // Semi-transparent fade for organic motion persistence
-        singularityCtx.fillStyle = "rgba(1, 3, 6, 0.28)";
+        // Semi-transparent fade for motion persistence trails
+        singularityCtx.fillStyle = "rgba(1, 2, 5, 0.26)";
         singularityCtx.fillRect(0, 0, w, h);
 
         singularityCtx.save();
         singularityCtx.translate(cx, cy);
 
         const eventHorizonRadius = Math.min(w, h) * 0.22;
-        const photonSphereRadius = eventHorizonRadius * 1.32;
-        const maxRadius = Math.min(w, h) * 0.48;
+        const photonSphereRadius = eventHorizonRadius * 1.34;
+        const maxRadius = Math.min(w, h) * 0.49;
 
-        // 1. Accretion Glow Disc (Additive Screen Blend)
+        // 1. Chromatic Aberration Dispersion Passes (Additive Screen Blend)
         singularityCtx.globalCompositeOperation = "screen";
+        const caOffset = (2.0 + Math.sin(singularityTick * 0.08) * 0.7) * vortexSpeedMultiplier;
+
+        // Red channel dispersion (displaced left/up)
+        singularityCtx.save();
+        singularityCtx.translate(-caOffset, -caOffset * 0.5);
+        const rGrad = singularityCtx.createRadialGradient(0, 0, eventHorizonRadius * 0.85, 0, 0, maxRadius * 0.95);
+        rGrad.addColorStop(0, "rgba(255, 60, 40, 0.4)");
+        rGrad.addColorStop(0.4, "rgba(255, 120, 20, 0.2)");
+        rGrad.addColorStop(1, "rgba(0,0,0,0)");
+        singularityCtx.fillStyle = rGrad;
+        singularityCtx.beginPath();
+        singularityCtx.arc(0, 0, maxRadius * 0.95, 0, Math.PI * 2);
+        singularityCtx.fill();
+        singularityCtx.restore();
+
+        // Blue/Cyan channel dispersion (displaced right/down)
+        singularityCtx.save();
+        singularityCtx.translate(caOffset, caOffset * 0.5);
+        const bGrad = singularityCtx.createRadialGradient(0, 0, eventHorizonRadius * 0.85, 0, 0, maxRadius * 0.95);
+        bGrad.addColorStop(0, "rgba(40, 180, 255, 0.4)");
+        bGrad.addColorStop(0.4, "rgba(70, 220, 255, 0.2)");
+        bGrad.addColorStop(1, "rgba(0,0,0,0)");
+        singularityCtx.fillStyle = bGrad;
+        singularityCtx.beginPath();
+        singularityCtx.arc(0, 0, maxRadius * 0.95, 0, Math.PI * 2);
+        singularityCtx.fill();
+        singularityCtx.restore();
+
+        // 2. Central Accretion Glow Disc
         const discGrad = singularityCtx.createRadialGradient(0, 0, eventHorizonRadius * 0.8, 0, 0, maxRadius);
-        discGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
-        discGrad.addColorStop(0.25, spiralCol);
+        discGrad.addColorStop(0, "rgba(255, 255, 255, 0.75)");
+        discGrad.addColorStop(0.22, spiralCol);
         discGrad.addColorStop(0.65, d.glowColor);
         discGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
         singularityCtx.fillStyle = discGrad;
@@ -2703,43 +2829,46 @@
         singularityCtx.arc(0, 0, maxRadius, 0, Math.PI * 2);
         singularityCtx.fill();
 
-        // 2. Dual Logarithmic Energy Spiral Arms
-        const spiralRot = singularityTick * 0.022 * vortexSpeedMultiplier;
-        for (let arm = 0; arm < 2; arm++) {
-          const armAngle = spiralRot + arm * Math.PI;
-          singularityCtx.strokeStyle = spiralCol;
-          singularityCtx.lineWidth = 2.5 * vortexSpeedMultiplier;
+        // 3. 4 Intertwined Plasma Energy Ribbons (Harmonic Wave Modulation)
+        const ribbonCount = 4;
+        for (let r = 0; r < ribbonCount; r++) {
+          const baseAngle = singularityTick * 0.024 * vortexSpeedMultiplier + (r * (Math.PI * 2 / ribbonCount));
           singularityCtx.beginPath();
-          for (let step = 0; step < 45; step++) {
-            const t = step / 45;
-            const rad = eventHorizonRadius + t * (maxRadius - eventHorizonRadius);
-            const ang = armAngle + t * 4.2;
-            const sx = Math.cos(ang) * rad;
-            const sy = Math.sin(ang) * rad;
-            if (step === 0) singularityCtx.moveTo(sx, sy);
-            else singularityCtx.lineTo(sx, sy);
+          const steps = 55;
+          for (let s = 0; s <= steps; s++) {
+            const t = s / steps;
+            const rad = eventHorizonRadius * 0.92 + Math.pow(t, 1.35) * (maxRadius - eventHorizonRadius * 0.92);
+            const harmonic = Math.sin(t * 9 - singularityTick * 0.07 + r * 1.5) * (4.2 * (1 - t * 0.35));
+            const ang = baseAngle + t * 4.6 + harmonic * 0.08;
+            const rx = Math.cos(ang) * (rad + harmonic);
+            const ry = Math.sin(ang) * (rad + harmonic);
+            if (s === 0) singularityCtx.moveTo(rx, ry);
+            else singularityCtx.lineTo(rx, ry);
           }
+          singularityCtx.strokeStyle = r % 2 === 0 ? coreCol : spiralCol;
+          singularityCtx.lineWidth = (3.2 - (r % 2) * 1.2) * vortexSpeedMultiplier;
+          singularityCtx.shadowColor = spiralCol;
+          singularityCtx.shadowBlur = 10 * vortexSpeedMultiplier;
           singularityCtx.stroke();
+          singularityCtx.shadowBlur = 0;
         }
 
-        // 3. Relativistic Infalling Particles with Motion Blur Trails
+        // 4. Relativistic Infalling Particles with Motion Blur Streaks
         singularityParticles.forEach(p => {
-          // Keplerian rotational acceleration: faster near core
-          const angVel = (p.speed * (maxRadius / (p.r + 20))) * vortexSpeedMultiplier;
+          const angVel = (p.speed * (maxRadius / (p.r + 16))) * vortexSpeedMultiplier;
           p.theta += angVel;
           p.r -= p.inwardSpeed * vortexSpeedMultiplier;
 
-          // Respawn at outer rim if pulled past event horizon
-          if (p.r < eventHorizonRadius * 0.45) {
-            p.r = maxRadius * (0.85 + Math.random() * 0.15);
+          if (p.r < eventHorizonRadius * 0.48) {
+            p.r = maxRadius * (0.84 + Math.random() * 0.16);
             p.theta = Math.random() * Math.PI * 2;
           }
 
           const px = Math.cos(p.theta) * p.r;
           const py = Math.sin(p.theta) * p.r;
-          const tailLength = Math.min(p.r * 0.12, 10) * vortexSpeedMultiplier;
-          const tx = Math.cos(p.theta - angVel * 1.8) * (p.r + tailLength * 0.5);
-          const ty = Math.sin(p.theta - angVel * 1.8) * (p.r + tailLength * 0.5);
+          const tailLen = Math.min(p.r * 0.13, 11) * vortexSpeedMultiplier;
+          const tx = Math.cos(p.theta - angVel * 1.85) * (p.r + tailLen * 0.5);
+          const ty = Math.sin(p.theta - angVel * 1.85) * (p.r + tailLen * 0.5);
 
           singularityCtx.strokeStyle = partCol;
           singularityCtx.lineWidth = p.size;
@@ -2751,23 +2880,23 @@
 
           singularityCtx.fillStyle = coreCol;
           singularityCtx.beginPath();
-          singularityCtx.arc(px, py, p.size * 0.8, 0, Math.PI * 2);
+          singularityCtx.arc(px, py, p.size * 0.85, 0, Math.PI * 2);
           singularityCtx.fill();
         });
 
-        // 4. Luminous Photon Sphere Ring (Pulsing)
+        // 5. Pulsing Photon Sphere Ring
         singularityCtx.globalCompositeOperation = "source-over";
-        const pulseRing = photonSphereRadius * (1.0 + 0.04 * Math.sin(singularityTick * 0.08));
+        const pulseRing = photonSphereRadius * (1.0 + 0.04 * Math.sin(singularityTick * 0.085));
         singularityCtx.strokeStyle = coreCol;
-        singularityCtx.lineWidth = 2.0;
+        singularityCtx.lineWidth = 2.2;
         singularityCtx.shadowColor = spiralCol;
-        singularityCtx.shadowBlur = 15;
+        singularityCtx.shadowBlur = 16;
         singularityCtx.beginPath();
         singularityCtx.arc(0, 0, pulseRing, 0, Math.PI * 2);
         singularityCtx.stroke();
         singularityCtx.shadowBlur = 0;
 
-        // 5. Pitch-Black Schwarzschild Event Horizon Core Void
+        // 6. Pitch-Black Schwarzschild Event Horizon Void
         singularityCtx.fillStyle = "#010204";
         singularityCtx.beginPath();
         singularityCtx.arc(0, 0, eventHorizonRadius, 0, Math.PI * 2);
@@ -2778,161 +2907,203 @@
       }
 
       // ----------------------------------------------------
-      // Dynamic Procedural World Renderer
+      // Layer 1: Distant Sky & Atmospheric Canvas Renderer
       // ----------------------------------------------------
-      let worldTick = 0;
-      function renderWorldCanvas() {
-        if (!worldCtx || !worldCanvas) return;
-        worldTick++;
+      function renderSky(w, h, d, farOffX, farOffY) {
+        if (!skyCtx) return;
+        skyCtx.clearRect(0, 0, w, h);
 
-        // Mouse physics lerp (differential parallax)
-        mouse.x += (mouse.targetX - mouse.x) * 0.075;
-        mouse.y += (mouse.targetY - mouse.y) * 0.075;
-
-        // Apply 3D tilt & parallax transforms to DOM elements
-        if (gateWrap) {
-          const rotY = mouse.x * 14;
-          const rotX = -mouse.y * 11;
-          const transX = mouse.x * 18;
-          const transY = mouse.y * 10;
-          gateWrap.style.transform = `perspective(1100px) rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(${transX}px, ${transY}px, 35px)`;
-        }
-        if (overlayLeft) {
-          overlayLeft.style.transform = `translate3d(${-mouse.x * 10}px, ${-mouse.y * 6}px, 22px)`;
-        }
-        if (overlayRight) {
-          overlayRight.style.transform = `translate3d(${-mouse.x * 10}px, ${-mouse.y * 6}px, 22px)`;
-        }
-        if (worldCanvas) {
-          worldCanvas.style.transform = `translate3d(${-mouse.x * 24}px, ${-mouse.y * 16}px, -30px) scale(1.08)`;
-        }
-
-        const w = worldCanvas.width;
-        const h = worldCanvas.height;
-        const d = destinations[currentIndex];
-
-        // Multi-plane parallax pixel offsets
-        const farOffX = -mouse.x * w * 0.015;
-        const farOffY = -mouse.y * h * 0.01;
-        const midOffX = -mouse.x * w * 0.035;
-        const midOffY = -mouse.y * h * 0.02;
-        const fgOffX = mouse.x * w * 0.055;
-        const fgOffY = mouse.y * h * 0.025;
-
-        // 1. Sky Gradient
-        const skyGrad = worldCtx.createLinearGradient(0, 0, 0, h);
+        // Sky Gradient
+        const skyGrad = skyCtx.createLinearGradient(0, 0, 0, h);
         const stops = d.bgGradient;
         stops.forEach((col, idx) => {
           skyGrad.addColorStop(idx / (stops.length - 1), col);
         });
-        worldCtx.fillStyle = skyGrad;
-        worldCtx.fillRect(0, 0, w, h);
+        skyCtx.fillStyle = skyGrad;
+        skyCtx.fillRect(0, 0, w, h);
 
         const horizonY = h * d.horizonY;
 
-        // 2. Render Destination Specific Landscapes
         if (d.particleType === "dust") {
-          // ----------------------------------------
-          // DESTINATION 1: MONUMENT VALLEY (UTAH)
-          // ----------------------------------------
-          if (d.useImage && monumentImg.complete && monumentImg.naturalWidth > 0) {
-            // Draw photographic backdrop with subtle parallax
-            worldCtx.drawImage(monumentImg, -0.04 * w + midOffX * 0.5, -0.04 * h + midOffY * 0.5, w * 1.08, h * 1.08);
-          } else {
-            // Procedural Monument Valley sunset sun
-            const sunX = w * 0.5 + farOffX;
-            const sunY = horizonY - h * 0.09 + farOffY;
-            const sunGrad = worldCtx.createRadialGradient(sunX, sunY, 4, sunX, sunY, w * 0.44);
-            sunGrad.addColorStop(0, "#fff5d0");
-            sunGrad.addColorStop(0.18, "rgba(255, 175, 75, 0.85)");
-            sunGrad.addColorStop(0.55, "rgba(225, 75, 45, 0.25)");
-            sunGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-            worldCtx.fillStyle = sunGrad;
-            worldCtx.fillRect(0, 0, w, h);
+          // Utah Sunset Sun Disk & Solar Corona
+          const sunX = w * 0.5 + farOffX;
+          const sunY = horizonY - h * 0.10 + farOffY;
+          const sunGrad = skyCtx.createRadialGradient(sunX, sunY, 5, sunX, sunY, w * 0.46);
+          sunGrad.addColorStop(0, "#fff8dd");
+          sunGrad.addColorStop(0.16, "rgba(255, 185, 80, 0.88)");
+          sunGrad.addColorStop(0.55, "rgba(225, 75, 45, 0.25)");
+          sunGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          skyCtx.fillStyle = sunGrad;
+          skyCtx.fillRect(0, 0, w, h);
 
-            // Distant Mesa Plateau Silhouette (Distant plane)
-            worldCtx.fillStyle = "rgba(42, 14, 20, 0.75)";
+          // Distant Plateau Mesas (Deep Horizon Layer)
+          skyCtx.fillStyle = "rgba(45, 15, 22, 0.72)";
+          skyCtx.beginPath();
+          skyCtx.moveTo(0, h);
+          skyCtx.lineTo(0, horizonY - 18 + farOffY);
+          skyCtx.lineTo(w * 0.22, horizonY - 18 + farOffY);
+          skyCtx.lineTo(w * 0.29, horizonY - 38 + farOffY);
+          skyCtx.lineTo(w * 0.44, horizonY - 38 + farOffY);
+          skyCtx.lineTo(w * 0.51, horizonY - 18 + farOffY);
+          skyCtx.lineTo(w * 0.72, horizonY - 18 + farOffY);
+          skyCtx.lineTo(w * 0.81, horizonY - 48 + farOffY);
+          skyCtx.lineTo(w * 0.94, horizonY - 48 + farOffY);
+          skyCtx.lineTo(w, horizonY - 22 + farOffY);
+          skyCtx.lineTo(w, h);
+          skyCtx.closePath();
+          skyCtx.fill();
+
+        } else if (d.particleType === "balloons") {
+          // Cappadocia Soft Dawn Radial Sun Glow
+          const dawnGrad = skyCtx.createRadialGradient(w * 0.5 + farOffX, horizonY - 25, 5, w * 0.5, horizonY - 25, w * 0.58);
+          dawnGrad.addColorStop(0, "rgba(255, 235, 195, 0.75)");
+          dawnGrad.addColorStop(0.38, "rgba(230, 135, 165, 0.35)");
+          dawnGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          skyCtx.fillStyle = dawnGrad;
+          skyCtx.fillRect(0, 0, w, h);
+
+          // Distant Volcanic Ridge (Mount Erciyes)
+          skyCtx.fillStyle = "rgba(48, 26, 58, 0.60)";
+          skyCtx.beginPath();
+          skyCtx.moveTo(0, h);
+          skyCtx.lineTo(0, horizonY - 12 + farOffY);
+          skyCtx.lineTo(w * 0.36 + farOffX, horizonY - 12 + farOffY);
+          skyCtx.lineTo(w * 0.50 + farOffX, horizonY - 105 + farOffY);
+          skyCtx.lineTo(w * 0.64 + farOffX, horizonY - 12 + farOffY);
+          skyCtx.lineTo(w, horizonY - 12 + farOffY);
+          skyCtx.lineTo(w, h);
+          skyCtx.closePath();
+          skyCtx.fill();
+
+        } else if (d.particleType === "fireflies") {
+          // Kyoto Silver Crescent Moon & Misty Corona
+          const moonX = w * 0.74 + farOffX;
+          const moonY = h * 0.22 + farOffY;
+          skyCtx.fillStyle = "rgba(225, 255, 240, 0.92)";
+          skyCtx.shadowColor = "rgba(140, 255, 190, 0.85)";
+          skyCtx.shadowBlur = 20;
+          skyCtx.beginPath();
+          skyCtx.arc(moonX, moonY, 17, 0, Math.PI * 2);
+          skyCtx.fill();
+          skyCtx.fillStyle = "#091c15";
+          skyCtx.shadowBlur = 0;
+          skyCtx.beginPath();
+          skyCtx.arc(moonX + 6, moonY - 3, 16, 0, Math.PI * 2);
+          skyCtx.fill();
+
+          // Distant Mountain Ridge
+          skyCtx.fillStyle = "rgba(11, 34, 24, 0.68)";
+          skyCtx.beginPath();
+          skyCtx.moveTo(0, h);
+          skyCtx.lineTo(0, horizonY - 22 + farOffY);
+          skyCtx.bezierCurveTo(w * 0.28, horizonY - 65 + farOffY, w * 0.66, horizonY - 15 + farOffY, w, horizonY - 38 + farOffY);
+          skyCtx.lineTo(w, h);
+          skyCtx.closePath();
+          skyCtx.fill();
+
+        } else if (d.particleType === "stars") {
+          // Salar de Uyuni Deep Space Nebula Dust Clouds
+          const nebulaGrad = skyCtx.createRadialGradient(w * 0.42 + farOffX, h * 0.24 + farOffY, 10, w * 0.42, h * 0.24, w * 0.58);
+          nebulaGrad.addColorStop(0, "rgba(110, 65, 205, 0.5)");
+          nebulaGrad.addColorStop(0.35, "rgba(40, 150, 230, 0.32)");
+          nebulaGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          skyCtx.fillStyle = nebulaGrad;
+          skyCtx.fillRect(0, 0, w, h);
+
+          // Horizon Aurora Australis Wave
+          skyCtx.strokeStyle = "rgba(65, 230, 220, 0.48)";
+          skyCtx.lineWidth = 16;
+          skyCtx.beginPath();
+          skyCtx.moveTo(0, horizonY - 9);
+          for (let ax = 0; ax <= w; ax += 30) {
+            skyCtx.lineTo(ax, horizonY - 15 + Math.sin(ax * 0.02 + singularityTick * 0.02) * 12);
+          }
+          skyCtx.stroke();
+
+        } else if (d.particleType === "embers") {
+          // Destination 5: Petra Terracotta Twilight & High Gorge Atmospheric Glow
+          const twilightGrad = skyCtx.createRadialGradient(w * 0.5 + farOffX, horizonY - 35 + farOffY, 10, w * 0.5, horizonY - 35, w * 0.52);
+          twilightGrad.addColorStop(0, "rgba(255, 145, 75, 0.42)");
+          twilightGrad.addColorStop(0.42, "rgba(165, 45, 35, 0.20)");
+          twilightGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          skyCtx.fillStyle = twilightGrad;
+          skyCtx.fillRect(0, 0, w, h);
+
+        } else if (d.particleType === "snow") {
+          // Matterhorn Undulating Aurora Borealis Curtains
+          for (let a = 0; a < 3; a++) {
+            const auroraY = h * 0.22 + a * 26;
+            skyCtx.strokeStyle = a === 0 ? "rgba(75, 245, 195, 0.38)" : a === 1 ? "rgba(95, 165, 255, 0.32)" : "rgba(185, 85, 245, 0.24)";
+            skyCtx.lineWidth = 20;
+            skyCtx.beginPath();
+            skyCtx.moveTo(0, auroraY);
+            for (let x = 0; x <= w; x += 32) {
+              const wav = Math.sin(x * 0.014 + singularityTick * 0.015 + a * 1.5) * 24;
+              skyCtx.lineTo(x, auroraY + wav);
+            }
+            skyCtx.stroke();
+          }
+        }
+      }
+
+      // ----------------------------------------------------
+      // Layer 2: Midground Landmarks & Animated World Canvas
+      // ----------------------------------------------------
+      function renderWorld(w, h, d, midOffX, midOffY) {
+        if (!worldCtx) return;
+        worldCtx.clearRect(0, 0, w, h);
+
+        const horizonY = h * d.horizonY;
+
+        if (d.particleType === "dust") {
+          // Destination 1: Monument Valley Midground Sandstone Formations
+          if (d.useImage && monumentImg.complete && monumentImg.naturalWidth > 0) {
+            worldCtx.save();
+            worldCtx.globalAlpha = 0.88;
+            worldCtx.drawImage(monumentImg, -0.04 * w + midOffX * 0.5, -0.04 * h + midOffY * 0.5, w * 1.08, h * 1.08);
+            worldCtx.restore();
+          } else {
+            // Procedural Mittens & Scree Slopes
+            worldCtx.fillStyle = "rgba(24, 7, 11, 0.92)";
             worldCtx.beginPath();
             worldCtx.moveTo(0, h);
-            worldCtx.lineTo(0, horizonY - 15 + farOffY);
-            worldCtx.lineTo(w * 0.2, horizonY - 15 + farOffY);
-            worldCtx.lineTo(w * 0.28, horizonY - 35 + farOffY);
-            worldCtx.lineTo(w * 0.45, horizonY - 35 + farOffY);
-            worldCtx.lineTo(w * 0.52, horizonY - 15 + farOffY);
-            worldCtx.lineTo(w * 0.72, horizonY - 15 + farOffY);
-            worldCtx.lineTo(w * 0.80, horizonY - 45 + farOffY);
-            worldCtx.lineTo(w * 0.95, horizonY - 45 + farOffY);
-            worldCtx.lineTo(w, horizonY - 20 + farOffY);
+            worldCtx.lineTo(0, horizonY + 8 + midOffY);
+            // West Mitten
+            worldCtx.lineTo(w * 0.22 + midOffX, horizonY + 8 + midOffY);
+            worldCtx.lineTo(w * 0.26 + midOffX, horizonY - 52 + midOffY);
+            worldCtx.lineTo(w * 0.28 + midOffX, horizonY - 52 + midOffY);
+            worldCtx.lineTo(w * 0.29 + midOffX, horizonY - 88 + midOffY); // thumb spire
+            worldCtx.lineTo(w * 0.31 + midOffX, horizonY - 88 + midOffY);
+            worldCtx.lineTo(w * 0.32 + midOffX, horizonY - 52 + midOffY);
+            worldCtx.lineTo(w * 0.36 + midOffX, horizonY - 52 + midOffY);
+            worldCtx.lineTo(w * 0.40 + midOffX, horizonY + 8 + midOffY);
+            // Merrick Butte
+            worldCtx.lineTo(w * 0.65 + midOffX, horizonY + 8 + midOffY);
+            worldCtx.lineTo(w * 0.69 + midOffX, horizonY - 68 + midOffY);
+            worldCtx.lineTo(w * 0.77 + midOffX, horizonY - 68 + midOffY);
+            worldCtx.lineTo(w * 0.82 + midOffX, horizonY + 8 + midOffY);
+            worldCtx.lineTo(w, horizonY + 8 + midOffY);
             worldCtx.lineTo(w, h);
             worldCtx.closePath();
             worldCtx.fill();
           }
 
-          // Midground Sandstone Mittens with Step Cliffs & Talus Slopes
-          worldCtx.fillStyle = "rgba(22, 6, 9, 0.88)";
-          worldCtx.beginPath();
-          worldCtx.moveTo(0, h);
-          worldCtx.lineTo(0, horizonY + 8 + midOffY);
-          // West Mitten Butte
-          worldCtx.lineTo(w * 0.22 + midOffX, horizonY + 8 + midOffY);
-          worldCtx.lineTo(w * 0.26 + midOffX, horizonY - 50 + midOffY);
-          worldCtx.lineTo(w * 0.28 + midOffX, horizonY - 50 + midOffY);
-          worldCtx.lineTo(w * 0.29 + midOffX, horizonY - 85 + midOffY); // thumb spire
-          worldCtx.lineTo(w * 0.31 + midOffX, horizonY - 85 + midOffY);
-          worldCtx.lineTo(w * 0.32 + midOffX, horizonY - 50 + midOffY);
-          worldCtx.lineTo(w * 0.36 + midOffX, horizonY - 50 + midOffY);
-          worldCtx.lineTo(w * 0.40 + midOffX, horizonY + 8 + midOffY);
-          // Merrick Butte
-          worldCtx.lineTo(w * 0.65 + midOffX, horizonY + 8 + midOffY);
-          worldCtx.lineTo(w * 0.69 + midOffX, horizonY - 65 + midOffY);
-          worldCtx.lineTo(w * 0.76 + midOffX, horizonY - 65 + midOffY);
-          worldCtx.lineTo(w * 0.81 + midOffX, horizonY + 8 + midOffY);
-          worldCtx.lineTo(w, horizonY + 8 + midOffY);
-          worldCtx.lineTo(w, h);
-          worldCtx.closePath();
-          worldCtx.fill();
-
         } else if (d.particleType === "balloons") {
-          // ----------------------------------------
-          // DESTINATION 2: CAPPADOCIA (TURKEY)
-          // ----------------------------------------
-          // Soft Dawn Glow
-          const dawnGrad = worldCtx.createRadialGradient(w * 0.5 + farOffX, horizonY - 20, 5, w * 0.5, horizonY - 20, w * 0.55);
-          dawnGrad.addColorStop(0, "rgba(255, 230, 190, 0.7)");
-          dawnGrad.addColorStop(0.4, "rgba(225, 130, 160, 0.3)");
-          dawnGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-          worldCtx.fillStyle = dawnGrad;
-          worldCtx.fillRect(0, 0, w, h);
-
-          // Distant Volcanic Mount Erciyes Ridge
-          worldCtx.fillStyle = "rgba(45, 25, 55, 0.55)";
-          worldCtx.beginPath();
-          worldCtx.moveTo(0, h);
-          worldCtx.lineTo(0, horizonY - 10 + farOffY);
-          worldCtx.lineTo(w * 0.38 + farOffX, horizonY - 10 + farOffY);
-          worldCtx.lineTo(w * 0.50 + farOffX, horizonY - 95 + farOffY);
-          worldCtx.lineTo(w * 0.62 + farOffX, horizonY - 10 + farOffY);
-          worldCtx.lineTo(w, horizonY - 10 + farOffY);
-          worldCtx.lineTo(w, h);
-          worldCtx.closePath();
-          worldCtx.fill();
-
-          // Procedural Floating Hot-Air Balloons
+          // Destination 2: Cappadocia Floating Hot Air Balloons & Fairy Chimneys
           balloons.forEach(bal => {
             bal.x += bal.driftSpeed;
             if (bal.x < -bal.size) bal.x = w + bal.size;
             if (bal.x > w + bal.size) bal.x = -bal.size;
 
-            const bob = Math.sin(worldTick * bal.bobSpeed + bal.bobPhase) * 9;
+            const bob = Math.sin(singularityTick * bal.bobSpeed + bal.bobPhase) * 10;
             const bx = bal.x + midOffX;
             const by = bal.baseY + bob + midOffY;
             const rad = bal.size;
 
-            // Balloon Envelope
             worldCtx.save();
             worldCtx.translate(bx, by);
 
-            // Teardrop Bulb
+            // Balloon Envelope
             worldCtx.fillStyle = bal.colors[0];
             worldCtx.beginPath();
             worldCtx.arc(0, 0, rad, Math.PI * 0.85, Math.PI * 0.15, false);
@@ -2940,22 +3111,22 @@
             worldCtx.closePath();
             worldCtx.fill();
 
-            // Decorative Stripe
+            // Decorative Center Stripe
             worldCtx.fillStyle = bal.colors[1];
             worldCtx.beginPath();
             worldCtx.ellipse(0, 0, rad * 0.45, rad, 0, 0, Math.PI * 2);
             worldCtx.fill();
 
             // Burner Flame Glow
-            if (bal.hasFlame && Math.sin(worldTick * 0.1 + bal.bobPhase) > 0.2) {
+            if (bal.hasFlame && Math.sin(singularityTick * 0.12 + bal.bobPhase) > 0.2) {
               worldCtx.fillStyle = "#fff4cc";
               worldCtx.beginPath();
-              worldCtx.arc(0, rad * 1.62, rad * 0.25, 0, Math.PI * 2);
+              worldCtx.arc(0, rad * 1.62, rad * 0.26, 0, Math.PI * 2);
               worldCtx.fill();
             }
 
-            // Suspension Lines & Basket
-            worldCtx.strokeStyle = "rgba(30, 20, 40, 0.75)";
+            // Suspension Lines & Wicker Basket
+            worldCtx.strokeStyle = "rgba(32, 22, 42, 0.75)";
             worldCtx.lineWidth = 0.8;
             worldCtx.beginPath();
             worldCtx.moveTo(-rad * 0.35, rad * 1.55);
@@ -2970,91 +3141,71 @@
             worldCtx.restore();
           });
 
-          // Midground Fairy Chimney Rock Formations
-          worldCtx.fillStyle = "rgba(18, 12, 26, 0.92)";
+          // Fairy Chimneys with glowing troglodyte cave windows
+          worldCtx.fillStyle = "rgba(18, 12, 28, 0.94)";
           worldCtx.beginPath();
           worldCtx.moveTo(0, h);
           worldCtx.lineTo(0, horizonY + 15 + midOffY);
           for (let cx = 0; cx <= w; cx += 40) {
-            const hVar = Math.sin(cx * 0.04) * 25 + Math.cos(cx * 0.08) * 15;
-            worldCtx.lineTo(cx + 10 + midOffX, horizonY - 45 + hVar + midOffY);
-            // Basalt capstone
-            worldCtx.lineTo(cx + 25 + midOffX, horizonY - 50 + hVar + midOffY);
-            worldCtx.lineTo(cx + 35 + midOffX, horizonY + 15 + midOffY);
+            const hVar = Math.sin(cx * 0.04) * 26 + Math.cos(cx * 0.08) * 16;
+            worldCtx.lineTo(cx + 10 + midOffX, horizonY - 48 + hVar + midOffY);
+            worldCtx.lineTo(cx + 26 + midOffX, horizonY - 54 + hVar + midOffY);
+            worldCtx.lineTo(cx + 36 + midOffX, horizonY + 15 + midOffY);
           }
           worldCtx.lineTo(w, horizonY + 15 + midOffY);
           worldCtx.lineTo(w, h);
           worldCtx.closePath();
           worldCtx.fill();
 
-        } else if (d.particleType === "fireflies") {
-          // ----------------------------------------
-          // DESTINATION 3: KYOTO ARASHIYAMA (JAPAN)
-          // ----------------------------------------
-          // Silver Crescent Moon in Sky
-          const moonX = w * 0.72 + farOffX;
-          const moonY = h * 0.22 + farOffY;
-          worldCtx.fillStyle = "rgba(220, 255, 235, 0.9)";
-          worldCtx.shadowColor = "rgba(140, 255, 190, 0.8)";
-          worldCtx.shadowBlur = 18;
-          worldCtx.beginPath();
-          worldCtx.arc(moonX, moonY, 16, 0, Math.PI * 2);
-          worldCtx.fill();
-          worldCtx.fillStyle = "#091c15";
-          worldCtx.shadowBlur = 0;
-          worldCtx.beginPath();
-          worldCtx.arc(moonX + 6, moonY - 3, 15, 0, Math.PI * 2);
-          worldCtx.fill();
-
-          // Misty Mountain Ridge
-          worldCtx.fillStyle = "rgba(10, 32, 22, 0.65)";
-          worldCtx.beginPath();
-          worldCtx.moveTo(0, h);
-          worldCtx.lineTo(0, horizonY - 20 + farOffY);
-          worldCtx.bezierCurveTo(w * 0.25, horizonY - 60 + farOffY, w * 0.65, horizonY - 10 + farOffY, w, horizonY - 35 + farOffY);
-          worldCtx.lineTo(w, h);
-          worldCtx.closePath();
-          worldCtx.fill();
-
-          // Swaying Bamboo Grove (Layered Stalks & Nodes)
-          worldCtx.strokeStyle = "rgba(6, 20, 14, 0.94)";
-          worldCtx.fillStyle = "rgba(6, 20, 14, 0.94)";
-          const stalkCount = 24;
-          for (let s = 0; s < stalkCount; s++) {
-            const bx = (s / stalkCount) * w + (s % 3) * 8 + midOffX;
-            const sway = Math.sin(worldTick * 0.02 + s * 0.7) * 12;
-            worldCtx.lineWidth = 4.5 + (s % 3);
+          // Warm cave dwelling windows
+          for (let cx = 30; cx < w; cx += 80) {
+            const winX = cx + midOffX;
+            const winY = horizonY - 15 + midOffY;
+            worldCtx.fillStyle = "rgba(255, 215, 140, 0.85)";
             worldCtx.beginPath();
-            worldCtx.moveTo(bx, h);
-            worldCtx.quadraticCurveTo(bx + sway * 0.4, horizonY - 30, bx + sway, horizonY - 140 - (s % 5) * 20);
-            worldCtx.stroke();
-
-            // Bamboo Leaves clusters
-            const tipX = bx + sway;
-            const tipY = horizonY - 140 - (s % 5) * 20;
-            worldCtx.beginPath();
-            worldCtx.ellipse(tipX - 10, tipY + 10, 12, 3, Math.PI / 4, 0, Math.PI * 2);
-            worldCtx.ellipse(tipX + 10, tipY + 15, 12, 3, -Math.PI / 4, 0, Math.PI * 2);
+            worldCtx.arc(winX, winY, 2.5, 0, Math.PI * 2);
             worldCtx.fill();
           }
 
-          // Traditional Stone Lanterns (Tōrō) with Warm Glow
+        } else if (d.particleType === "fireflies") {
+          // Destination 3: Kyoto Arashiyama Bamboo Grove & Stone Lanterns
+          worldCtx.strokeStyle = "rgba(6, 22, 15, 0.95)";
+          worldCtx.fillStyle = "rgba(6, 22, 15, 0.95)";
+          const stalkCount = 28;
+          for (let s = 0; s < stalkCount; s++) {
+            const bx = (s / stalkCount) * w + (s % 3) * 8 + midOffX;
+            const sway = Math.sin(singularityTick * 0.02 + s * 0.7) * 13;
+            worldCtx.lineWidth = 4.5 + (s % 3);
+            worldCtx.beginPath();
+            worldCtx.moveTo(bx, h);
+            worldCtx.quadraticCurveTo(bx + sway * 0.4, horizonY - 30, bx + sway, horizonY - 145 - (s % 5) * 20);
+            worldCtx.stroke();
+
+            // Leaf clusters
+            const tipX = bx + sway;
+            const tipY = horizonY - 145 - (s % 5) * 20;
+            worldCtx.beginPath();
+            worldCtx.ellipse(tipX - 10, tipY + 10, 13, 3, Math.PI / 4, 0, Math.PI * 2);
+            worldCtx.ellipse(tipX + 10, tipY + 15, 13, 3, -Math.PI / 4, 0, Math.PI * 2);
+            worldCtx.fill();
+          }
+
+          // Carved Stone Lanterns (Tōrō) with warm flickering fire
           [w * 0.18 + midOffX, w * 0.82 + midOffX].forEach((lx) => {
             const ly = horizonY + 30;
-            // Warm fire chamber glow
-            const glow = worldCtx.createRadialGradient(lx, ly, 2, lx, ly, 38);
-            glow.addColorStop(0, "rgba(255, 220, 130, 0.9)");
-            glow.addColorStop(0.45, "rgba(255, 160, 50, 0.35)");
+            const glow = worldCtx.createRadialGradient(lx, ly, 2, lx, ly, 40);
+            glow.addColorStop(0, "rgba(255, 225, 135, 0.95)");
+            glow.addColorStop(0.45, "rgba(255, 160, 50, 0.38)");
             glow.addColorStop(1, "rgba(0, 0, 0, 0)");
             worldCtx.fillStyle = glow;
             worldCtx.beginPath();
-            worldCtx.arc(lx, ly, 38, 0, Math.PI * 2);
+            worldCtx.arc(lx, ly, 40, 0, Math.PI * 2);
             worldCtx.fill();
 
-            // Carved Stone Silhouette
+            // Stone Silhouette
             worldCtx.fillStyle = "#050d09";
-            worldCtx.fillRect(lx - 12, ly + 6, 24, 22); // base
-            worldCtx.fillRect(lx - 8, ly - 8, 16, 14); // chamber frame
+            worldCtx.fillRect(lx - 12, ly + 6, 24, 22);
+            worldCtx.fillRect(lx - 8, ly - 8, 16, 14);
             worldCtx.beginPath();
             worldCtx.moveTo(lx - 18, ly - 8);
             worldCtx.lineTo(lx, ly - 22);
@@ -3063,19 +3214,19 @@
             worldCtx.fill();
           });
 
-          // Bioluminescent Fireflies with Waving Trails
+          // Bioluminescent Fireflies
           fireflies.forEach(f => {
-            f.x += f.vx + Math.sin(worldTick * 0.04 + f.glowPhase) * 0.5;
-            f.y += f.vy + Math.cos(worldTick * 0.03 + f.glowPhase) * 0.4;
+            f.x += f.vx + Math.sin(singularityTick * 0.04 + f.glowPhase) * 0.55;
+            f.y += f.vy + Math.cos(singularityTick * 0.03 + f.glowPhase) * 0.45;
             if (f.x < 0) f.x = w;
             if (f.x > w) f.x = 0;
-            if (f.y < h * 0.2) f.y = h * 0.8;
-            if (f.y > h * 0.88) f.y = h * 0.3;
+            if (f.y < h * 0.22) f.y = h * 0.82;
+            if (f.y > h * 0.88) f.y = h * 0.32;
 
-            const pulse = 0.5 + 0.5 * Math.sin(worldTick * f.glowSpeed + f.glowPhase);
-            worldCtx.fillStyle = `rgba(175, 255, 185, ${pulse * 0.9})`;
-            worldCtx.shadowColor = "rgba(120, 255, 160, 0.95)";
-            worldCtx.shadowBlur = 10 * pulse;
+            const pulse = 0.5 + 0.5 * Math.sin(singularityTick * f.glowSpeed + f.glowPhase);
+            worldCtx.fillStyle = `rgba(180, 255, 190, ${pulse * 0.92})`;
+            worldCtx.shadowColor = "rgba(125, 255, 165, 0.95)";
+            worldCtx.shadowBlur = 12 * pulse;
             worldCtx.beginPath();
             worldCtx.arc(f.x + midOffX * 0.5, f.y + midOffY * 0.5, f.radius * (0.8 + pulse * 0.4), 0, Math.PI * 2);
             worldCtx.fill();
@@ -3083,37 +3234,16 @@
           });
 
         } else if (d.particleType === "stars") {
-          // ----------------------------------------
-          // DESTINATION 4: SALAR DE UYUNI (BOLIVIA)
-          // ----------------------------------------
-          // Cosmic Nebula Glow
-          const nebulaGrad = worldCtx.createRadialGradient(w * 0.4 + farOffX, h * 0.25 + farOffY, 10, w * 0.4, h * 0.25, w * 0.55);
-          nebulaGrad.addColorStop(0, "rgba(100, 60, 190, 0.45)");
-          nebulaGrad.addColorStop(0.35, "rgba(35, 140, 220, 0.3)");
-          nebulaGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-          worldCtx.fillStyle = nebulaGrad;
-          worldCtx.fillRect(0, 0, w, h);
-
-          // Aurora Borealis Wave along Horizon
-          worldCtx.strokeStyle = "rgba(60, 220, 210, 0.45)";
-          worldCtx.lineWidth = 14;
-          worldCtx.beginPath();
-          worldCtx.moveTo(0, horizonY - 8);
-          for (let ax = 0; ax <= w; ax += 30) {
-            worldCtx.lineTo(ax, horizonY - 14 + Math.sin(ax * 0.02 + worldTick * 0.02) * 12);
-          }
-          worldCtx.stroke();
-
-          // Mirror Horizon Separation Line
-          worldCtx.strokeStyle = "rgba(180, 230, 255, 0.35)";
+          // Destination 4: Salar de Uyuni Razor Water Mirror & Hexagonal Tessellation
+          worldCtx.strokeStyle = "rgba(185, 235, 255, 0.38)";
           worldCtx.lineWidth = 1.0;
           worldCtx.beginPath();
           worldCtx.moveTo(0, horizonY);
           worldCtx.lineTo(w, horizonY);
           worldCtx.stroke();
 
-          // Hexagonal Salt Crust Tessellation Lines (Perspective below horizon)
-          worldCtx.strokeStyle = "rgba(140, 200, 240, 0.12)";
+          // Hexagonal salt tessellation
+          worldCtx.strokeStyle = "rgba(145, 205, 245, 0.14)";
           worldCtx.lineWidth = 0.9;
           for (let row = 0; row < 6; row++) {
             const ry = horizonY + 20 + row * 26;
@@ -3128,14 +3258,13 @@
             worldCtx.stroke();
           }
 
-          // Random Meteors / Shooting Stars
+          // Shooting Stars
           if (Math.random() < 0.025 && meteors.length < 3) {
             meteors.push({
               x: Math.random() * w * 0.8,
               y: Math.random() * h * 0.35,
               vx: 7 + Math.random() * 5,
               vy: 3 + Math.random() * 3,
-              len: 40 + Math.random() * 30,
               alpha: 1.0
             });
           }
@@ -3147,16 +3276,16 @@
               meteors.splice(idx, 1);
               return;
             }
-            // Sky Meteor
             worldCtx.strokeStyle = `rgba(255, 255, 255, ${m.alpha})`;
             worldCtx.lineWidth = 1.5;
             worldCtx.beginPath();
             worldCtx.moveTo(m.x, m.y);
             worldCtx.lineTo(m.x - m.vx * 4, m.y - m.vy * 4);
             worldCtx.stroke();
-            // Reflected Meteor below horizon
+
+            // Water Mirror Reflection
             const refY = horizonY + (horizonY - m.y);
-            worldCtx.strokeStyle = `rgba(180, 230, 255, ${m.alpha * 0.6})`;
+            worldCtx.strokeStyle = `rgba(185, 235, 255, ${m.alpha * 0.65})`;
             worldCtx.beginPath();
             worldCtx.moveTo(m.x, refY);
             worldCtx.lineTo(m.x - m.vx * 4, refY + m.vy * 4);
@@ -3164,10 +3293,7 @@
           });
 
         } else if (d.particleType === "embers") {
-          // ----------------------------------------
-          // DESTINATION 5: PETRA TREASURY (JORDAN)
-          // ----------------------------------------
-          // Towering Siq Canyon Sandstone Walls
+          // Destination 5: Petra Treasury Facade & Siq Canyon Gorge
           worldCtx.fillStyle = "rgba(18, 6, 8, 0.95)";
           // Left Canyon Wall
           worldCtx.beginPath();
@@ -3187,144 +3313,227 @@
           worldCtx.closePath();
           worldCtx.fill();
 
-          // Center Opening: Al-Khazneh (The Treasury) Facade
-          const tx = w * 0.5 + farOffX;
-          const ty = horizonY - 15 + farOffY;
-          worldCtx.fillStyle = "rgba(38, 12, 16, 0.92)";
+          // Al-Khazneh (Treasury) Facade
+          const tx = w * 0.5 + midOffX * 0.4;
+          const ty = horizonY - 15 + midOffY * 0.4;
+          worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
 
-          // Lower Portico & Pediment
+          // Portico
           worldCtx.beginPath();
-          worldCtx.moveTo(tx - 65, ty);
-          worldCtx.lineTo(tx, ty - 55);
-          worldCtx.lineTo(tx + 65, ty);
-          worldCtx.lineTo(tx + 60, ty + 65);
-          worldCtx.lineTo(tx - 60, ty + 65);
+          worldCtx.moveTo(tx - 68, ty);
+          worldCtx.lineTo(tx, ty - 58);
+          worldCtx.lineTo(tx + 68, ty);
+          worldCtx.lineTo(tx + 62, ty + 68);
+          worldCtx.lineTo(tx - 62, ty + 68);
           worldCtx.closePath();
           worldCtx.fill();
 
           // Columns
-          worldCtx.strokeStyle = "rgba(70, 24, 28, 0.85)";
-          worldCtx.lineWidth = 3.0;
-          for (let c = -45; c <= 45; c += 18) {
+          worldCtx.strokeStyle = "rgba(75, 26, 30, 0.88)";
+          worldCtx.lineWidth = 3.2;
+          for (let c = -48; c <= 48; c += 19) {
             worldCtx.beginPath();
             worldCtx.moveTo(tx + c, ty + 10);
-            worldCtx.lineTo(tx + c, ty + 65);
+            worldCtx.lineTo(tx + c, ty + 68);
             worldCtx.stroke();
           }
 
-          // Upper Tholos Temple & Crowning Urn
-          worldCtx.fillStyle = "rgba(38, 12, 16, 0.92)";
-          worldCtx.fillRect(tx - 22, ty - 100, 44, 45); // round tholos
+          // Upper Tholos & Urn
+          worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
+          worldCtx.fillRect(tx - 24, ty - 105, 48, 48);
           worldCtx.beginPath();
-          worldCtx.arc(tx, ty - 110, 8, 0, Math.PI * 2); // funerary urn
+          worldCtx.arc(tx, ty - 114, 9, 0, Math.PI * 2);
           worldCtx.fill();
 
-          // Living Candlelight Pools on the Canyon Floor
-          for (let c = 0; c < 18; c++) {
-            const cx = (w * 0.34) + (c / 17) * (w * 0.32) + (Math.sin(c * 2) * 12);
-            const cy = horizonY + 35 + (c % 4) * 18;
-            const flicker = 0.7 + 0.3 * Math.sin(worldTick * 0.12 + c);
-            const cGlow = worldCtx.createRadialGradient(cx, cy, 1, cx, cy, 22 * flicker);
-            cGlow.addColorStop(0, "rgba(255, 220, 140, 0.95)");
-            cGlow.addColorStop(0.35, "rgba(240, 110, 40, 0.45)");
+          // Living Candlelight Pools on Canyon Floor
+          for (let c = 0; c < 20; c++) {
+            const cx = (w * 0.33) + (c / 19) * (w * 0.34) + (Math.sin(c * 2.2) * 14);
+            const cy = horizonY + 36 + (c % 4) * 18;
+            const flicker = 0.7 + 0.3 * Math.sin(singularityTick * 0.12 + c);
+            const cGlow = worldCtx.createRadialGradient(cx, cy, 1, cx, cy, 24 * flicker);
+            cGlow.addColorStop(0, "rgba(255, 225, 145, 0.95)");
+            cGlow.addColorStop(0.35, "rgba(240, 115, 45, 0.48)");
             cGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
             worldCtx.fillStyle = cGlow;
             worldCtx.beginPath();
-            worldCtx.arc(cx, cy, 22 * flicker, 0, Math.PI * 2);
+            worldCtx.arc(cx, cy, 24 * flicker, 0, Math.PI * 2);
             worldCtx.fill();
           }
 
         } else if (d.particleType === "snow") {
-          // ----------------------------------------
-          // DESTINATION 6: MATTERHORN (SWITZERLAND)
-          // ----------------------------------------
-          // Northern Lights / Aurora Borealis Curtains
-          for (let a = 0; a < 3; a++) {
-            const auroraY = h * 0.22 + a * 25;
-            worldCtx.strokeStyle = a === 0 ? "rgba(70, 240, 190, 0.35)" : a === 1 ? "rgba(90, 160, 255, 0.3)" : "rgba(180, 80, 240, 0.22)";
-            worldCtx.lineWidth = 18;
-            worldCtx.beginPath();
-            worldCtx.moveTo(0, auroraY);
-            for (let x = 0; x <= w; x += 35) {
-              const wav = Math.sin(x * 0.015 + worldTick * 0.015 + a * 1.5) * 22;
-              worldCtx.lineTo(x, auroraY + wav);
-            }
-            worldCtx.stroke();
-          }
+          // Destination 6: Matterhorn Iconic Summit & Couloirs
+          const peakX = w * 0.5 + midOffX * 0.5;
+          const peakY = horizonY - 155 + midOffY * 0.5;
 
-          // Matterhorn Iconic Sharp Pyramid Peak
-          const peakX = w * 0.5 + farOffX;
-          const peakY = horizonY - 150 + farOffY;
-
-          // Dark Rock Face (North face shadow)
-          worldCtx.fillStyle = "rgba(8, 14, 24, 0.96)";
+          // North Face Shadow
+          worldCtx.fillStyle = "rgba(8, 15, 26, 0.96)";
           worldCtx.beginPath();
           worldCtx.moveTo(peakX, peakY);
-          worldCtx.lineTo(peakX - 110, horizonY + 20);
-          worldCtx.lineTo(peakX + 130, horizonY + 20);
+          worldCtx.lineTo(peakX - 115, horizonY + 22);
+          worldCtx.lineTo(peakX + 135, horizonY + 22);
           worldCtx.closePath();
           worldCtx.fill();
 
-          // Snow-covered Ridges (Hörnli Ridge & Couloirs)
-          worldCtx.fillStyle = "rgba(215, 240, 255, 0.88)";
+          // Snow-covered Couloirs
+          worldCtx.fillStyle = "rgba(220, 242, 255, 0.90)";
           worldCtx.beginPath();
           worldCtx.moveTo(peakX, peakY);
-          worldCtx.lineTo(peakX - 10, peakY + 45);
-          worldCtx.lineTo(peakX + 35, horizonY - 30);
-          worldCtx.lineTo(peakX + 115, horizonY + 20);
-          worldCtx.lineTo(peakX, horizonY + 20);
+          worldCtx.lineTo(peakX - 10, peakY + 46);
+          worldCtx.lineTo(peakX + 38, horizonY - 32);
+          worldCtx.lineTo(peakX + 120, horizonY + 22);
+          worldCtx.lineTo(peakX, horizonY + 22);
           worldCtx.closePath();
           worldCtx.fill();
 
-          // Summit Snow Banner / Spindrift blowing off peak
-          worldCtx.strokeStyle = "rgba(235, 245, 255, 0.45)";
+          // Summit Spindrift Snow Banner
+          worldCtx.strokeStyle = "rgba(240, 248, 255, 0.48)";
           worldCtx.lineWidth = 2.0;
           for (let b = 0; b < 6; b++) {
             worldCtx.beginPath();
             worldCtx.moveTo(peakX, peakY + b * 4);
-            worldCtx.quadraticCurveTo(peakX + 45 + b * 8, peakY - 10 + b * 5, peakX + 95 + b * 12, peakY - 5 + b * 7);
+            worldCtx.quadraticCurveTo(peakX + 48 + b * 8, peakY - 12 + b * 5, peakX + 100 + b * 12, peakY - 6 + b * 7);
             worldCtx.stroke();
           }
         }
 
-        // 3. Foreground Obsidian Dunes / Terrain Ridge (Grounding Layer)
-        worldCtx.fillStyle = "#040507";
-        worldCtx.beginPath();
-        worldCtx.moveTo(0, h);
-        worldCtx.lineTo(0, horizonY + 38 + fgOffY);
-        worldCtx.bezierCurveTo(w * 0.25 + fgOffX, horizonY + 18 + fgOffY, w * 0.75 + fgOffX, horizonY + 48 + fgOffY, w, horizonY + 28 + fgOffY);
-        worldCtx.lineTo(w, h);
-        worldCtx.closePath();
-        worldCtx.fill();
-
-        // 4. Ambient Atmospheric Particles (Stars, Snow, Embers, Dust)
+        // Ambient World Particles
         particles.forEach(p => {
           p.x += p.vx;
           p.y += p.vy;
-
           if (p.x < 0) p.x = w;
           if (p.x > w) p.x = 0;
           if (p.y < 0) p.y = h;
           if (p.y > h) p.y = 0;
 
-          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(worldTick * p.pulseSpeed + p.pulsePhase));
+          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(singularityTick * p.pulseSpeed + p.pulsePhase));
           worldCtx.fillStyle = d.particleColor;
           worldCtx.globalAlpha = Math.max(0, Math.min(1, currentAlpha));
           worldCtx.beginPath();
-          // Apply depth parallax to particles
-          const px = p.x + midOffX * p.depth;
-          const py = p.y + midOffY * p.depth;
-          worldCtx.arc(px, py, p.radius, 0, Math.PI * 2);
+          worldCtx.arc(p.x + midOffX * p.depth, p.y + midOffY * p.depth, p.radius, 0, Math.PI * 2);
           worldCtx.fill();
         });
         worldCtx.globalAlpha = 1.0;
+      }
 
-        // Render singularity vortex on its dedicated canvas
+      // ----------------------------------------------------
+      // Layer 4: Foreground Obsidian Dunes Canvas Renderer (Z: +75px)
+      // ----------------------------------------------------
+      function renderForeground(w, h, d, fgOffX, fgOffY) {
+        if (!fgCtx) return;
+        fgCtx.clearRect(0, 0, w, h);
+
+        const horizonY = h * d.horizonY;
+
+        // Dark Obsidian Dunes that physically overlap and ground the stone gate arch
+        fgCtx.fillStyle = "#040507";
+        fgCtx.beginPath();
+        fgCtx.moveTo(0, h);
+        fgCtx.lineTo(0, horizonY + 44 + fgOffY);
+        fgCtx.bezierCurveTo(
+          w * 0.28 + fgOffX, horizonY + 22 + fgOffY,
+          w * 0.72 + fgOffX, horizonY + 54 + fgOffY,
+          w, horizonY + 34 + fgOffY
+        );
+        fgCtx.lineTo(w, h);
+        fgCtx.closePath();
+        fgCtx.fill();
+
+        // Subtle bronze/gold dune rim illumination
+        fgCtx.strokeStyle = "rgba(223, 183, 108, 0.25)";
+        fgCtx.lineWidth = 1.2;
+        fgCtx.beginPath();
+        fgCtx.moveTo(0, horizonY + 44 + fgOffY);
+        fgCtx.bezierCurveTo(
+          w * 0.28 + fgOffX, horizonY + 22 + fgOffY,
+          w * 0.72 + fgOffX, horizonY + 54 + fgOffY,
+          w, horizonY + 34 + fgOffY
+        );
+        fgCtx.stroke();
+
+        // Foreground Floating Dust Motes
+        foregroundParticles.forEach(fp => {
+          fp.x += fp.vx;
+          fp.y += fp.vy;
+          if (fp.x < 0) fp.x = w;
+          if (fp.x > w) fp.x = 0;
+          if (fp.y < horizonY + 20) fp.y = h;
+
+          fgCtx.fillStyle = "rgba(223, 183, 108, " + (fp.alpha * 0.8) + ")";
+          fgCtx.beginPath();
+          fgCtx.arc(fp.x, fp.y, fp.radius, 0, Math.PI * 2);
+          fgCtx.fill();
+        });
+      }
+
+      // ----------------------------------------------------
+      // Main Animation Frame Loop (4-Layer Parallax Dispatcher)
+      // ----------------------------------------------------
+      function animLoop() {
+        // Differential Physics Parallax Lerp
+        mouse.x += (mouse.targetX - mouse.x) * 0.08;
+        mouse.y += (mouse.targetY - mouse.y) * 0.08;
+
+        // Apply true 4-tier differential 3D transforms
+        if (skyCanvas) {
+          skyCanvas.style.transform = `translate3d(${-mouse.x * 12}px, ${-mouse.y * 8}px, -60px) scale(1.06)`;
+        }
+        if (worldCanvas) {
+          worldCanvas.style.transform = `translate3d(${-mouse.x * 24}px, ${-mouse.y * 14}px, -15px) scale(1.05)`;
+        }
+        if (gateWrap) {
+          const rotY = mouse.x * 15;
+          const rotX = -mouse.y * 12;
+          const transX = mouse.x * 18;
+          const transY = mouse.y * 10;
+          gateWrap.style.transform = `perspective(1100px) rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(${transX}px, ${transY}px, 40px)`;
+        }
+        if (foregroundCanvas) {
+          foregroundCanvas.style.transform = `translate3d(${mouse.x * 34}px, ${mouse.y * 18}px, 75px) scale(1.08)`;
+        }
+        if (overlayLeft) {
+          overlayLeft.style.transform = `translate3d(${-mouse.x * 10}px, ${-mouse.y * 6}px, 25px)`;
+        }
+        if (overlayRight) {
+          overlayRight.style.transform = `translate3d(${-mouse.x * 10}px, ${-mouse.y * 6}px, 25px)`;
+        }
+        if (portalCue) {
+          portalCue.style.transform = `translate3d(calc(-50% + ${mouse.x * 22}px), ${mouse.y * 12}px, 90px)`;
+        }
+
+        // Programmatic Runes Ring Orbit & Liquid Ripple Update
+        runeSpeed += (targetRuneSpeed - runeSpeed) * 0.06;
+        runeRotation = (runeRotation + runeSpeed) % 360;
+        if (runesGroup) {
+          runesGroup.setAttribute("transform", `rotate(${runeRotation} 100 100)`);
+        }
+        runeDisplacementScale += (targetDisplacementScale - runeDisplacementScale) * 0.1;
+        if (targetDisplacementScale > 0.05) targetDisplacementScale *= 0.93;
+        if (runeDisplacement) {
+          runeDisplacement.setAttribute("scale", runeDisplacementScale.toFixed(2));
+        }
+        if (runeTurbulence && runeDisplacementScale > 0.1) {
+          runeTurbulence.setAttribute("baseFrequency", (0.04 + Math.sin(singularityTick * 0.08) * 0.012).toFixed(4));
+        }
+
+        const d = destinations[currentIndex];
+        const w = worldCanvas ? worldCanvas.width : 800;
+        const h = worldCanvas ? worldCanvas.height : 600;
+
+        const farOffX = -mouse.x * w * 0.015;
+        const farOffY = -mouse.y * h * 0.01;
+        const midOffX = -mouse.x * w * 0.035;
+        const midOffY = -mouse.y * h * 0.02;
+        const fgOffX = mouse.x * w * 0.055;
+        const fgOffY = mouse.y * h * 0.025;
+
+        renderSky(w, h, d, farOffX, farOffY);
+        renderWorld(w, h, d, midOffX, midOffY);
+        renderForeground(w, h, d, fgOffX, fgOffY);
         renderSingularityVortex();
 
-        requestAnimationFrame(renderWorldCanvas);
+        requestAnimationFrame(animLoop);
       }
-      requestAnimationFrame(renderWorldCanvas);
+      requestAnimationFrame(animLoop);
 
       // ----------------------------------------------------
       // Transition to Destination with Quantum Warp FX
@@ -3332,6 +3541,15 @@
       function setDestination(newIndex, direction = 1) {
         if (isTeleporting) return;
         isTeleporting = true;
+
+        // Trigger dynamic runes liquid shockwave ripple & vortex hyper-acceleration
+        targetDisplacementScale = 28.0;
+        targetRuneSpeed = 2.6;
+        targetVortexSpeed = 3.6;
+
+        if (portalCue) {
+          gsap.fromTo(portalCue, { scale: 0.88 }, { scale: 1.0, duration: 0.45, ease: "back.out(2)" });
+        }
 
         if (statusPill) {
           statusPill.innerHTML = '<span class="portal-status-dot" style="background:#e89b4f;box-shadow:0 0 12px #e89b4f"></span>WARPING';
@@ -3403,6 +3621,8 @@
                   ease: "power2.out",
                   onComplete() {
                     isTeleporting = false;
+                    targetVortexSpeed = isGateHovered ? 2.4 : 1.0;
+                    targetRuneSpeed = isGateHovered ? 1.6 : 0.28;
                     if (statusPill) {
                       statusPill.innerHTML = '<span class="portal-status-dot"></span>ONLINE';
                       statusPill.style.color = "#777";
@@ -3415,6 +3635,8 @@
         } else {
           currentIndex = (newIndex + destinations.length) % destinations.length;
           isTeleporting = false;
+          targetVortexSpeed = isGateHovered ? 2.4 : 1.0;
+          targetRuneSpeed = isGateHovered ? 1.6 : 0.28;
         }
       }
 
@@ -3424,6 +3646,13 @@
       // Click Gate Arch to Teleport to Next Destination
       if (gateWrap) {
         gateWrap.addEventListener("click", () => {
+          setDestination(currentIndex + 1, 1);
+        });
+      }
+
+      // Click Cue Badge to Teleport
+      if (portalCue) {
+        portalCue.addEventListener("click", () => {
           setDestination(currentIndex + 1, 1);
         });
       }
@@ -3476,16 +3705,17 @@
       });
 
       // Keyboard Arrow Navigation
-      if (viewport) {
-        viewport.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowRight") {
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+          const isNearPortal = document.activeElement === viewport || isGateHovered || Math.abs(mouse.x) > 0.05 || Math.abs(mouse.y) > 0.05;
+          if (isNearPortal) {
+            e.preventDefault();
             playUiTick();
-            setDestination(currentIndex + 1, 1);
-          } else if (e.key === "ArrowLeft") {
-            playUiTick();
-            setDestination(currentIndex - 1, -1);
+            setDestination(e.key === "ArrowRight" ? currentIndex + 1 : currentIndex - 1, e.key === "ArrowRight" ? 1 : -1);
           }
-        });
+        }
+      });
+      if (viewport) {
         viewport.setAttribute("tabindex", "0");
       }
     })();
