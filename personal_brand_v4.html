@@ -2226,11 +2226,23 @@
       let gateHumOsc2 = null;
       let gateHumFilter = null;
       let gateHumGain = null;
+      let chimeMasterGain = null;
+      let chimeFilter = null;
 
       function initAudioContext() {
         if (!audioCtx) {
           const AC = window.AudioContext || window.webkitAudioContext;
-          if (AC) audioCtx = new AC();
+          if (AC) {
+            audioCtx = new AC();
+            chimeMasterGain = audioCtx.createGain();
+            chimeMasterGain.gain.setValueAtTime(0.42, audioCtx.currentTime);
+            chimeFilter = audioCtx.createBiquadFilter();
+            chimeFilter.type = "lowpass";
+            chimeFilter.frequency.setValueAtTime(7500, audioCtx.currentTime);
+            chimeFilter.Q.setValueAtTime(0.7, audioCtx.currentTime);
+            chimeMasterGain.connect(chimeFilter);
+            chimeFilter.connect(audioCtx.destination);
+          }
         }
         if (audioCtx && audioCtx.state === "suspended") {
           audioCtx.resume().catch(() => {});
@@ -2238,11 +2250,9 @@
       }
 
       // Unlock AudioContext on any initial user gesture
-      ["click", "touchstart", "mousemove"].forEach(evt => {
+      ["click", "pointerdown", "touchstart", "mousemove", "keydown"].forEach(evt => {
         window.addEventListener(evt, () => {
-          if (audioCtx && audioCtx.state === "suspended") {
-            audioCtx.resume().catch(() => {});
-          }
+          initAudioContext();
         }, { once: true, passive: true });
       });
 
@@ -2392,14 +2402,15 @@
       // ----------------------------------------------------
       const CHIME_PENTATONIC = [1046.50, 1174.66, 1318.51, 1567.98, 1760.00, 2093.00, 2349.32];
 
-      function playThreadChime(stringIndex, strength = 0.5) {
+      function playThreadChime(stringIndex, strength = 0.5, delaySec = 0) {
         if (!soundEnabled) return;
         initAudioContext();
         if (!audioCtx) return;
         try {
-          const now = audioCtx.currentTime;
+          const now = audioCtx.currentTime + Math.max(0, delaySec);
           const freq = CHIME_PENTATONIC[stringIndex % CHIME_PENTATONIC.length];
-          const vol = Math.max(0.015, Math.min(0.06, 0.02 + strength * 0.035));
+          const vol = Math.max(0.016, Math.min(0.07, 0.022 + strength * 0.038));
+          const dest = chimeMasterGain || audioCtx.destination;
 
           // 1. Fundamental Pure Crystal Tone
           const osc1 = audioCtx.createOscillator();
@@ -2407,12 +2418,12 @@
           osc1.type = "sine";
           osc1.frequency.setValueAtTime(freq, now);
           gain1.gain.setValueAtTime(0.0001, now);
-          gain1.gain.linearRampToValueAtTime(vol, now + 0.003);
-          gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
+          gain1.gain.linearRampToValueAtTime(vol, now + 0.0035);
+          gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.92);
           osc1.connect(gain1);
-          gain1.connect(audioCtx.destination);
+          gain1.connect(dest);
           osc1.start(now);
-          osc1.stop(now + 0.9);
+          osc1.stop(now + 0.98);
 
           // 2. Metallic Tubular Bell Harmonic Overtone (f * 2.756)
           const osc2 = audioCtx.createOscillator();
@@ -2420,25 +2431,25 @@
           osc2.type = "sine";
           osc2.frequency.setValueAtTime(freq * 2.756, now);
           gain2.gain.setValueAtTime(0.0001, now);
-          gain2.gain.linearRampToValueAtTime(vol * 0.38, now + 0.002);
-          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+          gain2.gain.linearRampToValueAtTime(vol * 0.32, now + 0.0025);
+          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
           osc2.connect(gain2);
-          gain2.connect(audioCtx.destination);
+          gain2.connect(dest);
           osc2.start(now);
-          osc2.stop(now + 0.45);
+          osc2.stop(now + 0.52);
 
-          // 3. Shimmering High Crystal Sparkle (f * 5.404)
+          // 3. Shimmering High Crystal Sparkle (f * 4.07)
           const osc3 = audioCtx.createOscillator();
           const gain3 = audioCtx.createGain();
           osc3.type = "sine";
-          osc3.frequency.setValueAtTime(freq * 5.404, now);
+          osc3.frequency.setValueAtTime(freq * 4.07, now);
           gain3.gain.setValueAtTime(0.0001, now);
-          gain3.gain.linearRampToValueAtTime(vol * 0.14, now + 0.002);
-          gain3.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+          gain3.gain.linearRampToValueAtTime(vol * 0.12, now + 0.002);
+          gain3.gain.exponentialRampToValueAtTime(0.0001, now + 0.30);
           osc3.connect(gain3);
-          gain3.connect(audioCtx.destination);
+          gain3.connect(dest);
           osc3.start(now);
-          osc3.stop(now + 0.28);
+          osc3.stop(now + 0.34);
         } catch (_) {}
       }
 
@@ -2806,7 +2817,7 @@
       // Floating in gate archway with upcoming destination data
       // ----------------------------------------------------
       const NUM_THREADS = 7;
-      const NODES_PER_THREAD = 16;
+      const NODES_PER_THREAD = 24;
       let hangingThreads = [];
       const threadMouse = {
         x: -9999,
@@ -2827,13 +2838,14 @@
           // Arch ceiling curve (catenary/ellipse arch approximation)
           const archCenterDist = Math.abs((normX - 0.5) / 0.36);
           const archHeight = Math.sqrt(Math.max(0, 1 - archCenterDist * archCenterDist * 0.72));
-          const topY = (1 - archHeight) * (h * 0.19) + h * 0.04;
-          const totalLength = h * 0.80;
+          const topY = (1 - archHeight) * (h * 0.18) + h * 0.04;
+          const totalLength = h * 0.78;
+          const segmentLength = totalLength / (NODES_PER_THREAD - 1);
 
           const nodes = [];
           for (let j = 0; j < NODES_PER_THREAD; j++) {
             const restX = anchorX;
-            const restY = topY + (j / (NODES_PER_THREAD - 1)) * totalLength;
+            const restY = topY + j * segmentLength;
             nodes.push({
               x: restX,
               y: restY,
@@ -2848,6 +2860,7 @@
             nodes,
             anchorX,
             topY,
+            segmentLength,
             displacedIntensity: 0
           });
         }
@@ -2857,112 +2870,154 @@
         const nextIdx = (currentIndex + 1) % destinations.length;
         const next = destinations[nextIdx];
         const stringData = [
-          `▲ NEXT DEST: ${next.name.toUpperCase()}`,
-          `COORD: ${next.coords.replace(" ", "")}`,
-          `ALTITUDE: ${next.altitude} // ATMO`,
-          `ATMOSPHERE: ${next.atmosphere.split("·")[0].trim().toUpperCase()}`,
-          `TEMPORAL: ${next.temporal} // WARP`,
+          `◆ DEST: ${next.name.toUpperCase()}`,
+          `✦ COORD: ${next.coords.replace(" ", "")}`,
+          `▲ ALTITUDE: ${next.altitude} · SL`,
+          `◈ ATMO: ${next.atmosphere.split("·")[0].trim().toUpperCase()}`,
+          `❖ WARP SYNC: ${next.temporal.split(" ")[0]}`,
           `ᛟ ᚱ ᛒ ᛁ ᛏ ᚐ ᛚ // ᛋ ᛁ ᚾ ᚷ ᚢ ᛚ ᚐ`,
-          `QUANTUM STARGATE READY 99.9%`
+          `✦ STARGATE READY 99.9%`
         ];
         return stringData[threadIndex % stringData.length];
       }
 
       function updateHangingThreadsPhysics(tick) {
-        // Calculate cursor velocity
-        if (threadMouse.active && threadMouse.lastX > -1000) {
-          threadMouse.vx = (threadMouse.x - threadMouse.lastX) * 0.8;
-          threadMouse.vy = (threadMouse.y - threadMouse.lastY) * 0.8;
-        } else {
-          threadMouse.vx = 0;
-          threadMouse.vy = 0;
-        }
-        threadMouse.lastX = threadMouse.x;
-        threadMouse.lastY = threadMouse.y;
-
-        const cursorSpeed = Math.hypot(threadMouse.vx, threadMouse.vy);
         const nowMs = performance.now();
+        const hasPrevMouse = (threadMouse.lastX > -1000 && threadMouse.lastY > -1000);
+        const curX = threadMouse.x;
+        const curY = threadMouse.y;
+        const prevX = hasPrevMouse ? threadMouse.lastX : curX;
+        const prevY = hasPrevMouse ? threadMouse.lastY : curY;
+
+        const moveDx = curX - prevX;
+        const moveDy = curY - prevY;
+        const cursorSpeed = Math.hypot(moveDx, moveDy);
+        threadMouse.vx = moveDx * 0.75;
+        threadMouse.vy = moveDy * 0.75;
 
         hangingThreads.forEach((th, i) => {
           let threadDisplacedThisFrame = false;
+          let minTAlongSwipe = 1.0;
+          let maxDisplacementForce = 0;
 
+          // 1. Natural ambient harmonic air sway
           th.nodes.forEach((node, j) => {
             if (node.pinned) return;
-
-            // 1. Natural ambient air sway (fluid breathing of silk threads)
-            const sway = Math.sin(tick * 0.024 + i * 0.85 + j * 0.24) * (0.16 + (j / NODES_PER_THREAD) * 0.32);
+            const sway = Math.sin(tick * 0.022 + i * 0.9 + j * 0.22) * (0.12 + (j / th.nodes.length) * 0.28);
             node.vx += sway;
+          });
 
-            // 2. Spring-tension restoration to vertical resting position
-            const springK = 0.048 - (j / NODES_PER_THREAD) * 0.016;
-            node.vx += (node.restX - node.x) * springK;
-            node.vy += (node.restY - node.y) * (springK * 1.6);
+          // 2. Continuous swept-segment interaction ("huddi sochni qo'l bilan harakatlantirgandek")
+          if (threadMouse.active && (cursorSpeed > 0.4 || hasPrevMouse)) {
+            const segLenSq = moveDx * moveDx + moveDy * moveDy;
+            const brushRadius = Math.max(38, 28 * (window.devicePixelRatio || 1));
 
-            // 3. Neighbor constraint (hair/string elasticity & smooth bend continuity)
-            if (j > 0) {
-              const prev = th.nodes[j - 1];
-              node.vx += (prev.x - node.x) * 0.14;
-            }
-            if (j < NODES_PER_THREAD - 1) {
-              const next = th.nodes[j + 1];
-              node.vx += (next.x - node.x) * 0.14;
-            }
+            th.nodes.forEach((node, j) => {
+              if (node.pinned) return;
 
-            // 4. Hand brushing dynamics ("huddi sochni qo'l bilan harakatlantirgandek")
-            if (threadMouse.active) {
-              const dx = node.x - threadMouse.x;
-              const dy = node.y - threadMouse.y;
+              // Find closest point on cursor movement segment [prev -> cur]
+              let t = 0;
+              if (segLenSq > 0.001) {
+                t = ((node.x - prevX) * moveDx + (node.y - prevY) * moveDy) / segLenSq;
+                t = Math.max(0, Math.min(1, t));
+              }
+              const projX = prevX + t * moveDx;
+              const projY = prevY + t * moveDy;
+              const dx = node.x - projX;
+              const dy = node.y - projY;
               const dist = Math.hypot(dx, dy);
-              const brushRadius = 42; // Width of brush interaction
 
               if (dist < brushRadius) {
-                const brushFactor = Math.pow(1 - dist / brushRadius, 1.4);
-                const nx = dist > 0.1 ? (dx / dist) : (threadMouse.vx >= 0 ? 1 : -1);
+                const brushFactor = Math.pow(1 - dist / brushRadius, 1.3);
+                const nx = dist > 0.1 ? (dx / dist) : (moveDx >= 0 ? 1 : -1);
                 
-                // Displace strand away from finger and along movement vector
-                const pushX = (nx * 3.4 + threadMouse.vx * 0.65) * brushFactor;
-                const pushY = (threadMouse.vy * 0.35 + 0.8) * brushFactor;
-                
-                node.vx += pushX;
+                // Silky lateral displacement with forward hand drag and vertical ripple
+                const pushForce = Math.min(18, (nx * 3.8 + threadMouse.vx * 0.55) * brushFactor);
+                const pushY = (threadMouse.vy * 0.28 + 0.6) * brushFactor;
+
+                node.vx += pushForce;
                 node.vy += pushY;
                 threadDisplacedThisFrame = true;
-                th.displacedIntensity = Math.min(1.0, th.displacedIntensity + 0.35);
+                th.displacedIntensity = Math.min(1.0, th.displacedIntensity + 0.4 * brushFactor);
+                if (t < minTAlongSwipe) minTAlongSwipe = t;
+                if (Math.abs(pushForce) > maxDisplacementForce) maxDisplacementForce = Math.abs(pushForce);
+              }
+            });
+          }
+
+          // 3. Dual-pass Verlet constraint relaxation for inextensible silk/hair bend
+          for (let iter = 0; iter < 2; iter++) {
+            for (let j = 1; j < th.nodes.length; j++) {
+              const prev = th.nodes[j - 1];
+              const curr = th.nodes[j];
+              const dx = curr.x - prev.x;
+              const dy = curr.y - prev.y;
+              const dist = Math.hypot(dx, dy);
+              if (dist > 0.001) {
+                const diff = (dist - th.segmentLength) / dist;
+                const weight = prev.pinned ? 0.9 : 0.45;
+                if (!prev.pinned) {
+                  prev.x += dx * diff * 0.4;
+                  prev.y += dy * diff * 0.4;
+                }
+                curr.x -= dx * diff * weight;
+                curr.y -= dy * diff * weight;
               }
             }
+          }
 
-            // 5. Viscous air damping
-            node.vx *= 0.91;
-            node.vy *= 0.87;
+          // 4. Spring restoration to resting catenary spine & viscous air drag
+          th.nodes.forEach((node, j) => {
+            if (node.pinned) return;
+            const springK = 0.038 - (j / th.nodes.length) * 0.014;
+            node.vx += (node.restX - node.x) * springK;
+            node.vy += (node.restY - node.y) * (springK * 1.5);
 
-            // Clamp velocity
-            node.vx = Math.max(-14, Math.min(14, node.vx));
-            node.vy = Math.max(-10, Math.min(10, node.vy));
+            // Damping
+            node.vx *= 0.92;
+            node.vy *= 0.88;
+
+            // Velocity clamp
+            node.vx = Math.max(-16, Math.min(16, node.vx));
+            node.vy = Math.max(-12, Math.min(12, node.vy));
 
             node.x += node.vx;
             node.y += node.vy;
           });
 
-          // Trigger delicate bell chime if brushed with enough movement
-          if (threadDisplacedThisFrame && cursorSpeed > 0.8) {
-            if (nowMs - threadChimeCooldown[i] > 140) {
+          // 5. Delicate resonant crystal bell chime trigger with arpeggio glissando
+          if (threadDisplacedThisFrame && (cursorSpeed > 0.6 || maxDisplacementForce > 1.2)) {
+            if (nowMs - threadChimeCooldown[i] > 110) {
               threadChimeCooldown[i] = nowMs;
-              playThreadChime(i, Math.min(1.0, cursorSpeed / 6));
+              const delaySec = minTAlongSwipe * 0.055; // Natural glissando arpeggio stagger
+              const strength = Math.min(1.0, (cursorSpeed + maxDisplacementForce) / 8);
+              playThreadChime(i, strength, delaySec);
             }
           }
 
-          th.displacedIntensity *= 0.94; // Fade displacement glow
+          th.displacedIntensity *= 0.93;
         });
+
+        threadMouse.lastX = curX;
+        threadMouse.lastY = curY;
       }
 
       function renderHangingThreads() {
         if (!threadsCtx || !threadsCanvas) return;
         const w = threadsCanvas.width;
         const h = threadsCanvas.height;
+        const dpr = window.devicePixelRatio || 1;
         threadsCtx.clearRect(0, 0, w, h);
+
+        const fontSize = Math.max(7.5, Math.min(11, Math.round(8.5 * dpr)));
+        threadsCtx.font = `600 ${fontSize}px 'Cinzel', 'Cinzel Decorative', 'DM Sans', monospace`;
+        threadsCtx.textAlign = "center";
+        threadsCtx.textBaseline = "middle";
 
         hangingThreads.forEach((th, i) => {
           const text = getThreadGlyphs(i);
-          const isGlowing = th.displacedIntensity > 0.15;
+          const isGlowing = th.displacedIntensity > 0.12;
+          const glowAlpha = Math.min(1.0, 0.35 + th.displacedIntensity * 0.65);
 
           // 1. Draw subtle golden silk filament line
           threadsCtx.beginPath();
@@ -2976,41 +3031,52 @@
             }
           });
           threadsCtx.strokeStyle = isGlowing
-            ? `rgba(255, 243, 209, ${0.45 + th.displacedIntensity * 0.45})`
-            : "rgba(223, 183, 108, 0.28)";
-          threadsCtx.lineWidth = isGlowing ? 1.4 : 0.85;
+            ? `rgba(255, 245, 215, ${glowAlpha})`
+            : "rgba(223, 183, 108, 0.32)";
+          threadsCtx.lineWidth = (isGlowing ? 1.5 : 0.9) * dpr * 0.75;
+          threadsCtx.shadowColor = isGlowing ? "rgba(255, 230, 150, 0.85)" : "transparent";
+          threadsCtx.shadowBlur = isGlowing ? 8 * dpr : 0;
           threadsCtx.stroke();
+          threadsCtx.shadowBlur = 0;
+
+          // Top and bottom decorative golden finial beads
+          const topNode = th.nodes[0];
+          const btmNode = th.nodes[th.nodes.length - 1];
+          threadsCtx.fillStyle = isGlowing ? "#fffbe6" : "#dfb76c";
+          threadsCtx.beginPath();
+          threadsCtx.arc(topNode.x, topNode.y, 2.2 * dpr * 0.7, 0, Math.PI * 2);
+          threadsCtx.arc(btmNode.x, btmNode.y, 1.8 * dpr * 0.7, 0, Math.PI * 2);
+          threadsCtx.fill();
 
           // 2. Draw tiny luxury golden letters & glyphs along the hanging thread
-          threadsCtx.font = "600 8px 'DM Sans', monospace";
-          threadsCtx.textAlign = "center";
-          threadsCtx.textBaseline = "middle";
-
           th.nodes.forEach((node, j) => {
-            const char = text[j % text.length];
-            if (!char || char === " ") {
+            if (node.pinned) return; // Skip top anchor bead
+            const charIdx = j - 1;
+            const char = charIdx < text.length ? text[charIdx] : "·";
+
+            if (!char || char === " " || char === "·") {
               // Draw delicate golden micro bead / nodule
-              threadsCtx.fillStyle = isGlowing ? "#fff3d1" : "#dfb76c";
+              threadsCtx.fillStyle = isGlowing ? "#fff3d1" : "rgba(223, 183, 108, 0.75)";
               threadsCtx.beginPath();
-              threadsCtx.arc(node.x, node.y, isGlowing ? 1.4 : 0.9, 0, Math.PI * 2);
+              threadsCtx.arc(node.x, node.y, (isGlowing ? 1.4 : 1.0) * dpr * 0.7, 0, Math.PI * 2);
               threadsCtx.fill();
               return;
             }
 
-            // Golden luxury lettering with shimmering glow
             threadsCtx.save();
             threadsCtx.translate(node.x, node.y);
 
-            // Subtle letter tilt aligned with thread slope
+            // Rotate along thread tangent slope
             if (j > 0 && j < th.nodes.length - 1) {
-              const slope = (th.nodes[j + 1].x - th.nodes[j - 1].x) / (th.nodes[j + 1].y - th.nodes[j - 1].y + 0.001);
-              const angle = Math.atan(slope) * 0.6;
-              threadsCtx.rotate(angle);
+              const dx = th.nodes[j + 1].x - th.nodes[j - 1].x;
+              const dy = th.nodes[j + 1].y - th.nodes[j - 1].y;
+              const angle = Math.atan2(dx, dy) * 0.65;
+              threadsCtx.rotate(-angle);
             }
 
-            threadsCtx.shadowColor = isGlowing ? "rgba(255, 235, 170, 0.95)" : "rgba(223, 183, 108, 0.55)";
-            threadsCtx.shadowBlur = isGlowing ? 8 : 3.5;
-            threadsCtx.fillStyle = isGlowing ? "#fff8e6" : "#dfb76c";
+            threadsCtx.shadowColor = isGlowing ? "rgba(255, 235, 170, 0.95)" : "rgba(223, 183, 108, 0.45)";
+            threadsCtx.shadowBlur = (isGlowing ? 7 : 3) * dpr * 0.6;
+            threadsCtx.fillStyle = isGlowing ? "#fffce8" : "#dfb76c";
             threadsCtx.fillText(char, 0, 0);
 
             threadsCtx.restore();
@@ -3547,20 +3613,30 @@
         // Render authentic photographic high-resolution landscape for ALL 6 destinations
         if (hasRealImg) {
           worldCtx.save();
-          worldCtx.globalAlpha = 0.94;
-          const bleed = 0.05;
-          worldCtx.drawImage(
-            curImg,
-            -bleed * w + midOffX * 0.45,
-            -bleed * h + midOffY * 0.45,
-            w * (1 + bleed * 2),
-            h * (1 + bleed * 2)
-          );
+          worldCtx.globalAlpha = 1.0;
+          const bleed = 0.06;
+          const targetW = w * (1 + bleed * 2);
+          const targetH = h * (1 + bleed * 2);
+          const imgRatio = curImg.naturalWidth / curImg.naturalHeight;
+          const targetRatio = targetW / targetH;
+          let dw, dh, dx, dy;
+          if (targetRatio > imgRatio) {
+            dw = targetW;
+            dh = targetW / imgRatio;
+            dx = -bleed * w + midOffX * 0.45;
+            dy = -bleed * h + midOffY * 0.45 - (dh - targetH) * 0.5;
+          } else {
+            dh = targetH;
+            dw = targetH * imgRatio;
+            dx = -bleed * w + midOffX * 0.45 - (dw - targetW) * 0.5;
+            dy = -bleed * h + midOffY * 0.45;
+          }
+          worldCtx.drawImage(curImg, dx, dy, dw, dh);
           // Destination-specific subtle atmospheric light grading
           const atmoGrad = worldCtx.createLinearGradient(0, 0, 0, h);
-          atmoGrad.addColorStop(0, "rgba(5, 7, 10, 0.2)");
+          atmoGrad.addColorStop(0, "rgba(5, 7, 10, 0.18)");
           atmoGrad.addColorStop(0.68, "transparent");
-          atmoGrad.addColorStop(1, "rgba(4, 5, 7, 0.72)");
+          atmoGrad.addColorStop(1, "rgba(4, 5, 7, 0.68)");
           worldCtx.fillStyle = atmoGrad;
           worldCtx.fillRect(0, 0, w, h);
           worldCtx.restore();
