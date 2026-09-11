@@ -420,69 +420,148 @@
       padding:4px 9px;display:flex;align-items:center;gap:5px;cursor:pointer;transition:.3s;
     }
     .portal-sound-btn:hover{color:var(--white);border-color:rgba(223,183,108,.5)}
+    .portal-sound-btn.active{color:var(--gold);border-color:rgba(223,183,108,.6);background:rgba(223,183,108,.08)}
 
-    /* Viewport */
+    /* Viewport with 3D Perspective */
     .portal-viewport{
       position:relative;flex:1;overflow:hidden;
       display:flex;align-items:center;justify-content:center;
+      perspective:1100px;
+      perspective-origin:50% 50%;
+      transform-style:preserve-3d;
+      user-select:none;
     }
-    .portal-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+    .portal-canvas{
+      position:absolute;inset:-6%;width:112%;height:112%;z-index:1;
+      pointer-events:none;
+      transform-origin:center center;
+      will-change:transform;
+    }
     .portal-backdrop{
       position:absolute;inset:0;z-index:2;pointer-events:none;
-      background:radial-gradient(circle at 50% 50%, transparent 40%, rgba(6,7,9,.82) 100%);
-      transition:background 1s ease-in-out;
+      background:radial-gradient(circle at 50% 50%, transparent 35%, rgba(4,5,8,.85) 100%);
+      mix-blend-mode:multiply;
     }
 
     /* Left Overlay */
     .portal-overlay-left{
-      position:absolute;left:26px;top:26px;z-index:10;pointer-events:none;
-      max-width:240px;
+      position:absolute;left:26px;top:26px;z-index:15;pointer-events:none;
+      max-width:240px;transform-style:preserve-3d;
+      will-change:transform;
     }
     .portal-kicker{font-size:7.5px;letter-spacing:.26em;color:#8a8e97;text-transform:uppercase}
     .portal-place-name{
       margin:10px 0 0;font-family:var(--serif);font-size:clamp(26px,2.8vw,40px);
       line-height:.96;font-weight:400;color:var(--white);letter-spacing:-.03em;
+      text-shadow:0 2px 20px rgba(0,0,0,0.8);
     }
     .portal-index-row{display:flex;align-items:center;gap:10px;margin-top:18px}
-    .portal-index-current{font-size:11px;color:var(--gold);font-weight:600}
+    .portal-index-current{font-size:11px;color:var(--gold);font-weight:600;text-shadow:0 0 8px rgba(223,183,108,.5)}
     .portal-index-bar{width:60px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
-    .portal-index-fill{height:100%;background:var(--gold-grad);width:16.66%;transition:width .6s cubic-bezier(.16,1,.3,1)}
+    .portal-index-fill{height:100%;background:var(--gold-grad);width:16.66%;transition:width .6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 8px rgba(223,183,108,.8)}
     .portal-index-total{font-size:9px;color:#555}
 
-    /* Center Archway */
+    /* Center Archway with 3D Depth */
     .portal-gate-wrap{
-      position:relative;z-index:12;width:min(280px,38%);aspect-ratio:350/410;
+      position:relative;z-index:12;width:min(285px,38%);aspect-ratio:350/410;
       cursor:pointer;transform-origin:center center;
-      transition:transform .4s cubic-bezier(.16,1,.3,1),filter .4s;
+      transform-style:preserve-3d;
+      will-change:transform,filter;
+      transition:filter .4s;
     }
-    .portal-gate-wrap:hover{transform:scale(1.03);filter:drop-shadow(0 0 35px rgba(223,183,108,.35))}
-    .portal-gate-wrap:active{transform:scale(.98)}
+    .portal-gate-wrap:hover{
+      filter:drop-shadow(0 0 35px rgba(223,183,108,.45)) drop-shadow(0 0 65px rgba(223,183,108,.25));
+    }
+    .portal-gate-wrap:active{transform:scale(.97)}
     .portal-gate-img{
       position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
-      z-index:3;filter:drop-shadow(0 15px 35px rgba(0,0,0,.85));
+      z-index:5;filter:drop-shadow(0 20px 40px rgba(0,0,0,.92));
       pointer-events:none;
+      transform:translateZ(26px);
+      transform-style:preserve-3d;
     }
-    .portal-singularity{
-      position:absolute;left:20.5%;top:20%;width:59%;height:65%;
-      border-radius:50% 50% 12% 12% / 45% 45% 12% 12%;
-      background:radial-gradient(circle at 50% 45%, rgba(223,183,108,.4) 0%, rgba(240,165,80,.2) 35%, rgba(10,12,18,.05) 70%, transparent 100%);
-      z-index:2;pointer-events:none;mix-blend-mode:screen;
-      animation:singularityPulse 3.5s ease-in-out infinite alternate;
+
+    /* Singularity Aperture Container */
+    .portal-singularity-container{
+      position:absolute;left:20.5%;top:19.5%;width:59%;height:65.5%;
+      border-radius:50% 50% 10% 10% / 44% 44% 10% 10%;
+      overflow:hidden;
+      z-index:3;pointer-events:none;
+      transform:translateZ(6px);
+      background:#010204;
+      box-shadow:inset 0 0 30px rgba(0,0,0,0.95), 0 0 25px rgba(223,183,108,0.25);
     }
-    @keyframes singularityPulse{
-      0%{transform:scale(0.96);opacity:0.65}
-      100%{transform:scale(1.05);opacity:1}
+    .portal-singularity-canvas{
+      position:absolute;inset:0;width:100%;height:100%;
+      display:block;
     }
+    .portal-runes-svg{
+      position:absolute;inset:-6%;width:112%;height:112%;
+      pointer-events:none;
+      transform-origin:center center;
+      animation:runeOrbit 26s linear infinite;
+      opacity:0.75;
+      mix-blend-mode:screen;
+      filter:drop-shadow(0 0 5px rgba(223,183,108,0.5));
+      transition:opacity .4s, filter .4s;
+    }
+    .portal-gate-wrap:hover .portal-runes-svg{
+      opacity:1;
+      filter:drop-shadow(0 0 10px rgba(255,225,140,0.9));
+      animation-duration:8s;
+    }
+    .portal-runes-text{
+      font-family:monospace;
+      font-size:7px;
+      letter-spacing:4px;
+      fill:#ffd78a;
+      text-transform:uppercase;
+    }
+    @keyframes runeOrbit{
+      0%{transform:rotate(0deg)}
+      100%{transform:rotate(360deg)}
+    }
+    .portal-singularity-flare{
+      position:absolute;left:0;top:46%;width:100%;height:2px;
+      background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.95) 50%,transparent 100%);
+      box-shadow:0 0 14px 3px rgba(223,183,108,0.85);
+      mix-blend-mode:screen;
+      pointer-events:none;
+      opacity:0.65;
+      animation:flareBreathe 3s ease-in-out infinite alternate;
+    }
+    @keyframes flareBreathe{
+      0%{transform:scaleX(0.7);opacity:0.45}
+      100%{transform:scaleX(1.15);opacity:0.85}
+    }
+
+    /* Shockwave / Warp Flash FX */
     .portal-warp-fx{
-      position:absolute;inset:0;z-index:8;background:#fff;pointer-events:none;opacity:0;
+      position:absolute;inset:0;z-index:20;background:#fff;pointer-events:none;opacity:0;
       mix-blend-mode:overlay;
     }
+    .portal-ripple-fx{
+      position:absolute;left:50%;top:50%;width:200%;height:200%;
+      margin-left:-100%;margin-top:-100%;
+      z-index:18;pointer-events:none;opacity:0;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(223,183,108,0.45) 30%, transparent 70%);
+      mix-blend-mode:screen;
+      transform:scale(0.1);
+    }
+
+    /* Floating Cue Badge */
     .portal-cue{
-      position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);
+      position:absolute;bottom:-18px;left:50%;transform:translateX(-50%) translateZ(46px);
       white-space:nowrap;display:flex;align-items:center;gap:7px;
-      background:rgba(12,14,18,.88);border:1px solid rgba(223,183,108,.35);
-      border-radius:20px;padding:5px 12px;z-index:15;box-shadow:0 6px 20px rgba(0,0,0,.6);
+      background:rgba(12,14,18,.92);border:1px solid rgba(223,183,108,.4);
+      border-radius:20px;padding:6px 14px;z-index:25;box-shadow:0 8px 25px rgba(0,0,0,.75);
       pointer-events:none;
+      transition:transform .3s, border-color .3s;
+    }
+    .portal-gate-wrap:hover .portal-cue{
+      border-color:rgba(255,243,209,.85);
+      box-shadow:0 8px 25px rgba(223,183,108,.35);
     }
     .portal-cue-ring{
       width:6px;height:6px;border-radius:50%;background:#dfb76c;
@@ -490,41 +569,43 @@
     }
     @keyframes cuePulse{
       0%,100%{transform:scale(1);opacity:.5;box-shadow:0 0 0 0 rgba(223,183,108,.7)}
-      50%{transform:scale(1.4);opacity:1;box-shadow:0 0 0 6px rgba(223,183,108,0)}
+      50%{transform:scale(1.4);opacity:1;box-shadow:0 0 0 7px rgba(223,183,108,0)}
     }
-    .portal-cue-text{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#d0d0d0}
+    .portal-cue-text{font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:#e6e6e6;font-weight:500}
 
     /* Right Overlay */
     .portal-overlay-right{
-      position:absolute;right:26px;top:26px;bottom:26px;z-index:10;
-      width:min(230px,30%);display:flex;flex-direction:column;justify-content:space-between;
-      pointer-events:auto;
+      position:absolute;right:26px;top:26px;bottom:26px;z-index:15;
+      width:min(235px,30%);display:flex;flex-direction:column;justify-content:space-between;
+      pointer-events:auto;transform-style:preserve-3d;
+      will-change:transform;
     }
     .portal-quote{
       margin:0;font-size:9px;line-height:1.6;color:#858992;
-      border-left:1px solid rgba(223,183,108,.3);padding-left:10px;
+      border-left:1px solid rgba(223,183,108,.35);padding-left:10px;
+      text-shadow:0 1px 10px rgba(0,0,0,0.9);
     }
     .portal-telemetry-box{
-      background:rgba(10,12,16,.78);border:1px solid rgba(255,255,255,.08);
-      border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;
-      backdrop-filter:blur(8px);
+      background:rgba(8,10,14,.82);border:1px solid rgba(255,255,255,.1);
+      border-radius:8px;padding:13px 15px;display:flex;flex-direction:column;gap:9px;
+      backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,0.6);
     }
     .telemetry-row{display:flex;justify-content:space-between;align-items:center;font-size:7.5px}
     .telemetry-label{letter-spacing:.16em;text-transform:uppercase;color:#666}
     .telemetry-val{color:#bbb;font-family:monospace;letter-spacing:.06em}
 
     .portal-teleport-btn{
-      height:36px;border-radius:6px;border:1px solid rgba(223,183,108,.55);
-      background:linear-gradient(135deg,#1f1a12,#0f0e0c);
-      color:#fff3d1;font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+      height:38px;border-radius:6px;border:1px solid rgba(223,183,108,.6);
+      background:linear-gradient(135deg,#231d14,#100e0b);
+      color:#fff3d1;font-size:8px;letter-spacing:.22em;text-transform:uppercase;
       display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
       transition:background .35s,border-color .35s,transform .3s,box-shadow .35s;
     }
     .portal-teleport-btn:hover{
-      background:linear-gradient(135deg,#342816,#19150d);
-      border-color:rgba(255,243,209,.9);
-      box-shadow:0 0 25px rgba(223,183,108,.35);
-      transform:translateY(-1px);
+      background:linear-gradient(135deg,#3c2d18,#1d180f);
+      border-color:rgba(255,243,209,.95);
+      box-shadow:0 0 30px rgba(223,183,108,.4);
+      transform:translateY(-2px);
     }
 
     /* Footer Dock */
@@ -735,6 +816,13 @@
       .contact-heading{font-size:clamp(54px,15vw,90px)}
       .footer{flex-direction:column;gap:17px}
       .channel-preview{display:none}
+      .project-app-container{
+        position:relative;right:auto;top:auto;transform:none;
+        width:calc(100% - 40px);margin:24px auto 0;height:480px;
+      }
+      .portal-overlay-left{left:14px;top:14px;max-width:180px}
+      .portal-overlay-right{display:none}
+      .portal-gate-wrap{width:min(230px,55%)}
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -913,16 +1001,16 @@
                 </div>
               </div>
 
-              <!-- Portal Viewport -->
+              <!-- Portal Viewport with 3D Perspective & Depth Layers -->
               <div class="portal-viewport" id="portal-viewport">
-                <!-- World Canvas Background -->
+                <!-- World Canvas Background (Parallax Depth Layer 1) -->
                 <canvas id="portal-world-canvas" class="portal-canvas"></canvas>
                 
-                <!-- Subtle Radial Vignette -->
+                <!-- Atmospheric Vignette -->
                 <div class="portal-backdrop" id="portal-backdrop"></div>
 
-                <!-- Content Overlay: Left -->
-                <div class="portal-overlay-left">
+                <!-- Content Overlay: Left (Holographic HUD) -->
+                <div class="portal-overlay-left" id="portal-overlay-left">
                   <span class="portal-kicker">TELEPORT YOURS // <span id="portal-index-kicker">01 OF 06</span></span>
                   <h3 class="portal-place-name" id="portal-place-name">Discover<br><span class="gold" id="portal-place-title">Monument Valley</span></h3>
                   <div class="portal-index-row">
@@ -932,10 +1020,34 @@
                   </div>
                 </div>
 
-                <!-- Content Overlay: Center (The Portal Gate) -->
+                <!-- Center 3D Archway Stage (Parallax Depth Layer 2) -->
                 <div class="portal-gate-wrap" id="portal-gate-wrap" title="Click the Gate to Teleport">
-                  <!-- Portal Singularity Vortex Behind the Arch -->
-                  <div class="portal-singularity" id="portal-singularity"></div>
+                  <!-- Singularity Aperture Container & Real-time Canvas Vortex -->
+                  <div class="portal-singularity-container" id="portal-singularity-container">
+                    <canvas id="portal-singularity-canvas" class="portal-singularity-canvas"></canvas>
+                    
+                    <!-- Ancient Orbital Celestial Runes Ring -->
+                    <svg class="portal-runes-svg" id="portal-runes-svg" viewBox="0 0 200 200">
+                      <defs>
+                        <path id="runeCirclePath" d="M 100, 100 m -76, 0 a 76,76 0 1,1 152,0 a 76,76 0 1,1 -152,0" />
+                      </defs>
+                      <circle cx="100" cy="100" r="84" fill="none" stroke="rgba(223,183,108,0.22)" stroke-width="0.8" stroke-dasharray="3 5" />
+                      <circle cx="100" cy="100" r="76" fill="none" stroke="rgba(223,183,108,0.45)" stroke-width="1.2" />
+                      <circle cx="100" cy="100" r="68" fill="none" stroke="rgba(223,183,108,0.22)" stroke-width="0.8" stroke-dasharray="8 4 2 4" />
+                      <text class="portal-runes-text">
+                        <textPath href="#runeCirclePath" startOffset="0%">
+                          ᚛ ᚛ ᛟ ᚱ ᛒ ᛁ ᛏ ᚐ ᛚ // ᛋ ᛁ ᚾ ᚷ ᚢ ᛚ ᚐ ᚱ ᛁ ᛏ ᚤ // ᚲ ᚑ ᚑ ᚱ ᛞ ᛁ ᚾ ᚐ ᛏ ᛖ ᛋ // ᚦ ᚢ ᚱ ᛁ ᛋ ᚐ ᛉ ᚛ ᚛
+                        </textPath>
+                      </text>
+                      <line x1="100" y1="16" x2="100" y2="28" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                      <line x1="100" y1="172" x2="100" y2="184" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                      <line x1="16" y1="100" x2="28" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                      <line x1="172" y1="100" x2="184" y2="100" stroke="rgba(255,243,209,0.85)" stroke-width="1.5" />
+                    </svg>
+
+                    <!-- Anamorphic Quantum Flare -->
+                    <div class="portal-singularity-flare"></div>
+                  </div>
 
                   <!-- Authentic S-Tier Photo-Real Cutout Stone Archway -->
                   <img src="gate_arch_transparent.png" alt="Ancient Stone Gate Arch" class="portal-gate-img" id="portal-gate-img" />
@@ -947,11 +1059,12 @@
                   </div>
                 </div>
 
-                <!-- Quantum Flash / Warp FX Overlay -->
+                <!-- Quantum Flash & Shockwave Ripple Layer -->
                 <div class="portal-warp-fx" id="portal-warp-fx"></div>
+                <div class="portal-ripple-fx" id="portal-ripple-fx"></div>
 
                 <!-- Content Overlay: Right (Telemetry & CTA) -->
-                <div class="portal-overlay-right">
+                <div class="portal-overlay-right" id="portal-overlay-right">
                   <p class="portal-quote">
                     "Teleportation is the transfer of matter or energy from one point to another without traversing physical space."
                   </p>
@@ -2019,14 +2132,24 @@
     /* ============================================================
        PROJECT 01: TELEPORT GATE INTERACTIVE APPLICATION ENGINE (S-TIER)
        ============================================================ */
-    (function initPortalApp(){
+    (function initPortalApp() {
       const portalApp = document.getElementById("portal-app");
-      if(!portalApp) return;
+      if (!portalApp) return;
 
-      const canvas = document.getElementById("portal-world-canvas");
-      const ctx = canvas ? canvas.getContext("2d") : null;
+      // Viewport & Layers
+      const viewport = document.getElementById("portal-viewport");
+      const worldCanvas = document.getElementById("portal-world-canvas");
+      const worldCtx = worldCanvas ? worldCanvas.getContext("2d") : null;
       const gateWrap = document.getElementById("portal-gate-wrap");
-      const singularity = document.getElementById("portal-singularity");
+      const singularityCanvas = document.getElementById("portal-singularity-canvas");
+      const singularityCtx = singularityCanvas ? singularityCanvas.getContext("2d") : null;
+      const runesSvg = document.getElementById("portal-runes-svg");
+      const warpFx = document.getElementById("portal-warp-fx");
+      const rippleFx = document.getElementById("portal-ripple-fx");
+      const overlayLeft = document.getElementById("portal-overlay-left");
+      const overlayRight = document.getElementById("portal-overlay-right");
+
+      // Telemetry & UI
       const statusPill = portalApp.querySelector(".portal-status");
       const kickerIndexEl = document.getElementById("portal-index-kicker");
       const placeTitleEl = document.getElementById("portal-place-title");
@@ -2042,25 +2165,179 @@
       const pills = Array.from(document.querySelectorAll(".portal-pill"));
       const btnPrev = document.getElementById("portal-prev");
       const btnNext = document.getElementById("portal-next");
-      const warpFx = document.getElementById("portal-warp-fx");
       const teleportBtn = document.getElementById("portal-teleport-trigger");
       const soundBtn = document.getElementById("portal-sound-toggle");
       const soundText = document.getElementById("portal-sound-text");
 
+      // ----------------------------------------------------
+      // S-Tier Web Audio API Procedural Sound Synthesizer
+      // ----------------------------------------------------
       let soundEnabled = true;
+      let audioCtx = null;
+      let gateHumOsc1 = null;
+      let gateHumOsc2 = null;
+      let gateHumFilter = null;
+      let gateHumGain = null;
+
+      function initAudioContext() {
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === "suspended") {
+          audioCtx.resume().catch(() => {});
+        }
+      }
+
+      function startGateHum() {
+        if (!soundEnabled) return;
+        initAudioContext();
+        if (!audioCtx) return;
+        try {
+          const now = audioCtx.currentTime;
+          if (!gateHumOsc1) {
+            gateHumOsc1 = audioCtx.createOscillator();
+            gateHumOsc2 = audioCtx.createOscillator();
+            gateHumFilter = audioCtx.createBiquadFilter();
+            gateHumGain = audioCtx.createGain();
+
+            gateHumOsc1.type = "sine";
+            gateHumOsc1.frequency.setValueAtTime(55, now); // Sub-bass A1
+
+            gateHumOsc2.type = "triangle";
+            gateHumOsc2.frequency.setValueAtTime(110, now); // Harmonic A2
+
+            gateHumFilter.type = "lowpass";
+            gateHumFilter.frequency.setValueAtTime(160, now);
+            gateHumFilter.Q.setValueAtTime(4.0, now);
+
+            gateHumGain.gain.setValueAtTime(0.0001, now);
+
+            gateHumOsc1.connect(gateHumFilter);
+            gateHumOsc2.connect(gateHumFilter);
+            gateHumFilter.connect(gateHumGain);
+            gateHumGain.connect(audioCtx.destination);
+
+            gateHumOsc1.start(now);
+            gateHumOsc2.start(now);
+          }
+          gateHumFilter.frequency.setTargetAtTime(380, now, 0.25);
+          gateHumGain.gain.setTargetAtTime(0.07, now, 0.2);
+        } catch (_) {}
+      }
+
+      function stopGateHum() {
+        if (!audioCtx || !gateHumGain) return;
+        try {
+          const now = audioCtx.currentTime;
+          gateHumFilter.frequency.setTargetAtTime(120, now, 0.25);
+          gateHumGain.gain.setTargetAtTime(0.0001, now, 0.2);
+        } catch (_) {}
+      }
+
+      function playUiTick() {
+        if (!soundEnabled) return;
+        initAudioContext();
+        if (!audioCtx) return;
+        try {
+          const now = audioCtx.currentTime;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(1800, now);
+          osc.frequency.exponentialRampToValueAtTime(700, now + 0.035);
+          gain.gain.setValueAtTime(0.03, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.04);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.045);
+        } catch (_) {}
+      }
+
+      function playTeleportWarpSound() {
+        if (!soundEnabled) return;
+        initAudioContext();
+        if (!audioCtx) return;
+        try {
+          const now = audioCtx.currentTime;
+
+          // 1. Sub Implosion
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = "sine";
+          subOsc.frequency.setValueAtTime(140, now);
+          subOsc.frequency.exponentialRampToValueAtTime(36, now + 0.38);
+          subGain.gain.setValueAtTime(0.001, now);
+          subGain.gain.linearRampToValueAtTime(0.24, now + 0.09);
+          subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.96);
+
+          // 2. Quantum Resonant Warp Sweep
+          const warpOsc = audioCtx.createOscillator();
+          const warpFilter = audioCtx.createBiquadFilter();
+          const warpGain = audioCtx.createGain();
+          warpOsc.type = "sawtooth";
+          warpOsc.frequency.setValueAtTime(160, now);
+          warpOsc.frequency.exponentialRampToValueAtTime(1050, now + 0.24);
+          warpOsc.frequency.exponentialRampToValueAtTime(240, now + 0.75);
+
+          warpFilter.type = "bandpass";
+          warpFilter.frequency.setValueAtTime(350, now);
+          warpFilter.frequency.exponentialRampToValueAtTime(2800, now + 0.28);
+          warpFilter.frequency.exponentialRampToValueAtTime(450, now + 0.8);
+          warpFilter.Q.setValueAtTime(5.5, now);
+
+          warpGain.gain.setValueAtTime(0.001, now);
+          warpGain.gain.linearRampToValueAtTime(0.15, now + 0.14);
+          warpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
+
+          warpOsc.connect(warpFilter);
+          warpFilter.connect(warpGain);
+          warpGain.connect(audioCtx.destination);
+          warpOsc.start(now);
+          warpOsc.stop(now + 0.82);
+
+          // 3. Crystalline Arrival Chime Chord (E5, G#5, B5, E6)
+          const chord = [659.25, 830.61, 987.77, 1318.51];
+          chord.forEach((freq, idx) => {
+            const chimeOsc = audioCtx.createOscillator();
+            const chimeGain = audioCtx.createGain();
+            chimeOsc.type = "sine";
+            chimeOsc.frequency.setValueAtTime(freq, now + 0.16 + idx * 0.035);
+            chimeGain.gain.setValueAtTime(0.001, now + 0.16 + idx * 0.035);
+            chimeGain.gain.linearRampToValueAtTime(0.07 / (idx + 1), now + 0.2 + idx * 0.035);
+            chimeGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2 + idx * 0.08);
+            chimeOsc.connect(chimeGain);
+            chimeGain.connect(audioCtx.destination);
+            chimeOsc.start(now + 0.16 + idx * 0.035);
+            chimeOsc.stop(now + 1.35);
+          });
+        } catch (_) {}
+      }
+
       if (soundBtn) {
+        soundBtn.classList.add("active");
         soundBtn.addEventListener("click", () => {
+          initAudioContext();
           soundEnabled = !soundEnabled;
           if (soundText) soundText.textContent = soundEnabled ? "AUDIO ON" : "AUDIO MUTED";
-          soundBtn.style.opacity = soundEnabled ? "1" : "0.5";
+          soundBtn.classList.toggle("active", soundEnabled);
+          soundBtn.style.opacity = soundEnabled ? "1" : "0.55";
+          if (!soundEnabled) stopGateHum();
         });
       }
 
-      // Preload World 1 Landscape Image from reference
+      // Preload World 1 Landscape Image
       const monumentImg = new Image();
       monumentImg.src = "world_monument_valley.jpg";
 
-      // 6 Distinct S-Tier Destinations
+      // ----------------------------------------------------
+      // 6 Distinct S-Tier Destinations Definition
+      // ----------------------------------------------------
       const destinations = [
         {
           kicker: "01 OF 06",
@@ -2070,12 +2347,13 @@
           altitude: "1,638 M",
           atmosphere: "Arid Sunset · 24°C",
           temporal: "OPTIMAL SYNC",
-          bgGradient: ["#0b0406", "#2d0f19", "#782329", "#e26d40", "#f8b76c"],
+          bgGradient: ["#0b0407", "#2e0f19", "#7a2228", "#e46436", "#faba63"],
           horizonY: 0.64,
-          glowColor: "rgba(235, 140, 75, 0.45)",
+          glowColor: "rgba(240, 140, 70, 0.55)",
+          singularityColors: ["#fff2d0", "#ff9922", "rgba(255, 120, 30, 0.9)"],
           particleType: "dust",
-          particleCount: 55,
-          particleColor: "rgba(255, 200, 140, 0.75)",
+          particleCount: 65,
+          particleColor: "rgba(255, 195, 130, 0.85)",
           useImage: true
         },
         {
@@ -2086,12 +2364,13 @@
           altitude: "1,050 M",
           atmosphere: "Dawn Breeze · 14°C",
           temporal: "STABLE CONVERGENCE",
-          bgGradient: ["#090916", "#1c1432", "#472852", "#9c556b", "#eec09e"],
+          bgGradient: ["#0e0b1c", "#2b1b38", "#613354", "#b25870", "#f1be98"],
           horizonY: 0.62,
-          glowColor: "rgba(215, 130, 160, 0.45)",
+          glowColor: "rgba(220, 130, 160, 0.50)",
+          singularityColors: ["#ffeef8", "#df75cc", "rgba(255, 130, 180, 0.9)"],
           particleType: "balloons",
-          particleCount: 45,
-          particleColor: "rgba(250, 210, 180, 0.70)",
+          particleCount: 50,
+          particleColor: "rgba(255, 215, 185, 0.75)",
           useImage: false
         },
         {
@@ -2102,12 +2381,13 @@
           altitude: "42 M",
           atmosphere: "Misty Twilight · 18°C",
           temporal: "HARMONIC FLOW",
-          bgGradient: ["#030907", "#0a1f18", "#153d2d", "#2e684a", "#69a778"],
+          bgGradient: ["#030906", "#0b2219", "#174431", "#2e6f50", "#76b991"],
           horizonY: 0.66,
-          glowColor: "rgba(90, 190, 140, 0.45)",
+          glowColor: "rgba(95, 205, 145, 0.50)",
+          singularityColors: ["#e0fff0", "#38e096", "rgba(40, 230, 150, 0.9)"],
           particleType: "fireflies",
-          particleCount: 60,
-          particleColor: "rgba(165, 255, 180, 0.85)",
+          particleCount: 70,
+          particleColor: "rgba(170, 255, 180, 0.90)",
           useImage: false
         },
         {
@@ -2118,12 +2398,13 @@
           altitude: "3,656 M",
           atmosphere: "Glacial Mirror · -2°C",
           temporal: "CRYSTALLINE APEX",
-          bgGradient: ["#020409", "#061324", "#0f2b48", "#1b5278", "#4ea5c9"],
+          bgGradient: ["#010309", "#061426", "#0f2c49", "#185073", "#459fc2"],
           horizonY: 0.58,
-          glowColor: "rgba(80, 180, 245, 0.50)",
+          glowColor: "rgba(75, 185, 245, 0.55)",
+          singularityColors: ["#e6f7ff", "#3bb7ff", "rgba(50, 170, 255, 0.9)"],
           particleType: "stars",
-          particleCount: 85,
-          particleColor: "rgba(200, 240, 255, 0.90)",
+          particleCount: 95,
+          particleColor: "rgba(215, 245, 255, 0.95)",
           useImage: false
         },
         {
@@ -2134,12 +2415,13 @@
           altitude: "810 M",
           atmosphere: "Terracotta Dusk · 22°C",
           temporal: "ANCIENT RESONANCE",
-          bgGradient: ["#080405", "#1c0d12", "#471e23", "#8a423b", "#d98762"],
+          bgGradient: ["#080405", "#200e13", "#4e1d23", "#8f3e36", "#de865f"],
           horizonY: 0.65,
-          glowColor: "rgba(230, 150, 90, 0.45)",
+          glowColor: "rgba(235, 145, 85, 0.50)",
+          singularityColors: ["#fff0e6", "#ff733b", "rgba(255, 80, 40, 0.9)"],
           particleType: "embers",
-          particleCount: 50,
-          particleColor: "rgba(255, 190, 110, 0.75)",
+          particleCount: 60,
+          particleColor: "rgba(255, 185, 95, 0.85)",
           useImage: false
         },
         {
@@ -2150,12 +2432,13 @@
           altitude: "4,478 M",
           atmosphere: "Alpine Frost · -8°C",
           temporal: "AURORAL PEAK",
-          bgGradient: ["#020308", "#0b1220", "#182a44", "#315370", "#84aed2"],
+          bgGradient: ["#020308", "#0a1322", "#162b46", "#2c5472", "#7cb4d5"],
           horizonY: 0.60,
-          glowColor: "rgba(140, 200, 255, 0.50)",
+          glowColor: "rgba(130, 205, 255, 0.55)",
+          singularityColors: ["#f0fbff", "#7de5ff", "rgba(100, 230, 255, 0.9)"],
           particleType: "snow",
-          particleCount: 70,
-          particleColor: "rgba(235, 245, 255, 0.85)",
+          particleCount: 85,
+          particleColor: "rgba(240, 248, 255, 0.90)",
           useImage: false
         }
       ];
@@ -2163,190 +2446,858 @@
       let currentIndex = 0;
       let isTeleporting = false;
       let particles = [];
-      let animationFrameId = null;
+      let balloons = [];
+      let fireflies = [];
+      let meteors = [];
 
-      // Web Audio API Procedural Sound Synthesizer
-      let audioCtx = null;
-      function playTeleportSound() {
-        if (!soundEnabled) return;
-        try {
-          if (!audioCtx) {
-            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-            if (AudioContextClass) audioCtx = new AudioContextClass();
+      // ----------------------------------------------------
+      // Multi-Layer 3D Perspective & Physics Parallax State
+      // ----------------------------------------------------
+      const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+      let isGateHovered = false;
+      let vortexSpeedMultiplier = 1.0;
+      let targetVortexSpeed = 1.0;
+
+      if (viewport) {
+        viewport.addEventListener("mousemove", (e) => {
+          const rect = viewport.getBoundingClientRect();
+          const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 to 1
+          const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1; // -1 to 1
+          mouse.targetX = Math.max(-1, Math.min(1, nx));
+          mouse.targetY = Math.max(-1, Math.min(1, ny));
+        });
+
+        viewport.addEventListener("mouseleave", () => {
+          mouse.targetX = 0;
+          mouse.targetY = 0;
+          if (isGateHovered) {
+            isGateHovered = false;
+            targetVortexSpeed = 1.0;
+            stopGateHum();
           }
-          if (!audioCtx) return;
-          if (audioCtx.state === "suspended") audioCtx.resume();
+        });
 
-          const now = audioCtx.currentTime;
+        // Touch support for tablets / mobile
+        viewport.addEventListener("touchmove", (e) => {
+          if (e.touches && e.touches[0]) {
+            const rect = viewport.getBoundingClientRect();
+            const nx = ((e.touches[0].clientX - rect.left) / rect.width) * 2 - 1;
+            const ny = ((e.touches[0].clientY - rect.top) / rect.height) * 2 - 1;
+            mouse.targetX = Math.max(-1, Math.min(1, nx * 0.7));
+            mouse.targetY = Math.max(-1, Math.min(1, ny * 0.7));
+          }
+        }, { passive: true });
 
-          // Sub-bass sweep
-          const osc1 = audioCtx.createOscillator();
-          const gain1 = audioCtx.createGain();
-          osc1.type = "sine";
-          osc1.frequency.setValueAtTime(140, now);
-          osc1.frequency.exponentialRampToValueAtTime(420, now + 0.28);
-          osc1.frequency.exponentialRampToValueAtTime(60, now + 0.95);
-          gain1.gain.setValueAtTime(0.001, now);
-          gain1.gain.linearRampToValueAtTime(0.20, now + 0.12);
-          gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
-          osc1.connect(gain1);
-          gain1.connect(audioCtx.destination);
-          osc1.start(now);
-          osc1.stop(now + 0.96);
-
-          // Crystalline warp shimmer
-          const osc2 = audioCtx.createOscillator();
-          const gain2 = audioCtx.createGain();
-          const filter = audioCtx.createBiquadFilter();
-          filter.type = "bandpass";
-          filter.frequency.setValueAtTime(900, now);
-          filter.frequency.exponentialRampToValueAtTime(2600, now + 0.35);
-          filter.Q.setValueAtTime(4.0, now);
-
-          osc2.type = "triangle";
-          osc2.frequency.setValueAtTime(520, now);
-          osc2.frequency.exponentialRampToValueAtTime(1040, now + 0.25);
-          osc2.frequency.exponentialRampToValueAtTime(260, now + 0.85);
-
-          gain2.gain.setValueAtTime(0.001, now);
-          gain2.gain.linearRampToValueAtTime(0.12, now + 0.18);
-          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
-
-          osc2.connect(filter);
-          filter.connect(gain2);
-          gain2.connect(audioCtx.destination);
-          osc2.start(now);
-          osc2.stop(now + 0.86);
-        } catch(_) {}
+        viewport.addEventListener("touchend", () => {
+          mouse.targetX = 0;
+          mouse.targetY = 0;
+        });
       }
 
-      // Initialize Particles
-      function initParticles() {
-        if (!canvas) return;
+      if (gateWrap) {
+        gateWrap.addEventListener("mouseenter", () => {
+          isGateHovered = true;
+          targetVortexSpeed = 2.4;
+          startGateHum();
+        });
+
+        gateWrap.addEventListener("mouseleave", () => {
+          isGateHovered = false;
+          targetVortexSpeed = 1.0;
+          stopGateHum();
+        });
+      }
+
+      // ----------------------------------------------------
+      // Singularity Particles (Relativistic Accretion Infall)
+      // ----------------------------------------------------
+      const singularityParticles = [];
+      const SINGULARITY_PARTICLE_COUNT = 130;
+
+      function initSingularityParticles(w, h) {
+        singularityParticles.length = 0;
+        const maxRadius = Math.min(w, h) * 0.52;
+        for (let i = 0; i < SINGULARITY_PARTICLE_COUNT; i++) {
+          singularityParticles.push({
+            r: Math.random() * maxRadius * 0.95 + maxRadius * 0.05,
+            theta: Math.random() * Math.PI * 2,
+            speed: (Math.random() * 0.035 + 0.015),
+            inwardSpeed: (Math.random() * 0.45 + 0.25),
+            size: Math.random() * 1.8 + 0.6,
+            alpha: Math.random() * 0.75 + 0.25,
+            hueShift: Math.random() * 0.2 - 0.1
+          });
+        }
+      }
+
+      // ----------------------------------------------------
+      // Dynamic Destination Particles
+      // ----------------------------------------------------
+      function initWorldParticles() {
+        if (!worldCanvas) return;
         particles = [];
         const d = destinations[currentIndex];
-        const w = canvas.width || 800;
-        const h = canvas.height || 600;
+        const w = worldCanvas.width || 800;
+        const h = worldCanvas.height || 600;
+
         for (let i = 0; i < d.particleCount; i++) {
           particles.push({
             x: Math.random() * w,
             y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (d.particleType === "snow" ? (0.7 + Math.random() * 1.0) :
-                 d.particleType === "fireflies" ? ((Math.random() - 0.5) * 0.6) :
-                 d.particleType === "balloons" ? (-0.3 - Math.random() * 0.4) :
-                 (-0.15 - Math.random() * 0.25)),
+            vx: (Math.random() - 0.5) * (d.particleType === "snow" ? 0.9 : 0.6),
+            vy: (d.particleType === "snow" ? (0.8 + Math.random() * 1.3) :
+                 d.particleType === "fireflies" ? ((Math.random() - 0.5) * 0.5) :
+                 d.particleType === "balloons" ? (-0.25 - Math.random() * 0.35) :
+                 (-0.2 - Math.random() * 0.3)),
             radius: Math.random() * 2.2 + 0.8,
-            alpha: Math.random() * 0.7 + 0.2,
+            alpha: Math.random() * 0.7 + 0.25,
             pulseSpeed: Math.random() * 0.04 + 0.015,
-            pulsePhase: Math.random() * Math.PI * 2
+            pulsePhase: Math.random() * Math.PI * 2,
+            depth: Math.random() * 0.7 + 0.3
           });
         }
+
+        // Procedural Hot Air Balloons for Cappadocia
+        balloons = [];
+        if (d.particleType === "balloons") {
+          const palette = [
+            ["#e89b4f", "#2b1434"],
+            ["#dfb76c", "#9c3b52"],
+            ["#4fc3e8", "#1c2445"],
+            ["#a3e84f", "#1c3d25"],
+            ["#e84f88", "#38182d"],
+            ["#e8c84f", "#442118"]
+          ];
+          for (let b = 0; b < 7; b++) {
+            balloons.push({
+              x: (w * 0.12) + (b / 6) * (w * 0.76) + (Math.random() - 0.5) * (w * 0.1),
+              baseY: (h * 0.28) + (b % 3) * (h * 0.12) + (Math.random() - 0.5) * (h * 0.08),
+              size: 14 + (b % 4) * 6,
+              bobPhase: Math.random() * Math.PI * 2,
+              bobSpeed: 0.015 + Math.random() * 0.01,
+              driftSpeed: (Math.random() - 0.5) * 0.15,
+              colors: palette[b % palette.length],
+              hasFlame: Math.random() > 0.3
+            });
+          }
+        }
+
+        // Organic Bioluminescent Fireflies for Kyoto
+        fireflies = [];
+        if (d.particleType === "fireflies") {
+          for (let f = 0; f < 35; f++) {
+            fireflies.push({
+              x: Math.random() * w,
+              y: (h * 0.35) + Math.random() * (h * 0.55),
+              vx: (Math.random() - 0.5) * 0.6,
+              vy: (Math.random() - 0.5) * 0.4,
+              glowPhase: Math.random() * Math.PI * 2,
+              glowSpeed: 0.03 + Math.random() * 0.04,
+              radius: Math.random() * 2.5 + 1.2,
+              tail: []
+            });
+          }
+        }
+
+        // Shooting Stars for Salar de Uyuni
+        meteors = [];
       }
 
-      // Resize Canvas
-      function resizeCanvas() {
-        if (!canvas) return;
-        const rect = canvas.getBoundingClientRect();
+      // ----------------------------------------------------
+      // Canvas Resizing with High-DPR Support
+      // ----------------------------------------------------
+      function resizeAllCanvases() {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.max(rect.width * dpr, 400);
-        canvas.height = Math.max(rect.height * dpr, 300);
-        initParticles();
-      }
-      resizeCanvas();
-      window.addEventListener("resize", resizeCanvas);
 
-      // Render Dynamic Procedural World onto Canvas
-      let renderTick = 0;
-      function renderCanvasWorld() {
-        if (!ctx || !canvas) return;
-        renderTick++;
-        const w = canvas.width;
-        const h = canvas.height;
+        if (worldCanvas) {
+          const rect = worldCanvas.getBoundingClientRect();
+          worldCanvas.width = Math.max(rect.width * dpr, 400);
+          worldCanvas.height = Math.max(rect.height * dpr, 300);
+        }
+
+        if (singularityCanvas) {
+          const rect = singularityCanvas.getBoundingClientRect();
+          const sw = Math.max(rect.width * dpr, 200);
+          const sh = Math.max(rect.height * dpr, 260);
+          singularityCanvas.width = sw;
+          singularityCanvas.height = sh;
+          initSingularityParticles(sw, sh);
+        }
+
+        initWorldParticles();
+      }
+      resizeAllCanvases();
+      window.addEventListener("resize", resizeAllCanvases);
+
+      // ----------------------------------------------------
+      // Scramble HUD Text Effect for Telemetry
+      // ----------------------------------------------------
+      function scrambleText(element, finalVal, duration = 360) {
+        if (!element) return;
+        const chars = "0123456789°NEWS·%+-ABCDEF";
+        const length = finalVal.length;
+        const startTime = performance.now();
+
+        function updateScramble(time) {
+          const elapsed = time - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const settledCount = Math.floor(progress * length);
+
+          let result = finalVal.slice(0, settledCount);
+          for (let i = settledCount; i < length; i++) {
+            const char = finalVal[i];
+            if (char === " " || char === "·" || char === "°" || char === "," || char === "-" || char === "/") {
+              result += char;
+            } else {
+              result += chars[Math.floor(Math.random() * chars.length)];
+            }
+          }
+          element.textContent = result;
+          if (progress < 1) {
+            requestAnimationFrame(updateScramble);
+          } else {
+            element.textContent = finalVal;
+          }
+        }
+        requestAnimationFrame(updateScramble);
+      }
+
+      // ----------------------------------------------------
+      // High-End Real-time Singularity Vortex Renderer
+      // ----------------------------------------------------
+      let singularityTick = 0;
+      function renderSingularityVortex() {
+        if (!singularityCtx || !singularityCanvas) return;
+        singularityTick++;
+
+        // Smoothly lerp vortex speed multiplier on hover
+        vortexSpeedMultiplier += (targetVortexSpeed - vortexSpeedMultiplier) * 0.08;
+
+        const w = singularityCanvas.width;
+        const h = singularityCanvas.height;
+        const cx = w * 0.5;
+        const cy = h * 0.5;
+        const d = destinations[currentIndex];
+        const [coreCol, spiralCol, partCol] = d.singularityColors;
+
+        // Semi-transparent fade for organic motion persistence
+        singularityCtx.fillStyle = "rgba(1, 3, 6, 0.28)";
+        singularityCtx.fillRect(0, 0, w, h);
+
+        singularityCtx.save();
+        singularityCtx.translate(cx, cy);
+
+        const eventHorizonRadius = Math.min(w, h) * 0.22;
+        const photonSphereRadius = eventHorizonRadius * 1.32;
+        const maxRadius = Math.min(w, h) * 0.48;
+
+        // 1. Accretion Glow Disc (Additive Screen Blend)
+        singularityCtx.globalCompositeOperation = "screen";
+        const discGrad = singularityCtx.createRadialGradient(0, 0, eventHorizonRadius * 0.8, 0, 0, maxRadius);
+        discGrad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+        discGrad.addColorStop(0.25, spiralCol);
+        discGrad.addColorStop(0.65, d.glowColor);
+        discGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        singularityCtx.fillStyle = discGrad;
+        singularityCtx.beginPath();
+        singularityCtx.arc(0, 0, maxRadius, 0, Math.PI * 2);
+        singularityCtx.fill();
+
+        // 2. Dual Logarithmic Energy Spiral Arms
+        const spiralRot = singularityTick * 0.022 * vortexSpeedMultiplier;
+        for (let arm = 0; arm < 2; arm++) {
+          const armAngle = spiralRot + arm * Math.PI;
+          singularityCtx.strokeStyle = spiralCol;
+          singularityCtx.lineWidth = 2.5 * vortexSpeedMultiplier;
+          singularityCtx.beginPath();
+          for (let step = 0; step < 45; step++) {
+            const t = step / 45;
+            const rad = eventHorizonRadius + t * (maxRadius - eventHorizonRadius);
+            const ang = armAngle + t * 4.2;
+            const sx = Math.cos(ang) * rad;
+            const sy = Math.sin(ang) * rad;
+            if (step === 0) singularityCtx.moveTo(sx, sy);
+            else singularityCtx.lineTo(sx, sy);
+          }
+          singularityCtx.stroke();
+        }
+
+        // 3. Relativistic Infalling Particles with Motion Blur Trails
+        singularityParticles.forEach(p => {
+          // Keplerian rotational acceleration: faster near core
+          const angVel = (p.speed * (maxRadius / (p.r + 20))) * vortexSpeedMultiplier;
+          p.theta += angVel;
+          p.r -= p.inwardSpeed * vortexSpeedMultiplier;
+
+          // Respawn at outer rim if pulled past event horizon
+          if (p.r < eventHorizonRadius * 0.45) {
+            p.r = maxRadius * (0.85 + Math.random() * 0.15);
+            p.theta = Math.random() * Math.PI * 2;
+          }
+
+          const px = Math.cos(p.theta) * p.r;
+          const py = Math.sin(p.theta) * p.r;
+          const tailLength = Math.min(p.r * 0.12, 10) * vortexSpeedMultiplier;
+          const tx = Math.cos(p.theta - angVel * 1.8) * (p.r + tailLength * 0.5);
+          const ty = Math.sin(p.theta - angVel * 1.8) * (p.r + tailLength * 0.5);
+
+          singularityCtx.strokeStyle = partCol;
+          singularityCtx.lineWidth = p.size;
+          singularityCtx.globalAlpha = p.alpha;
+          singularityCtx.beginPath();
+          singularityCtx.moveTo(tx, ty);
+          singularityCtx.lineTo(px, py);
+          singularityCtx.stroke();
+
+          singularityCtx.fillStyle = coreCol;
+          singularityCtx.beginPath();
+          singularityCtx.arc(px, py, p.size * 0.8, 0, Math.PI * 2);
+          singularityCtx.fill();
+        });
+
+        // 4. Luminous Photon Sphere Ring (Pulsing)
+        singularityCtx.globalCompositeOperation = "source-over";
+        const pulseRing = photonSphereRadius * (1.0 + 0.04 * Math.sin(singularityTick * 0.08));
+        singularityCtx.strokeStyle = coreCol;
+        singularityCtx.lineWidth = 2.0;
+        singularityCtx.shadowColor = spiralCol;
+        singularityCtx.shadowBlur = 15;
+        singularityCtx.beginPath();
+        singularityCtx.arc(0, 0, pulseRing, 0, Math.PI * 2);
+        singularityCtx.stroke();
+        singularityCtx.shadowBlur = 0;
+
+        // 5. Pitch-Black Schwarzschild Event Horizon Core Void
+        singularityCtx.fillStyle = "#010204";
+        singularityCtx.beginPath();
+        singularityCtx.arc(0, 0, eventHorizonRadius, 0, Math.PI * 2);
+        singularityCtx.fill();
+
+        singularityCtx.restore();
+        singularityCtx.globalAlpha = 1.0;
+      }
+
+      // ----------------------------------------------------
+      // Dynamic Procedural World Renderer
+      // ----------------------------------------------------
+      let worldTick = 0;
+      function renderWorldCanvas() {
+        if (!worldCtx || !worldCanvas) return;
+        worldTick++;
+
+        // Mouse physics lerp (differential parallax)
+        mouse.x += (mouse.targetX - mouse.x) * 0.075;
+        mouse.y += (mouse.targetY - mouse.y) * 0.075;
+
+        // Apply 3D tilt & parallax transforms to DOM elements
+        if (gateWrap) {
+          const rotY = mouse.x * 14;
+          const rotX = -mouse.y * 11;
+          const transX = mouse.x * 18;
+          const transY = mouse.y * 10;
+          gateWrap.style.transform = `perspective(1100px) rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(${transX}px, ${transY}px, 35px)`;
+        }
+        if (overlayLeft) {
+          overlayLeft.style.transform = `translate3d(${-mouse.x * 10}px, ${-mouse.y * 6}px, 22px)`;
+        }
+        if (overlayRight) {
+          overlayRight.style.transform = `translate3d(${-mouse.x * 10}px, ${-mouse.y * 6}px, 22px)`;
+        }
+        if (worldCanvas) {
+          worldCanvas.style.transform = `translate3d(${-mouse.x * 24}px, ${-mouse.y * 16}px, -30px) scale(1.08)`;
+        }
+
+        const w = worldCanvas.width;
+        const h = worldCanvas.height;
         const d = destinations[currentIndex];
 
-        if (d.useImage && monumentImg.complete && monumentImg.naturalWidth > 0) {
-          // Draw high-res photographic world
-          ctx.drawImage(monumentImg, 0, 0, w, h);
-          // Dark vignette overlay
-          const vig = ctx.createRadialGradient(w * 0.5, h * 0.5, h * 0.2, w * 0.5, h * 0.5, w * 0.75);
-          vig.addColorStop(0, "rgba(0,0,0,0)");
-          vig.addColorStop(1, "rgba(0,0,0,0.55)");
-          ctx.fillStyle = vig;
-          ctx.fillRect(0, 0, w, h);
-        } else {
-          // 1. Sky Gradient
-          const grad = ctx.createLinearGradient(0, 0, 0, h);
-          const stops = d.bgGradient;
-          stops.forEach((col, idx) => {
-            grad.addColorStop(idx / (stops.length - 1), col);
-          });
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, w, h);
+        // Multi-plane parallax pixel offsets
+        const farOffX = -mouse.x * w * 0.015;
+        const farOffY = -mouse.y * h * 0.01;
+        const midOffX = -mouse.x * w * 0.035;
+        const midOffY = -mouse.y * h * 0.02;
+        const fgOffX = mouse.x * w * 0.055;
+        const fgOffY = mouse.y * h * 0.025;
 
-          // 2. Horizon Sun / Glow
-          const horizonY = h * d.horizonY;
-          const sunX = w * 0.5;
-          const sunY = horizonY - h * 0.08;
-          const sunGrad = ctx.createRadialGradient(sunX, sunY, 5, sunX, sunY, w * 0.42);
-          sunGrad.addColorStop(0, d.glowColor);
-          sunGrad.addColorStop(0.5, "rgba(255,255,255,0.06)");
-          sunGrad.addColorStop(1, "rgba(0,0,0,0)");
-          ctx.fillStyle = sunGrad;
-          ctx.fillRect(0, 0, w, h);
+        // 1. Sky Gradient
+        const skyGrad = worldCtx.createLinearGradient(0, 0, 0, h);
+        const stops = d.bgGradient;
+        stops.forEach((col, idx) => {
+          skyGrad.addColorStop(idx / (stops.length - 1), col);
+        });
+        worldCtx.fillStyle = skyGrad;
+        worldCtx.fillRect(0, 0, w, h);
 
-          // 3. Terrain Silhouette (Distant)
-          ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
-          ctx.beginPath();
-          ctx.moveTo(0, h);
-          if (d.particleType === "snow") {
-            // Matterhorn peaks
-            ctx.lineTo(0, horizonY + 20);
-            ctx.lineTo(w * 0.30, horizonY - 50);
-            ctx.lineTo(w * 0.50, horizonY - 140);
-            ctx.lineTo(w * 0.54, horizonY - 80);
-            ctx.lineTo(w * 0.75, horizonY - 60);
-            ctx.lineTo(w, horizonY + 30);
-          } else if (d.particleType === "fireflies") {
-            // Kyoto bamboo ridge
-            ctx.lineTo(0, horizonY - 20);
-            for (let bx = 0; bx <= w; bx += 30) {
-              ctx.lineTo(bx + 10, horizonY - 30 - Math.sin(bx * 0.05) * 15);
-              ctx.lineTo(bx + 20, horizonY);
-            }
-            ctx.lineTo(w, horizonY);
-          } else if (d.particleType === "balloons") {
-            // Cappadocia fairy chimneys
-            ctx.lineTo(0, horizonY);
-            for (let cx = 0; cx <= w; cx += 45) {
-              ctx.lineTo(cx + 15, horizonY - 40 - Math.sin(cx * 0.03) * 20);
-              ctx.lineTo(cx + 30, horizonY);
-            }
-            ctx.lineTo(w, horizonY);
+        const horizonY = h * d.horizonY;
+
+        // 2. Render Destination Specific Landscapes
+        if (d.particleType === "dust") {
+          // ----------------------------------------
+          // DESTINATION 1: MONUMENT VALLEY (UTAH)
+          // ----------------------------------------
+          if (d.useImage && monumentImg.complete && monumentImg.naturalWidth > 0) {
+            // Draw photographic backdrop with subtle parallax
+            worldCtx.drawImage(monumentImg, -0.04 * w + midOffX * 0.5, -0.04 * h + midOffY * 0.5, w * 1.08, h * 1.08);
           } else {
-            // Plateau / Canyon
-            ctx.lineTo(0, horizonY + 10);
-            for (let mx = 0; mx <= w; mx += 60) {
-              ctx.lineTo(mx, horizonY - 35 + Math.sin(mx * 0.02 + renderTick * 0.005) * 12);
-            }
-            ctx.lineTo(w, horizonY + 10);
-          }
-          ctx.lineTo(w, h);
-          ctx.closePath();
-          ctx.fill();
+            // Procedural Monument Valley sunset sun
+            const sunX = w * 0.5 + farOffX;
+            const sunY = horizonY - h * 0.09 + farOffY;
+            const sunGrad = worldCtx.createRadialGradient(sunX, sunY, 4, sunX, sunY, w * 0.44);
+            sunGrad.addColorStop(0, "#fff5d0");
+            sunGrad.addColorStop(0.18, "rgba(255, 175, 75, 0.85)");
+            sunGrad.addColorStop(0.55, "rgba(225, 75, 45, 0.25)");
+            sunGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+            worldCtx.fillStyle = sunGrad;
+            worldCtx.fillRect(0, 0, w, h);
 
-          // 4. Foreground Terrain Layer (Deep Obsidian)
-          ctx.fillStyle = "#040507";
-          ctx.beginPath();
-          ctx.moveTo(0, h);
-          ctx.lineTo(0, horizonY + 35);
-          ctx.bezierCurveTo(w * 0.25, horizonY + 15, w * 0.75, horizonY + 45, w, horizonY + 25);
-          ctx.lineTo(w, h);
-          ctx.closePath();
-          ctx.fill();
+            // Distant Mesa Plateau Silhouette (Distant plane)
+            worldCtx.fillStyle = "rgba(42, 14, 20, 0.75)";
+            worldCtx.beginPath();
+            worldCtx.moveTo(0, h);
+            worldCtx.lineTo(0, horizonY - 15 + farOffY);
+            worldCtx.lineTo(w * 0.2, horizonY - 15 + farOffY);
+            worldCtx.lineTo(w * 0.28, horizonY - 35 + farOffY);
+            worldCtx.lineTo(w * 0.45, horizonY - 35 + farOffY);
+            worldCtx.lineTo(w * 0.52, horizonY - 15 + farOffY);
+            worldCtx.lineTo(w * 0.72, horizonY - 15 + farOffY);
+            worldCtx.lineTo(w * 0.80, horizonY - 45 + farOffY);
+            worldCtx.lineTo(w * 0.95, horizonY - 45 + farOffY);
+            worldCtx.lineTo(w, horizonY - 20 + farOffY);
+            worldCtx.lineTo(w, h);
+            worldCtx.closePath();
+            worldCtx.fill();
+          }
+
+          // Midground Sandstone Mittens with Step Cliffs & Talus Slopes
+          worldCtx.fillStyle = "rgba(22, 6, 9, 0.88)";
+          worldCtx.beginPath();
+          worldCtx.moveTo(0, h);
+          worldCtx.lineTo(0, horizonY + 8 + midOffY);
+          // West Mitten Butte
+          worldCtx.lineTo(w * 0.22 + midOffX, horizonY + 8 + midOffY);
+          worldCtx.lineTo(w * 0.26 + midOffX, horizonY - 50 + midOffY);
+          worldCtx.lineTo(w * 0.28 + midOffX, horizonY - 50 + midOffY);
+          worldCtx.lineTo(w * 0.29 + midOffX, horizonY - 85 + midOffY); // thumb spire
+          worldCtx.lineTo(w * 0.31 + midOffX, horizonY - 85 + midOffY);
+          worldCtx.lineTo(w * 0.32 + midOffX, horizonY - 50 + midOffY);
+          worldCtx.lineTo(w * 0.36 + midOffX, horizonY - 50 + midOffY);
+          worldCtx.lineTo(w * 0.40 + midOffX, horizonY + 8 + midOffY);
+          // Merrick Butte
+          worldCtx.lineTo(w * 0.65 + midOffX, horizonY + 8 + midOffY);
+          worldCtx.lineTo(w * 0.69 + midOffX, horizonY - 65 + midOffY);
+          worldCtx.lineTo(w * 0.76 + midOffX, horizonY - 65 + midOffY);
+          worldCtx.lineTo(w * 0.81 + midOffX, horizonY + 8 + midOffY);
+          worldCtx.lineTo(w, horizonY + 8 + midOffY);
+          worldCtx.lineTo(w, h);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+        } else if (d.particleType === "balloons") {
+          // ----------------------------------------
+          // DESTINATION 2: CAPPADOCIA (TURKEY)
+          // ----------------------------------------
+          // Soft Dawn Glow
+          const dawnGrad = worldCtx.createRadialGradient(w * 0.5 + farOffX, horizonY - 20, 5, w * 0.5, horizonY - 20, w * 0.55);
+          dawnGrad.addColorStop(0, "rgba(255, 230, 190, 0.7)");
+          dawnGrad.addColorStop(0.4, "rgba(225, 130, 160, 0.3)");
+          dawnGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          worldCtx.fillStyle = dawnGrad;
+          worldCtx.fillRect(0, 0, w, h);
+
+          // Distant Volcanic Mount Erciyes Ridge
+          worldCtx.fillStyle = "rgba(45, 25, 55, 0.55)";
+          worldCtx.beginPath();
+          worldCtx.moveTo(0, h);
+          worldCtx.lineTo(0, horizonY - 10 + farOffY);
+          worldCtx.lineTo(w * 0.38 + farOffX, horizonY - 10 + farOffY);
+          worldCtx.lineTo(w * 0.50 + farOffX, horizonY - 95 + farOffY);
+          worldCtx.lineTo(w * 0.62 + farOffX, horizonY - 10 + farOffY);
+          worldCtx.lineTo(w, horizonY - 10 + farOffY);
+          worldCtx.lineTo(w, h);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+          // Procedural Floating Hot-Air Balloons
+          balloons.forEach(bal => {
+            bal.x += bal.driftSpeed;
+            if (bal.x < -bal.size) bal.x = w + bal.size;
+            if (bal.x > w + bal.size) bal.x = -bal.size;
+
+            const bob = Math.sin(worldTick * bal.bobSpeed + bal.bobPhase) * 9;
+            const bx = bal.x + midOffX;
+            const by = bal.baseY + bob + midOffY;
+            const rad = bal.size;
+
+            // Balloon Envelope
+            worldCtx.save();
+            worldCtx.translate(bx, by);
+
+            // Teardrop Bulb
+            worldCtx.fillStyle = bal.colors[0];
+            worldCtx.beginPath();
+            worldCtx.arc(0, 0, rad, Math.PI * 0.85, Math.PI * 0.15, false);
+            worldCtx.lineTo(0, rad * 1.55);
+            worldCtx.closePath();
+            worldCtx.fill();
+
+            // Decorative Stripe
+            worldCtx.fillStyle = bal.colors[1];
+            worldCtx.beginPath();
+            worldCtx.ellipse(0, 0, rad * 0.45, rad, 0, 0, Math.PI * 2);
+            worldCtx.fill();
+
+            // Burner Flame Glow
+            if (bal.hasFlame && Math.sin(worldTick * 0.1 + bal.bobPhase) > 0.2) {
+              worldCtx.fillStyle = "#fff4cc";
+              worldCtx.beginPath();
+              worldCtx.arc(0, rad * 1.62, rad * 0.25, 0, Math.PI * 2);
+              worldCtx.fill();
+            }
+
+            // Suspension Lines & Basket
+            worldCtx.strokeStyle = "rgba(30, 20, 40, 0.75)";
+            worldCtx.lineWidth = 0.8;
+            worldCtx.beginPath();
+            worldCtx.moveTo(-rad * 0.35, rad * 1.55);
+            worldCtx.lineTo(-rad * 0.2, rad * 1.95);
+            worldCtx.moveTo(rad * 0.35, rad * 1.55);
+            worldCtx.lineTo(rad * 0.2, rad * 1.95);
+            worldCtx.stroke();
+
+            worldCtx.fillStyle = "#4a2a18";
+            worldCtx.fillRect(-rad * 0.25, rad * 1.95, rad * 0.5, rad * 0.35);
+
+            worldCtx.restore();
+          });
+
+          // Midground Fairy Chimney Rock Formations
+          worldCtx.fillStyle = "rgba(18, 12, 26, 0.92)";
+          worldCtx.beginPath();
+          worldCtx.moveTo(0, h);
+          worldCtx.lineTo(0, horizonY + 15 + midOffY);
+          for (let cx = 0; cx <= w; cx += 40) {
+            const hVar = Math.sin(cx * 0.04) * 25 + Math.cos(cx * 0.08) * 15;
+            worldCtx.lineTo(cx + 10 + midOffX, horizonY - 45 + hVar + midOffY);
+            // Basalt capstone
+            worldCtx.lineTo(cx + 25 + midOffX, horizonY - 50 + hVar + midOffY);
+            worldCtx.lineTo(cx + 35 + midOffX, horizonY + 15 + midOffY);
+          }
+          worldCtx.lineTo(w, horizonY + 15 + midOffY);
+          worldCtx.lineTo(w, h);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+        } else if (d.particleType === "fireflies") {
+          // ----------------------------------------
+          // DESTINATION 3: KYOTO ARASHIYAMA (JAPAN)
+          // ----------------------------------------
+          // Silver Crescent Moon in Sky
+          const moonX = w * 0.72 + farOffX;
+          const moonY = h * 0.22 + farOffY;
+          worldCtx.fillStyle = "rgba(220, 255, 235, 0.9)";
+          worldCtx.shadowColor = "rgba(140, 255, 190, 0.8)";
+          worldCtx.shadowBlur = 18;
+          worldCtx.beginPath();
+          worldCtx.arc(moonX, moonY, 16, 0, Math.PI * 2);
+          worldCtx.fill();
+          worldCtx.fillStyle = "#091c15";
+          worldCtx.shadowBlur = 0;
+          worldCtx.beginPath();
+          worldCtx.arc(moonX + 6, moonY - 3, 15, 0, Math.PI * 2);
+          worldCtx.fill();
+
+          // Misty Mountain Ridge
+          worldCtx.fillStyle = "rgba(10, 32, 22, 0.65)";
+          worldCtx.beginPath();
+          worldCtx.moveTo(0, h);
+          worldCtx.lineTo(0, horizonY - 20 + farOffY);
+          worldCtx.bezierCurveTo(w * 0.25, horizonY - 60 + farOffY, w * 0.65, horizonY - 10 + farOffY, w, horizonY - 35 + farOffY);
+          worldCtx.lineTo(w, h);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+          // Swaying Bamboo Grove (Layered Stalks & Nodes)
+          worldCtx.strokeStyle = "rgba(6, 20, 14, 0.94)";
+          worldCtx.fillStyle = "rgba(6, 20, 14, 0.94)";
+          const stalkCount = 24;
+          for (let s = 0; s < stalkCount; s++) {
+            const bx = (s / stalkCount) * w + (s % 3) * 8 + midOffX;
+            const sway = Math.sin(worldTick * 0.02 + s * 0.7) * 12;
+            worldCtx.lineWidth = 4.5 + (s % 3);
+            worldCtx.beginPath();
+            worldCtx.moveTo(bx, h);
+            worldCtx.quadraticCurveTo(bx + sway * 0.4, horizonY - 30, bx + sway, horizonY - 140 - (s % 5) * 20);
+            worldCtx.stroke();
+
+            // Bamboo Leaves clusters
+            const tipX = bx + sway;
+            const tipY = horizonY - 140 - (s % 5) * 20;
+            worldCtx.beginPath();
+            worldCtx.ellipse(tipX - 10, tipY + 10, 12, 3, Math.PI / 4, 0, Math.PI * 2);
+            worldCtx.ellipse(tipX + 10, tipY + 15, 12, 3, -Math.PI / 4, 0, Math.PI * 2);
+            worldCtx.fill();
+          }
+
+          // Traditional Stone Lanterns (Tōrō) with Warm Glow
+          [w * 0.18 + midOffX, w * 0.82 + midOffX].forEach((lx) => {
+            const ly = horizonY + 30;
+            // Warm fire chamber glow
+            const glow = worldCtx.createRadialGradient(lx, ly, 2, lx, ly, 38);
+            glow.addColorStop(0, "rgba(255, 220, 130, 0.9)");
+            glow.addColorStop(0.45, "rgba(255, 160, 50, 0.35)");
+            glow.addColorStop(1, "rgba(0, 0, 0, 0)");
+            worldCtx.fillStyle = glow;
+            worldCtx.beginPath();
+            worldCtx.arc(lx, ly, 38, 0, Math.PI * 2);
+            worldCtx.fill();
+
+            // Carved Stone Silhouette
+            worldCtx.fillStyle = "#050d09";
+            worldCtx.fillRect(lx - 12, ly + 6, 24, 22); // base
+            worldCtx.fillRect(lx - 8, ly - 8, 16, 14); // chamber frame
+            worldCtx.beginPath();
+            worldCtx.moveTo(lx - 18, ly - 8);
+            worldCtx.lineTo(lx, ly - 22);
+            worldCtx.lineTo(lx + 18, ly - 8);
+            worldCtx.closePath();
+            worldCtx.fill();
+          });
+
+          // Bioluminescent Fireflies with Waving Trails
+          fireflies.forEach(f => {
+            f.x += f.vx + Math.sin(worldTick * 0.04 + f.glowPhase) * 0.5;
+            f.y += f.vy + Math.cos(worldTick * 0.03 + f.glowPhase) * 0.4;
+            if (f.x < 0) f.x = w;
+            if (f.x > w) f.x = 0;
+            if (f.y < h * 0.2) f.y = h * 0.8;
+            if (f.y > h * 0.88) f.y = h * 0.3;
+
+            const pulse = 0.5 + 0.5 * Math.sin(worldTick * f.glowSpeed + f.glowPhase);
+            worldCtx.fillStyle = `rgba(175, 255, 185, ${pulse * 0.9})`;
+            worldCtx.shadowColor = "rgba(120, 255, 160, 0.95)";
+            worldCtx.shadowBlur = 10 * pulse;
+            worldCtx.beginPath();
+            worldCtx.arc(f.x + midOffX * 0.5, f.y + midOffY * 0.5, f.radius * (0.8 + pulse * 0.4), 0, Math.PI * 2);
+            worldCtx.fill();
+            worldCtx.shadowBlur = 0;
+          });
+
+        } else if (d.particleType === "stars") {
+          // ----------------------------------------
+          // DESTINATION 4: SALAR DE UYUNI (BOLIVIA)
+          // ----------------------------------------
+          // Cosmic Nebula Glow
+          const nebulaGrad = worldCtx.createRadialGradient(w * 0.4 + farOffX, h * 0.25 + farOffY, 10, w * 0.4, h * 0.25, w * 0.55);
+          nebulaGrad.addColorStop(0, "rgba(100, 60, 190, 0.45)");
+          nebulaGrad.addColorStop(0.35, "rgba(35, 140, 220, 0.3)");
+          nebulaGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          worldCtx.fillStyle = nebulaGrad;
+          worldCtx.fillRect(0, 0, w, h);
+
+          // Aurora Borealis Wave along Horizon
+          worldCtx.strokeStyle = "rgba(60, 220, 210, 0.45)";
+          worldCtx.lineWidth = 14;
+          worldCtx.beginPath();
+          worldCtx.moveTo(0, horizonY - 8);
+          for (let ax = 0; ax <= w; ax += 30) {
+            worldCtx.lineTo(ax, horizonY - 14 + Math.sin(ax * 0.02 + worldTick * 0.02) * 12);
+          }
+          worldCtx.stroke();
+
+          // Mirror Horizon Separation Line
+          worldCtx.strokeStyle = "rgba(180, 230, 255, 0.35)";
+          worldCtx.lineWidth = 1.0;
+          worldCtx.beginPath();
+          worldCtx.moveTo(0, horizonY);
+          worldCtx.lineTo(w, horizonY);
+          worldCtx.stroke();
+
+          // Hexagonal Salt Crust Tessellation Lines (Perspective below horizon)
+          worldCtx.strokeStyle = "rgba(140, 200, 240, 0.12)";
+          worldCtx.lineWidth = 0.9;
+          for (let row = 0; row < 6; row++) {
+            const ry = horizonY + 20 + row * 26;
+            worldCtx.beginPath();
+            for (let col = 0; col <= w; col += 60) {
+              const shift = (row % 2) * 30;
+              worldCtx.moveTo(col + shift - 15, ry);
+              worldCtx.lineTo(col + shift, ry - 8);
+              worldCtx.lineTo(col + shift + 15, ry);
+              worldCtx.lineTo(col + shift + 15, ry + 12);
+            }
+            worldCtx.stroke();
+          }
+
+          // Random Meteors / Shooting Stars
+          if (Math.random() < 0.025 && meteors.length < 3) {
+            meteors.push({
+              x: Math.random() * w * 0.8,
+              y: Math.random() * h * 0.35,
+              vx: 7 + Math.random() * 5,
+              vy: 3 + Math.random() * 3,
+              len: 40 + Math.random() * 30,
+              alpha: 1.0
+            });
+          }
+          meteors.forEach((m, idx) => {
+            m.x += m.vx;
+            m.y += m.vy;
+            m.alpha -= 0.035;
+            if (m.alpha <= 0) {
+              meteors.splice(idx, 1);
+              return;
+            }
+            // Sky Meteor
+            worldCtx.strokeStyle = `rgba(255, 255, 255, ${m.alpha})`;
+            worldCtx.lineWidth = 1.5;
+            worldCtx.beginPath();
+            worldCtx.moveTo(m.x, m.y);
+            worldCtx.lineTo(m.x - m.vx * 4, m.y - m.vy * 4);
+            worldCtx.stroke();
+            // Reflected Meteor below horizon
+            const refY = horizonY + (horizonY - m.y);
+            worldCtx.strokeStyle = `rgba(180, 230, 255, ${m.alpha * 0.6})`;
+            worldCtx.beginPath();
+            worldCtx.moveTo(m.x, refY);
+            worldCtx.lineTo(m.x - m.vx * 4, refY + m.vy * 4);
+            worldCtx.stroke();
+          });
+
+        } else if (d.particleType === "embers") {
+          // ----------------------------------------
+          // DESTINATION 5: PETRA TREASURY (JORDAN)
+          // ----------------------------------------
+          // Towering Siq Canyon Sandstone Walls
+          worldCtx.fillStyle = "rgba(18, 6, 8, 0.95)";
+          // Left Canyon Wall
+          worldCtx.beginPath();
+          worldCtx.moveTo(0, 0);
+          worldCtx.lineTo(w * 0.32 + midOffX, 0);
+          worldCtx.bezierCurveTo(w * 0.28 + midOffX, h * 0.4, w * 0.35 + midOffX, h * 0.7, w * 0.30 + midOffX, h);
+          worldCtx.lineTo(0, h);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+          // Right Canyon Wall
+          worldCtx.beginPath();
+          worldCtx.moveTo(w, 0);
+          worldCtx.lineTo(w * 0.68 + midOffX, 0);
+          worldCtx.bezierCurveTo(w * 0.72 + midOffX, h * 0.4, w * 0.65 + midOffX, h * 0.7, w * 0.70 + midOffX, h);
+          worldCtx.lineTo(w, h);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+          // Center Opening: Al-Khazneh (The Treasury) Facade
+          const tx = w * 0.5 + farOffX;
+          const ty = horizonY - 15 + farOffY;
+          worldCtx.fillStyle = "rgba(38, 12, 16, 0.92)";
+
+          // Lower Portico & Pediment
+          worldCtx.beginPath();
+          worldCtx.moveTo(tx - 65, ty);
+          worldCtx.lineTo(tx, ty - 55);
+          worldCtx.lineTo(tx + 65, ty);
+          worldCtx.lineTo(tx + 60, ty + 65);
+          worldCtx.lineTo(tx - 60, ty + 65);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+          // Columns
+          worldCtx.strokeStyle = "rgba(70, 24, 28, 0.85)";
+          worldCtx.lineWidth = 3.0;
+          for (let c = -45; c <= 45; c += 18) {
+            worldCtx.beginPath();
+            worldCtx.moveTo(tx + c, ty + 10);
+            worldCtx.lineTo(tx + c, ty + 65);
+            worldCtx.stroke();
+          }
+
+          // Upper Tholos Temple & Crowning Urn
+          worldCtx.fillStyle = "rgba(38, 12, 16, 0.92)";
+          worldCtx.fillRect(tx - 22, ty - 100, 44, 45); // round tholos
+          worldCtx.beginPath();
+          worldCtx.arc(tx, ty - 110, 8, 0, Math.PI * 2); // funerary urn
+          worldCtx.fill();
+
+          // Living Candlelight Pools on the Canyon Floor
+          for (let c = 0; c < 18; c++) {
+            const cx = (w * 0.34) + (c / 17) * (w * 0.32) + (Math.sin(c * 2) * 12);
+            const cy = horizonY + 35 + (c % 4) * 18;
+            const flicker = 0.7 + 0.3 * Math.sin(worldTick * 0.12 + c);
+            const cGlow = worldCtx.createRadialGradient(cx, cy, 1, cx, cy, 22 * flicker);
+            cGlow.addColorStop(0, "rgba(255, 220, 140, 0.95)");
+            cGlow.addColorStop(0.35, "rgba(240, 110, 40, 0.45)");
+            cGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
+            worldCtx.fillStyle = cGlow;
+            worldCtx.beginPath();
+            worldCtx.arc(cx, cy, 22 * flicker, 0, Math.PI * 2);
+            worldCtx.fill();
+          }
+
+        } else if (d.particleType === "snow") {
+          // ----------------------------------------
+          // DESTINATION 6: MATTERHORN (SWITZERLAND)
+          // ----------------------------------------
+          // Northern Lights / Aurora Borealis Curtains
+          for (let a = 0; a < 3; a++) {
+            const auroraY = h * 0.22 + a * 25;
+            worldCtx.strokeStyle = a === 0 ? "rgba(70, 240, 190, 0.35)" : a === 1 ? "rgba(90, 160, 255, 0.3)" : "rgba(180, 80, 240, 0.22)";
+            worldCtx.lineWidth = 18;
+            worldCtx.beginPath();
+            worldCtx.moveTo(0, auroraY);
+            for (let x = 0; x <= w; x += 35) {
+              const wav = Math.sin(x * 0.015 + worldTick * 0.015 + a * 1.5) * 22;
+              worldCtx.lineTo(x, auroraY + wav);
+            }
+            worldCtx.stroke();
+          }
+
+          // Matterhorn Iconic Sharp Pyramid Peak
+          const peakX = w * 0.5 + farOffX;
+          const peakY = horizonY - 150 + farOffY;
+
+          // Dark Rock Face (North face shadow)
+          worldCtx.fillStyle = "rgba(8, 14, 24, 0.96)";
+          worldCtx.beginPath();
+          worldCtx.moveTo(peakX, peakY);
+          worldCtx.lineTo(peakX - 110, horizonY + 20);
+          worldCtx.lineTo(peakX + 130, horizonY + 20);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+          // Snow-covered Ridges (Hörnli Ridge & Couloirs)
+          worldCtx.fillStyle = "rgba(215, 240, 255, 0.88)";
+          worldCtx.beginPath();
+          worldCtx.moveTo(peakX, peakY);
+          worldCtx.lineTo(peakX - 10, peakY + 45);
+          worldCtx.lineTo(peakX + 35, horizonY - 30);
+          worldCtx.lineTo(peakX + 115, horizonY + 20);
+          worldCtx.lineTo(peakX, horizonY + 20);
+          worldCtx.closePath();
+          worldCtx.fill();
+
+          // Summit Snow Banner / Spindrift blowing off peak
+          worldCtx.strokeStyle = "rgba(235, 245, 255, 0.45)";
+          worldCtx.lineWidth = 2.0;
+          for (let b = 0; b < 6; b++) {
+            worldCtx.beginPath();
+            worldCtx.moveTo(peakX, peakY + b * 4);
+            worldCtx.quadraticCurveTo(peakX + 45 + b * 8, peakY - 10 + b * 5, peakX + 95 + b * 12, peakY - 5 + b * 7);
+            worldCtx.stroke();
+          }
         }
 
-        // 5. Ambient Atmospheric Particles (Stars, Snow, Sparks, Fireflies)
+        // 3. Foreground Obsidian Dunes / Terrain Ridge (Grounding Layer)
+        worldCtx.fillStyle = "#040507";
+        worldCtx.beginPath();
+        worldCtx.moveTo(0, h);
+        worldCtx.lineTo(0, horizonY + 38 + fgOffY);
+        worldCtx.bezierCurveTo(w * 0.25 + fgOffX, horizonY + 18 + fgOffY, w * 0.75 + fgOffX, horizonY + 48 + fgOffY, w, horizonY + 28 + fgOffY);
+        worldCtx.lineTo(w, h);
+        worldCtx.closePath();
+        worldCtx.fill();
+
+        // 4. Ambient Atmospheric Particles (Stars, Snow, Embers, Dust)
         particles.forEach(p => {
           p.x += p.vx;
           p.y += p.vy;
@@ -2356,46 +3307,62 @@
           if (p.y < 0) p.y = h;
           if (p.y > h) p.y = 0;
 
-          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(renderTick * p.pulseSpeed + p.pulsePhase));
-          ctx.fillStyle = d.particleColor;
-          ctx.globalAlpha = Math.max(0, Math.min(1, currentAlpha));
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fill();
+          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(worldTick * p.pulseSpeed + p.pulsePhase));
+          worldCtx.fillStyle = d.particleColor;
+          worldCtx.globalAlpha = Math.max(0, Math.min(1, currentAlpha));
+          worldCtx.beginPath();
+          // Apply depth parallax to particles
+          const px = p.x + midOffX * p.depth;
+          const py = p.y + midOffY * p.depth;
+          worldCtx.arc(px, py, p.radius, 0, Math.PI * 2);
+          worldCtx.fill();
         });
-        ctx.globalAlpha = 1.0;
+        worldCtx.globalAlpha = 1.0;
 
-        animationFrameId = requestAnimationFrame(renderCanvasWorld);
+        // Render singularity vortex on its dedicated canvas
+        renderSingularityVortex();
+
+        requestAnimationFrame(renderWorldCanvas);
       }
-      animationFrameId = requestAnimationFrame(renderCanvasWorld);
+      requestAnimationFrame(renderWorldCanvas);
 
-      // Transition to Specific Destination with S-Tier Warp FX
+      // ----------------------------------------------------
+      // Transition to Destination with Quantum Warp FX
+      // ----------------------------------------------------
       function setDestination(newIndex, direction = 1) {
         if (isTeleporting) return;
         isTeleporting = true;
 
         if (statusPill) {
-          statusPill.innerHTML = '<span class="portal-status-dot" style="background:#e89b4f;box-shadow:0 0 10px #e89b4f"></span>WARPING';
+          statusPill.innerHTML = '<span class="portal-status-dot" style="background:#e89b4f;box-shadow:0 0 12px #e89b4f"></span>WARPING';
           statusPill.style.color = "#ffddaa";
         }
 
-        // Trigger Audio Feedback
-        playTeleportSound();
+        // Trigger Rich Audio Feedback
+        playTeleportWarpSound();
 
-        // Flash Gate Singularity & Ripple
-        if (singularity) {
-          gsap.fromTo(singularity,
-            { scale: 0.8, opacity: 0.4 },
-            { scale: 1.45, opacity: 1, duration: 0.32, ease: "power2.out", yoyo: true, repeat: 1 }
+        // Singularity Gravitational Collapse & Expansion Animation
+        if (gateWrap) {
+          gsap.timeline()
+            .to(gateWrap, { scale: 0.94, duration: 0.18, ease: "power2.in" })
+            .to(gateWrap, { scale: 1.05, duration: 0.28, ease: "back.out(2.5)" })
+            .to(gateWrap, { scale: 1.0, duration: 0.35, ease: "power2.out" });
+        }
+
+        // Shockwave Ripple Ring FX
+        if (rippleFx) {
+          gsap.fromTo(rippleFx,
+            { scale: 0.1, opacity: 0.95 },
+            { scale: 2.2, opacity: 0, duration: 0.65, ease: "power2.out" }
           );
         }
 
-        // Warp Flash Layer
+        // Quantum Warp Flash Layer
         if (warpFx) {
           gsap.fromTo(warpFx,
-            { opacity: 0, scale: 0.96 },
+            { opacity: 0, scale: 0.95 },
             {
-              opacity: 0.85,
+              opacity: 0.92,
               scale: 1.02,
               duration: 0.28,
               ease: "power2.inOut",
@@ -2404,26 +3371,29 @@
                 currentIndex = (newIndex + destinations.length) % destinations.length;
                 const d = destinations[currentIndex];
 
-                // Update Left Side Panel
+                // Update Left HUD
                 if (kickerIndexEl) kickerIndexEl.textContent = d.kicker;
                 if (placeTitleEl) {
-                  gsap.fromTo(placeTitleEl, { y: direction * 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" });
+                  gsap.fromTo(placeTitleEl,
+                    { y: direction * 15, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }
+                  );
                   placeTitleEl.textContent = d.name;
                 }
                 if (indexNumEl) indexNumEl.textContent = d.num;
                 if (indexFillEl) indexFillEl.style.width = ((currentIndex + 1) / destinations.length * 100) + "%";
 
-                // Update Right Telemetry Panel
-                if (coordsEl) coordsEl.textContent = d.coords;
-                if (altEl) altEl.textContent = d.altitude;
-                if (atmoEl) atmoEl.textContent = d.atmosphere;
-                if (windowEl) windowEl.textContent = d.temporal;
+                // Digital HUD Scramble on Right Telemetry Panel
+                if (coordsEl) scrambleText(coordsEl, d.coords, 380);
+                if (altEl) scrambleText(altEl, d.altitude, 320);
+                if (atmoEl) scrambleText(atmoEl, d.atmosphere, 420);
+                if (windowEl) scrambleText(windowEl, d.temporal, 350);
 
-                // Update Tabs and Pills
+                // Update Tabs & Pills
                 navTabs.forEach((tab, idx) => tab.classList.toggle("active", idx === currentIndex));
                 pills.forEach((pill, idx) => pill.classList.toggle("active", idx === currentIndex));
 
-                initParticles();
+                initWorldParticles();
 
                 // Fade out Warp Flash
                 gsap.to(warpFx, {
@@ -2448,7 +3418,10 @@
         }
       }
 
-      // Event Listeners: Click Gate Arch to Warp to Next World
+      // ----------------------------------------------------
+      // Interactive Event Listeners
+      // ----------------------------------------------------
+      // Click Gate Arch to Teleport to Next Destination
       if (gateWrap) {
         gateWrap.addEventListener("click", () => {
           setDestination(currentIndex + 1, 1);
@@ -2466,12 +3439,14 @@
       if (btnPrev) {
         btnPrev.addEventListener("click", (e) => {
           e.stopPropagation();
+          playUiTick();
           setDestination(currentIndex - 1, -1);
         });
       }
       if (btnNext) {
         btnNext.addEventListener("click", (e) => {
           e.stopPropagation();
+          playUiTick();
           setDestination(currentIndex + 1, 1);
         });
       }
@@ -2480,6 +3455,7 @@
       navTabs.forEach(tab => {
         tab.addEventListener("click", (e) => {
           e.stopPropagation();
+          playUiTick();
           const targetIdx = parseInt(tab.getAttribute("data-idx"), 10);
           if (!isNaN(targetIdx) && targetIdx !== currentIndex) {
             setDestination(targetIdx, targetIdx > currentIndex ? 1 : -1);
@@ -2491,6 +3467,7 @@
       pills.forEach(pill => {
         pill.addEventListener("click", (e) => {
           e.stopPropagation();
+          playUiTick();
           const targetIdx = parseInt(pill.getAttribute("data-idx"), 10);
           if (!isNaN(targetIdx) && targetIdx !== currentIndex) {
             setDestination(targetIdx, targetIdx > currentIndex ? 1 : -1);
@@ -2498,13 +3475,14 @@
         });
       });
 
-      // Keyboard arrow navigation
-      const viewport = document.getElementById("portal-viewport");
+      // Keyboard Arrow Navigation
       if (viewport) {
         viewport.addEventListener("keydown", (e) => {
           if (e.key === "ArrowRight") {
+            playUiTick();
             setDestination(currentIndex + 1, 1);
           } else if (e.key === "ArrowLeft") {
+            playUiTick();
             setDestination(currentIndex - 1, -1);
           }
         });
