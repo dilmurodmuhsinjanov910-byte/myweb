@@ -379,8 +379,179 @@
       background:radial-gradient(circle at 28% 22%,#ffffff 0%,#d8dbe0 12%,#1a1b1d 38%,#060606 58%,#dfb76c 78%,#78531c 94%,#0a0a0a 100%);
       box-shadow:0 0 140px rgba(223,183,108,.14);
     }
-    .project-content{position:relative;z-index:2;padding:0 calc(var(--pad)*1.25);width:100%}
+    .project-content{position:relative;z-index:5;padding:0 calc(var(--pad)*1.1);width:100%;max-width:440px;pointer-events:auto}
     .project-number{font-size:8px;color:#777;letter-spacing:.21em;margin-bottom:17px}
+
+    /* Project Interactive App Stage */
+    .project-app-container{
+      position:absolute;right:calc(var(--pad) + 14px);top:50%;transform:translateY(-50%);
+      width:min(58vw,940px);height:min(74vh,580px);z-index:10;
+      border-radius:14px;overflow:hidden;
+      border:1px solid rgba(223,183,108,.30);
+      box-shadow:0 35px 90px -20px rgba(0,0,0,.95), 0 0 50px rgba(223,183,108,.08);
+      background:#060709;
+      display:flex;flex-direction:column;
+      user-select:none;
+    }
+
+    /* App Header */
+    .portal-header{
+      height:44px;padding:0 18px;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(10,11,14,.88);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.07);z-index:20;
+    }
+    .portal-brand{display:flex;align-items:center;gap:10px}
+    .portal-logo{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);line-height:1}
+    .portal-title{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#aaa}
+    .portal-status{display:flex;align-items:center;gap:6px;font-size:7px;letter-spacing:.18em;color:#777;margin-left:8px}
+    .portal-status-dot{width:5px;height:5px;border-radius:50%;background:#50e3c2;box-shadow:0 0 8px #50e3c2}
+    .portal-nav-tabs{display:flex;gap:14px}
+    .portal-tab{
+      font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#666;cursor:pointer;
+      transition:color .3s, transform .3s;padding:4px 0;border-bottom:1px solid transparent;
+    }
+    .portal-tab:hover{color:#bbb}
+    .portal-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+    .portal-actions{display:flex;align-items:center;gap:8px}
+    .portal-sound-btn{
+      background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:20px;
+      color:#888;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;
+      padding:4px 9px;display:flex;align-items:center;gap:5px;cursor:pointer;transition:.3s;
+    }
+    .portal-sound-btn:hover{color:var(--white);border-color:rgba(223,183,108,.5)}
+
+    /* Viewport */
+    .portal-viewport{
+      position:relative;flex:1;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .portal-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+    .portal-backdrop{
+      position:absolute;inset:0;z-index:2;pointer-events:none;
+      background:radial-gradient(circle at 50% 50%, transparent 40%, rgba(6,7,9,.82) 100%);
+      transition:background 1s ease-in-out;
+    }
+
+    /* Left Overlay */
+    .portal-overlay-left{
+      position:absolute;left:26px;top:26px;z-index:10;pointer-events:none;
+      max-width:240px;
+    }
+    .portal-kicker{font-size:7.5px;letter-spacing:.26em;color:#8a8e97;text-transform:uppercase}
+    .portal-place-name{
+      margin:10px 0 0;font-family:var(--serif);font-size:clamp(26px,2.8vw,40px);
+      line-height:.96;font-weight:400;color:var(--white);letter-spacing:-.03em;
+    }
+    .portal-index-row{display:flex;align-items:center;gap:10px;margin-top:18px}
+    .portal-index-current{font-size:11px;color:var(--gold);font-weight:600}
+    .portal-index-bar{width:60px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+    .portal-index-fill{height:100%;background:var(--gold-grad);width:16.66%;transition:width .6s cubic-bezier(.16,1,.3,1)}
+    .portal-index-total{font-size:9px;color:#555}
+
+    /* Center Archway */
+    .portal-gate-wrap{
+      position:relative;z-index:12;width:min(280px,38%);aspect-ratio:350/410;
+      cursor:pointer;transform-origin:center center;
+      transition:transform .4s cubic-bezier(.16,1,.3,1),filter .4s;
+    }
+    .portal-gate-wrap:hover{transform:scale(1.03);filter:drop-shadow(0 0 35px rgba(223,183,108,.35))}
+    .portal-gate-wrap:active{transform:scale(.98)}
+    .portal-gate-img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+      z-index:3;filter:drop-shadow(0 15px 35px rgba(0,0,0,.85));
+      pointer-events:none;
+    }
+    .portal-singularity{
+      position:absolute;left:20.5%;top:20%;width:59%;height:65%;
+      border-radius:50% 50% 12% 12% / 45% 45% 12% 12%;
+      background:radial-gradient(circle at 50% 45%, rgba(223,183,108,.4) 0%, rgba(240,165,80,.2) 35%, rgba(10,12,18,.05) 70%, transparent 100%);
+      z-index:2;pointer-events:none;mix-blend-mode:screen;
+      animation:singularityPulse 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes singularityPulse{
+      0%{transform:scale(0.96);opacity:0.65}
+      100%{transform:scale(1.05);opacity:1}
+    }
+    .portal-warp-fx{
+      position:absolute;inset:0;z-index:8;background:#fff;pointer-events:none;opacity:0;
+      mix-blend-mode:overlay;
+    }
+    .portal-cue{
+      position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);
+      white-space:nowrap;display:flex;align-items:center;gap:7px;
+      background:rgba(12,14,18,.88);border:1px solid rgba(223,183,108,.35);
+      border-radius:20px;padding:5px 12px;z-index:15;box-shadow:0 6px 20px rgba(0,0,0,.6);
+      pointer-events:none;
+    }
+    .portal-cue-ring{
+      width:6px;height:6px;border-radius:50%;background:#dfb76c;
+      animation:cuePulse 1.8s ease-in-out infinite;
+    }
+    @keyframes cuePulse{
+      0%,100%{transform:scale(1);opacity:.5;box-shadow:0 0 0 0 rgba(223,183,108,.7)}
+      50%{transform:scale(1.4);opacity:1;box-shadow:0 0 0 6px rgba(223,183,108,0)}
+    }
+    .portal-cue-text{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#d0d0d0}
+
+    /* Right Overlay */
+    .portal-overlay-right{
+      position:absolute;right:26px;top:26px;bottom:26px;z-index:10;
+      width:min(230px,30%);display:flex;flex-direction:column;justify-content:space-between;
+      pointer-events:auto;
+    }
+    .portal-quote{
+      margin:0;font-size:9px;line-height:1.6;color:#858992;
+      border-left:1px solid rgba(223,183,108,.3);padding-left:10px;
+    }
+    .portal-telemetry-box{
+      background:rgba(10,12,16,.78);border:1px solid rgba(255,255,255,.08);
+      border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;
+      backdrop-filter:blur(8px);
+    }
+    .telemetry-row{display:flex;justify-content:space-between;align-items:center;font-size:7.5px}
+    .telemetry-label{letter-spacing:.16em;text-transform:uppercase;color:#666}
+    .telemetry-val{color:#bbb;font-family:monospace;letter-spacing:.06em}
+
+    .portal-teleport-btn{
+      height:36px;border-radius:6px;border:1px solid rgba(223,183,108,.55);
+      background:linear-gradient(135deg,#1f1a12,#0f0e0c);
+      color:#fff3d1;font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+      display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+      transition:background .35s,border-color .35s,transform .3s,box-shadow .35s;
+    }
+    .portal-teleport-btn:hover{
+      background:linear-gradient(135deg,#342816,#19150d);
+      border-color:rgba(255,243,209,.9);
+      box-shadow:0 0 25px rgba(223,183,108,.35);
+      transform:translateY(-1px);
+    }
+
+    /* Footer Dock */
+    .portal-footer{
+      height:44px;padding:0 18px;display:flex;justify-content:space-between;align-items:center;
+      background:rgba(10,11,14,.92);backdrop-filter:blur(12px);
+      border-top:1px solid rgba(255,255,255,.07);z-index:20;
+    }
+    .portal-nav-arrows{display:flex;gap:8px}
+    .portal-arrow-btn{
+      width:28px;height:28px;border-radius:4px;border:1px solid rgba(255,255,255,.1);
+      background:transparent;color:#999;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;transition:.3s;
+    }
+    .portal-arrow-btn:hover{color:var(--gold);border-color:rgba(223,183,108,.5);background:rgba(223,183,108,.05)}
+    .portal-pills{display:flex;gap:6px;overflow-x:auto}
+    .portal-pill{
+      padding:4px 10px;border-radius:12px;font-size:8px;letter-spacing:.12em;text-transform:uppercase;
+      background:rgba(255,255,255,.04);color:#777;border:1px solid transparent;cursor:pointer;
+      transition:all .3s;white-space:nowrap;
+    }
+    .portal-pill:hover{color:#bbb;background:rgba(255,255,255,.07)}
+    .portal-pill.active{
+      color:#080808;background:var(--gold-grad);border-color:transparent;
+      box-shadow:0 0 12px rgba(223,183,108,.4);font-weight:600;
+    }
+    .portal-hint{font-size:7.5px;letter-spacing:.16em;color:#555}
     .project-title{
       margin:0;font-family:var(--serif);font-size:clamp(58px,8.8vw,145px);line-height:.82;font-weight:400;
       letter-spacing:-.05em;color:var(--white);
@@ -713,21 +884,138 @@
         <h2>Work that<br><span class="gold">left a mark.</span></h2>
       </div>
 
-      <article class="project">
+      <article class="project" id="project-01">
         <div class="project-stage">
           <div class="project-visual">
             <div class="project-light"></div>
-            <div class="project-orb-art"></div>
+            <!-- S-Tier Interactive Mini-Web: Teleport Portal -->
+            <div class="project-app-container" id="portal-app">
+              <!-- App Header Bar -->
+              <div class="portal-header">
+                <div class="portal-brand">
+                  <span class="portal-logo">p.</span>
+                  <span class="portal-title">TELEPORT PROTOCOL</span>
+                  <span class="portal-status"><span class="portal-status-dot"></span>ONLINE</span>
+                </div>
+                <div class="portal-nav-tabs" id="portal-nav-tabs">
+                  <span class="portal-tab active" data-idx="0">Utah</span>
+                  <span class="portal-tab" data-idx="1">Cappadocia</span>
+                  <span class="portal-tab" data-idx="2">Kyoto</span>
+                  <span class="portal-tab" data-idx="3">Uyuni</span>
+                  <span class="portal-tab" data-idx="4">Petra</span>
+                  <span class="portal-tab" data-idx="5">Zermatt</span>
+                </div>
+                <div class="portal-actions">
+                  <button class="portal-sound-btn" id="portal-sound-toggle" title="Toggle audio">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                    <span id="portal-sound-text">AUDIO ON</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Portal Viewport -->
+              <div class="portal-viewport" id="portal-viewport">
+                <!-- World Canvas Background -->
+                <canvas id="portal-world-canvas" class="portal-canvas"></canvas>
+                
+                <!-- Subtle Radial Vignette -->
+                <div class="portal-backdrop" id="portal-backdrop"></div>
+
+                <!-- Content Overlay: Left -->
+                <div class="portal-overlay-left">
+                  <span class="portal-kicker">TELEPORT YOURS // <span id="portal-index-kicker">01 OF 06</span></span>
+                  <h3 class="portal-place-name" id="portal-place-name">Discover<br><span class="gold" id="portal-place-title">Monument Valley</span></h3>
+                  <div class="portal-index-row">
+                    <span class="portal-index-current" id="portal-index-num">01</span>
+                    <div class="portal-index-bar"><div class="portal-index-fill" id="portal-index-fill"></div></div>
+                    <span class="portal-index-total">06</span>
+                  </div>
+                </div>
+
+                <!-- Content Overlay: Center (The Portal Gate) -->
+                <div class="portal-gate-wrap" id="portal-gate-wrap" title="Click the Gate to Teleport">
+                  <!-- Portal Singularity Vortex Behind the Arch -->
+                  <div class="portal-singularity" id="portal-singularity"></div>
+
+                  <!-- Authentic S-Tier Photo-Real Cutout Stone Archway -->
+                  <img src="gate_arch_transparent.png" alt="Ancient Stone Gate Arch" class="portal-gate-img" id="portal-gate-img" />
+
+                  <!-- Gate Pulse Cue Badge -->
+                  <div class="portal-cue">
+                    <div class="portal-cue-ring"></div>
+                    <span class="portal-cue-text">CLICK THE GATE TO TELEPORT</span>
+                  </div>
+                </div>
+
+                <!-- Quantum Flash / Warp FX Overlay -->
+                <div class="portal-warp-fx" id="portal-warp-fx"></div>
+
+                <!-- Content Overlay: Right (Telemetry & CTA) -->
+                <div class="portal-overlay-right">
+                  <p class="portal-quote">
+                    "Teleportation is the transfer of matter or energy from one point to another without traversing physical space."
+                  </p>
+
+                  <div class="portal-telemetry-box">
+                    <div class="telemetry-row">
+                      <span class="telemetry-label">COORDINATES</span>
+                      <span class="telemetry-val" id="telemetry-coords">36.998° N, 110.098° W</span>
+                    </div>
+                    <div class="telemetry-row">
+                      <span class="telemetry-label">ALTITUDE</span>
+                      <span class="telemetry-val" id="telemetry-alt">1,638 M</span>
+                    </div>
+                    <div class="telemetry-row">
+                      <span class="telemetry-label">ATMOSPHERE</span>
+                      <span class="telemetry-val" id="telemetry-atmo">Arid Sunset · 24°C</span>
+                    </div>
+                    <div class="telemetry-row">
+                      <span class="telemetry-label">TEMPORAL WINDOW</span>
+                      <span class="telemetry-val gold" id="telemetry-window">OPTIMAL SYNC</span>
+                    </div>
+                  </div>
+
+                  <button class="portal-teleport-btn magnetic" id="portal-teleport-trigger">
+                    <span>TELEPORT NOW</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Footer Dock -->
+              <div class="portal-footer">
+                <div class="portal-nav-arrows">
+                  <button class="portal-arrow-btn" id="portal-prev" aria-label="Previous destination">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                  </button>
+                  <button class="portal-arrow-btn" id="portal-next" aria-label="Next destination">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                  </button>
+                </div>
+                <div class="portal-pills" id="portal-pills">
+                  <button class="portal-pill active" data-idx="0">01. Utah</button>
+                  <button class="portal-pill" data-idx="1">02. Cappadocia</button>
+                  <button class="portal-pill" data-idx="2">03. Kyoto</button>
+                  <button class="portal-pill" data-idx="3">04. Uyuni</button>
+                  <button class="portal-pill" data-idx="4">05. Petra</button>
+                  <button class="portal-pill" data-idx="5">06. Zermatt</button>
+                </div>
+                <div class="portal-hint">
+                  <span>[← / → KEYS]</span>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="project-content">
             <div class="project-number">PROJECT / 01</div>
-            <h3 class="project-title">Project<br>One</h3>
+            <h3 class="project-title">Teleport<br><span class="gold">Portal</span></h3>
             <div class="project-meta">
-              <div class="meta-item"><small>Role</small><span>[Your role]</span></div>
-              <div class="meta-item"><small>Category</small><span>[Category]</span></div>
-              <div class="meta-item"><small>Year</small><span>[2026]</span></div>
+              <div class="meta-item"><small>Role</small><span>Lead Experience Architect</span></div>
+              <div class="meta-item"><small>Category</small><span>Interactive Spatial UI</span></div>
+              <div class="meta-item"><small>Year</small><span>2026</span></div>
             </div>
-            <div class="impact">[One powerful measurable result or outcome.]</div>
+            <div class="impact">Seamless dimensional teleportation across 6 global realities with zero latency.</div>
           </div>
           <div class="project-progress"><span>01 / 03</span><i></i></div>
         </div>
@@ -1547,19 +1835,24 @@
           }
         });
 
-        tl
-          .fromTo(visual,
+        if(visual){
+          tl.fromTo(visual,
             {clipPath:"inset(12% 8% 12% 8%)",scale:.985},
             {clipPath:"inset(0% 0% 0% 0%)",scale:1,duration:.32,ease:"none"},0
-          )
-          .fromTo(art,
+          );
+        }
+        if(art){
+          tl.fromTo(art,
             {yPercent:14,scale:.82},
             {yPercent:-12,scale:1.09,duration:1,ease:"none"},0
-          )
-          .fromTo(light,
+          );
+        }
+        if(light){
+          tl.fromTo(light,
             {xPercent:-25},
             {xPercent:55,duration:1,ease:"none"},0
           );
+        }
 
         gsap.from(title,{
           yPercent:34,
@@ -1722,6 +2015,502 @@
         gsap.to(el,{x:x*.12,y:y*.12,duration:.30,ease:"power3.out"});
       });
     });
+
+    /* ============================================================
+       PROJECT 01: TELEPORT GATE INTERACTIVE APPLICATION ENGINE (S-TIER)
+       ============================================================ */
+    (function initPortalApp(){
+      const portalApp = document.getElementById("portal-app");
+      if(!portalApp) return;
+
+      const canvas = document.getElementById("portal-world-canvas");
+      const ctx = canvas ? canvas.getContext("2d") : null;
+      const gateWrap = document.getElementById("portal-gate-wrap");
+      const singularity = document.getElementById("portal-singularity");
+      const statusPill = portalApp.querySelector(".portal-status");
+      const kickerIndexEl = document.getElementById("portal-index-kicker");
+      const placeTitleEl = document.getElementById("portal-place-title");
+      const indexNumEl = document.getElementById("portal-index-num");
+      const indexFillEl = document.getElementById("portal-index-fill");
+
+      const coordsEl = document.getElementById("telemetry-coords");
+      const altEl = document.getElementById("telemetry-alt");
+      const atmoEl = document.getElementById("telemetry-atmo");
+      const windowEl = document.getElementById("telemetry-window");
+
+      const navTabs = Array.from(document.querySelectorAll(".portal-tab"));
+      const pills = Array.from(document.querySelectorAll(".portal-pill"));
+      const btnPrev = document.getElementById("portal-prev");
+      const btnNext = document.getElementById("portal-next");
+      const warpFx = document.getElementById("portal-warp-fx");
+      const teleportBtn = document.getElementById("portal-teleport-trigger");
+      const soundBtn = document.getElementById("portal-sound-toggle");
+      const soundText = document.getElementById("portal-sound-text");
+
+      let soundEnabled = true;
+      if (soundBtn) {
+        soundBtn.addEventListener("click", () => {
+          soundEnabled = !soundEnabled;
+          if (soundText) soundText.textContent = soundEnabled ? "AUDIO ON" : "AUDIO MUTED";
+          soundBtn.style.opacity = soundEnabled ? "1" : "0.5";
+        });
+      }
+
+      // Preload World 1 Landscape Image from reference
+      const monumentImg = new Image();
+      monumentImg.src = "world_monument_valley.jpg";
+
+      // 6 Distinct S-Tier Destinations
+      const destinations = [
+        {
+          kicker: "01 OF 06",
+          num: "01",
+          name: "Monument Valley",
+          coords: "36.998° N, 110.098° W",
+          altitude: "1,638 M",
+          atmosphere: "Arid Sunset · 24°C",
+          temporal: "OPTIMAL SYNC",
+          bgGradient: ["#0b0406", "#2d0f19", "#782329", "#e26d40", "#f8b76c"],
+          horizonY: 0.64,
+          glowColor: "rgba(235, 140, 75, 0.45)",
+          particleType: "dust",
+          particleCount: 55,
+          particleColor: "rgba(255, 200, 140, 0.75)",
+          useImage: true
+        },
+        {
+          kicker: "02 OF 06",
+          num: "02",
+          name: "Cappadocia Valley",
+          coords: "38.643° N, 34.830° E",
+          altitude: "1,050 M",
+          atmosphere: "Dawn Breeze · 14°C",
+          temporal: "STABLE CONVERGENCE",
+          bgGradient: ["#090916", "#1c1432", "#472852", "#9c556b", "#eec09e"],
+          horizonY: 0.62,
+          glowColor: "rgba(215, 130, 160, 0.45)",
+          particleType: "balloons",
+          particleCount: 45,
+          particleColor: "rgba(250, 210, 180, 0.70)",
+          useImage: false
+        },
+        {
+          kicker: "03 OF 06",
+          num: "03",
+          name: "Kyoto Arashiyama",
+          coords: "35.016° N, 135.671° E",
+          altitude: "42 M",
+          atmosphere: "Misty Twilight · 18°C",
+          temporal: "HARMONIC FLOW",
+          bgGradient: ["#030907", "#0a1f18", "#153d2d", "#2e684a", "#69a778"],
+          horizonY: 0.66,
+          glowColor: "rgba(90, 190, 140, 0.45)",
+          particleType: "fireflies",
+          particleCount: 60,
+          particleColor: "rgba(165, 255, 180, 0.85)",
+          useImage: false
+        },
+        {
+          kicker: "04 OF 06",
+          num: "04",
+          name: "Salar de Uyuni",
+          coords: "20.133° S, 67.489° W",
+          altitude: "3,656 M",
+          atmosphere: "Glacial Mirror · -2°C",
+          temporal: "CRYSTALLINE APEX",
+          bgGradient: ["#020409", "#061324", "#0f2b48", "#1b5278", "#4ea5c9"],
+          horizonY: 0.58,
+          glowColor: "rgba(80, 180, 245, 0.50)",
+          particleType: "stars",
+          particleCount: 85,
+          particleColor: "rgba(200, 240, 255, 0.90)",
+          useImage: false
+        },
+        {
+          kicker: "05 OF 06",
+          num: "05",
+          name: "Petra Treasury",
+          coords: "30.328° N, 35.444° E",
+          altitude: "810 M",
+          atmosphere: "Terracotta Dusk · 22°C",
+          temporal: "ANCIENT RESONANCE",
+          bgGradient: ["#080405", "#1c0d12", "#471e23", "#8a423b", "#d98762"],
+          horizonY: 0.65,
+          glowColor: "rgba(230, 150, 90, 0.45)",
+          particleType: "embers",
+          particleCount: 50,
+          particleColor: "rgba(255, 190, 110, 0.75)",
+          useImage: false
+        },
+        {
+          kicker: "06 OF 06",
+          num: "06",
+          name: "Matterhorn Peak",
+          coords: "45.976° N, 7.658° E",
+          altitude: "4,478 M",
+          atmosphere: "Alpine Frost · -8°C",
+          temporal: "AURORAL PEAK",
+          bgGradient: ["#020308", "#0b1220", "#182a44", "#315370", "#84aed2"],
+          horizonY: 0.60,
+          glowColor: "rgba(140, 200, 255, 0.50)",
+          particleType: "snow",
+          particleCount: 70,
+          particleColor: "rgba(235, 245, 255, 0.85)",
+          useImage: false
+        }
+      ];
+
+      let currentIndex = 0;
+      let isTeleporting = false;
+      let particles = [];
+      let animationFrameId = null;
+
+      // Web Audio API Procedural Sound Synthesizer
+      let audioCtx = null;
+      function playTeleportSound() {
+        if (!soundEnabled) return;
+        try {
+          if (!audioCtx) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (AudioContextClass) audioCtx = new AudioContextClass();
+          }
+          if (!audioCtx) return;
+          if (audioCtx.state === "suspended") audioCtx.resume();
+
+          const now = audioCtx.currentTime;
+
+          // Sub-bass sweep
+          const osc1 = audioCtx.createOscillator();
+          const gain1 = audioCtx.createGain();
+          osc1.type = "sine";
+          osc1.frequency.setValueAtTime(140, now);
+          osc1.frequency.exponentialRampToValueAtTime(420, now + 0.28);
+          osc1.frequency.exponentialRampToValueAtTime(60, now + 0.95);
+          gain1.gain.setValueAtTime(0.001, now);
+          gain1.gain.linearRampToValueAtTime(0.20, now + 0.12);
+          gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
+          osc1.connect(gain1);
+          gain1.connect(audioCtx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.96);
+
+          // Crystalline warp shimmer
+          const osc2 = audioCtx.createOscillator();
+          const gain2 = audioCtx.createGain();
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = "bandpass";
+          filter.frequency.setValueAtTime(900, now);
+          filter.frequency.exponentialRampToValueAtTime(2600, now + 0.35);
+          filter.Q.setValueAtTime(4.0, now);
+
+          osc2.type = "triangle";
+          osc2.frequency.setValueAtTime(520, now);
+          osc2.frequency.exponentialRampToValueAtTime(1040, now + 0.25);
+          osc2.frequency.exponentialRampToValueAtTime(260, now + 0.85);
+
+          gain2.gain.setValueAtTime(0.001, now);
+          gain2.gain.linearRampToValueAtTime(0.12, now + 0.18);
+          gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
+
+          osc2.connect(filter);
+          filter.connect(gain2);
+          gain2.connect(audioCtx.destination);
+          osc2.start(now);
+          osc2.stop(now + 0.86);
+        } catch(_) {}
+      }
+
+      // Initialize Particles
+      function initParticles() {
+        if (!canvas) return;
+        particles = [];
+        const d = destinations[currentIndex];
+        const w = canvas.width || 800;
+        const h = canvas.height || 600;
+        for (let i = 0; i < d.particleCount; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (d.particleType === "snow" ? (0.7 + Math.random() * 1.0) :
+                 d.particleType === "fireflies" ? ((Math.random() - 0.5) * 0.6) :
+                 d.particleType === "balloons" ? (-0.3 - Math.random() * 0.4) :
+                 (-0.15 - Math.random() * 0.25)),
+            radius: Math.random() * 2.2 + 0.8,
+            alpha: Math.random() * 0.7 + 0.2,
+            pulseSpeed: Math.random() * 0.04 + 0.015,
+            pulsePhase: Math.random() * Math.PI * 2
+          });
+        }
+      }
+
+      // Resize Canvas
+      function resizeCanvas() {
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(rect.width * dpr, 400);
+        canvas.height = Math.max(rect.height * dpr, 300);
+        initParticles();
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      // Render Dynamic Procedural World onto Canvas
+      let renderTick = 0;
+      function renderCanvasWorld() {
+        if (!ctx || !canvas) return;
+        renderTick++;
+        const w = canvas.width;
+        const h = canvas.height;
+        const d = destinations[currentIndex];
+
+        if (d.useImage && monumentImg.complete && monumentImg.naturalWidth > 0) {
+          // Draw high-res photographic world
+          ctx.drawImage(monumentImg, 0, 0, w, h);
+          // Dark vignette overlay
+          const vig = ctx.createRadialGradient(w * 0.5, h * 0.5, h * 0.2, w * 0.5, h * 0.5, w * 0.75);
+          vig.addColorStop(0, "rgba(0,0,0,0)");
+          vig.addColorStop(1, "rgba(0,0,0,0.55)");
+          ctx.fillStyle = vig;
+          ctx.fillRect(0, 0, w, h);
+        } else {
+          // 1. Sky Gradient
+          const grad = ctx.createLinearGradient(0, 0, 0, h);
+          const stops = d.bgGradient;
+          stops.forEach((col, idx) => {
+            grad.addColorStop(idx / (stops.length - 1), col);
+          });
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, w, h);
+
+          // 2. Horizon Sun / Glow
+          const horizonY = h * d.horizonY;
+          const sunX = w * 0.5;
+          const sunY = horizonY - h * 0.08;
+          const sunGrad = ctx.createRadialGradient(sunX, sunY, 5, sunX, sunY, w * 0.42);
+          sunGrad.addColorStop(0, d.glowColor);
+          sunGrad.addColorStop(0.5, "rgba(255,255,255,0.06)");
+          sunGrad.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = sunGrad;
+          ctx.fillRect(0, 0, w, h);
+
+          // 3. Terrain Silhouette (Distant)
+          ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
+          ctx.beginPath();
+          ctx.moveTo(0, h);
+          if (d.particleType === "snow") {
+            // Matterhorn peaks
+            ctx.lineTo(0, horizonY + 20);
+            ctx.lineTo(w * 0.30, horizonY - 50);
+            ctx.lineTo(w * 0.50, horizonY - 140);
+            ctx.lineTo(w * 0.54, horizonY - 80);
+            ctx.lineTo(w * 0.75, horizonY - 60);
+            ctx.lineTo(w, horizonY + 30);
+          } else if (d.particleType === "fireflies") {
+            // Kyoto bamboo ridge
+            ctx.lineTo(0, horizonY - 20);
+            for (let bx = 0; bx <= w; bx += 30) {
+              ctx.lineTo(bx + 10, horizonY - 30 - Math.sin(bx * 0.05) * 15);
+              ctx.lineTo(bx + 20, horizonY);
+            }
+            ctx.lineTo(w, horizonY);
+          } else if (d.particleType === "balloons") {
+            // Cappadocia fairy chimneys
+            ctx.lineTo(0, horizonY);
+            for (let cx = 0; cx <= w; cx += 45) {
+              ctx.lineTo(cx + 15, horizonY - 40 - Math.sin(cx * 0.03) * 20);
+              ctx.lineTo(cx + 30, horizonY);
+            }
+            ctx.lineTo(w, horizonY);
+          } else {
+            // Plateau / Canyon
+            ctx.lineTo(0, horizonY + 10);
+            for (let mx = 0; mx <= w; mx += 60) {
+              ctx.lineTo(mx, horizonY - 35 + Math.sin(mx * 0.02 + renderTick * 0.005) * 12);
+            }
+            ctx.lineTo(w, horizonY + 10);
+          }
+          ctx.lineTo(w, h);
+          ctx.closePath();
+          ctx.fill();
+
+          // 4. Foreground Terrain Layer (Deep Obsidian)
+          ctx.fillStyle = "#040507";
+          ctx.beginPath();
+          ctx.moveTo(0, h);
+          ctx.lineTo(0, horizonY + 35);
+          ctx.bezierCurveTo(w * 0.25, horizonY + 15, w * 0.75, horizonY + 45, w, horizonY + 25);
+          ctx.lineTo(w, h);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        // 5. Ambient Atmospheric Particles (Stars, Snow, Sparks, Fireflies)
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+
+          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(renderTick * p.pulseSpeed + p.pulsePhase));
+          ctx.fillStyle = d.particleColor;
+          ctx.globalAlpha = Math.max(0, Math.min(1, currentAlpha));
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+
+        animationFrameId = requestAnimationFrame(renderCanvasWorld);
+      }
+      animationFrameId = requestAnimationFrame(renderCanvasWorld);
+
+      // Transition to Specific Destination with S-Tier Warp FX
+      function setDestination(newIndex, direction = 1) {
+        if (isTeleporting) return;
+        isTeleporting = true;
+
+        if (statusPill) {
+          statusPill.innerHTML = '<span class="portal-status-dot" style="background:#e89b4f;box-shadow:0 0 10px #e89b4f"></span>WARPING';
+          statusPill.style.color = "#ffddaa";
+        }
+
+        // Trigger Audio Feedback
+        playTeleportSound();
+
+        // Flash Gate Singularity & Ripple
+        if (singularity) {
+          gsap.fromTo(singularity,
+            { scale: 0.8, opacity: 0.4 },
+            { scale: 1.45, opacity: 1, duration: 0.32, ease: "power2.out", yoyo: true, repeat: 1 }
+          );
+        }
+
+        // Warp Flash Layer
+        if (warpFx) {
+          gsap.fromTo(warpFx,
+            { opacity: 0, scale: 0.96 },
+            {
+              opacity: 0.85,
+              scale: 1.02,
+              duration: 0.28,
+              ease: "power2.inOut",
+              onComplete() {
+                // Swap State at Peak Flash
+                currentIndex = (newIndex + destinations.length) % destinations.length;
+                const d = destinations[currentIndex];
+
+                // Update Left Side Panel
+                if (kickerIndexEl) kickerIndexEl.textContent = d.kicker;
+                if (placeTitleEl) {
+                  gsap.fromTo(placeTitleEl, { y: direction * 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" });
+                  placeTitleEl.textContent = d.name;
+                }
+                if (indexNumEl) indexNumEl.textContent = d.num;
+                if (indexFillEl) indexFillEl.style.width = ((currentIndex + 1) / destinations.length * 100) + "%";
+
+                // Update Right Telemetry Panel
+                if (coordsEl) coordsEl.textContent = d.coords;
+                if (altEl) altEl.textContent = d.altitude;
+                if (atmoEl) atmoEl.textContent = d.atmosphere;
+                if (windowEl) windowEl.textContent = d.temporal;
+
+                // Update Tabs and Pills
+                navTabs.forEach((tab, idx) => tab.classList.toggle("active", idx === currentIndex));
+                pills.forEach((pill, idx) => pill.classList.toggle("active", idx === currentIndex));
+
+                initParticles();
+
+                // Fade out Warp Flash
+                gsap.to(warpFx, {
+                  opacity: 0,
+                  scale: 1,
+                  duration: 0.45,
+                  ease: "power2.out",
+                  onComplete() {
+                    isTeleporting = false;
+                    if (statusPill) {
+                      statusPill.innerHTML = '<span class="portal-status-dot"></span>ONLINE';
+                      statusPill.style.color = "#777";
+                    }
+                  }
+                });
+              }
+            }
+          );
+        } else {
+          currentIndex = (newIndex + destinations.length) % destinations.length;
+          isTeleporting = false;
+        }
+      }
+
+      // Event Listeners: Click Gate Arch to Warp to Next World
+      if (gateWrap) {
+        gateWrap.addEventListener("click", () => {
+          setDestination(currentIndex + 1, 1);
+        });
+      }
+
+      // CTA Teleport Button
+      if (teleportBtn) {
+        teleportBtn.addEventListener("click", () => {
+          setDestination(currentIndex + 1, 1);
+        });
+      }
+
+      // Nav Arrows
+      if (btnPrev) {
+        btnPrev.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setDestination(currentIndex - 1, -1);
+        });
+      }
+      if (btnNext) {
+        btnNext.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setDestination(currentIndex + 1, 1);
+        });
+      }
+
+      // Top Tabs
+      navTabs.forEach(tab => {
+        tab.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const targetIdx = parseInt(tab.getAttribute("data-idx"), 10);
+          if (!isNaN(targetIdx) && targetIdx !== currentIndex) {
+            setDestination(targetIdx, targetIdx > currentIndex ? 1 : -1);
+          }
+        });
+      });
+
+      // Bottom Pills
+      pills.forEach(pill => {
+        pill.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const targetIdx = parseInt(pill.getAttribute("data-idx"), 10);
+          if (!isNaN(targetIdx) && targetIdx !== currentIndex) {
+            setDestination(targetIdx, targetIdx > currentIndex ? 1 : -1);
+          }
+        });
+      });
+
+      // Keyboard arrow navigation
+      const viewport = document.getElementById("portal-viewport");
+      if (viewport) {
+        viewport.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight") {
+            setDestination(currentIndex + 1, 1);
+          } else if (e.key === "ArrowLeft") {
+            setDestination(currentIndex - 1, -1);
+          }
+        });
+        viewport.setAttribute("tabindex", "0");
+      }
+    })();
 
     /* Resize */
     addEventListener("resize",()=>{
