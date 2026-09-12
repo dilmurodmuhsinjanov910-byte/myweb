@@ -2633,7 +2633,215 @@
         scroll-behavior:auto!important;
       }
     }
-  </style>
+  
+    /* ============================================================
+       PROJECT 03: FULL-VIEWPORT SPATIAL LAYOUT OVERRIDES
+       ============================================================ */
+    #project-03 {
+      position: relative;
+      height: 120vh;
+      border-top: 1px solid var(--line);
+      background: #010204;
+      overflow: visible;
+    }
+    #project-03 .project-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      background: #010204;
+      display: block;
+      z-index: 10;
+    }
+    #project-03 .project-visual {
+      position: absolute !important;
+      inset: 0 !important;
+      clip-path: none !important;
+      transform: none !important;
+      background: #010204 !important;
+      border-radius: 0 !important;
+    }
+    #project-03 .project-light {
+      display: none !important;
+    }
+    #project-03 .solar-app-container {
+      position: absolute !important;
+      inset: 0 !important;
+      top: 0 !important;
+      right: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      transform: none !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+    #project-03 .solar-viewport {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #project-03 #solar-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Left Info HUD Panel for Project 03 */
+    #project-03 .project-content {
+      position: absolute !important;
+      top: 68px !important;
+      left: 24px !important;
+      width: min(320px, calc(100vw - 48px)) !important;
+      max-width: 320px !important;
+      padding: 16px 18px !important;
+      background: rgba(8, 12, 18, 0.82) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(223, 183, 108, 0.22) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
+      z-index: 20 !important;
+      pointer-events: auto !important;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease !important;
+    }
+    #project-03 .project-content.is-collapsed {
+      transform: translateX(calc(-100% - 10px)) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    #project-03 .project-number {
+      font-size: 8px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.18em !important;
+      color: #dfb76c !important;
+      text-transform: uppercase !important;
+      margin-bottom: 6px !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    .solar-info-collapse-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #8c98a8;
+      cursor: pointer;
+      padding: 2px 7px;
+      font-size: 9px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.2s;
+    }
+    .solar-info-collapse-btn:hover {
+      color: #dfb76c;
+      border-color: rgba(223, 183, 108, 0.35);
+      background: rgba(223, 183, 108, 0.12);
+    }
+    .solar-info-floating-toggle {
+      display: none;
+      position: absolute;
+      top: 68px;
+      left: 24px;
+      z-index: 20;
+      background: rgba(8, 12, 18, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(223, 183, 108, 0.28);
+      border-radius: 20px;
+      padding: 7px 14px;
+      color: #dfb76c;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .solar-info-floating-toggle.is-active {
+      display: flex;
+    }
+    .solar-info-floating-toggle:hover {
+      background: rgba(223, 183, 108, 0.18);
+      color: #fff;
+    }
+    #project-03 .project-title {
+      font-family: var(--serif) !important;
+      font-size: 26px !important;
+      font-weight: 400 !important;
+      line-height: 1.05 !important;
+      letter-spacing: -0.02em !important;
+      color: #ffffff !important;
+      margin-bottom: 8px !important;
+    }
+    #project-03 .project-meta {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 5px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      padding: 8px 0 !important;
+      margin-bottom: 8px !important;
+    }
+    #project-03 .meta-item {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: baseline !important;
+    }
+    #project-03 .meta-item small {
+      font-size: 7.5px !important;
+      letter-spacing: 0.14em !important;
+      color: #647082 !important;
+      text-transform: uppercase !important;
+    }
+    #project-03 .meta-item span {
+      font-size: 10px !important;
+      font-weight: 600 !important;
+      color: #e2e8f0 !important;
+    }
+    #project-03 .impact {
+      font-size: 9px !important;
+      line-height: 1.5 !important;
+      color: #94a3b8 !important;
+      margin: 0 !important;
+    }
+    #project-03 .project-progress {
+      z-index: 20;
+    }
+
+    /* Keep Bottom Dock and Watermark anchored beautifully */
+    #project-03 .solar-planet-dock {
+      bottom: 22px !important;
+      z-index: 25 !important;
+    }
+    #project-03 .solar-watermark {
+      bottom: 66px !important;
+      z-index: 20 !important;
+    }
+    #project-03 .solar-top-bar {
+      top: 18px !important;
+      left: 24px !important;
+      right: 24px !important;
+      z-index: 25 !important;
+    }
+    #project-03 .solar-telemetry-panel {
+      top: 68px !important;
+      right: 24px !important;
+      z-index: 20 !important;
+    }
+
+    </style>
 </head>
 <body>
   <div class="ambient"></div>
@@ -3364,8 +3572,20 @@
               </div>
             </div>
           </div>
-          <div class="project-content">
-            <div class="project-number">PROJECT / 03</div>
+          <!-- Floating Info Pill (shown when panel is minimized) -->
+          <button type="button" class="solar-info-floating-toggle" id="solar-info-open-btn" title="View Project Details">
+            <span>PROJECT // 03</span>
+            <span style="font-size:11px;opacity:0.75;">ℹ</span>
+          </button>
+
+          <div class="project-content" id="solar-project-info">
+            <div class="project-number">
+              <span>PROJECT // 03</span>
+              <button type="button" class="solar-info-collapse-btn" id="solar-info-close-btn" title="Minimize Details">
+                <span>HIDE</span>
+                <span>×</span>
+              </button>
+            </div>
             <h3 class="project-title">The Next<br><span class="gold">Level</span></h3>
             <div class="project-meta">
               <div class="meta-item"><small>Role</small><span>Lead Spatial Experience Architect</span></div>
@@ -4622,41 +4842,48 @@
           }
         });
 
-        if(visual){
-          tl.fromTo(visual,
-            {clipPath:"inset(12% 8% 12% 8%)",scale:.985},
-            {clipPath:"inset(0% 0% 0% 0%)",scale:1,duration:.32,ease:"none"},0
-          );
-        }
-        if(art){
-          tl.fromTo(art,
-            {yPercent:14,scale:.82},
-            {yPercent:-12,scale:1.09,duration:1,ease:"none"},0
-          );
-        }
-        if(light){
-          tl.fromTo(light,
-            {xPercent:-25},
-            {xPercent:55,duration:1,ease:"none"},0
-          );
-        }
+        if(project.id === "project-03"){
+          if(visual){
+            tl.set(visual, {clipPath:"inset(0% 0% 0% 0%)", scale: 1}, 0);
+          }
+          // For Project 03, the HUD panels remain clean, stable, and immediately interactive
+        } else {
+          if(visual){
+            tl.fromTo(visual,
+              {clipPath:"inset(12% 8% 12% 8%)",scale:.985},
+              {clipPath:"inset(0% 0% 0% 0%)",scale:1,duration:.32,ease:"none"},0
+            );
+          }
+          if(art){
+            tl.fromTo(art,
+              {yPercent:14,scale:.82},
+              {yPercent:-12,scale:1.09,duration:1,ease:"none"},0
+            );
+          }
+          if(light){
+            tl.fromTo(light,
+              {xPercent:-25},
+              {xPercent:55,duration:1,ease:"none"},0
+            );
+          }
 
-        gsap.from(title,{
-          yPercent:34,
-          opacity:0,
-          duration:0.95,
-          ease:"expo.out",
-          scrollTrigger:{trigger:project,start:"top 56%"}
-        });
+          gsap.from(title,{
+            yPercent:34,
+            opacity:0,
+            duration:0.95,
+            ease:"expo.out",
+            scrollTrigger:{trigger:project,start:"top 56%"}
+          });
 
-        gsap.from([meta,impact],{
-          y:22,
-          opacity:0,
-          duration:.75,
-          stagger:.08,
-          ease:"power3.out",
-          scrollTrigger:{trigger:project,start:"top 48%"}
-        });
+          gsap.from([meta,impact],{
+            y:22,
+            opacity:0,
+            duration:.75,
+            stagger:.08,
+            ease:"power3.out",
+            scrollTrigger:{trigger:project,start:"top 48%"}
+          });
+        }
       });
 
     } else {
@@ -8334,8 +8561,8 @@
       const sunLight = new THREE.PointLight(0xfffaee, 5.0, 3000, 0.25);
       sunLight.position.set(0, 0, 0);
       sunLight.castShadow = true;
-      sunLight.shadow.mapSize.width = 1024;
-      sunLight.shadow.mapSize.height = 1024;
+      sunLight.shadow.mapSize.width = 2048;
+      sunLight.shadow.mapSize.height = 2048;
       sunLight.shadow.camera.near = 1;
       sunLight.shadow.camera.far = 2400;
       sunLight.shadow.bias = -0.0002;
@@ -8783,7 +9010,7 @@
             depthWrite: false
           });
           const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
-          cloudMesh.castShadow = true;
+          cloudMesh.castShadow = false;
           tiltGroup.add(cloudMesh);
           rotatingClouds.push({ mesh: cloudMesh, speed: 0.026 });
 
@@ -8839,7 +9066,7 @@
           });
           const ringMesh = new THREE.Mesh(ringGeo, ringMat);
           ringMesh.rotation.x = Math.PI / 2;
-          ringMesh.castShadow = true;
+          ringMesh.castShadow = false;
           ringMesh.receiveShadow = true;
           tiltGroup.add(ringMesh);
         }
@@ -8869,7 +9096,7 @@
           });
           const ringMesh = new THREE.Mesh(ringGeo, ringMat);
           ringMesh.rotation.x = Math.PI / 2;
-          ringMesh.castShadow = true;
+          ringMesh.castShadow = false;
           ringMesh.receiveShadow = true;
           tiltGroup.add(ringMesh);
         }
@@ -8946,7 +9173,7 @@
         metalness: 0.05
       });
       const asteroidInstanced = new THREE.InstancedMesh(asteroidGeo, asteroidMat, asteroidCount);
-      asteroidInstanced.castShadow = true;
+      asteroidInstanced.castShadow = false;
       asteroidInstanced.receiveShadow = true;
       const dummy = new THREE.Object3D();
       const asteroidData = [];
@@ -9172,8 +9399,9 @@
             const isActive = k === activeKey;
             btn.classList.toggle("active", isActive);
             btn.setAttribute("aria-selected", isActive ? "true" : "false");
-            if (isActive) {
-              btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+            if (isActive && dockContainer) {
+              const scrollTarget = btn.offsetLeft - (dockContainer.clientWidth / 2) + (btn.clientWidth / 2);
+              dockContainer.scrollTo({ left: scrollTarget, behavior: "smooth" });
             }
           }
         });
@@ -9267,6 +9495,24 @@
         });
       }
 
+      // Left Info Panel Collapse & Expand
+      const solarInfoPanel = document.getElementById("solar-project-info");
+      const solarInfoCloseBtn = document.getElementById("solar-info-close-btn");
+      const solarInfoOpenBtn = document.getElementById("solar-info-open-btn");
+
+      if (solarInfoCloseBtn && solarInfoPanel && solarInfoOpenBtn) {
+        solarInfoCloseBtn.addEventListener("click", () => {
+          solarInfoPanel.classList.add("is-collapsed");
+          solarInfoOpenBtn.classList.add("is-active");
+          playCelestialHarmonic(330, "sine", 0.4, 0.04);
+        });
+        solarInfoOpenBtn.addEventListener("click", () => {
+          solarInfoPanel.classList.remove("is-collapsed");
+          solarInfoOpenBtn.classList.remove("is-active");
+          playCelestialHarmonic(440, "sine", 0.4, 0.05);
+        });
+      }
+
       // Action Buttons
       const overviewBtn = document.getElementById("solar-overview-btn");
       if (overviewBtn) {
@@ -9317,18 +9563,43 @@
         });
       }
 
-      // Fullscreen Mode Toggle
+      // Native Fullscreen & Cinematic HUD Toggle
       const fsBtn = document.getElementById("solar-fs-btn");
       const fsLabel = document.getElementById("solar-fs-label");
-      if (fsBtn && appContainer) {
-        fsBtn.addEventListener("click", () => {
-          appContainer.classList.toggle("fullscreen-mode");
-          const isFs = appContainer.classList.contains("fullscreen-mode");
-          if (fsLabel) {
-            fsLabel.textContent = isFs ? "COLLAPSE" : "EXPAND";
+      if (fsBtn) {
+        fsBtn.addEventListener("click", async () => {
+          const targetElem = document.getElementById("project-03") || document.documentElement;
+          try {
+            if (!document.fullscreenElement) {
+              if (targetElem.requestFullscreen) {
+                await targetElem.requestFullscreen();
+              } else if (targetElem.webkitRequestFullscreen) {
+                await targetElem.webkitRequestFullscreen();
+              }
+              if (fsLabel) fsLabel.textContent = "COLLAPSE";
+            } else {
+              if (document.exitFullscreen) {
+                await document.exitFullscreen();
+              } else if (document.webkitExitFullscreen) {
+                await document.webkitExitFullscreen();
+              }
+              if (fsLabel) fsLabel.textContent = "EXPAND";
+            }
+          } catch (_) {
+            // Fallback: cinematic toggle
+            appContainer.classList.toggle("fullscreen-mode");
+            const isFs = appContainer.classList.contains("fullscreen-mode");
+            if (fsLabel) fsLabel.textContent = isFs ? "COLLAPSE" : "EXPAND";
           }
           onResize();
-          playCelestialHarmonic(isFs ? 587.3 : 440, "sine", 0.5, 0.05);
+          playCelestialHarmonic(587.3, "sine", 0.5, 0.05);
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+          if (fsLabel) {
+            fsLabel.textContent = document.fullscreenElement ? "COLLAPSE" : "EXPAND";
+          }
+          onResize();
         });
       }
 
