@@ -967,16 +967,76 @@
     .snk-tilt-card.grabbing {
       cursor: grabbing;
     }
-    .snk-light-spot {
+    /* Feature 2: Dynamic Specular Studio Lighting Flare */
+    .snk-light-spot,
+    .hw-light-spot {
       position: absolute;
-      width: 280px;
-      height: 280px;
+      width: 360px;
+      height: 360px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(223, 183, 108, 0.12) 0%, rgba(223, 183, 108, 0.02) 45%, transparent 70%);
+      background: radial-gradient(circle at center, rgba(255, 248, 230, 0.22) 0%, rgba(223, 183, 108, 0.12) 28%, rgba(223, 183, 108, 0.02) 58%, transparent 72%);
       pointer-events: none;
       transform: translate(-50%, -50%);
-      transition: left 0.1s ease-out, top 0.1s ease-out;
-      z-index: 1;
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 4;
+    }
+    .snk-tilt-card:hover .snk-light-spot,
+    .hw-viewport:hover .hw-light-spot {
+      opacity: 1;
+    }
+
+    /* Feature 4: Atmospheric Environment Micro-Particles Canvases */
+    .portal-petals-canvas,
+    .snk-particles-canvas,
+    .hw-particles-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    /* Feature 3: Kinetic Typography Odometer & Digit Roll */
+    .odometer-rolling {
+      display: inline-block;
+      font-variant-numeric: tabular-nums;
+      transition: transform 0.15s ease, text-shadow 0.25s ease;
+      text-shadow: 0 0 14px rgba(223, 183, 108, 0.65), 0 0 25px rgba(223, 183, 108, 0.35);
+      color: #fff6de !important;
+    }
+    .snk-price-val, .hw-card-price, #hw-tele-price, #snk-degree-val, #hw-hud-angle, #hw-spec-weight, #hw-xray-slider-val {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Feature 1: Multi-Depth 3D Exploded X-Ray Parallax */
+    .hw-rig {
+      perspective: 1200px;
+      transform-style: preserve-3d;
+    }
+    .hw-rotator {
+      transform-style: preserve-3d;
+      transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+    }
+    .hw-main-img,
+    .hw-teardown-img {
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      will-change: transform, opacity;
+    }
+    .hw-xray-assembly {
+      transform-style: preserve-3d;
+    }
+    .hw-callout {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.35s ease;
+    }
+    .hw-cat-btn, .hw-rakurs-btn, .hw-profile-btn, .snk-model-tab, .snk-angle-pill, .snk-size-pill, .hw-hud-btn, .hw-video-toggle-btn, .snk-autospin-btn {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
     .snk-render-box {
       width: 96%;
@@ -3515,6 +3575,8 @@
 
                 <!-- Layer 2: Midground Landmarks & Dynamic World Canvas (Z: -15px) -->
                 <canvas id="portal-world-canvas" class="portal-world-canvas"></canvas>
+                <!-- Atmospheric Sakura Petals & Stardust Canvas (Feature 4) -->
+                <canvas id="portal-petals-canvas" class="portal-petals-canvas"></canvas>
                 
                 <!-- Atmospheric Vignette -->
                 <div class="portal-backdrop" id="portal-backdrop"></div>
@@ -3746,13 +3808,21 @@
                       <span id="snk-cert-badge">AUTHENTIC ARCHIVE // MILANO</span>
                     </div>
                     <div class="snk-turntable-hud">
-                      <span id="snk-degree-val" style="font-size:8px;letter-spacing:0.16em;color:var(--gold);background:rgba(0,0,0,0.6);padding:4px 10px;border-radius:12px;border:1px solid rgba(223,183,108,0.3);font-weight:600;">0° // PROFILE</span>
+                      <div class="snk-degree-dial" id="snk-degree-dial">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 6 16 14 8 14 12 6"/></svg>
+                        <span id="snk-degree-val">0° // PROFILE</span>
+                      </div>
+                      <button class="snk-autospin-btn" id="snk-autospin-btn" title="Toggle 360 Auto-Rotation">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        <span id="snk-autospin-text">SPIN 360°</span>
+                      </button>
                     </div>
                   </div>
 
                   <!-- 3D Studio Stage Container -->
                   <div class="snk-tilt-card" id="snk-tilt-card">
                     <div class="snk-light-spot" id="snk-light-spot"></div>
+                    <canvas class="snk-particles-canvas" id="snk-particles-canvas"></canvas>
                     <div class="snk-render-box" id="snk-render-box">
                       <img src="assets/sneakers/studio/palm-angels_profile.jpg" data-src="assets/sneakers/studio/palm-angels_profile.jpg" alt="PALM ANGELS Flame Low" class="snk-photo-render" draggable="false" />
                     </div>
@@ -3764,7 +3834,9 @@
                   <div class="snk-angle-pills" id="snk-angle-pills">
                     <button class="snk-angle-pill active" data-angle="0">0° PROFILE</button>
                     <button class="snk-angle-pill" data-angle="45">45° 3/4 FRONT</button>
-                    <button class="snk-angle-pill" data-angle="270">270° HEEL</button>
+                    <button class="snk-angle-pill" data-angle="90">90° MEDIAL</button>
+                    <button class="snk-angle-pill" data-angle="180">180° REAR</button>
+                    <button class="snk-angle-pill ref-highlight" data-angle="270" title="Reference Luxury Archive Heel">★ 270° HEEL</button>
                     <button class="snk-angle-pill" data-angle="top">AERIAL LACE</button>
                   </div>
                 </div>
@@ -4022,6 +4094,17 @@
                   <div class="hw-stage-hud">
                     <div class="hw-hud-tag" id="hw-hud-angle">STUDIO // 3/4 HERO PERSPECTIVE</div>
                     
+                    <div class="hw-hud-scroll-badge" id="hw-scroll-badge" title="Scroll Page to Scrub 3D Teardown & Rotate Turntable">
+                      <span class="scroll-dot"></span>
+                      <span id="hw-scroll-badge-text">SCROLL-LINKED: READY</span>
+                    </div>
+
+                    <div class="hw-hud-controls">
+                      <button class="hw-hud-btn" id="hw-btn-rot-left" title="Rotate Counter-Clockwise">↺ -15°</button>
+                      <button class="hw-hud-btn" id="hw-btn-rot-reset" title="Reset Alignment">ALIGN</button>
+                      <button class="hw-hud-btn" id="hw-btn-rot-right" title="Rotate Clockwise">↻ +15°</button>
+                    </div>
+
                     <!-- Multi-Angle Studio Rakurs Pills -->
                     <div class="hw-rakurs-pills" id="hw-rakurs-pills" style="display:flex;gap:6px;align-items:center;z-index:25;">
                       <button class="hw-rakurs-btn active" data-rakurs="hero" style="background:rgba(223,183,108,0.22);border:1px solid rgba(223,183,108,0.5);color:#fff3d1;padding:4px 12px;font-size:7.5px;letter-spacing:0.14em;cursor:pointer;border-radius:12px;transition:all 0.25s;font-weight:700;">3/4 HERO</button>
@@ -4036,18 +4119,42 @@
                     <div class="hw-ground-grid"></div>
                     <div class="hw-contact-shadow" id="hw-contact-shadow"></div>
 
-                    <!-- 3D Product Studio Stage Rig -->
+                    <!-- Dynamic Specular Studio Lighting Flare (Feature 2) -->
+                    <div class="hw-light-spot" id="hw-light-spot"></div>
+
+                    <!-- Atmospheric Environment Micro-Particles Canvas (Feature 4) -->
+                    <canvas class="hw-particles-canvas" id="hw-particles-canvas"></canvas>
+
+                    <!-- AI High-Definition Transparent WebM Video Teardown Layer -->
+                    <div class="hw-video-layer" id="hw-video-layer" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s ease;z-index:3;">
+                      <video id="hw-xray-video" class="hw-xray-video" playsinline muted loop preload="auto" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E" style="max-width:92%;max-height:88%;object-fit:contain;">
+                        <source src="assets/videos_webm/Apple_AirPods_Max_Exploded_View_20260912183607.webm" type="video/webm">
+                        <source src="assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4" type="video/mp4">
+                      </video>
+                      <div class="hw-video-play-badge" id="hw-video-badge" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:none;">
+                        <span class="pulse-dot"></span>
+                        <span class="badge-text" id="hw-video-badge-text">AI 3D EXPLODED CINEMA (WEBM ALPHA)</span>
+                      </div>
+                    </div>
+
+                    <!-- 3D Product Studio Stage Rig (Feature 1 Multi-Depth 3D Exploded Parallax) -->
                     <div class="hw-rig" id="hw-rig" style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
                       <div class="hw-rotator" id="hw-rotator" style="position:relative;width:86%;height:86%;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d;">
                         <!-- Primary Studio Image (Hero / Profile) -->
-                        <img id="hw-main-img" class="hw-main-img" src="assets/hardware/studio/apple-airpods-max_hero.jpg" alt="Hardware Flagship" draggable="false" style="max-width:92%;max-height:88%;object-fit:contain;transition:opacity 0.35s ease, transform 0.35s ease;filter:drop-shadow(0 20px 35px rgba(0,0,0,0.85));">
+                        <img id="hw-main-img" class="hw-main-img" src="assets/hardware/studio/apple-airpods-max_hero.jpg" alt="Hardware Flagship" draggable="false" style="max-width:92%;max-height:88%;object-fit:contain;transition:opacity 0.35s ease, transform 0.15s cubic-bezier(0.2,0,0.2,1);filter:drop-shadow(0 20px 35px rgba(0,0,0,0.85));">
                         <!-- Exploded Teardown Studio Image (Overlay with Cross-Fade) -->
-                        <img id="hw-teardown-img" class="hw-teardown-img" src="assets/hardware/studio/apple-airpods-max_teardown.jpg" alt="Hardware Teardown" draggable="false" style="position:absolute;inset:0;margin:auto;max-width:92%;max-height:88%;object-fit:contain;opacity:0;pointer-events:none;transition:opacity 0.35s ease, transform 0.35s ease;filter:drop-shadow(0 20px 40px rgba(223,183,108,0.18));">
+                        <img id="hw-teardown-img" class="hw-teardown-img" src="assets/hardware/studio/apple-airpods-max_teardown.jpg" alt="Hardware Teardown" draggable="false" style="position:absolute;inset:0;margin:auto;max-width:92%;max-height:88%;object-fit:contain;opacity:0;pointer-events:none;transition:opacity 0.35s ease, transform 0.15s cubic-bezier(0.2,0,0.2,1);filter:drop-shadow(0 20px 40px rgba(223,183,108,0.18));">
+
+                        <!-- Multi-Depth 3D Exploded X-Ray Parallax Planes (Feature 1) -->
+                        <div class="hw-depth-layer hw-layer-chassis" id="hw-layer-chassis" style="position:absolute;inset:0;pointer-events:none;transform-style:preserve-3d;"></div>
+                        <div class="hw-depth-layer hw-layer-driver" id="hw-layer-driver" style="position:absolute;inset:0;pointer-events:none;transform-style:preserve-3d;"></div>
+                        <div class="hw-depth-layer hw-layer-magnets" id="hw-layer-magnets" style="position:absolute;inset:0;pointer-events:none;transform-style:preserve-3d;"></div>
+                        <div class="hw-depth-layer hw-layer-pcb" id="hw-layer-pcb" style="position:absolute;inset:0;pointer-events:none;transform-style:preserve-3d;"></div>
                       </div>
 
                       <!-- Interactive Technical Callouts Overlay (revealed in Teardown mode) -->
-                      <div class="hw-xray-assembly" id="hw-xray-assembly" style="position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 0.4s ease;">
-                        <div class="hw-callout callout-left" style="top: 22%; left: 5%;">
+                      <div class="hw-xray-assembly" id="hw-xray-assembly" style="position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 0.4s ease;transform-style:preserve-3d;">
+                        <div class="hw-callout callout-left" id="hw-callout-1" style="top: 22%; left: 5%;">
                           <span class="callout-dot"></span>
                           <span class="callout-line"></span>
                           <div class="callout-card">
@@ -4055,7 +4162,7 @@
                             <span id="callout-chassis-spec">Aviation-Grade Anodized Alloy</span>
                           </div>
                         </div>
-                        <div class="hw-callout callout-right" style="top: 38%; right: 5%;">
+                        <div class="hw-callout callout-right" id="hw-callout-2" style="top: 38%; right: 5%;">
                           <span class="callout-dot"></span>
                           <span class="callout-line"></span>
                           <div class="callout-card">
@@ -4063,7 +4170,7 @@
                             <span id="callout-driver-spec">Custom Dynamic Transducer</span>
                           </div>
                         </div>
-                        <div class="hw-callout callout-left" style="top: 64%; left: 7%;">
+                        <div class="hw-callout callout-left" id="hw-callout-3" style="top: 64%; left: 7%;">
                           <span class="callout-dot"></span>
                           <span class="callout-line"></span>
                           <div class="callout-card">
@@ -4071,7 +4178,7 @@
                             <span id="callout-pcb-spec">Low-Latency Neural Compute SIP</span>
                           </div>
                         </div>
-                        <div class="hw-callout callout-right" style="top: 76%; right: 7%;">
+                        <div class="hw-callout callout-right" id="hw-callout-4" style="top: 76%; right: 7%;">
                           <span class="callout-dot"></span>
                           <span class="callout-line"></span>
                           <div class="callout-card">
@@ -4086,6 +4193,7 @@
                   <!-- X-Ray Separation Slider Bar -->
                   <div class="hw-xray-slider-bar" id="hw-xray-slider-bar">
                     <span class="hw-slider-lbl">EXPLODED TEARDOWN DEPTH</span>
+                    <button class="hw-video-toggle-btn" id="hw-btn-video-play" title="Play Full Cinematic Teardown Video">▶ PLAY CINEMA</button>
                     <input type="range" id="hw-xray-slider" min="0" max="100" value="0" step="0.5" />
                     <span class="hw-slider-val" id="hw-xray-slider-val">0%</span>
                   </div>
@@ -5681,6 +5789,80 @@
       const foregroundCanvas = document.getElementById("portal-foreground-canvas");
       const fgCtx = foregroundCanvas ? foregroundCanvas.getContext("2d") : null;
       
+      // Feature 4: Atmospheric Sakura Petals & Golden Stardust
+      const petalsCanvas = document.getElementById("portal-petals-canvas");
+      const petalsCtx = petalsCanvas ? petalsCanvas.getContext("2d") : null;
+      const portalAtmosphere = {
+        petals: Array.from({ length: 28 }, () => ({
+          x: Math.random() * 1000,
+          y: Math.random() * 700,
+          size: 4 + Math.random() * 6,
+          speedY: 0.6 + Math.random() * 0.9,
+          speedX: -0.3 + Math.random() * 0.6,
+          swayAmp: 1.2 + Math.random() * 1.8,
+          swayFreq: 0.015 + Math.random() * 0.02,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: 0.01 + Math.random() * 0.02,
+          alpha: 0.35 + Math.random() * 0.45
+        })),
+        stardust: Array.from({ length: 45 }, () => ({
+          x: Math.random() * 1000,
+          y: Math.random() * 700,
+          radius: 0.6 + Math.random() * 1.4,
+          speedY: -0.2 - Math.random() * 0.4,
+          speedX: -0.2 + Math.random() * 0.4,
+          pulseSpeed: 0.03 + Math.random() * 0.04,
+          phase: Math.random() * Math.PI * 2,
+          alpha: 0.25 + Math.random() * 0.55
+        }))
+      };
+
+      function renderPortalAtmosphere(w, h, tick) {
+        if (!petalsCtx || !petalsCanvas) return;
+        petalsCtx.clearRect(0, 0, w, h);
+
+        // Render Golden Stardust
+        portalAtmosphere.stardust.forEach(star => {
+          star.y += star.speedY;
+          star.x += star.speedX;
+          if (star.y < 0) star.y = h;
+          if (star.x < 0) star.x = w;
+          if (star.x > w) star.x = 0;
+          const a = star.alpha * (0.6 + 0.4 * Math.sin(tick * star.pulseSpeed + star.phase));
+          petalsCtx.save();
+          petalsCtx.fillStyle = `rgba(223, 183, 108, ${a.toFixed(3)})`;
+          petalsCtx.shadowColor = "rgba(223, 183, 108, 0.8)";
+          petalsCtx.shadowBlur = 6;
+          petalsCtx.beginPath();
+          petalsCtx.arc(star.x % w, star.y % h, star.radius, 0, Math.PI * 2);
+          petalsCtx.fill();
+          petalsCtx.restore();
+        });
+
+        // Render Sakura Petals with Organic Bezier Curve & Dynamic Sway
+        portalAtmosphere.petals.forEach(petal => {
+          petal.y += petal.speedY;
+          petal.x += petal.speedX + Math.sin(petal.y * petal.swayFreq + tick * 0.02) * petal.swayAmp;
+          petal.rotation += petal.rotSpeed;
+          if (petal.y > h + 20) { petal.y = -20; petal.x = Math.random() * w; }
+          if (petal.x < -20) petal.x = w + 20;
+          if (petal.x > w + 20) petal.x = -20;
+
+          petalsCtx.save();
+          petalsCtx.translate(petal.x, petal.y);
+          petalsCtx.rotate(petal.rotation);
+          petalsCtx.fillStyle = `rgba(255, 192, 203, ${petal.alpha.toFixed(3)})`;
+          petalsCtx.shadowColor = "rgba(255, 182, 193, 0.5)";
+          petalsCtx.shadowBlur = 4;
+          petalsCtx.beginPath();
+          petalsCtx.moveTo(0, -petal.size);
+          petalsCtx.bezierCurveTo(petal.size * 0.8, -petal.size * 0.6, petal.size * 0.8, petal.size * 0.6, 0, petal.size);
+          petalsCtx.bezierCurveTo(-petal.size * 0.8, petal.size * 0.6, -petal.size * 0.8, -petal.size * 0.6, 0, -petal.size);
+          petalsCtx.fill();
+          petalsCtx.restore();
+        });
+      }
+      
       const gateWrap = document.getElementById("portal-gate-wrap");
       const singularityCanvas = document.getElementById("portal-singularity-canvas");
       const singularityCtx = singularityCanvas ? singularityCanvas.getContext("2d") : null;
@@ -6708,6 +6890,10 @@
           foregroundCanvas.width = Math.max(rect.width * dpr, 400);
           foregroundCanvas.height = Math.max(rect.height * dpr, 300);
         }
+        if (petalsCanvas) {
+          petalsCanvas.width = Math.max(rect.width * dpr, 400);
+          petalsCanvas.height = Math.max(rect.height * dpr, 300);
+        }
 
         if (singularityCanvas) {
           const rect = singularityCanvas.getBoundingClientRect();
@@ -7495,6 +7681,7 @@
         renderNeonCosmicPortal();
         updateHangingThreadsPhysics(cosmicTick);
         renderHangingThreads();
+        renderPortalAtmosphere(w, h, cosmicTick);
 
         requestAnimationFrame(animLoop);
       }
@@ -8464,20 +8651,157 @@
         } catch (e) {}
       }
 
-      // Smooth 3D Mouse Parallax Tilt
+      // Feature 5: Enhanced Granular Haptic Synthesizer
+      function playClothSwatchPluck(freq = 360) {
+        if (!isAudioEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          const filt = ctx.createBiquadFilter();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.4, ctx.currentTime + 0.08);
+          filt.type = "lowpass";
+          filt.frequency.setValueAtTime(1400, ctx.currentTime);
+          filt.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.08);
+          g.gain.setValueAtTime(0.08, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.09);
+          osc.connect(filt);
+          filt.connect(g);
+          g.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.1);
+        } catch (e) {}
+      }
+
+      function playDrawerGlide() {
+        if (!isAudioEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(220, ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(440, ctx.currentTime + 0.15);
+          g.gain.setValueAtTime(0.03, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.16);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.17);
+        } catch (e) {}
+      }
+
+      // Feature 3: Kinetic Typography Odometer & Digit Roll
+      function rollOdometer(element, targetNum, prefix = "", suffix = "", duration = 400) {
+        if (!element) return;
+        const currentText = (element.textContent || "").replace(/[^0-9.]/g, "");
+        const startNum = parseFloat(currentText) || 0;
+        if (startNum === targetNum) {
+          element.textContent = `${prefix}${targetNum.toLocaleString()}${suffix}`;
+          return;
+        }
+        element.classList.add("odometer-rolling");
+        const startTime = performance.now();
+        function stepOdo(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const val = Math.round(startNum + (targetNum - startNum) * ease);
+          element.textContent = `${prefix}${val.toLocaleString()}${suffix}`;
+          if (progress < 1) {
+            requestAnimationFrame(stepOdo);
+          } else {
+            element.textContent = `${prefix}${targetNum.toLocaleString()}${suffix}`;
+            setTimeout(() => element.classList.remove("odometer-rolling"), 100);
+          }
+        }
+        requestAnimationFrame(stepOdo);
+      }
+
+      // Feature 2: Dynamic Specular Studio Lighting Flare (Sneakers)
+      const snkLightSpot = document.getElementById("snk-light-spot");
+      let snkSpot = { x: 160, y: 140, targetX: 160, targetY: 140 };
+
+      // Feature 4: Atmospheric Champagne-Gold Dust Micro-Particles (Sneakers)
+      const snkParticlesCanvas = document.getElementById("snk-particles-canvas");
+      const snkParticlesCtx = snkParticlesCanvas ? snkParticlesCanvas.getContext("2d") : null;
+      const snkMotes = Array.from({ length: 24 }, () => ({
+        x: Math.random() * 320,
+        y: Math.random() * 280,
+        r: 0.8 + Math.random() * 1.5,
+        speedY: -0.2 - Math.random() * 0.4,
+        speedX: -0.15 + Math.random() * 0.3,
+        alpha: 0.25 + Math.random() * 0.45
+      }));
+
+      function renderSnkParticles() {
+        if (!snkParticlesCanvas || !snkParticlesCtx) return;
+        const rect = snkParticlesCanvas.getBoundingClientRect();
+        if (snkParticlesCanvas.width !== Math.round(rect.width) || snkParticlesCanvas.height !== Math.round(rect.height)) {
+          snkParticlesCanvas.width = Math.max(Math.round(rect.width), 300);
+          snkParticlesCanvas.height = Math.max(Math.round(rect.height), 240);
+        }
+        const w = snkParticlesCanvas.width;
+        const h = snkParticlesCanvas.height;
+        snkParticlesCtx.clearRect(0, 0, w, h);
+
+        snkMotes.forEach(m => {
+          m.y += m.speedY;
+          m.x += m.speedX;
+          if (m.y < 0) { m.y = h; m.x = Math.random() * w; }
+          if (m.x < 0) m.x = w;
+          if (m.x > w) m.x = 0;
+
+          snkParticlesCtx.save();
+          snkParticlesCtx.fillStyle = `rgba(223, 183, 108, ${m.alpha.toFixed(3)})`;
+          snkParticlesCtx.shadowColor = "rgba(223, 183, 108, 0.6)";
+          snkParticlesCtx.shadowBlur = 4;
+          snkParticlesCtx.beginPath();
+          snkParticlesCtx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+          snkParticlesCtx.fill();
+          snkParticlesCtx.restore();
+        });
+
+        // Update specular spot lerp
+        snkSpot.x += (snkSpot.targetX - snkSpot.x) * 0.15;
+        snkSpot.y += (snkSpot.targetY - snkSpot.y) * 0.15;
+        if (snkLightSpot) {
+          snkLightSpot.style.left = `${snkSpot.x.toFixed(1)}px`;
+          snkLightSpot.style.top = `${snkSpot.y.toFixed(1)}px`;
+        }
+
+        requestAnimationFrame(renderSnkParticles);
+      }
+      requestAnimationFrame(renderSnkParticles);
+
+      // Smooth 3D Mouse / Touch Parallax Tilt with Specular Spot Tracking
       if (tiltCard && renderBox) {
-        tiltCard.addEventListener("mousemove", (e) => {
+        const handleCardPointer = (e) => {
           const rect = tiltCard.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          const x = (clientX - rect.left) / rect.width - 0.5;
+          const y = (clientY - rect.top) / rect.height - 0.5;
           const tiltX = (x * 12).toFixed(2);
           const tiltY = (-y * 12).toFixed(2);
           renderBox.style.transform = `perspective(1000px) rotateX(${tiltY}deg) rotateY(${tiltX}deg) scale(1.02)`;
-        });
 
-        tiltCard.addEventListener("mouseleave", () => {
+          snkSpot.targetX = clientX - rect.left;
+          snkSpot.targetY = clientY - rect.top;
+        };
+
+        tiltCard.addEventListener("mousemove", handleCardPointer);
+        tiltCard.addEventListener("touchmove", handleCardPointer, { passive: true });
+
+        const resetCardPointer = () => {
           renderBox.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
-        });
+        };
+        tiltCard.addEventListener("mouseleave", resetCardPointer);
+        tiltCard.addEventListener("touchend", resetCardPointer);
       }
 
       // Multi-Angle Studio Viewport Update
@@ -8498,6 +8822,12 @@
         } else if (activeAngle === "270") {
           angleKey = "heel";
           angleLabel = "270° // HEEL ARCHIVE";
+        } else if (activeAngle === "180") {
+          angleKey = "heel";
+          angleLabel = "180° // REAR MONOGRAM";
+        } else if (activeAngle === "90") {
+          angleKey = "threequarter";
+          angleLabel = "90° // MEDIAL ARCH";
         } else if (activeAngle === "45") {
           angleKey = "threequarter";
           angleLabel = "45° // 3/4 FRONT";
@@ -8531,7 +8861,7 @@
         if (certBadge) certBadge.textContent = sneaker.badge;
         if (brandTagEl) brandTagEl.textContent = sneaker.brandTag;
         if (titleEl) titleEl.textContent = `${sneaker.brand} ${sneaker.model}`;
-        if (priceValEl) priceValEl.textContent = `${sneaker.currency}${sneaker.price.toLocaleString()}`;
+        if (priceValEl) rollOdometer(priceValEl, sneaker.price, sneaker.currency);
         if (descEl) descEl.textContent = sneaker.desc;
         if (cwLabel && colorway) cwLabel.textContent = colorway.name;
 
@@ -8739,6 +9069,40 @@
         });
       }
 
+      // Autospin 360° Toggle Control
+      const autospinBtn = document.getElementById("snk-autospin-btn");
+      const autospinText = document.getElementById("snk-autospin-text");
+      let isAutoSpinning = false;
+      let autoSpinInterval = null;
+      const angleSequence = ["0", "45", "90", "180", "270", "top"];
+      let seqIdx = 0;
+
+      if (autospinBtn) {
+        autospinBtn.addEventListener("click", () => {
+          isAutoSpinning = !isAutoSpinning;
+          autospinBtn.classList.toggle("active", isAutoSpinning);
+          if (autospinText) autospinText.textContent = isAutoSpinning ? "SPINNING" : "SPIN 360°";
+          playClothSwatchPluck(480);
+          if (isAutoSpinning) {
+            autoSpinInterval = setInterval(() => {
+              seqIdx = (seqIdx + 1) % angleSequence.length;
+              activeAngle = angleSequence[seqIdx];
+              isAerialView = (activeAngle === "top");
+              updateSneakerView();
+            }, 1400);
+          } else {
+            clearInterval(autoSpinInterval);
+          }
+        });
+      }
+
+      // Drawer Open/Close Silky Audio Hook
+      if (cartTrigger) {
+        cartTrigger.addEventListener("click", () => {
+          playDrawerGlide();
+        });
+      }
+
       // Initial Viewport Render
       updateSneakerView();
       updateCartUI();
@@ -8749,9 +9113,7 @@
    ============================================================ */
     (function initHardwareApp() {
       const hardwareApp = document.getElementById("hardware-app");
-      if (!hardwareApp) return;
-
-      // 19 Iconic Photorealistic Flagships across 4 Luxury Categories
+      if (!hardwareApp) return;      // 19 Iconic Photorealistic Flagships across 4 Luxury Categories
       const HARDWARE_CATALOG = {
         headphones: [
           {
@@ -8767,6 +9129,10 @@
             conn: "Bluetooth 5.0, AAC, Lightning",
             battery: "20h with ANC & Spatial Audio",
             image: "assets/hardware/studio/apple-airpods-max_hero.jpg",
+            video: "assets/videos_webm/Apple_AirPods_Max_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Apple_AirPods_Max_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Apple_AirPods_Max_Exploded_View_20260912183607.jpg",
             chassisSpec: "Anodized Aluminum & Stainless Steel Canopy",
             driverSpec: "40mm Dual Neodymium Ring Magnet Motor",
             pcbSpec: "Dual Apple H1 10-Audio-Core Computational SIP",
@@ -8786,6 +9152,10 @@
             conn: "BT 5.2, LDAC, 3.5mm, USB-PD",
             battery: "30h Playtime (Fast Charge 3m=3h)",
             image: "assets/hardware/studio/sony-wh1000xm5_hero.jpg",
+            video: "assets/videos_webm/Sony_WH-1000XM5_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Sony_WH-1000XM5_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Sony_WH-1000XM5_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Sony_WH-1000XM5_Exploded_View_20260912183606.jpg",
             chassisSpec: "Stepless Slider & Soft Fit Leather Chassis",
             driverSpec: "30mm High-Rigidity Carbon Fiber Dome Transducer",
             pcbSpec: "Integrated Processor V1 + HD QN1 Dual DSP",
@@ -8805,6 +9175,10 @@
             conn: "BT 5.3, aptX Adaptive, 2.5/3.5mm",
             battery: "24h (18h Immersive Audio)",
             image: "assets/hardware/studio/bose-qc-ultra_hero.jpg",
+            video: "assets/videos_webm/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.jpg",
             chassisSpec: "Ultra-lightweight Ergonomic Cast Aluminum Yoke",
             driverSpec: "Custom Bio-Cellulose Transient Acoustic Diaphragm",
             pcbSpec: "Qualcomm S5 Gen 2 Sound Platform with Custom Bose DSP",
@@ -8812,22 +9186,26 @@
             frCurve: [3.1, 3.9, 3.5, 2.4, 1.2, 0.0, -0.2, 0.5, 2.1, 3.4, 1.8, -0.8, -1.9, -3.2]
           },
           {
-            id: "sennheiser-hd820",
-            name: "HD 820 Audiophile",
+            id: "sennheiser-hd660s2",
+            name: "HD 660S2 Audiophile",
             brand: "SENNHEISER",
             brandTag: "SENNHEISER // WEDEMARK",
-            price: 1999,
-            weight: "360 g",
-            freq: "6 Hz – 48 kHz",
-            driver: "56mm Ring Radiator Transducer",
+            price: 599,
+            weight: "260 g",
+            freq: "8 Hz – 41.5 kHz",
+            driver: "38mm High-Performance Dynamic Transducer",
             latency: "0 ms / Balanced 4.4mm Pentaconn",
-            conn: "XLR-4, 4.4mm Pentaconn, 6.35mm",
-            battery: "Passive Reference Audiophile Studio",
-            image: "assets/hardware/studio/sennheiser-hd820_hero.jpg",
-            chassisSpec: "Concave Gorilla Glass Damping Chambers & Metal Frame",
-            driverSpec: "56mm Patented Ring Radiator Transducer",
-            pcbSpec: "Silver-Plated OFC Balanced Acoustic Signal Path",
-            baseSpec: "Handcrafted Microfibre & Synthetic Leather Comfort Pads",
+            conn: "6.35mm, 4.4mm Balanced, 3.5mm Adapter",
+            battery: "Passive Audiophile Open-Back Reference",
+            image: "assets/hardware/studio/sennheiser-hd660s2_hero.jpg",
+            video: "assets/videos_webm/Sennheiser_HD_660S2_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Sennheiser_HD_660S2_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Sennheiser_HD_660S2_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Sennheiser_HD_660S2_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Acoustically Transparent Steel Mesh Open-Back Grille",
+            driverSpec: "38mm Transducer with Ultra-Light Aluminum Voice Coil",
+            pcbSpec: "Oxygen-Free Copper Para-Aramid Reinforced Cabling",
+            baseSpec: "Plush Velour Ear Cushions for Fatigue-Free Mastering",
             frCurve: [0.5, 1.2, 1.5, 1.2, 0.8, 0.1, 0.0, 0.2, 1.1, 2.2, 1.5, 0.2, -0.8, -1.5]
           },
           {
@@ -8840,190 +9218,138 @@
             freq: "20 Hz – 22 kHz",
             driver: "40mm Electro-Dynamic Titanium Driver",
             latency: "14 ms / aptX Adaptive Low Latency",
-            conn: "BT 5.1, aptX Adaptive, AAC, USB-C Audio",
-            battery: "38h with ANC (50h without ANC)",
+            conn: "BT 5.1, aptX Adaptive, AAC, 3.5mm",
+            battery: "38h with ANC Active (50h ANC Off)",
             image: "assets/hardware/studio/bo-h95_hero.jpg",
-            chassisSpec: "Brushed Aluminum Frame with Precision Rotary Dial Dials",
-            driverSpec: "40mm Custom Titanium Driver with Neodymium Magnets",
-            pcbSpec: "Dual Dedicated DSP Engine with 4 Digital MEMS Mics",
-            baseSpec: "Magnetically Detachable Lambskin & Memory Foam Cushions",
-            frCurve: [1.8, 2.9, 3.2, 2.6, 1.5, 0.3, 0.0, 0.4, 1.8, 2.8, 1.9, -0.4, -1.8, -2.8]
+            video: "assets/videos_webm/Headphones_exploded_view_animation_20260912183607.webm",
+            videoMp4: "assets/videos/Headphones_exploded_view_animation_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Headphones_exploded_view_animation_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Headphones_exploded_view_animation_20260912183607.jpg",
+            chassisSpec: "Brushed Aluminum Frame with Lambskin Memory Foam",
+            driverSpec: "40mm Customized Titanium Driver with Neodymium Magnets",
+            pcbSpec: "Digital Signal Processing ANC with Precision Rotary Dials",
+            baseSpec: "Detachable Magnetic Lambskin Ear Cushions",
+            frCurve: [2.0, 2.8, 2.6, 1.8, 0.9, 0.2, 0.0, 0.4, 1.8, 2.9, 1.6, -0.4, -1.5, -2.8]
           }
         ],
         mice: [
           {
+            id: "logitech-gpro-x",
+            name: "G Pro X Superlight 2",
+            brand: "LOGITECH G",
+            brandTag: "LOGITECH // LAUSANNE",
+            price: 159,
+            weight: "60 g",
+            freq: "2,000 Hz Polling Rate / 44,000 DPI",
+            driver: "HERO 2 Optical Sensor (500+ IPS)",
+            latency: "0.5 ms LIGHTSPEED Wireless",
+            conn: "2.4GHz LIGHTSPEED, USB Type-C",
+            battery: "95h Continuous Motion",
+            image: "assets/hardware/studio/logitech-gpro-x_hero.jpg",
+            video: "assets/videos_webm/Logitech_G_Pro_X_Superlight_20260912183605.webm",
+            videoMp4: "assets/videos/Logitech_G_Pro_X_Superlight_20260912183605.mp4",
+            thumb: "assets/video_thumbs_webm/Logitech_G_Pro_X_Superlight_20260912183605.png",
+            thumbJpg: "assets/video_thumbs/Logitech_G_Pro_X_Superlight_20260912183605.jpg",
+            chassisSpec: "Ultra-Thin 1mm Injection Molded Lightweight Skeleton",
+            driverSpec: "LIGHTFORCE Hybrid Optical-Mechanical Switches",
+            pcbSpec: "HERO 2 Next-Gen Sub-Micron Precision Tracking Sensor",
+            baseSpec: "Zero-Additive Pure PTFE Low-Friction Glide Skates",
+            frCurve: [0.0, 0.0, 0.0, 0.1, 0.1, 0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.2]
+          },
+          {
+            id: "razer-deathadder-v3",
+            name: "DeathAdder V3 Pro",
+            brand: "RAZER",
+            brandTag: "RAZER // IRVINE",
+            price: 169,
+            weight: "63 g",
+            freq: "8,000 Hz HyperPolling / 30,000 DPI",
+            driver: "Focus Pro 30K Optical Sensor",
+            latency: "0.125 ms HyperSpeed Wireless",
+            conn: "Razer HyperSpeed Wireless, USB-C",
+            battery: "90h Battery Life",
+            image: "assets/hardware/studio/razer-deathadder-v3_hero.jpg",
+            video: "assets/videos_webm/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.webm",
+            videoMp4: "assets/videos/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.jpg",
+            chassisSpec: "Iconic Ergonomic Split-Key Palm Support Architecture",
+            driverSpec: "Optical Mouse Switches Gen-3 Rated for 90M Clicks",
+            pcbSpec: "Focus Pro 30K Sensor with 99.8% Resolution Accuracy",
+            baseSpec: "Flawless Contoured 100% PTFE Smooth Edge Skates",
+            frCurve: [0.0, 0.1, 0.1, 0.1, 0.2, 0.2, 0.3, 0.4, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5]
+          },
+          {
+            id: "apple-magic-mouse-2",
+            name: "Magic Mouse Multi-Touch",
+            brand: "APPLE",
+            brandTag: "APPLE // CUPERTINO",
+            price: 79,
+            weight: "99 g",
+            freq: "Multi-Touch Gesture Recognition Engine",
+            driver: "Capacitive Sub-Surface Gesture Array",
+            latency: "8 ms Bluetooth Optimized",
+            conn: "Bluetooth, Lightning Charging",
+            battery: "About a Month per Charge",
+            image: "assets/hardware/studio/apple-magic-mouse-2_hero.jpg",
+            video: "assets/videos_webm/Apple_Magic_Mouse_2_Exploded_20260912183605.webm",
+            videoMp4: "assets/videos/Apple_Magic_Mouse_2_Exploded_20260912183605.mp4",
+            thumb: "assets/video_thumbs_webm/Apple_Magic_Mouse_2_Exploded_20260912183605.png",
+            thumbJpg: "assets/video_thumbs/Apple_Magic_Mouse_2_Exploded_20260912183605.jpg",
+            chassisSpec: "Continuous Seamless Top Shell Multi-Touch Surface",
+            driverSpec: "Capacitive Sensor Array with Micro-Switch Tactile Mechanism",
+            pcbSpec: "Custom Apple ARM Controller for Gesture Coordinate Processing",
+            baseSpec: "Optimized High-Density Polyethylene Low-Resistance Rails",
+            frCurve: [0.0, 0.0, 0.1, 0.1, 0.1, 0.2, 0.2, 0.3, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+          },
+          {
+            id: "zowie-ec2-cw",
+            name: "EC2-CW Esports Wireless",
+            brand: "BENQ ZOWIE",
+            brandTag: "ZOWIE // TAIPEI",
+            price: 149,
+            weight: "77 g",
+            freq: "1,000 Hz Polling Rate / 3370 Sensor",
+            driver: "PixArt 3370 Optical Sensor",
+            latency: "1.0 ms Enhanced Wireless Receiver",
+            conn: "2.4G Wireless Enhanced Stand, USB-C",
+            battery: "70h Competitive Playtime",
+            image: "assets/hardware/studio/zowie-ec2-cw_hero.jpg",
+            video: "assets/videos_webm/ZOWIE_EC2-CW_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/ZOWIE_EC2-CW_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/ZOWIE_EC2-CW_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/ZOWIE_EC2-CW_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Asymmetrical Ergonomic Shell Engineered for Palm/Claw Grip",
+            driverSpec: "Huano Blue Shell Pink Dot Switches with 24-Step Optical Wheel",
+            pcbSpec: "Interference-Resistant Enhanced Directional Wireless Antenna",
+            baseSpec: "Large Surface Area High-Durability Black Teflon Skates",
+            frCurve: [0.0, 0.1, 0.1, 0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9, 1.0, 1.2, 1.4]
+          },
+          {
             id: "logitech-mx-master-3s",
-            name: "MX Master 3S",
+            name: "MX Master 3S Ergonomic",
             brand: "LOGITECH",
             brandTag: "LOGITECH // LAUSANNE",
             price: 99,
             weight: "141 g",
-            freq: "8,000 DPI Darkfield Sensor",
-            driver: "MagSpeed Electromagnetic SmartShift",
-            latency: "1 ms / Logi Bolt & BT LE",
-            conn: "Logi Bolt, Bluetooth Low Energy, USB-C",
-            battery: "70 Days Full Charge (3h in 1 min)",
+            freq: "8,000 DPI Darkfield High-Precision",
+            driver: "Darkfield Any-Surface Glass Tracking",
+            latency: "4 ms Logi Bolt / Bluetooth Low Energy",
+            conn: "Logi Bolt Receiver, Bluetooth, USB-C",
+            battery: "70 Days Full Charge (3h on 1 min)",
             image: "assets/hardware/studio/logitech-mx-master-3s_hero.jpg",
-            chassisSpec: "Sculpted Ergonomic Silicone Thumb Rest & Magnesium Frame",
-            driverSpec: "MagSpeed Electromagnetic Steel Wheel (1,000 lines/sec)",
-            pcbSpec: "Darkfield 8K Glass Tracking Optical Subsystem",
-            baseSpec: "Quiet Click Tactile Dampened Membrane Switches",
-            frCurve: [0.5, 1.0, 1.2, 0.8, 0.3, 0.0, 0.1, 0.5, 1.0, 1.5, 1.0, 0.2, -0.4, -0.8]
-          },
-          {
-            id: "razer-viper-mini",
-            name: "Viper Mini Signature",
-            brand: "RAZER",
-            brandTag: "RAZER // IRVINE",
-            price: 279,
-            weight: "49 g",
-            freq: "30,000 DPI Focus Pro 30K",
-            driver: "Razer Optical Gen-3 90M Clicks",
-            latency: "0.125 ms / True 8000Hz HyperPolling",
-            conn: "Razer HyperSpeed Wireless 8K, Type-C",
-            battery: "60h Battery Life at 1000Hz Polling",
-            image: "assets/hardware/studio/razer-viper-mini_hero.jpg",
-            chassisSpec: "Magnesium-Alloy Exoskeleton Unibody Skeleton",
-            driverSpec: "Gen-3 Fast-Actuation Optical Switches (0.2ms zero debounce)",
-            pcbSpec: "Focus Pro 30K Optical Sensor with 99.8% Resolution Accuracy",
-            baseSpec: "Pure PTFE Arc Glides with Corner Rounded Radials",
-            frCurve: [0.2, 0.5, 0.8, 0.6, 0.2, 0.0, 0.1, 0.4, 0.9, 1.2, 0.8, 0.1, -0.2, -0.5]
-          },
-          {
-            id: "finalmouse-ultralightx",
-            name: "UltralightX Lion",
-            brand: "FINALMOUSE",
-            brandTag: "FINALMOUSE // LOS ANGELES",
-            price: 189,
-            weight: "31 g",
-            freq: "26,000 DPI Tournament Sensor",
-            driver: "Kailh Blue Sword Dustproof Binned",
-            latency: "0.125 ms / Dedicated 8K Wireless Dongle",
-            conn: "2.4GHz Ultrafast RF, Lightweight Paracord",
-            battery: "Up to 3 Weeks Wireless Playtime",
-            image: "assets/hardware/studio/finalmouse-ultralightx_hero.jpg",
-            chassisSpec: "Carbon Fiber Composite Structural Honeycomb Weave",
-            driverSpec: "Binned Mechanical Microswitches with Instant Tactile Feedback",
-            pcbSpec: "Nordic nRF52840 Low-Power High-Performance MCU",
-            baseSpec: "Zero-Friction Heat-Treated Virgin Grade PTFE Feet",
-            frCurve: [0.1, 0.4, 0.6, 0.5, 0.1, 0.0, 0.1, 0.3, 0.7, 1.0, 0.6, 0.0, -0.2, -0.4]
-          },
-          {
-            id: "angry-miao-am-hatsu",
-            name: "AM HATSU Split 3D",
-            brand: "ANGRY MIAO",
-            brandTag: "ANGRY MIAO // ZHUHAI",
-            price: 1600,
-            weight: "1,850 g",
-            freq: "Dual True 3D Sculpted Ortholinear",
-            driver: "Aviation-Grade 5-Axis CNC Aluminum",
-            latency: "1 ms / Nordic Advanced Wireless",
-            conn: "Bluetooth 5.0, 2.4G Low-Latency Wireless",
-            battery: "Dual Independent Li-Ion Battery Banks",
-            image: "assets/hardware/studio/angry-miao-am-hatsu_hero.jpg",
-            chassisSpec: "5-Axis CNC Carved Aerospace Aluminum Curved Monocoque",
-            driverSpec: "3D Organic Ergo Split Geometry with Custom Spring Assemblies",
-            pcbSpec: "Dual Independent Nordic Semiconductor Wireless Subsystems",
-            baseSpec: "Custom Mirror-Polished Stainless Steel Weighted Counter-Bases",
-            frCurve: [0.4, 0.8, 1.0, 0.7, 0.3, 0.0, 0.2, 0.6, 1.2, 1.4, 0.9, 0.1, -0.3, -0.6]
-          },
-          {
-            id: "logitech-gpro-x",
-            name: "G Pro X Superlight 2",
-            brand: "LOGITECH G",
-            brandTag: "LOGITECH G // LAUSANNE",
-            price: 159,
-            weight: "60 g",
-            freq: "32,000 DPI HERO 2 Sensor",
-            driver: "LIGHTFORCE Hybrid Optical-Mechanical",
-            latency: "0.25 ms / 4K/8K LIGHTSPEED Wireless",
-            conn: "LIGHTSPEED Wireless, USB-C Data/Charging",
-            battery: "95h Continuous Motion Battery Life",
-            image: "assets/hardware/studio/logitech-gpro-x_hero.jpg",
-            chassisSpec: "Zero-Additive Ultralight Structural Skeleton",
-            driverSpec: "LIGHTFORCE Hybrid Switches (Optical Speed + Mechanical Crisp)",
-            pcbSpec: "HERO 2 500+ IPS Sensor with Dynamic Sub-Micron Calibration",
-            baseSpec: "Zero-Additive PTFE Glides with Continuous Glide Ring",
-            frCurve: [0.3, 0.7, 0.9, 0.6, 0.2, 0.0, 0.1, 0.5, 1.0, 1.3, 0.8, 0.1, -0.3, -0.6]
+            video: "assets/videos_webm/Mouse_disassembly_product_visual_20260912183605.webm",
+            videoMp4: "assets/videos/Mouse_disassembly_product_visual_20260912183605.mp4",
+            thumb: "assets/video_thumbs_webm/Mouse_disassembly_product_visual_20260912183605.png",
+            thumbJpg: "assets/video_thumbs/Mouse_disassembly_product_visual_20260912183605.jpg",
+            chassisSpec: "Sculpted Hand-Crafted Ergonomic Chassis with Thumb Rest",
+            driverSpec: "MagSpeed Electromagnetic Stainless Steel SmartScroll Wheel",
+            pcbSpec: "8K Darkfield Optical Sensor with Quiet Click Dampeners",
+            baseSpec: "Four High-Grade PTFE Gliding Pads for Silent Glide",
+            frCurve: [0.0, 0.0, 0.1, 0.1, 0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
           }
         ],
         speakers: [
-          {
-            id: "devialet-phantom-i",
-            name: "Phantom I 108dB",
-            brand: "DEVIALET",
-            brandTag: "DEVIALET // PARIS",
-            price: 3200,
-            weight: "11.4 kg",
-            freq: "14 Hz – 27 kHz",
-            driver: "Grade 1 Titanium Tweeter + Dual Aluminum Woofers",
-            latency: "0 ms (ADH Hybrid Analog-Digital)",
-            conn: "AirPlay 2, Roon Ready, Optical, BT 5.0, Wi-Fi",
-            battery: "1,100 Watts RMS Audiophile Amplification",
-            image: "assets/hardware/studio/devialet-phantom-i_hero.jpg",
-            chassisSpec: "White Matte Composite Body with 22-Carat Rose Gold Plated Sides",
-            driverSpec: "ADH (Analog Digital Hybrid) + SAM (Speaker Active Matching)",
-            pcbSpec: "Devialet Operating System 2 (DOS2) with ARM Cortex-A9 800MHz",
-            baseSpec: "Hermetically Sealed Dual-Woofer Push-Push Symmetrical Geometry",
-            frCurve: [4.8, 5.2, 4.5, 2.8, 1.2, 0.0, -0.1, 0.6, 2.2, 3.8, 2.9, 0.5, -1.2, -2.4]
-          },
-          {
-            id: "bo-beosound-a9",
-            name: "Beosound A9 (5th Gen)",
-            brand: "BANG & OLUFSEN",
-            brandTag: "B&O // STRUER",
-            price: 3999,
-            weight: "14.7 kg",
-            freq: "33 Hz – 23 kHz",
-            driver: "1x 8-inch Woofer, 2x 3-inch Mid, 2x 1.5-inch Full, 2x 0.75-inch Tweet",
-            latency: "1,500 Watts Total 7-Class-D Digital Power",
-            conn: "AirPlay 2, Chromecast, Beolink Multiroom, Wi-Fi 6",
-            battery: "Mains Powered Luxury Architectural Audio",
-            image: "assets/hardware/studio/bo-beosound-a9_hero.jpg",
-            chassisSpec: "Circular Anodized Aluminum Ring with Kvadrat Wool Cover & Oak Legs",
-            driverSpec: "Active Room Compensation Microphones Tuning Acoustic Reflection",
-            pcbSpec: "Mozart Platform Software Engine with Upgradable Processing Card",
-            baseSpec: "Solid Turned Nordic Oak Wood Tripod Assembly with Brass Dampeners",
-            frCurve: [3.6, 4.2, 3.8, 2.5, 1.1, 0.0, 0.1, 0.5, 1.9, 3.2, 2.4, 0.2, -1.0, -2.0]
-          },
-          {
-            id: "bowers-wilkins-zeppelin",
-            name: "Zeppelin Hi-Fi",
-            brand: "BOWERS & WILKINS",
-            brandTag: "B&W // WORTHING",
-            price: 799,
-            weight: "6.5 kg",
-            freq: "35 Hz – 24 kHz",
-            driver: "2x Decoupled Double Dome Tweeters + 6-inch Subwoofer",
-            latency: "24-bit/96kHz High-Resolution Audio Processing",
-            conn: "AirPlay 2, Spotify Connect, aptX Adaptive, Wi-Fi",
-            battery: "240 Watts Total Digital Amplification",
-            image: "assets/hardware/studio/bowers-wilkins-zeppelin_hero.jpg",
-            chassisSpec: "Aerodynamic Rigid Acoustic Polycarbonate Airship Chassis",
-            driverSpec: "Fixed Suspension Transducer (FST) Midrange from Reference 800 Series",
-            pcbSpec: "High-Performance 24-bit Digital Signal Processor (DSP) with Dynamic EQ",
-            baseSpec: "Integrated Polished Pedestal Stand with Ambient Halo Lighting",
-            frCurve: [3.2, 3.8, 3.4, 2.2, 1.0, 0.0, 0.2, 0.7, 2.0, 3.1, 2.1, 0.1, -0.9, -1.8]
-          },
-          {
-            id: "transparent-speaker",
-            name: "Transparent Acoustic Glass",
-            brand: "TRANSPARENT",
-            brandTag: "TRANSPARENT // STOCKHOLM",
-            price: 1100,
-            weight: "11 kg",
-            freq: "35 Hz – 20 kHz",
-            driver: "2x 3-inch Full-Range + 1x 6.5-inch Custom Subwoofer",
-            latency: "True Wireless Stereo (TWS) Dual Sync",
-            conn: "Bluetooth 5.0, 3.5mm In/Out, Modular Wi-Fi Bay",
-            battery: "140W Class-D Built-in Active Amplification",
-            image: "assets/hardware/studio/transparent-speaker_hero.jpg",
-            chassisSpec: "Tempered Glass Acoustic Panels & Single Aluminum Extrusion Unibody",
-            driverSpec: "Sealed Glass Enclosure with Custom Dampened Acoustic Drivers",
-            pcbSpec: "Modular Architecture with Upgradable Wireless Component Bay",
-            baseSpec: "Silicone Vibration Isolating Feet for Table Resonance Decoupling",
-            frCurve: [2.8, 3.4, 3.0, 1.9, 0.9, 0.0, 0.1, 0.6, 1.7, 2.8, 1.9, 0.0, -0.8, -1.6]
-          },
           {
             id: "sonos-era-300",
             name: "Era 300 Spatial Audio",
@@ -9031,76 +9357,184 @@
             brandTag: "SONOS // SANTA BARBARA",
             price: 449,
             weight: "4.47 kg",
-            freq: "Dolby Atmos Spatial Acoustic Geometry",
-            driver: "6x Class-D Digital Amplifiers + 4 Tweeters + 2 Woofers",
-            latency: "Trueplay Room Tuning Microphone Array",
+            freq: "Dolby Atmos Spatial Acoustic Waveguide",
+            driver: "6 Class-D Digital Amplifiers + 4 Tweeters + 2 Woofers",
+            latency: "Wi-Fi 6 Synchronized Multi-Room Audio",
             conn: "Wi-Fi 6, Bluetooth 5.0, USB-C Line-In, AirPlay 2",
-            battery: "Mains Powered Spatial Cinema Node",
+            battery: "AC Power (Continuous Studio Playback)",
             image: "assets/hardware/studio/sonos-era-300_hero.jpg",
-            chassisSpec: "Hourglass Acoustic Baffle Minimizing Edge Diffraction",
-            driverSpec: "Six Optimally Positioned Compression Drivers for Dolby Atmos Channels",
-            pcbSpec: "Quad-Core A55 1.9GHz Processor with 2GB DDR4 Memory",
-            baseSpec: "Non-Resonant Polymer Housing with Micro-Drilled Acoustic Grille",
-            frCurve: [2.9, 3.5, 3.1, 2.0, 1.0, 0.0, 0.2, 0.6, 1.8, 2.9, 2.0, 0.1, -0.9, -1.7]
+            video: "assets/videos_webm/Sonos_Era_300_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Sonos_Era_300_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Sonos_Era_300_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Sonos_Era_300_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Hourglass Acoustic Compression Chamber with Precision Grille",
+            driverSpec: "Six Precision-Calibrated Drivers Optimized for Dolby Atmos",
+            pcbSpec: "Trueplay Tuning Quad-Core A55 Neural Audio DSP",
+            baseSpec: "Vibration-Isolating Silicone Damping Footpad",
+            frCurve: [2.5, 3.8, 4.2, 3.5, 2.0, 0.8, 0.2, -0.1, 1.5, 3.2, 2.0, -0.6, -1.8, -3.0]
+          },
+          {
+            id: "marshall-stanmore-3",
+            name: "Stanmore III Bluetooth",
+            brand: "MARSHALL",
+            brandTag: "MARSHALL // LONDON",
+            price: 379,
+            weight: "4.25 kg",
+            freq: "45 Hz – 20,000 Hz",
+            driver: "50 Watt Class D Woofer + 2x 15 Watt Class D Tweeters",
+            latency: "aptX Low Latency Audio",
+            conn: "Bluetooth 5.2 (LE Audio ready), 3.5mm AUX, RCA",
+            battery: "Mains Powered 100-240V",
+            image: "assets/hardware/studio/marshall-stanmore-3_hero.jpg",
+            video: "assets/videos_webm/Marshall_Stanmore_III_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Marshall_Stanmore_III_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Marshall_Stanmore_III_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Marshall_Stanmore_III_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Vintage Textured Vinyl with Brass Accents and Wooden Cabinet",
+            driverSpec: "Outward-Angled Tweeters and Updated Waveguides for Wide Soundstage",
+            pcbSpec: "Dynamic Loudness DSP Adjusting Tonal Balance Across Volumes",
+            baseSpec: "Non-Slip Rubber Acoustic Isolation Feet",
+            frCurve: [3.5, 4.5, 4.0, 2.8, 1.5, 0.3, -0.2, 0.2, 1.8, 2.8, 1.5, -0.5, -1.5, -2.5]
+          },
+          {
+            id: "jbl-flip-6",
+            name: "Flip 6 Waterproof Portable",
+            brand: "JBL",
+            brandTag: "HARMAN // STAMFORD",
+            price: 129,
+            weight: "550 g",
+            freq: "63 Hz – 20,000 Hz",
+            driver: "2-Way Speaker System (Racetrack Woofer + Separate Tweeter)",
+            latency: "Low-Latency Bluetooth 5.1",
+            conn: "Bluetooth 5.1, JBL PartyBoost",
+            battery: "12 Hours Playtime (2.5h Charge Time)",
+            image: "assets/hardware/studio/jbl-flip-6_hero.jpg",
+            video: "assets/videos_webm/JBL_Flip_6_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/JBL_Flip_6_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/JBL_Flip_6_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/JBL_Flip_6_Exploded_View_20260912183607.jpg",
+            chassisSpec: "IP67 Waterproof & Dustproof Rugged Fabric Housing",
+            driverSpec: "Racetrack-Shaped Woofer with Dual Passive Radiators",
+            pcbSpec: "Harman DSP Optimization with USB-C Charging Protection",
+            baseSpec: "Integrated Silicone Grip Rails and Impact-Resistant Endcaps",
+            frCurve: [2.0, 3.2, 3.0, 2.0, 1.0, 0.1, -0.3, 0.4, 2.0, 3.0, 1.2, -1.0, -2.0, -3.2]
+          },
+          {
+            id: "bose-revolve-2",
+            name: "SoundLink Revolve+ II",
+            brand: "BOSE",
+            brandTag: "BOSE // FRAMINGHAM",
+            price: 329,
+            weight: "900 g",
+            freq: "True 360-Degree Omnidirectional Sound",
+            driver: "Downward-Firing Full-Range Transducer + Omnidirectional Deflector",
+            latency: "Low Latency Wireless Sync",
+            conn: "Bluetooth 4.2, 3.5mm AUX, Micro-B USB",
+            battery: "17 Hours per Charge",
+            image: "assets/hardware/studio/bose-revolve-2_hero.jpg",
+            video: "assets/videos_webm/Bose_SoundLink_Revolve_II_Exploded_20260912183607.webm",
+            videoMp4: "assets/videos/Bose_SoundLink_Revolve_II_Exploded_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Bose_SoundLink_Revolve_II_Exploded_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Bose_SoundLink_Revolve_II_Exploded_20260912183607.jpg",
+            chassisSpec: "Seamless Anodized Aluminum Cylindrical Body (IP55 Water Resistant)",
+            driverSpec: "Dual Opposing Passive Radiators & Omnidirectional Acoustic Deflector",
+            pcbSpec: "Stereo / Party Mode Pairing Engine with Voice Prompt DSP",
+            baseSpec: "Soft Impact-Absorbing Molded Bumpers and Threaded Mount Base",
+            frCurve: [1.8, 2.8, 2.5, 1.6, 0.8, 0.0, -0.2, 0.3, 1.6, 2.5, 1.0, -0.8, -1.6, -2.5]
+          },
+          {
+            id: "devialet-phantom-i",
+            name: "Phantom I 108dB",
+            brand: "DEVIALET",
+            brandTag: "DEVIALET // PARIS",
+            price: 3199,
+            weight: "11.4 kg",
+            freq: "14 Hz – 27,000 Hz",
+            driver: "1100 Watts RMS / Grade 1 Titanium Tweeter",
+            latency: "0 ms Devialet Wireless Link",
+            conn: "Wi-Fi, AirPlay 2, Bluetooth, Optical TOSLink",
+            battery: "Mains Powered (1100W Peak Transient Power)",
+            image: "assets/hardware/studio/devialet-phantom-i_hero.jpg",
+            video: "assets/videos_webm/Speaker_exploded-view_product_vi_20260912183606.webm",
+            videoMp4: "assets/videos/Speaker_exploded-view_product_vi_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Speaker_exploded-view_product_vi_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Speaker_exploded-view_product_vi_20260912183606.jpg",
+            chassisSpec: "Composite Body with 22-Carat Rose Gold Gilded Sides",
+            driverSpec: "Hermetically Sealed Dual Push-Push Woofers with SAM Emulation",
+            pcbSpec: "ADH Next-Gen Hybrid Analog-Digital Amplification Core",
+            baseSpec: "Ultra-Rigid Damped Cast Aluminum Foundation",
+            frCurve: [4.8, 5.2, 4.5, 3.2, 1.8, 0.4, 0.0, 0.6, 2.2, 3.8, 2.2, -0.2, -1.0, -1.8]
           }
         ],
         keyboards: [
           {
-            id: "apple-magic-keyboard",
-            name: "Magic Keyboard with Touch ID",
-            brand: "APPLE",
-            brandTag: "APPLE // CUPERTINO",
-            price: 199,
-            weight: "369 g",
-            freq: "Full-size with Numeric Keypad",
-            driver: "Scissor Mechanism with 1mm Low-Travel",
-            latency: "Secure Enclave Hardware Encrypted Biometric",
-            conn: "Bluetooth, Lightning/USB-C Woven Cable",
-            battery: "1 Month or More Per Full Recharge",
-            image: "assets/hardware/studio/apple-magic-keyboard_hero.jpg",
-            chassisSpec: "Seamless Anodized Aluminum Top Enclosure",
-            driverSpec: "Optimized Scissor Mechanism Keycaps with Tactile Spring Leaf",
-            pcbSpec: "Dedicated Secure Enclave Touch ID Fingerprint Coprocessor",
-            baseSpec: "Non-Slip Molded Polyurethane Foot Strip",
-            frCurve: [0.4, 0.7, 0.8, 0.5, 0.2, 0.0, 0.1, 0.4, 0.8, 1.1, 0.7, 0.1, -0.2, -0.4]
-          },
-          {
             id: "keychron-q1-pro",
-            name: "Q1 Pro Custom Wireless",
+            name: "Q1 Pro QMK/VIA Wireless",
             brand: "KEYCHRON",
-            brandTag: "KEYCHRON // HONG KONG",
+            brandTag: "KEYCHRON // KOWLOON",
             price: 199,
-            weight: "1,724 g",
-            freq: "75% Double-Gasket Acoustic Mount",
-            driver: "Keychron K Pro Banana / Red Binned",
-            latency: "1,000 Hz Polling Rate / Type-C & BT 5.1",
-            conn: "Bluetooth 5.1, Wired Type-C, macOS/Win Switch",
+            weight: "1.73 kg",
+            freq: "1,000 Hz Polling Rate (Wired)",
+            driver: "Double-Gasket CNC Aluminum Chassis",
+            latency: "1.0 ms Wired / 8 ms BT 5.1",
+            conn: "Bluetooth 5.1, USB Type-C Detachable",
             battery: "4000mAh Battery (300h RGB Off)",
             image: "assets/hardware/studio/keychron-q1-pro_hero.jpg",
-            chassisSpec: "Full 6063 CNC Machined Aluminum Body with Anodized Finish",
-            driverSpec: "Double-Gasket Design with Sound Absorbing Foam & Silicone Pads",
-            pcbSpec: "South-Facing RGB Hot-Swappable PCB with QMK/VIA Open Source Support",
-            baseSpec: "Screw-In Gold-Plated PCB Stabilizers with Lubricated Stems",
-            frCurve: [0.6, 1.0, 1.2, 0.8, 0.3, 0.0, 0.1, 0.5, 1.1, 1.4, 0.9, 0.2, -0.3, -0.6]
+            video: "assets/videos_webm/Keychron_Q1_Pro_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Keychron_Q1_Pro_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Keychron_Q1_Pro_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Keychron_Q1_Pro_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Full 6063 CNC Machined Aluminum Double-Gasket Mount",
+            driverSpec: "Hot-Swappable K Pro Banana Switches with Screw-in PCB Stabs",
+            pcbSpec: "Ultra-Low-Power ARM Cortex-M4 32-bit STM32L432 (128KB Flash)",
+            baseSpec: "Sound Absorbing Acoustic Foam & Case Silicone Dampening Pad",
+            frCurve: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2, 0.0, 0.0]
           },
           {
             id: "logitech-g915-tkl",
             name: "G915 TKL LIGHTSPEED",
             brand: "LOGITECH G",
-            brandTag: "LOGITECH G // LAUSANNE",
+            brandTag: "LOGITECH // LAUSANNE",
             price: 229,
             weight: "810 g",
-            freq: "Tenkeyless Ultra-Slim 22mm Profile",
-            driver: "GL Tactile Low-Profile Mechanical Switches",
-            latency: "1 ms Pro-Grade LIGHTSPEED Wireless",
-            conn: "LIGHTSPEED Wireless, Bluetooth, Micro-USB/Type-C",
-            battery: "40 Hours Non-Stop Play at 100% RGB",
+            freq: "1,000 Hz Polling Rate / 1.5mm Actuation",
+            driver: "Low Profile GL Tactile Mechanical Switches",
+            latency: "1.0 ms Pro-Grade LIGHTSPEED",
+            conn: "LIGHTSPEED Wireless, Bluetooth, Micro-USB",
+            battery: "40 Hours at 100% RGB Brightness",
             image: "assets/hardware/studio/logitech-g915-tkl_hero.jpg",
-            chassisSpec: "Aircraft-Grade 5052 Aluminum-Magnesium Alloy Brushed Top Plate",
-            driverSpec: "GL Low Profile Mechanical Switches (Half-Height, Full Speed)",
-            pcbSpec: "LIGHTSPEED Wireless Engine with Onboard Profile Memory Storage",
-            baseSpec: "Dual-Angle Adjustable Rubber Tilt Feet (4° and 8°)",
-            frCurve: [0.5, 0.9, 1.1, 0.7, 0.3, 0.0, 0.1, 0.4, 1.0, 1.3, 0.8, 0.1, -0.3, -0.5]
+            video: "assets/videos_webm/Logitech_G915_TKL_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Logitech_G915_TKL_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Logitech_G915_TKL_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Logitech_G915_TKL_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Aircraft-Grade 5052 Aluminum-Magnesium Alloy Top Case",
+            driverSpec: "High-Performance Low-Profile GL Mechanical Switches (50g Force)",
+            pcbSpec: "LIGHTSPEED Wireless Sub-Millisecond Report Frequency Module",
+            baseSpec: "Ultra-Slim 22mm Profile with Dual Rubberized Tilt Feet",
+            frCurve: [0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.0, 0.8, 0.6, 0.5, 0.3, 0.2, 0.1, 0.0]
+          },
+          {
+            id: "apple-magic-keyboard",
+            name: "Magic Keyboard with Touch ID",
+            brand: "APPLE",
+            brandTag: "APPLE // CUPERTINO",
+            price: 179,
+            weight: "243 g",
+            freq: "Secure Enclave Touch ID Biometric Engine",
+            driver: "Refined Scissor Mechanism (1mm Travel)",
+            latency: "8 ms Bluetooth Low Energy",
+            conn: "Bluetooth, Lightning, Wireless",
+            battery: "Internal Battery (Over 1 Month per Charge)",
+            image: "assets/hardware/studio/apple-magic-keyboard_hero.jpg",
+            video: "assets/videos_webm/Apple_Magic_Keyboard_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Apple_Magic_Keyboard_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Apple_Magic_Keyboard_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Apple_Magic_Keyboard_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Precision 100% Recycled Aluminum Unibody Enclosure",
+            driverSpec: "Ultra-Low Profile Scissor Mechanism with Optimized Key Stability",
+            pcbSpec: "Secure Enclave Hardware Biometric Authentication SIP",
+            baseSpec: "Four Recessed High-Tack Non-Slip Rubber Base Footpads",
+            frCurve: [0.0, 0.1, 0.2, 0.3, 0.5, 0.7, 0.8, 0.7, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
           },
           {
             id: "razer-huntsman-v3",
@@ -9109,12 +9543,16 @@
             brandTag: "RAZER // IRVINE",
             price: 219,
             weight: "880 g",
-            freq: "Analog Optical Rapid Trigger (0.1mm - 4.0mm)",
-            driver: "2nd-Gen Razer Analog Optical Switches",
-            latency: "1,000 Hz True Polling Rate / Type-C Detachable",
-            conn: "Detachable Braided USB Type-C Cable",
-            battery: "Wired Tournament Speed Low-Latency",
+            freq: "1,000 Hz / Adjustable Actuation 0.1 – 4.0mm",
+            driver: "Gen-2 Analog Optical Switches with Rapid Trigger",
+            latency: "0.2 ms Analog Optical Detection",
+            conn: "Detachable Braided Type-C Cable",
+            battery: "Wired Tournament-Grade Zero-Drop Connection",
             image: "assets/hardware/studio/razer-huntsman-v3_hero.jpg",
+            video: "assets/videos_webm/Razer_Huntsman_V3_Pro_Exploded_20260912183606.webm",
+            videoMp4: "assets/videos/Razer_Huntsman_V3_Pro_Exploded_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Razer_Huntsman_V3_Pro_Exploded_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Razer_Huntsman_V3_Pro_Exploded_20260912183606.jpg",
             chassisSpec: "5052 Brushed Aluminum Top Plate with Magnetic Leatherette Wrist Rest",
             driverSpec: "Analog Optical Switches with Rapid Trigger & Stepless Actuation",
             pcbSpec: "Multi-Function Digital Dial & Dedicated Macro Tactical Buttons",
@@ -9234,6 +9672,75 @@
         } catch (e) {}
       }
 
+      // Feature 5: Granular Haptic Synthesizer (Hardware Studio)
+      function playChamberResonance(freq = 160) {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.5, ctx.currentTime + 0.12);
+          filter.type = "bandpass";
+          filter.frequency.setValueAtTime(freq * 1.5, ctx.currentTime);
+          filter.Q.setValueAtTime(6.0, ctx.currentTime);
+          g.gain.setValueAtTime(0.09, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.14);
+          osc.connect(filter);
+          filter.connect(g);
+          g.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.15);
+        } catch (e) {}
+      }
+
+      function playSliderTick(depth) {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          const f = 700 + depth * 8; // 700Hz to 1500Hz depending on depth
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(f, ctx.currentTime);
+          g.gain.setValueAtTime(0.02, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.015);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.02);
+        } catch (e) {}
+      }
+
+      // Feature 3: Kinetic Typography Odometer (Hardware Studio)
+      function rollHwOdometer(element, targetNum, prefix = "", suffix = "", duration = 400) {
+        if (!element) return;
+        const currentText = (element.textContent || "").replace(/[^0-9.]/g, "");
+        const startNum = parseFloat(currentText) || 0;
+        if (startNum === targetNum) {
+          element.textContent = `${prefix}${targetNum.toLocaleString()}${suffix}`;
+          return;
+        }
+        element.classList.add("odometer-rolling");
+        const startTime = performance.now();
+        function stepOdo(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const val = Math.round(startNum + (targetNum - startNum) * ease);
+          element.textContent = `${prefix}${val.toLocaleString()}${suffix}`;
+          if (progress < 1) {
+            requestAnimationFrame(stepOdo);
+          } else {
+            element.textContent = `${prefix}${targetNum.toLocaleString()}${suffix}`;
+            setTimeout(() => element.classList.remove("odometer-rolling"), 100);
+          }
+        }
+        requestAnimationFrame(stepOdo);
+      }
+
       function startAcousticSynthesis(profile) {
         const ctx = getAudioContext();
         if (!ctx) return;
@@ -9341,12 +9848,22 @@
         requestAnimationFrame(renderVisualizerLoop);
       }
 
-      // Draw Frequency Response Curve
+      // Draw Frequency Response Curve with High-DPI Scaling
       function drawFrequencyResponseCurve(curve) {
         if (!frCanvas || !curve) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const rect = frCanvas.getBoundingClientRect();
+        const rw = Math.round(rect.width || frCanvas.width);
+        const rh = Math.round(rect.height || frCanvas.height);
+        if (frCanvas.width !== rw * dpr || frCanvas.height !== rh * dpr) {
+          frCanvas.width = rw * dpr;
+          frCanvas.height = rh * dpr;
+        }
         const ctx = frCanvas.getContext("2d");
-        const w = frCanvas.width;
-        const h = frCanvas.height;
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        const w = rw;
+        const h = rh;
         ctx.clearRect(0, 0, w, h);
 
         ctx.strokeStyle = "rgba(255,255,255,0.06)";
@@ -9368,22 +9885,128 @@
           else ctx.lineTo(x, y);
         });
         ctx.stroke();
+        ctx.restore();
       }
 
-      // Smooth 3D Cursor Parallax Tilt
-      if (hwViewport && hwRotator) {
-        hwViewport.addEventListener("mousemove", (e) => {
-          const rect = hwViewport.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          const tiltX = (x * 10).toFixed(2);
-          const tiltY = (-y * 10).toFixed(2);
-          hwRotator.style.transform = `perspective(1000px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
+      // Feature 1: Multi-Depth 3D Exploded X-Ray Parallax & Rig State
+      let hwTilt = { x: 0, y: 0, targetX: 0, targetY: 0 };
+      let hwPointer = { x: 200, y: 150, targetX: 200, targetY: 150 };
+      let hwTurntableDeg = 0;
+      let xrayExpansionDepth = 0; // 0.0 to 1.0
+
+      const hwLightSpot = document.getElementById("hw-light-spot");
+      const layerChassis = document.getElementById("hw-layer-chassis");
+      const layerDriver = document.getElementById("hw-layer-driver");
+      const layerMagnets = document.getElementById("hw-layer-magnets");
+      const layerPcb = document.getElementById("hw-layer-pcb");
+      const hwCallout1 = document.getElementById("hw-callout-1");
+      const hwCallout2 = document.getElementById("hw-callout-2");
+      const hwCallout3 = document.getElementById("hw-callout-3");
+      const hwCallout4 = document.getElementById("hw-callout-4");
+
+      // Feature 4: Atmospheric Cyber Motes Micro-Particles (Hardware)
+      const hwParticlesCanvas = document.getElementById("hw-particles-canvas");
+      const hwParticlesCtx = hwParticlesCanvas ? hwParticlesCanvas.getContext("2d") : null;
+      const hwMotes = Array.from({ length: 32 }, () => ({
+        x: Math.random() * 500,
+        y: Math.random() * 400,
+        r: 0.7 + Math.random() * 1.5,
+        speedY: -0.15 - Math.random() * 0.35,
+        speedX: -0.2 + Math.random() * 0.4,
+        alpha: 0.2 + Math.random() * 0.45
+      }));
+
+      function renderHwParticles() {
+        if (!hwParticlesCanvas || !hwParticlesCtx) return;
+        const rect = hwParticlesCanvas.getBoundingClientRect();
+        if (hwParticlesCanvas.width !== Math.round(rect.width) || hwParticlesCanvas.height !== Math.round(rect.height)) {
+          hwParticlesCanvas.width = Math.max(Math.round(rect.width), 400);
+          hwParticlesCanvas.height = Math.max(Math.round(rect.height), 300);
+        }
+        const w = hwParticlesCanvas.width;
+        const h = hwParticlesCanvas.height;
+        hwParticlesCtx.clearRect(0, 0, w, h);
+
+        hwMotes.forEach(m => {
+          m.y += m.speedY;
+          m.x += m.speedX;
+          if (m.y < 0) { m.y = h; m.x = Math.random() * w; }
+          if (m.x < 0) m.x = w;
+          if (m.x > w) m.x = 0;
+
+          hwParticlesCtx.save();
+          hwParticlesCtx.fillStyle = `rgba(223, 183, 108, ${m.alpha.toFixed(3)})`;
+          hwParticlesCtx.shadowColor = "rgba(223, 183, 108, 0.6)";
+          hwParticlesCtx.shadowBlur = 4;
+          hwParticlesCtx.beginPath();
+          hwParticlesCtx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+          hwParticlesCtx.fill();
+          hwParticlesCtx.restore();
         });
 
-        hwViewport.addEventListener("mouseleave", () => {
-          hwRotator.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-        });
+        // Update Specular Studio Light Flare (Feature 2)
+        hwPointer.x += (hwPointer.targetX - hwPointer.x) * 0.15;
+        hwPointer.y += (hwPointer.targetY - hwPointer.y) * 0.15;
+        if (hwLightSpot) {
+          hwLightSpot.style.left = `${hwPointer.x.toFixed(1)}px`;
+          hwLightSpot.style.top = `${hwPointer.y.toFixed(1)}px`;
+        }
+
+        // Update 3D Exploded X-Ray Parallax Rig (Feature 1)
+        hwTilt.x += (hwTilt.targetX - hwTilt.x) * 0.12;
+        hwTilt.y += (hwTilt.targetY - hwTilt.y) * 0.12;
+
+        if (hwRotator) {
+          const rotX = (-hwTilt.y * 14).toFixed(2);
+          const rotY = (hwTilt.x * 14 + hwTurntableDeg).toFixed(2);
+          hwRotator.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+
+        const exp = xrayExpansionDepth; // 0.0 to 1.0
+        if (teardownImg) {
+          const zFwd = (exp * 32).toFixed(1);
+          const sc = (1 + exp * 0.04).toFixed(3);
+          teardownImg.style.transform = `translateZ(${zFwd}px) scale(${sc})`;
+        }
+        if (mainImg) {
+          const zBack = (-exp * 18).toFixed(1);
+          mainImg.style.transform = `translateZ(${zBack}px)`;
+        }
+
+        if (layerChassis) layerChassis.style.transform = `translateZ(${(-22 * exp).toFixed(1)}px)`;
+        if (layerDriver) layerDriver.style.transform = `translateZ(${(16 * exp).toFixed(1)}px)`;
+        if (layerMagnets) layerMagnets.style.transform = `translateZ(${(36 * exp).toFixed(1)}px)`;
+        if (layerPcb) layerPcb.style.transform = `translateZ(${(56 * exp).toFixed(1)}px)`;
+
+        if (hwCallout1) hwCallout1.style.transform = `translate3d(${(-16 * exp).toFixed(1)}px, ${(-10 * exp).toFixed(1)}px, ${(45 * exp).toFixed(1)}px)`;
+        if (hwCallout2) hwCallout2.style.transform = `translate3d(${(16 * exp).toFixed(1)}px, ${(-8 * exp).toFixed(1)}px, ${(55 * exp).toFixed(1)}px)`;
+        if (hwCallout3) hwCallout3.style.transform = `translate3d(${(-14 * exp).toFixed(1)}px, ${(12 * exp).toFixed(1)}px, ${(65 * exp).toFixed(1)}px)`;
+        if (hwCallout4) hwCallout4.style.transform = `translate3d(${(14 * exp).toFixed(1)}px, ${(16 * exp).toFixed(1)}px, ${(75 * exp).toFixed(1)}px)`;
+
+        requestAnimationFrame(renderHwParticles);
+      }
+      requestAnimationFrame(renderHwParticles);
+
+      if (hwViewport) {
+        const handleHwPointer = (e) => {
+          const rect = hwViewport.getBoundingClientRect();
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          hwTilt.targetX = (clientX - rect.left) / rect.width - 0.5;
+          hwTilt.targetY = (clientY - rect.top) / rect.height - 0.5;
+          hwPointer.targetX = clientX - rect.left;
+          hwPointer.targetY = clientY - rect.top;
+        };
+
+        hwViewport.addEventListener("mousemove", handleHwPointer);
+        hwViewport.addEventListener("touchmove", handleHwPointer, { passive: true });
+
+        const resetHwPointer = () => {
+          hwTilt.targetX = 0;
+          hwTilt.targetY = 0;
+        };
+        hwViewport.addEventListener("mouseleave", resetHwPointer);
+        hwViewport.addEventListener("touchend", resetHwPointer);
       }
 
       // Populate Left Arsenal Roster
@@ -9485,7 +10108,7 @@
         if (telSeries) telSeries.textContent = `SERIES // ${activeCategory.toUpperCase()}-0${activeModelIdx + 1}`;
         if (telName) telName.textContent = model.name;
         if (telBrand) telBrand.textContent = model.brandTag;
-        if (telPrice) telPrice.textContent = `$${model.price.toLocaleString()}`;
+        if (telPrice) rollHwOdometer(telPrice, model.price, "$");
         if (telWeight) telWeight.textContent = model.weight;
         if (telFreq) telFreq.textContent = model.freq;
         if (telDriver) telDriver.textContent = model.driver;
@@ -9499,7 +10122,7 @@
         if (specBase) specBase.textContent = model.baseSpec;
 
         if (modalProdTitle) modalProdTitle.textContent = `${model.brand} ${model.name}`;
-        if (modalPriceVal) modalPriceVal.textContent = `$${model.price.toLocaleString()}`;
+        if (modalPriceVal) rollHwOdometer(modalPriceVal, model.price, "$");
         if (modalSerialCode) modalSerialCode.textContent = `SN: CS-${Math.floor(1000 + Math.random() * 9000)}-${model.id.toUpperCase().slice(0, 8)}`;
 
         drawFrequencyResponseCurve(model.frCurve);
@@ -9512,10 +10135,12 @@
           currentHardwareRakurs = r;
           if (r === "teardown") {
             isXRayMode = true;
+            xrayExpansionDepth = 1.0;
             if (xraySlider) xraySlider.value = 100;
             if (xraySliderVal) xraySliderVal.textContent = "100%";
           } else {
             isXRayMode = false;
+            xrayExpansionDepth = 0.0;
             if (xraySlider) xraySlider.value = 0;
             if (xraySliderVal) xraySliderVal.textContent = "0%";
           }
@@ -9530,6 +10155,8 @@
           const val = parseFloat(e.target.value);
           if (xraySliderVal) xraySliderVal.textContent = `${Math.round(val)}%`;
           const depth = val / 100;
+          xrayExpansionDepth = depth;
+          playSliderTick(val);
           
           if (teardownImg) teardownImg.style.opacity = depth.toString();
           if (mainImg) mainImg.style.opacity = (1 - depth * 0.75).toString();
@@ -9631,6 +10258,56 @@
             modalSubmit.style.background = "";
             modalSubmit.style.color = "";
           }, 1600);
+        });
+      }
+
+      // Turntable Rotation Controls
+      const btnRotLeft = document.getElementById("hw-btn-rot-left");
+      const btnRotReset = document.getElementById("hw-btn-rot-reset");
+      const btnRotRight = document.getElementById("hw-btn-rot-right");
+
+      if (btnRotLeft) {
+        btnRotLeft.addEventListener("click", () => {
+          hwTurntableDeg -= 15;
+          playUiTick(900, 0.025, 0.05);
+        });
+      }
+      if (btnRotReset) {
+        btnRotReset.addEventListener("click", () => {
+          hwTurntableDeg = 0;
+          playUiTick(1200, 0.03, 0.06);
+        });
+      }
+      if (btnRotRight) {
+        btnRotRight.addEventListener("click", () => {
+          hwTurntableDeg += 15;
+          playUiTick(900, 0.025, 0.05);
+        });
+      }
+
+      // Cinema Playback Video Control Hook
+      const btnVideoPlay = document.getElementById("hw-btn-video-play");
+      const hwVideoLayer = document.getElementById("hw-video-layer");
+      const hwXrayVideo = document.getElementById("hw-xray-video");
+      const hwVideoBadge = document.getElementById("hw-video-badge");
+      let isCinemaPlaying = false;
+
+      if (btnVideoPlay && hwXrayVideo) {
+        btnVideoPlay.addEventListener("click", () => {
+          isCinemaPlaying = !isCinemaPlaying;
+          btnVideoPlay.textContent = isCinemaPlaying ? "❚❚ PAUSE CINEMA" : "▶ PLAY CINEMA";
+          btnVideoPlay.classList.toggle("active", isCinemaPlaying);
+          if (isCinemaPlaying) {
+            playChamberResonance(220);
+            if (hwVideoLayer) hwVideoLayer.style.opacity = "1";
+            if (hwVideoBadge) hwVideoBadge.style.display = "flex";
+            hwXrayVideo.play().catch(() => {});
+          } else {
+            playUiTick(750, 0.03, 0.05);
+            hwXrayVideo.pause();
+            if (hwVideoLayer) hwVideoLayer.style.opacity = "0";
+            if (hwVideoBadge) hwVideoBadge.style.display = "none";
+          }
         });
       }
 
