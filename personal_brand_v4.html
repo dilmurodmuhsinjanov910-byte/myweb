@@ -968,8 +968,7 @@
       cursor: grabbing;
     }
     /* Feature 2: Dynamic Specular Studio Lighting Flare */
-    .snk-light-spot,
-    .hw-light-spot {
+    .snk-light-spot {
       position: absolute;
       width: 360px;
       height: 360px;
@@ -983,16 +982,13 @@
       z-index: 4;
     }
     .snk-tilt-card:hover .snk-light-spot,
-    .snk-tilt-card.tracking .snk-light-spot,
-    .hw-viewport:hover .hw-light-spot,
-    .hw-viewport.tracking .hw-light-spot {
+    .snk-tilt-card.tracking .snk-light-spot {
       opacity: 1;
     }
 
     /* Feature 4: Atmospheric Environment Micro-Particles Canvases */
     .portal-petals-canvas,
-    .snk-particles-canvas,
-    .hw-particles-canvas {
+    .snk-particles-canvas {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -1009,84 +1005,13 @@
       text-shadow: 0 0 14px rgba(223, 183, 108, 0.65), 0 0 25px rgba(223, 183, 108, 0.35);
       color: #fff6de !important;
     }
-    .snk-price-val, .hw-card-price, #hw-tele-price, #snk-degree-val, #hw-hud-angle, #hw-spec-weight, #hw-spec-freq, #hw-spec-latency, #hw-spec-conn, #hw-spec-battery, #hw-xray-slider-val {
+    .snk-price-val,
+    #snk-degree-val {
       font-variant-numeric: tabular-nums;
     }
 
-    /* Feature 1: Multi-Depth 3D Exploded X-Ray Parallax */
-    .hw-rig {
-      perspective: 1200px;
-      transform-style: preserve-3d;
-    }
-    .hw-rotator {
-      transform-style: preserve-3d;
-      transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
-    }
-    .hw-main-img,
-    .hw-teardown-img {
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-      will-change: transform, opacity;
-    }
-    .hw-xray-assembly {
-      transform-style: preserve-3d;
-    }
-    .hw-callout {
-      transform-style: preserve-3d;
-      will-change: transform;
-      transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.35s ease;
-    }
-    .hw-depth-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      transform-style: preserve-3d;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      border-radius: 14px;
-    }
-    .hw-layer-chassis {
-      border: 1px dashed rgba(223, 183, 108, 0.18);
-      background: radial-gradient(circle at center, rgba(223, 183, 108, 0.035) 0%, transparent 70%);
-      box-shadow: inset 0 0 24px rgba(223, 183, 108, 0.035);
-    }
-    .hw-layer-driver {
-      border: 1px solid rgba(0, 229, 255, 0.16);
-      background: radial-gradient(circle at 45% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 65%);
-      box-shadow: 0 0 28px rgba(0, 229, 255, 0.06);
-    }
-    .hw-layer-magnets {
-      border: 1px dotted rgba(255, 170, 50, 0.18);
-      background: radial-gradient(circle at 55% 50%, rgba(255, 170, 50, 0.04) 0%, transparent 65%);
-      box-shadow: 0 0 22px rgba(255, 170, 50, 0.05);
-    }
-    .hw-layer-pcb {
-      border: 1px solid rgba(223, 183, 108, 0.26);
-      background: radial-gradient(circle at 50% 50%, rgba(223, 183, 108, 0.06) 0%, transparent 60%);
-      box-shadow: inset 0 0 32px rgba(223, 183, 108, 0.05);
-    }
-
-    /* Interactive Buttons States & Touch Ergonomics */
-    .hw-cat-btn, .hw-rakurs-btn, .hw-profile-btn, .snk-model-tab, .snk-angle-pill, .snk-size-btn, .hw-hud-btn, .hw-video-toggle-btn, .snk-autospin-btn {
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .hw-rakurs-btn:hover:not(.active) {
-      background: rgba(255, 255, 255, 0.12) !important;
-      border-color: rgba(223, 183, 108, 0.45) !important;
-      color: #fff !important;
-      transform: translateY(-1px);
-    }
-    .hw-rakurs-btn:active {
-      transform: translateY(0px) scale(0.96);
-    }
-    .hw-rakurs-btn.active {
-      background: rgba(223, 183, 108, 0.22) !important;
-      border-color: rgba(223, 183, 108, 0.5) !important;
-      color: #fff3d1 !important;
-    }
-    .snk-angle-pill:hover:not(.active) {
+    /* Obsolete hardware catalog styles purged */
+.snk-angle-pill:hover:not(.active) {
       background: rgba(255, 255, 255, 0.12) !important;
       border-color: rgba(223, 183, 108, 0.4) !important;
       color: #fff !important;
@@ -2820,25 +2745,218 @@
       z-index: 20;
     }
 
-    /* Keep Bottom Dock and Watermark anchored beautifully */
-    #project-03 .solar-planet-dock {
-      bottom: 22px !important;
-      z-index: 25 !important;
+        /* S-Tier Multi-Device Spatial Layout System */
+    @media (min-width: 769px) {
+      #project-03 .solar-planet-dock {
+        bottom: 22px !important;
+        z-index: 25 !important;
+      }
+      #project-03 .solar-watermark {
+        bottom: 66px !important;
+        z-index: 20 !important;
+      }
+      #project-03 .solar-top-bar {
+        top: 18px !important;
+        left: 24px !important;
+        right: 24px !important;
+        z-index: 25 !important;
+      }
+      #project-03 .solar-telemetry-panel {
+        top: 68px !important;
+        right: 24px !important;
+        z-index: 20 !important;
+      }
     }
-    #project-03 .solar-watermark {
-      bottom: 66px !important;
-      z-index: 20 !important;
+
+    /* Mobile & Tablet Specific Optimizations (375px - 768px) */
+    @media (max-width: 768px) {
+      #project-03 .solar-planet-dock {
+        bottom: 12px !important;
+        padding: 4px 8px !important;
+        max-width: calc(100% - 16px) !important;
+        z-index: 25 !important;
+      }
+      #project-03 .solar-watermark {
+        display: none !important;
+      }
+      #project-03 .solar-top-bar {
+        top: 10px !important;
+        left: 10px !important;
+        right: 10px !important;
+        z-index: 25 !important;
+      }
+      #project-03 .solar-telemetry-panel {
+        top: auto !important;
+        bottom: 62px !important;
+        left: 10px !important;
+        right: 10px !important;
+        width: calc(100% - 20px) !important;
+        max-width: calc(100% - 20px) !important;
+        max-height: 180px !important;
+        overflow-y: auto !important;
+        z-index: 20 !important;
+      }
+      .dock-planet-moons {
+        display: none !important;
+      }
+      .dock-planet-name {
+        font-size: 8.5px !important;
+      }
+      .solar-dock-item {
+        padding: 3px 8px !important;
+      }
+      .solar-badge {
+        display: none !important;
+      }
+      .solar-brand-mark {
+        padding: 4px 8px !important;
+      }
+      .solar-logo {
+        font-size: 9.5px !important;
+      }
+      .solar-speed-btn {
+        padding: 3px 6px !important;
+        font-size: 8px !important;
+      }
+      #project-03 #solar-project-info:not(.is-expanded) {
+        transform: translateX(calc(-100% - 10px)) !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+      #project-03 #solar-info-open-btn:not(.is-hidden) {
+        display: inline-flex !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
     }
-    #project-03 .solar-top-bar {
-      top: 18px !important;
-      left: 24px !important;
-      right: 24px !important;
-      z-index: 25 !important;
+
+    @media (max-width: 520px) {
+      #solar-overview-btn span,
+      #solar-fs-btn span,
+      #solar-audio-btn span {
+        display: none !important;
+      }
+      .solar-action-btn {
+        padding: 5px 8px !important;
+      }
+      .solar-speed-controls {
+        padding: 2px !important;
+        gap: 1px !important;
+      }
     }
-    #project-03 .solar-telemetry-panel {
-      top: 68px !important;
-      right: 24px !important;
-      z-index: 20 !important;
+
+    /* Clean non-overlapping display for Project 1 & 2 on tablet & mobile */
+    @media (max-width: 1024px) {
+      #project-01 .project-content,
+      #project-02 .project-content {
+        display: none !important;
+      }
+      #project-01 .project-app-container,
+      #project-02 .project-app-container {
+        position: absolute !important;
+        inset: 10px !important;
+        width: calc(100% - 20px) !important;
+        height: calc(100% - 20px) !important;
+        margin: 0 !important;
+        transform: none !important;
+        border-radius: 12px !important;
+      }
+      #project-01 .project-visual,
+      #project-02 .project-visual {
+        inset: 0 !important;
+      }
+      .portal-header {
+        padding: 0 10px !important;
+        height: 40px !important;
+      }
+      .portal-nav-tabs {
+        overflow-x: auto !important;
+        scrollbar-width: none !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 8px !important;
+        flex: 1 !important;
+        margin: 0 6px !important;
+      }
+      .portal-nav-tabs::-webkit-scrollbar {
+        display: none !important;
+      }
+      .portal-tab {
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        font-size: 7.5px !important;
+        padding: 2px 4px !important;
+      }
+      .portal-cue {
+        bottom: 12px !important;
+        padding: 4px 10px !important;
+      }
+      .portal-cue-text {
+        font-size: 6.5px !important;
+      }
+      .portal-gate-wrap {
+        width: min(250px, 64%) !important;
+        aspect-ratio: 1/1 !important;
+        max-height: 72% !important;
+        margin-top: 6px !important;
+      }
+      .portal-footer {
+        padding: 0 10px !important;
+        height: 40px !important;
+      }
+      .portal-arrow-btn {
+        width: 24px !important;
+        height: 24px !important;
+      }
+      .portal-pills {
+        gap: 4px !important;
+        overflow-x: auto !important;
+        scrollbar-width: none !important;
+      }
+      .portal-pills::-webkit-scrollbar {
+        display: none !important;
+      }
+      .portal-pill {
+        font-size: 7px !important;
+        padding: 2px 6px !important;
+      }
+      .portal-hint {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name {
+        font-size: clamp(38px, 12.5vw, 54px) !important;
+        width: 100% !important;
+        letter-spacing: -0.03em !important;
+      }
+      .portal-title {
+        display: none !important;
+      }
+      .portal-status {
+        display: none !important;
+      }
+      #portal-sound-text {
+        display: none !important;
+      }
+      .portal-sound-btn {
+        padding: 3px 6px !important;
+      }
+      .portal-overlay-left {
+        display: none !important;
+      }
+      .snk-logo-sub {
+        display: none !important;
+      }
+      .snk-icon-btn span {
+        display: none !important;
+      }
+      .snk-icon-btn {
+        padding: 3px 6px !important;
+      }
+      .contact-heading {
+        font-size: clamp(40px, 12vw, 60px) !important;
+      }
     }
 
     </style>
@@ -4624,8 +4742,15 @@
     addEventListener("pointercancel", stopDrag);
 
     let isHeroVisible = true;
+    let heroRafId = null;
     const heroObserver = new IntersectionObserver(([entry]) => {
       isHeroVisible = entry.isIntersecting;
+      if (isHeroVisible) {
+        if (!heroRafId) heroRafId = requestAnimationFrame(render);
+      } else if (heroRafId) {
+        cancelAnimationFrame(heroRafId);
+        heroRafId = null;
+      }
     }, { threshold: 0.02 });
     const heroEl = document.querySelector("#hero");
     if(heroEl) heroObserver.observe(heroEl);
@@ -4634,8 +4759,10 @@
     const scrollState = { progress: 0 };
 
     function render(t){
-      requestAnimationFrame(render);
-      if(!isHeroVisible) return;
+      if (!isHeroVisible) {
+        heroRafId = null;
+        return;
+      }
 
       const sec = t * 0.001;
 
@@ -4695,8 +4822,9 @@
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
+      heroRafId = requestAnimationFrame(render);
     }
-    requestAnimationFrame(render);
+    heroRafId = requestAnimationFrame(render);
 
     /* Preloader */
     const load = {v:0};
@@ -5001,34 +5129,41 @@
     /* Cursor + magnetic */
     const dot=document.querySelector(".cursor-dot");
     const ring=document.querySelector(".cursor-ring");
-    let mx=-100,my=-100,rx=-100,ry=-100;
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+    let cursorRafId = null;
 
-    addEventListener("mousemove",e=>{
-      mx=e.clientX; my=e.clientY;
-    },{passive:true});
+    if (isFinePointer && dot && ring) {
+      let mx=-100,my=-100,rx=-100,ry=-100;
 
-    function cursorLoop(){
-      rx += (mx-rx)*.15;
-      ry += (my-ry)*.15;
-      dot.style.transform = `translate3d(${mx}px,${my}px,0)`;
-      ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
-      requestAnimationFrame(cursorLoop);
+      addEventListener("mousemove",e=>{
+        mx=e.clientX; my=e.clientY;
+      },{passive:true});
+
+      function cursorLoop(){
+        rx += (mx-rx)*.15;
+        ry += (my-ry)*.15;
+        dot.style.transform = `translate3d(${mx}px,${my}px,0)`;
+        ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
+        cursorRafId = requestAnimationFrame(cursorLoop);
+      }
+      cursorRafId = requestAnimationFrame(cursorLoop);
+
+      document.querySelectorAll("a,button,.magnetic").forEach(el=>{
+        el.addEventListener("mouseenter",()=>ring.classList.add("active"), {passive:true});
+        el.addEventListener("mouseleave",()=>{
+          ring.classList.remove("active");
+          gsap.to(el,{x:0,y:0,duration:.65,ease:"elastic.out(1,.42)"});
+        }, {passive:true});
+        let elRect = null;
+        el.addEventListener("mouseenter", () => { elRect = el.getBoundingClientRect(); }, {passive:true});
+        el.addEventListener("mousemove",e=>{
+          const r = elRect || el.getBoundingClientRect();
+          const x=e.clientX-r.left-r.width/2;
+          const y=e.clientY-r.top-r.height/2;
+          gsap.to(el,{x:x*.12,y:y*.12,duration:.30,ease:"power3.out"});
+        }, {passive:true});
+      });
     }
-    cursorLoop();
-
-    document.querySelectorAll("a,button,.magnetic").forEach(el=>{
-      el.addEventListener("mouseenter",()=>ring.classList.add("active"));
-      el.addEventListener("mouseleave",()=>{
-        ring.classList.remove("active");
-        gsap.to(el,{x:0,y:0,duration:.65,ease:"elastic.out(1,.42)"});
-      });
-      el.addEventListener("mousemove",e=>{
-        const r=el.getBoundingClientRect();
-        const x=e.clientX-r.left-r.width/2;
-        const y=e.clientY-r.top-r.height/2;
-        gsap.to(el,{x:x*.12,y:y*.12,duration:.30,ease:"power3.out"});
-      });
-    });
 
     /* ============================================================
        PROJECT 01: TELEPORT GATE INTERACTIVE APPLICATION ENGINE (S-TIER)
@@ -5037,107 +5172,30 @@
       const portalApp = document.getElementById("portal-app");
       if (!portalApp) return;
 
-      // 4-Layer Viewport & Canvases
+      // 4-Layer Viewport & Canvases with 1.25 DPR Capping for 60+ FPS
       const viewport = document.getElementById("portal-viewport");
       const skyCanvas = document.getElementById("portal-sky-canvas");
-      const skyCtx = skyCanvas ? skyCanvas.getContext("2d") : null;
+      const skyCtx = skyCanvas ? skyCanvas.getContext("2d", { alpha: false }) : null;
       const worldCanvas = document.getElementById("portal-world-canvas");
       const worldCtx = worldCanvas ? worldCanvas.getContext("2d") : null;
       const foregroundCanvas = document.getElementById("portal-foreground-canvas");
       const fgCtx = foregroundCanvas ? foregroundCanvas.getContext("2d") : null;
-      
-      // Feature 4: Atmospheric Sakura Petals & Golden Stardust
       const petalsCanvas = document.getElementById("portal-petals-canvas");
       const petalsCtx = petalsCanvas ? petalsCanvas.getContext("2d") : null;
-      const portalAtmosphere = {
-        petals: Array.from({ length: 28 }, () => ({
-          x: Math.random() * 1000,
-          y: Math.random() * 700,
-          size: 4 + Math.random() * 6,
-          speedY: 0.6 + Math.random() * 0.9,
-          speedX: -0.3 + Math.random() * 0.6,
-          swayAmp: 1.2 + Math.random() * 1.8,
-          swayFreq: 0.015 + Math.random() * 0.02,
-          rotation: Math.random() * Math.PI * 2,
-          rotSpeed: 0.01 + Math.random() * 0.02,
-          alpha: 0.35 + Math.random() * 0.45
-        })),
-        stardust: Array.from({ length: 45 }, () => ({
-          x: Math.random() * 1000,
-          y: Math.random() * 700,
-          radius: 0.6 + Math.random() * 1.4,
-          speedY: -0.2 - Math.random() * 0.4,
-          speedX: -0.2 + Math.random() * 0.4,
-          pulseSpeed: 0.03 + Math.random() * 0.04,
-          phase: Math.random() * Math.PI * 2,
-          alpha: 0.25 + Math.random() * 0.55
-        }))
-      };
 
-      function renderPortalAtmosphere(w, h, tick) {
-        if (!petalsCtx || !petalsCanvas) return;
-        petalsCtx.clearRect(0, 0, w, h);
-
-        // Render Golden Stardust
-        portalAtmosphere.stardust.forEach(star => {
-          star.y += star.speedY;
-          star.x += star.speedX;
-          if (star.y < 0) star.y = h;
-          if (star.x < 0) star.x = w;
-          if (star.x > w) star.x = 0;
-          const a = star.alpha * (0.6 + 0.4 * Math.sin(tick * star.pulseSpeed + star.phase));
-          petalsCtx.save();
-          petalsCtx.fillStyle = `rgba(223, 183, 108, ${a.toFixed(3)})`;
-          petalsCtx.shadowColor = "rgba(223, 183, 108, 0.8)";
-          petalsCtx.shadowBlur = 6;
-          petalsCtx.beginPath();
-          petalsCtx.arc(star.x % w, star.y % h, star.radius, 0, Math.PI * 2);
-          petalsCtx.fill();
-          petalsCtx.restore();
-        });
-
-        // Render Sakura Petals with Organic Bezier Curve & Dynamic Sway
-        portalAtmosphere.petals.forEach(petal => {
-          petal.y += petal.speedY;
-          petal.x += petal.speedX + Math.sin(petal.y * petal.swayFreq + tick * 0.02) * petal.swayAmp;
-          petal.rotation += petal.rotSpeed;
-          if (petal.y > h + 20) { petal.y = -20; petal.x = Math.random() * w; }
-          if (petal.x < -20) petal.x = w + 20;
-          if (petal.x > w + 20) petal.x = -20;
-
-          petalsCtx.save();
-          petalsCtx.translate(petal.x, petal.y);
-          petalsCtx.rotate(petal.rotation);
-          petalsCtx.fillStyle = `rgba(255, 192, 203, ${petal.alpha.toFixed(3)})`;
-          petalsCtx.shadowColor = "rgba(255, 182, 193, 0.5)";
-          petalsCtx.shadowBlur = 4;
-          petalsCtx.beginPath();
-          petalsCtx.moveTo(0, -petal.size);
-          petalsCtx.bezierCurveTo(petal.size * 0.8, -petal.size * 0.6, petal.size * 0.8, petal.size * 0.6, 0, petal.size);
-          petalsCtx.bezierCurveTo(-petal.size * 0.8, petal.size * 0.6, -petal.size * 0.8, -petal.size * 0.6, 0, -petal.size);
-          petalsCtx.fill();
-          petalsCtx.restore();
-        });
-      }
-      
       const gateWrap = document.getElementById("portal-gate-wrap");
       const singularityCanvas = document.getElementById("portal-singularity-canvas");
       const singularityCtx = singularityCanvas ? singularityCanvas.getContext("2d") : null;
       const threadsCanvas = document.getElementById("portal-threads-canvas");
       const threadsCtx = threadsCanvas ? threadsCanvas.getContext("2d") : null;
-      
-      const runesSvg = document.getElementById("portal-runes-svg");
-      const runesGroup = document.getElementById("portal-runes-group");
-      const runeDisplacement = document.getElementById("runeDisplacement");
-      const runeTurbulence = document.getElementById("runeTurbulence");
-      
+
       const warpFx = document.getElementById("portal-warp-fx");
       const rippleFx = document.getElementById("portal-ripple-fx");
       const overlayLeft = document.getElementById("portal-overlay-left");
       const overlayRight = document.getElementById("portal-overlay-right");
       const portalCue = document.getElementById("portal-cue");
 
-      // Telemetry & UI
+      // Telemetry & UI Elements
       const statusPill = portalApp.querySelector(".portal-status");
       const kickerIndexEl = document.getElementById("portal-index-kicker");
       const placeTitleEl = document.getElementById("portal-place-title");
@@ -5156,6 +5214,52 @@
       const teleportBtn = document.getElementById("portal-teleport-trigger");
       const soundBtn = document.getElementById("portal-sound-toggle");
       const soundText = document.getElementById("portal-sound-text");
+
+      // Visibility Guard via IntersectionObserver: 0% CPU when offscreen
+      let isPortalVisible = true;
+      if (window.IntersectionObserver) {
+        const portalObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            isPortalVisible = entry.isIntersecting;
+            if (isPortalVisible) {
+              if (!portalRafId) portalRafId = requestAnimationFrame(animLoop);
+            } else if (portalRafId) {
+              cancelAnimationFrame(portalRafId);
+              portalRafId = null;
+            }
+          });
+        }, { threshold: 0.04 });
+        portalObserver.observe(portalApp);
+      }
+
+      // Dirty-check flags for static layers (eliminates 1MB photo decoding & redraw per frame)
+      let needsSkyRedraw = true;
+      let needsWorldRedraw = true;
+      let needsForegroundRedraw = true;
+
+      // Feature 4: Atmospheric Sakura Petals & Golden Stardust
+      const portalAtmosphere = {
+        petals: Array.from({ length: 24 }, () => ({
+          x: Math.random() * 800,
+          y: Math.random() * 500,
+          size: 4 + Math.random() * 5,
+          speedY: 0.6 + Math.random() * 0.8,
+          speedX: -0.2 + Math.random() * 0.5,
+          swayAmp: 1.2 + Math.random() * 1.5,
+          swayFreq: 0.015 + Math.random() * 0.02,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: 0.01 + Math.random() * 0.02,
+          alpha: 0.35 + Math.random() * 0.45
+        })),
+        stardust: Array.from({ length: 36 }, () => ({
+          x: Math.random() * 800,
+          y: Math.random() * 500,
+          radius: 0.7 + Math.random() * 1.2,
+          speedY: -0.2 - Math.random() * 0.35,
+          speedX: -0.15 + Math.random() * 0.3,
+          alpha: 0.25 + Math.random() * 0.5
+        }))
+      };
 
       // ----------------------------------------------------
       // S-Tier Web Audio API Procedural Sound Synthesizer
@@ -5189,8 +5293,8 @@
         }
       }
 
-      // Unlock AudioContext on any initial user gesture
-      ["click", "pointerdown", "touchstart", "mousemove", "keydown"].forEach(evt => {
+      // Unlock AudioContext on initial gesture
+      ["click", "pointerdown", "touchstart", "keydown"].forEach(evt => {
         window.addEventListener(evt, () => {
           initAudioContext();
         }, { once: true, passive: true });
@@ -5207,10 +5311,10 @@
             gateHumGain = audioCtx.createGain();
 
             gateHumOsc1.type = "sine";
-            gateHumOsc1.frequency.setValueAtTime(55, now); // 55Hz sub A1
+            gateHumOsc1.frequency.setValueAtTime(55, now);
 
             gateHumOsc2.type = "triangle";
-            gateHumOsc2.frequency.setValueAtTime(110, now); // 110Hz harmonic A2
+            gateHumOsc2.frequency.setValueAtTime(110, now);
 
             gateHumFilter.type = "lowpass";
             gateHumFilter.frequency.setValueAtTime(140, now);
@@ -5278,8 +5382,6 @@
         if (!audioCtx) return;
         try {
           const now = audioCtx.currentTime;
-
-          // 1. Sub Implosion (Gravity Collapse)
           const subOsc = audioCtx.createOscillator();
           const subGain = audioCtx.createGain();
           subOsc.type = "sine";
@@ -5293,32 +5395,6 @@
           subOsc.start(now);
           subOsc.stop(now + 1.0);
 
-          // 2. Quantum Resonant Warp Sweep with FM Modulation
-          const warpOsc = audioCtx.createOscillator();
-          const warpFilter = audioCtx.createBiquadFilter();
-          const warpGain = audioCtx.createGain();
-          warpOsc.type = "sawtooth";
-          warpOsc.frequency.setValueAtTime(180, now);
-          warpOsc.frequency.exponentialRampToValueAtTime(1350, now + 0.26);
-          warpOsc.frequency.exponentialRampToValueAtTime(280, now + 0.78);
-
-          warpFilter.type = "bandpass";
-          warpFilter.frequency.setValueAtTime(380, now);
-          warpFilter.frequency.exponentialRampToValueAtTime(3200, now + 0.28);
-          warpFilter.frequency.exponentialRampToValueAtTime(450, now + 0.85);
-          warpFilter.Q.setValueAtTime(6.0, now);
-
-          warpGain.gain.setValueAtTime(0.001, now);
-          warpGain.gain.linearRampToValueAtTime(0.18, now + 0.15);
-          warpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
-
-          warpOsc.connect(warpFilter);
-          warpFilter.connect(warpGain);
-          warpGain.connect(audioCtx.destination);
-          warpOsc.start(now);
-          warpOsc.stop(now + 0.88);
-
-          // 3. Shimmering Celestial Pentatonic Chord (E5, G#5, B5, D#6, E6)
           const chord = [659.25, 830.61, 987.77, 1244.51, 1318.51];
           chord.forEach((freq, idx) => {
             const chimeOsc = audioCtx.createOscillator();
@@ -5336,14 +5412,9 @@
         } catch (_) {}
       }
 
-      // ----------------------------------------------------
-      // Delicate Crystal Bell / Metallic Wind Chime Synthesizer
-      // ("mayin qo'ng'iroq ovozi" - Shimmering overtones & pentatonic decay)
-      // ----------------------------------------------------
       const CHIME_PENTATONIC = [
         587.33, 659.25, 783.99, 880.00, 1046.50,
-        1174.66, 1318.51, 1567.98, 1760.00, 2093.00, 2349.32,
-        2637.02, 3135.96
+        1174.66, 1318.51, 1567.98, 1760.00, 2093.00, 2349.32
       ];
 
       function playThreadChime(stringIndex, strength = 0.5, delaySec = 0) {
@@ -5356,7 +5427,6 @@
           const vol = Math.max(0.016, Math.min(0.07, 0.022 + strength * 0.038));
           const dest = chimeMasterGain || audioCtx.destination;
 
-          // 1. Fundamental Pure Crystal Tone
           const osc1 = audioCtx.createOscillator();
           const gain1 = audioCtx.createGain();
           osc1.type = "sine";
@@ -5369,7 +5439,6 @@
           osc1.start(now);
           osc1.stop(now + 0.98);
 
-          // 2. Metallic Tubular Bell Harmonic Overtone (f * 2.756)
           const osc2 = audioCtx.createOscillator();
           const gain2 = audioCtx.createGain();
           osc2.type = "sine";
@@ -5381,19 +5450,6 @@
           gain2.connect(dest);
           osc2.start(now);
           osc2.stop(now + 0.52);
-
-          // 3. Shimmering High Crystal Sparkle (f * 4.07)
-          const osc3 = audioCtx.createOscillator();
-          const gain3 = audioCtx.createGain();
-          osc3.type = "sine";
-          osc3.frequency.setValueAtTime(freq * 4.07, now);
-          gain3.gain.setValueAtTime(0.0001, now);
-          gain3.gain.linearRampToValueAtTime(vol * 0.12, now + 0.002);
-          gain3.gain.exponentialRampToValueAtTime(0.0001, now + 0.30);
-          osc3.connect(gain3);
-          gain3.connect(dest);
-          osc3.start(now);
-          osc3.stop(now + 0.34);
         } catch (_) {}
       }
 
@@ -5410,8 +5466,7 @@
       }
 
       // ----------------------------------------------------
-      // 6 Authentic S-Tier Photographic Destinations Definition
-      // With real ultra-high-res landscape photography for ALL 6 destinations
+      // 6 Authentic S-Tier Photographic Destinations
       // ----------------------------------------------------
       const destinations = [
         {
@@ -5424,19 +5479,10 @@
           temporal: "DIVINE HARMONY",
           bgGradient: ["#140718", "#2f112e", "#6b2346", "#ca485c", "#f9b282"],
           horizonY: 0.60,
-          glowColor: "rgba(255, 140, 160, 0.55)",
-          singularityColors: ["#fff0f5", "#ff7da7", "rgba(255, 105, 150, 0.8)"],
-          cosmicColors: {
-            nebulaPrimary: "rgba(255, 120, 160, 0.35)",
-            nebulaSecondary: "rgba(210, 80, 140, 0.3)",
-            cosmicCyan: "rgba(255, 215, 230, 0.6)",
-            rayColor: "rgba(255, 160, 180, 0.4)"
-          },
           particleType: "sakura",
-          particleCount: 75,
+          particleCount: 50,
           particleColor: "rgba(255, 192, 203, 0.85)",
-          imageSrc: "world_mount_fuji.jpg",
-          useImage: true
+          imageSrc: "world_mount_fuji.jpg"
         },
         {
           kicker: "02 OF 06",
@@ -5448,19 +5494,10 @@
           temporal: "STABLE CONVERGENCE",
           bgGradient: ["#0e0b1c", "#2b1b38", "#613354", "#b25870", "#f1be98"],
           horizonY: 0.62,
-          glowColor: "rgba(220, 130, 160, 0.50)",
-          singularityColors: ["#ffeef8", "#df75cc", "rgba(255, 130, 180, 0.9)"],
-          cosmicColors: {
-            nebulaPrimary: "rgba(240, 90, 180, 0.62)",
-            nebulaSecondary: "rgba(130, 50, 210, 0.55)",
-            cosmicCyan: "rgba(255, 190, 140, 0.85)",
-            rayColor: "rgba(245, 130, 195, 0.8)"
-          },
           particleType: "balloons",
-          particleCount: 50,
+          particleCount: 8,
           particleColor: "rgba(255, 215, 185, 0.75)",
-          imageSrc: "world_cappadocia.jpg",
-          useImage: true
+          imageSrc: "world_cappadocia.jpg"
         },
         {
           kicker: "03 OF 06",
@@ -5472,19 +5509,10 @@
           temporal: "HARMONIC FLOW",
           bgGradient: ["#030906", "#0b2219", "#174431", "#2e6f50", "#76b991"],
           horizonY: 0.66,
-          glowColor: "rgba(95, 205, 145, 0.50)",
-          singularityColors: ["#e0fff0", "#38e096", "rgba(40, 230, 150, 0.9)"],
-          cosmicColors: {
-            nebulaPrimary: "rgba(40, 230, 160, 0.62)",
-            nebulaSecondary: "rgba(20, 140, 210, 0.55)",
-            cosmicCyan: "rgba(180, 255, 220, 0.85)",
-            rayColor: "rgba(60, 240, 180, 0.75)"
-          },
           particleType: "fireflies",
-          particleCount: 70,
+          particleCount: 36,
           particleColor: "rgba(170, 255, 180, 0.90)",
-          imageSrc: "world_kyoto.jpg",
-          useImage: true
+          imageSrc: "world_kyoto.jpg"
         },
         {
           kicker: "04 OF 06",
@@ -5496,19 +5524,10 @@
           temporal: "CRYSTALLINE APEX",
           bgGradient: ["#010309", "#061426", "#0f2c49", "#185073", "#459fc2"],
           horizonY: 0.58,
-          glowColor: "rgba(75, 185, 245, 0.55)",
-          singularityColors: ["#e6f7ff", "#3bb7ff", "rgba(50, 170, 255, 0.9)"],
-          cosmicColors: {
-            nebulaPrimary: "rgba(20, 180, 255, 0.65)",
-            nebulaSecondary: "rgba(110, 60, 255, 0.6)",
-            cosmicCyan: "rgba(220, 250, 255, 0.9)",
-            rayColor: "rgba(50, 210, 255, 0.8)"
-          },
           particleType: "stars",
-          particleCount: 95,
+          particleCount: 50,
           particleColor: "rgba(215, 245, 255, 0.95)",
-          imageSrc: "world_salar_de_uyuni.jpg",
-          useImage: true
+          imageSrc: "world_salar_de_uyuni.jpg"
         },
         {
           kicker: "05 OF 06",
@@ -5520,19 +5539,10 @@
           temporal: "ANCIENT RESONANCE",
           bgGradient: ["#080405", "#200e13", "#4e1d23", "#8f3e36", "#de865f"],
           horizonY: 0.65,
-          glowColor: "rgba(235, 145, 85, 0.50)",
-          singularityColors: ["#fff0e6", "#ff733b", "rgba(255, 80, 40, 0.9)"],
-          cosmicColors: {
-            nebulaPrimary: "rgba(255, 80, 50, 0.65)",
-            nebulaSecondary: "rgba(180, 20, 60, 0.55)",
-            cosmicCyan: "rgba(255, 200, 120, 0.85)",
-            rayColor: "rgba(255, 110, 50, 0.8)"
-          },
           particleType: "embers",
-          particleCount: 60,
+          particleCount: 30,
           particleColor: "rgba(255, 185, 95, 0.85)",
-          imageSrc: "world_petra.jpg",
-          useImage: true
+          imageSrc: "world_petra.jpg"
         },
         {
           kicker: "06 OF 06",
@@ -5544,26 +5554,18 @@
           temporal: "AURORAL PEAK",
           bgGradient: ["#020308", "#0a1322", "#162b46", "#2c5472", "#7cb4d5"],
           horizonY: 0.60,
-          glowColor: "rgba(130, 205, 255, 0.55)",
-          singularityColors: ["#f0fbff", "#7de5ff", "rgba(100, 230, 255, 0.9)"],
-          cosmicColors: {
-            nebulaPrimary: "rgba(60, 220, 255, 0.65)",
-            nebulaSecondary: "rgba(160, 70, 255, 0.55)",
-            cosmicCyan: "rgba(240, 250, 255, 0.95)",
-            rayColor: "rgba(120, 230, 255, 0.8)"
-          },
           particleType: "snow",
-          particleCount: 85,
+          particleCount: 55,
           particleColor: "rgba(240, 248, 255, 0.90)",
-          imageSrc: "world_matterhorn.jpg",
-          useImage: true
+          imageSrc: "world_matterhorn.jpg"
         }
       ];
 
-      // Preload All 6 Authentic Photographic Destination Images
+      // Preload images
       const destinationImages = destinations.map(d => {
         const img = new Image();
         img.src = d.imageSrc;
+        img.onload = () => { needsWorldRedraw = true; };
         return img;
       });
 
@@ -5573,38 +5575,37 @@
       let balloons = [];
       let fireflies = [];
       let meteors = [];
-      let foregroundParticles = [];
 
-      // ----------------------------------------------------
-      // Multi-Layer 3D Perspective & Physics Parallax State
-      // ----------------------------------------------------
       const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
       let isGateHovered = false;
       let vortexSpeedMultiplier = 1.0;
       let targetVortexSpeed = 1.0;
 
-      // Runes Ring Programmatic Orbit & Dynamic Ripple State
-      let runeRotation = 0;
-      let runeSpeed = 0.28;
-      let targetRuneSpeed = 0.28;
-      let runeDisplacementScale = 0;
-      let targetDisplacementScale = 0;
-
+      // Pointer event listeners
       if (viewport) {
+        let cachedVpRect = null;
+        let cachedThreadsRect = null;
+        function refreshP1Rects() {
+          if (viewport) cachedVpRect = viewport.getBoundingClientRect();
+          if (threadsCanvas) cachedThreadsRect = threadsCanvas.getBoundingClientRect();
+        }
+        window.addEventListener("resize", refreshP1Rects, { passive: true });
+        window.addEventListener("scroll", refreshP1Rects, { passive: true });
+        viewport.addEventListener("mouseenter", refreshP1Rects, { passive: true });
+
         viewport.addEventListener("mousemove", (e) => {
-          const rect = viewport.getBoundingClientRect();
-          const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 to 1
-          const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1; // -1 to 1
+          const rect = cachedVpRect || viewport.getBoundingClientRect();
+          const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
           mouse.targetX = Math.max(-1, Math.min(1, nx));
           mouse.targetY = Math.max(-1, Math.min(1, ny));
 
-          // Track cursor for hanging golden threads inside gate arch
           if (threadsCanvas) {
-            const tRect = threadsCanvas.getBoundingClientRect();
+            const tRect = cachedThreadsRect || threadsCanvas.getBoundingClientRect();
             if (e.clientX >= tRect.left - 20 && e.clientX <= tRect.right + 20 &&
                 e.clientY >= tRect.top - 20 && e.clientY <= tRect.bottom + 20) {
-              threadMouse.x = (e.clientX - tRect.left) * (threadsCanvas.width / tRect.width);
-              threadMouse.y = (e.clientY - tRect.top) * (threadsCanvas.height / tRect.height);
+              threadMouse.x = (e.clientX - tRect.left) * (threadsCanvas.width / (tRect.width || 1));
+              threadMouse.y = (e.clientY - tRect.top) * (threadsCanvas.height / (tRect.height || 1));
               threadMouse.active = true;
             } else if (!isGateHovered) {
               threadMouse.active = false;
@@ -5613,7 +5614,6 @@
             }
           }
 
-          // Proximity to gate center (0, 0)
           const dist = Math.sqrt(mouse.targetX * mouse.targetX + mouse.targetY * mouse.targetY);
           const prox = Math.max(0, 1 - dist / 1.15);
           updateGateHumProximity(prox);
@@ -5625,7 +5625,6 @@
           if (isGateHovered) {
             isGateHovered = false;
             targetVortexSpeed = 1.0;
-            targetRuneSpeed = 0.28;
           }
           threadMouse.active = false;
           threadMouse.lastX = -9999;
@@ -5633,7 +5632,6 @@
           stopGateHum();
         });
 
-        // Touch support for tablets & mobile
         viewport.addEventListener("touchmove", (e) => {
           if (e.touches && e.touches[0]) {
             const rect = viewport.getBoundingClientRect();
@@ -5669,51 +5667,20 @@
         gateWrap.addEventListener("mouseenter", () => {
           isGateHovered = true;
           targetVortexSpeed = 2.4;
-          targetRuneSpeed = 1.6;
-          targetDisplacementScale = 6.0; // Trigger liquid ripple on runes
-        });
-
-        gateWrap.addEventListener("mousemove", (e) => {
-          if (threadsCanvas) {
-            const tRect = threadsCanvas.getBoundingClientRect();
-            threadMouse.x = (e.clientX - tRect.left) * (threadsCanvas.width / tRect.width);
-            threadMouse.y = (e.clientY - tRect.top) * (threadsCanvas.height / tRect.height);
-            threadMouse.active = true;
-          }
         });
 
         gateWrap.addEventListener("mouseleave", () => {
           isGateHovered = false;
           targetVortexSpeed = 1.0;
-          targetRuneSpeed = 0.28;
-          threadMouse.active = false;
-          threadMouse.lastX = -9999;
-          threadMouse.lastY = -9999;
-        });
-
-        gateWrap.addEventListener("touchmove", (e) => {
-          if (threadsCanvas && e.touches && e.touches[0]) {
-            const tRect = threadsCanvas.getBoundingClientRect();
-            const tx = e.touches[0].clientX;
-            const ty = e.touches[0].clientY;
-            threadMouse.x = (tx - tRect.left) * (threadsCanvas.width / tRect.width);
-            threadMouse.y = (ty - tRect.top) * (threadsCanvas.height / tRect.height);
-            threadMouse.active = true;
-          }
-        }, { passive: true });
-
-        gateWrap.addEventListener("touchend", () => {
           threadMouse.active = false;
           threadMouse.lastX = -9999;
           threadMouse.lastY = -9999;
         });
       }
 
-      // ----------------------------------------------------
-      // Singularity Particles (Relativistic Accretion Infall)
-      // ----------------------------------------------------
+      // Singularity Particles (Reduced count for 60+ FPS efficiency)
       const singularityParticles = [];
-      const SINGULARITY_PARTICLE_COUNT = 140;
+      const SINGULARITY_PARTICLE_COUNT = 60;
 
       function initSingularityParticles(w, h) {
         singularityParticles.length = 0;
@@ -5723,45 +5690,15 @@
             r: Math.random() * maxRadius * 0.95 + maxRadius * 0.05,
             theta: Math.random() * Math.PI * 2,
             speed: (Math.random() * 0.035 + 0.015),
-            inwardSpeed: (Math.random() * 0.45 + 0.25),
-            size: Math.random() * 1.8 + 0.6,
-            alpha: Math.random() * 0.75 + 0.25,
-            hueShift: Math.random() * 0.2 - 0.1
+            size: Math.random() * 1.6 + 0.6,
+            alpha: Math.random() * 0.75 + 0.25
           });
         }
       }
 
-      // ----------------------------------------------------
-      // Celestial Cosmic Stars Definition
-      // ----------------------------------------------------
-      const COSMIC_STARS_COUNT = 110;
-      const cosmicStars = [];
-
-      function initCosmicStars(w, h) {
-        cosmicStars.length = 0;
-        const maxR = Math.min(w, h) * 0.50;
-        for (let i = 0; i < COSMIC_STARS_COUNT; i++) {
-          const r = Math.pow(Math.random(), 0.65) * maxR;
-          const theta = Math.random() * Math.PI * 2;
-          cosmicStars.push({
-            r,
-            theta,
-            orbitSpeed: (Math.random() * 0.006 + 0.002) * (Math.random() > 0.5 ? 1 : -1),
-            size: Math.random() * 1.6 + 0.5,
-            twinkleSpeed: Math.random() * 0.05 + 0.02,
-            phase: Math.random() * Math.PI * 2,
-            hasDiamondSpike: i < 14,
-            color: i % 4 === 0 ? "#00f0ff" : i % 4 === 1 ? "#ff55d4" : i % 4 === 2 ? "#ffd700" : "#ffffff"
-          });
-        }
-      }
-
-      // ----------------------------------------------------
-      // Golden Telemetry Threads (Fluid Hair/Silk Cloth Dynamics)
-      // Floating in gate archway with upcoming destination data
-      // ----------------------------------------------------
+      // Golden Telemetry Threads
       const NUM_THREADS = 13;
-      const NODES_PER_THREAD = 24;
+      const NODES_PER_THREAD = 18; // Optimized from 24 to 18 nodes for lightweight physics
       let hangingThreads = [];
       const threadMouse = {
         x: -9999,
@@ -5777,12 +5714,10 @@
       function initHangingThreads(w, h) {
         hangingThreads = [];
         for (let i = 0; i < NUM_THREADS; i++) {
-          // Distributed evenly across Torii gate aperture (between inner vermilion pillars: 0.360 to 0.640)
           const normX = 0.360 + (i / (NUM_THREADS - 1)) * 0.280;
           const anchorX = w * normX;
-          // Anchored directly underneath horizontal vermilion lintel beam (normY = 0.396)
           const topY = h * 0.396;
-          const totalLength = h * 0.470; // Suspended gracefully above stone pedestals
+          const totalLength = h * 0.470;
           const segmentLength = totalLength / (NODES_PER_THREAD - 1);
 
           const nodes = [];
@@ -5849,14 +5784,12 @@
           let minTAlongSwipe = 1.0;
           let maxDisplacementForce = 0;
 
-          // 1. Natural ambient harmonic air sway
           th.nodes.forEach((node, j) => {
             if (node.pinned) return;
             const sway = Math.sin(tick * 0.022 + i * 0.9 + j * 0.22) * (0.12 + (j / th.nodes.length) * 0.28);
             node.vx += sway;
           });
 
-          // 2. Continuous swept-segment interaction ("huddi sochni qo'l bilan harakatlantirgandek")
           if (threadMouse.active && (cursorSpeed > 0.4 || hasPrevMouse)) {
             const segLenSq = moveDx * moveDx + moveDy * moveDy;
             const brushRadius = Math.max(38, 28 * (window.devicePixelRatio || 1));
@@ -5864,7 +5797,6 @@
             th.nodes.forEach((node, j) => {
               if (node.pinned) return;
 
-              // Find closest point on cursor movement segment [prev -> cur]
               let t = 0;
               if (segLenSq > 0.001) {
                 t = ((node.x - prevX) * moveDx + (node.y - prevY) * moveDy) / segLenSq;
@@ -5879,10 +5811,8 @@
               if (dist < brushRadius) {
                 const brushFactor = Math.pow(1 - dist / brushRadius, 1.3);
                 const nx = dist > 0.1 ? (dx / dist) : (moveDx >= 0 ? 1 : -1);
-                
-                // Silky lateral displacement with forward hand drag and vertical ripple
-                const pushForce = Math.min(18, (nx * 3.8 + threadMouse.vx * 0.55) * brushFactor);
-                const pushY = (threadMouse.vy * 0.28 + 0.6) * brushFactor;
+                const pushForce = Math.min(16, (nx * 3.6 + threadMouse.vx * 0.5) * brushFactor);
+                const pushY = (threadMouse.vy * 0.25 + 0.5) * brushFactor;
 
                 node.vx += pushForce;
                 node.vy += pushY;
@@ -5894,51 +5824,45 @@
             });
           }
 
-          // 3. Dual-pass Verlet constraint relaxation for inextensible silk/hair bend
-          for (let iter = 0; iter < 2; iter++) {
-            for (let j = 1; j < th.nodes.length; j++) {
-              const prev = th.nodes[j - 1];
-              const curr = th.nodes[j];
-              const dx = curr.x - prev.x;
-              const dy = curr.y - prev.y;
-              const dist = Math.hypot(dx, dy);
-              if (dist > 0.001) {
-                const diff = (dist - th.segmentLength) / dist;
-                const weight = prev.pinned ? 0.9 : 0.45;
-                if (!prev.pinned) {
-                  prev.x += dx * diff * 0.4;
-                  prev.y += dy * diff * 0.4;
-                }
-                curr.x -= dx * diff * weight;
-                curr.y -= dy * diff * weight;
+          // Single-pass Verlet constraint relaxation for inextensible silk/hair bend
+          for (let j = 1; j < th.nodes.length; j++) {
+            const prev = th.nodes[j - 1];
+            const curr = th.nodes[j];
+            const dx = curr.x - prev.x;
+            const dy = curr.y - prev.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist > 0.001) {
+              const diff = (dist - th.segmentLength) / dist;
+              const weight = prev.pinned ? 0.9 : 0.45;
+              if (!prev.pinned) {
+                prev.x += dx * diff * 0.4;
+                prev.y += dy * diff * 0.4;
               }
+              curr.x -= dx * diff * weight;
+              curr.y -= dy * diff * weight;
             }
           }
 
-          // 4. Spring restoration to resting catenary spine & viscous air drag
           th.nodes.forEach((node, j) => {
             if (node.pinned) return;
             const springK = 0.038 - (j / th.nodes.length) * 0.014;
             node.vx += (node.restX - node.x) * springK;
             node.vy += (node.restY - node.y) * (springK * 1.5);
 
-            // Damping
             node.vx *= 0.92;
             node.vy *= 0.88;
 
-            // Velocity clamp
-            node.vx = Math.max(-16, Math.min(16, node.vx));
-            node.vy = Math.max(-12, Math.min(12, node.vy));
+            node.vx = Math.max(-15, Math.min(15, node.vx));
+            node.vy = Math.max(-10, Math.min(10, node.vy));
 
             node.x += node.vx;
             node.y += node.vy;
           });
 
-          // 5. Delicate resonant crystal bell chime trigger with arpeggio glissando
           if (threadDisplacedThisFrame && (cursorSpeed > 0.6 || maxDisplacementForce > 1.2)) {
             if (nowMs - threadChimeCooldown[i] > 110) {
               threadChimeCooldown[i] = nowMs;
-              const delaySec = minTAlongSwipe * 0.055; // Natural glissando arpeggio stagger
+              const delaySec = minTAlongSwipe * 0.055;
               const strength = Math.min(1.0, (cursorSpeed + maxDisplacementForce) / 8);
               playThreadChime(i, strength, delaySec);
             }
@@ -5955,11 +5879,11 @@
         if (!threadsCtx || !threadsCanvas) return;
         const w = threadsCanvas.width;
         const h = threadsCanvas.height;
-        const dpr = window.devicePixelRatio || 1;
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
         threadsCtx.clearRect(0, 0, w, h);
 
         const fontSize = Math.max(5.0, Math.min(6.8, Math.round(5.4 * dpr)));
-        threadsCtx.font = `400 ${fontSize}px 'Cinzel', 'Cinzel Decorative', 'DM Sans', monospace`;
+        threadsCtx.font = `400 ${fontSize}px 'DM Sans', sans-serif, monospace`;
         threadsCtx.textAlign = "center";
         threadsCtx.textBaseline = "middle";
 
@@ -5968,7 +5892,7 @@
           const isGlowing = th.displacedIntensity > 0.12;
           const glowAlpha = Math.min(1.0, 0.35 + th.displacedIntensity * 0.65);
 
-          // 1. Draw subtle golden silk filament line (mayin va nozik)
+          // Subtle golden silk filament line
           threadsCtx.beginPath();
           th.nodes.forEach((node, j) => {
             if (j === 0) threadsCtx.moveTo(node.x, node.y);
@@ -5983,8 +5907,13 @@
             ? `rgba(255, 245, 215, ${glowAlpha})`
             : "rgba(223, 195, 130, 0.22)";
           threadsCtx.lineWidth = (isGlowing ? 0.85 : 0.45) * dpr;
-          threadsCtx.shadowColor = isGlowing ? "rgba(255, 230, 150, 0.85)" : "transparent";
-          threadsCtx.shadowBlur = isGlowing ? 5 * dpr : 0;
+          if (isGlowing) {
+            threadsCtx.shadowColor = "rgba(255, 230, 150, 0.85)";
+            threadsCtx.shadowBlur = 4 * dpr;
+          } else {
+            threadsCtx.shadowColor = "transparent";
+            threadsCtx.shadowBlur = 0;
+          }
           threadsCtx.stroke();
           threadsCtx.shadowBlur = 0;
 
@@ -5997,14 +5926,14 @@
           threadsCtx.arc(btmNode.x, btmNode.y, 1.1 * dpr, 0, Math.PI * 2);
           threadsCtx.fill();
 
-          // 2. Draw tiny luxury golden letters & glyphs along the hanging thread
+          // Zero-shadowBlur letter glyph rendering (ultra-lightweight CPU path)
+          threadsCtx.fillStyle = isGlowing ? "#fffce8" : "rgba(230, 205, 155, 0.78)";
           th.nodes.forEach((node, j) => {
             if (node.pinned) return;
             const charIdx = j - 1;
             const char = charIdx < text.length ? text[charIdx] : "·";
 
             if (!char || char === " " || char === "·") {
-              threadsCtx.fillStyle = isGlowing ? "#fff3d1" : "rgba(223, 183, 108, 0.65)";
               threadsCtx.beginPath();
               threadsCtx.arc(node.x, node.y, (isGlowing ? 0.95 : 0.6) * dpr, 0, Math.PI * 2);
               threadsCtx.fill();
@@ -6014,27 +5943,18 @@
             threadsCtx.save();
             threadsCtx.translate(node.x, node.y);
 
-            // Rotate along thread tangent slope
             if (j > 0 && j < th.nodes.length - 1) {
               const dx = th.nodes[j + 1].x - th.nodes[j - 1].x;
               const dy = th.nodes[j + 1].y - th.nodes[j - 1].y;
-              const angle = Math.atan2(dx, dy);
-              threadsCtx.rotate(-angle);
+              threadsCtx.rotate(-Math.atan2(dx, dy));
             }
 
-            threadsCtx.shadowColor = isGlowing ? "rgba(255, 235, 170, 0.9)" : "rgba(223, 183, 108, 0.25)";
-            threadsCtx.shadowBlur = (isGlowing ? 4 : 1.5) * dpr * 0.5;
-            threadsCtx.fillStyle = isGlowing ? "#fffce8" : "rgba(230, 205, 155, 0.78)";
             threadsCtx.fillText(char, 0, 0);
-
             threadsCtx.restore();
           });
         });
       }
 
-      // ----------------------------------------------------
-      // Dynamic Destination Particles
-      // ----------------------------------------------------
       function initWorldParticles() {
         if (!worldCanvas) return;
         particles = [];
@@ -6046,26 +5966,12 @@
           particles.push({
             x: Math.random() * w,
             y: Math.random() * h,
-            vx: (d.particleType === "sakura" ? (0.45 + Math.random() * 0.55) :
-                 d.particleType === "snow" ? ((Math.random() - 0.5) * 0.9) :
-                 (Math.random() - 0.5) * 0.6),
-            vy: (d.particleType === "sakura" ? (0.65 + Math.random() * 0.65) :
-                 d.particleType === "snow" ? (0.8 + Math.random() * 1.3) :
-                 d.particleType === "fireflies" ? ((Math.random() - 0.5) * 0.5) :
-                 d.particleType === "balloons" ? (-0.25 - Math.random() * 0.35) :
-                 (-0.2 - Math.random() * 0.3)),
-            radius: d.particleType === "sakura" ? (Math.random() * 2.8 + 1.8) : (Math.random() * 2.2 + 0.8),
-            rot: Math.random() * Math.PI * 2,
-            vRot: (Math.random() - 0.5) * 0.035,
-            radius: Math.random() * 2.2 + 0.8,
-            alpha: Math.random() * 0.7 + 0.25,
-            pulseSpeed: Math.random() * 0.04 + 0.015,
-            pulsePhase: Math.random() * Math.PI * 2,
-            depth: Math.random() * 0.7 + 0.3
+            vx: (d.particleType === "snow" ? ((Math.random() - 0.5) * 0.8) : (Math.random() - 0.5) * 0.5),
+            vy: (d.particleType === "snow" ? (0.7 + Math.random() * 1.1) : (0.5 + Math.random() * 0.6)),
+            radius: Math.random() * 2.0 + 0.8
           });
         }
 
-        // Procedural Hot Air Balloons for Cappadocia
         balloons = [];
         if (d.particleType === "balloons") {
           const palette = [
@@ -6074,112 +5980,98 @@
             ["#4fc3e8", "#1c2445"],
             ["#a3e84f", "#1c3d25"],
             ["#e84f88", "#38182d"],
-            ["#e8c84f", "#442118"],
-            ["#e66a38", "#223b52"],
-            ["#9c5fe8", "#2c1c38"]
+            ["#e8c84f", "#442118"]
           ];
-          for (let b = 0; b < 8; b++) {
+          for (let b = 0; b < 6; b++) {
             balloons.push({
-              x: (w * 0.08) + (b / 7) * (w * 0.84) + (Math.random() - 0.5) * (w * 0.08),
-              baseY: (h * 0.24) + (b % 4) * (h * 0.11) + (Math.random() - 0.5) * (h * 0.06),
-              size: 15 + (b % 4) * 5.5,
+              x: (w * 0.1) + (b / 5) * (w * 0.8) + (Math.random() - 0.5) * (w * 0.08),
+              baseY: (h * 0.25) + (b % 3) * (h * 0.12),
+              size: 14 + (b % 3) * 5,
               bobPhase: Math.random() * Math.PI * 2,
               bobSpeed: 0.014 + Math.random() * 0.01,
-              driftSpeed: (Math.random() - 0.5) * 0.16,
-              colors: palette[b % palette.length],
-              hasFlame: Math.random() > 0.25
+              driftSpeed: (Math.random() - 0.5) * 0.14,
+              colors: palette[b % palette.length]
             });
           }
         }
 
-        // Bioluminescent Fireflies for Kyoto
         fireflies = [];
         if (d.particleType === "fireflies") {
-          for (let f = 0; f < 45; f++) {
+          for (let f = 0; f < 32; f++) {
             fireflies.push({
               x: Math.random() * w,
-              y: (h * 0.32) + Math.random() * (h * 0.58),
-              vx: (Math.random() - 0.5) * 0.65,
-              vy: (Math.random() - 0.5) * 0.45,
+              y: (h * 0.32) + Math.random() * (h * 0.55),
+              vx: (Math.random() - 0.5) * 0.5,
+              vy: (Math.random() - 0.5) * 0.35,
               glowPhase: Math.random() * Math.PI * 2,
-              glowSpeed: 0.03 + Math.random() * 0.045,
-              radius: Math.random() * 2.4 + 1.2
+              glowSpeed: 0.03 + Math.random() * 0.04,
+              radius: Math.random() * 2.2 + 1.1
             });
           }
-        }
-
-        // Foreground Atmospheric Dust Motes
-        foregroundParticles = [];
-        for (let fp = 0; fp < 30; fp++) {
-          foregroundParticles.push({
-            x: Math.random() * w,
-            y: (h * 0.72) + Math.random() * (h * 0.28),
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: -0.15 - Math.random() * 0.35,
-            radius: Math.random() * 1.8 + 0.6,
-            alpha: Math.random() * 0.6 + 0.2
-          });
         }
 
         meteors = [];
       }
 
-      // ----------------------------------------------------
-      // Canvas Resizing with High-DPR Support (4 Canvases)
-      // ----------------------------------------------------
+      // Responsive Canvas Resizing with Capped 1.25 DPR
       function resizeAllCanvases() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
 
         if (skyCanvas) {
           const rect = skyCanvas.getBoundingClientRect();
-          skyCanvas.width = Math.max(rect.width * dpr, 400);
-          skyCanvas.height = Math.max(rect.height * dpr, 300);
+          skyCanvas.width = Math.max(Math.round(rect.width * dpr), 360);
+          skyCanvas.height = Math.max(Math.round(rect.height * dpr), 260);
         }
 
         if (worldCanvas) {
           const rect = worldCanvas.getBoundingClientRect();
-          worldCanvas.width = Math.max(rect.width * dpr, 400);
-          worldCanvas.height = Math.max(rect.height * dpr, 300);
+          worldCanvas.width = Math.max(Math.round(rect.width * dpr), 360);
+          worldCanvas.height = Math.max(Math.round(rect.height * dpr), 260);
         }
 
         if (foregroundCanvas) {
           const rect = foregroundCanvas.getBoundingClientRect();
-          foregroundCanvas.width = Math.max(rect.width * dpr, 400);
-          foregroundCanvas.height = Math.max(rect.height * dpr, 300);
+          foregroundCanvas.width = Math.max(Math.round(rect.width * dpr), 360);
+          foregroundCanvas.height = Math.max(Math.round(rect.height * dpr), 260);
         }
+
         if (petalsCanvas) {
           const rect = petalsCanvas.getBoundingClientRect();
-          petalsCanvas.width = Math.max(rect.width * dpr, 400);
-          petalsCanvas.height = Math.max(rect.height * dpr, 300);
+          petalsCanvas.width = Math.max(Math.round(rect.width * dpr), 360);
+          petalsCanvas.height = Math.max(Math.round(rect.height * dpr), 260);
         }
 
         if (singularityCanvas) {
           const rect = singularityCanvas.getBoundingClientRect();
-          const sw = Math.max(rect.width * dpr, 240);
-          const sh = Math.max(rect.height * dpr, 280);
+          const sw = Math.max(Math.round(rect.width * dpr), 200);
+          const sh = Math.max(Math.round(rect.height * dpr), 240);
           singularityCanvas.width = sw;
           singularityCanvas.height = sh;
           initSingularityParticles(sw, sh);
-          initCosmicStars(sw, sh);
         }
 
         if (threadsCanvas) {
           const rect = threadsCanvas.getBoundingClientRect();
-          const tw = Math.max(rect.width * dpr, 240);
-          const th = Math.max(rect.height * dpr, 280);
+          const tw = Math.max(Math.round(rect.width * dpr), 200);
+          const th = Math.max(Math.round(rect.height * dpr), 240);
           threadsCanvas.width = tw;
           threadsCanvas.height = th;
           initHangingThreads(tw, th);
         }
 
         initWorldParticles();
+        needsSkyRedraw = true;
+        needsWorldRedraw = true;
+        needsForegroundRedraw = true;
       }
       resizeAllCanvases();
-      window.addEventListener("resize", resizeAllCanvases);
 
-      // ----------------------------------------------------
-      // Scramble HUD Text Effect for Telemetry
-      // ----------------------------------------------------
+      let resizeDebounce = null;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeDebounce);
+        resizeDebounce = setTimeout(resizeAllCanvases, 100);
+      });
+
       function scrambleText(element, finalVal, duration = 360) {
         if (!element) return;
         const chars = "0123456789°NEWS·%+-ABCDEF";
@@ -6210,10 +6102,6 @@
         requestAnimationFrame(updateScramble);
       }
 
-      // ----------------------------------------------------
-      // ----------------------------------------------------
-      // Transparent Torii Gate Aperture (Crystal Clear Landscape Framing & Shimmer)
-      // ----------------------------------------------------
       let cosmicTick = 0;
       function renderNeonCosmicPortal() {
         if (!singularityCtx || !singularityCanvas) return;
@@ -6223,27 +6111,25 @@
         const w = singularityCanvas.width;
         const h = singularityCanvas.height;
 
-        // 1. Clear completely so the breathtaking photographic landscape is 100% visible!
         singularityCtx.clearRect(0, 0, w, h);
-
         singularityCtx.save();
 
-        // 2. Delicate ambient golden stardust motes floating through the open Torii gate
-        singularityParticles.forEach((p, idx) => {
+        // Stardust motes floating through Torii gate aperture (batched)
+        singularityCtx.fillStyle = isGateHovered ? "rgba(255, 235, 180, 0.45)" : "rgba(223, 183, 108, 0.28)";
+        singularityCtx.beginPath();
+        for (let idx = 0; idx < singularityParticles.length; idx++) {
+          const p = singularityParticles[idx];
           p.theta += (p.speed * 0.12) * vortexSpeedMultiplier;
           const px = w * 0.5 + Math.cos(p.theta + idx) * (w * 0.125);
           const py = h * 0.64 + Math.sin(p.theta * 0.85 + idx * 1.4) * (h * 0.19);
 
           if (px > w * 0.35 && px < w * 0.65 && py > h * 0.41 && py < h * 0.88) {
-            const moteAlpha = (0.22 + 0.28 * Math.sin(cosmicTick * 0.035 + idx)) * (isGateHovered ? 1.5 : 1.0);
-            singularityCtx.fillStyle = isGateHovered ? "rgba(255, 235, 180, " + moteAlpha + ")" : "rgba(223, 183, 108, " + (moteAlpha * 0.7) + ")";
-            singularityCtx.beginPath();
+            singularityCtx.moveTo(px + p.size * 0.65, py);
             singularityCtx.arc(px, py, p.size * 0.65, 0, Math.PI * 2);
-            singularityCtx.fill();
           }
-        });
+        }
+        singularityCtx.fill();
 
-        // 3. Ethereal subtle golden aura when gate is hovered or teleporting (non-blocking)
         if (isTeleporting) {
           const cx = w * 0.5;
           const cy = h * 0.65;
@@ -6274,28 +6160,23 @@
         singularityCtx.restore();
       }
 
-// ----------------------------------------------------
-      // Layer 1: Distant Sky & Atmospheric Canvas Renderer
-      // ----------------------------------------------------
-      function renderSky(w, h, d, farOffX, farOffY) {
+      // Static Layer 1: Rendered ONCE per destination change or canvas resize
+      function renderSkyStatic(w, h, d) {
         if (!skyCtx) return;
         skyCtx.clearRect(0, 0, w, h);
 
-        // Sky Gradient
         const skyGrad = skyCtx.createLinearGradient(0, 0, 0, h);
-        const stops = d.bgGradient;
-        stops.forEach((col, idx) => {
-          skyGrad.addColorStop(idx / (stops.length - 1), col);
+        d.bgGradient.forEach((col, idx) => {
+          skyGrad.addColorStop(idx / (d.bgGradient.length - 1), col);
         });
         skyCtx.fillStyle = skyGrad;
         skyCtx.fillRect(0, 0, w, h);
 
         const horizonY = h * d.horizonY;
 
-                if (d.particleType === "sakura") {
-          // Mount Fuji Dawn Sunrise Sun & Sakura Glow
-          const sunX = w * 0.38 + farOffX;
-          const sunY = horizonY - h * 0.12 + farOffY;
+        if (d.particleType === "sakura") {
+          const sunX = w * 0.38;
+          const sunY = horizonY - h * 0.12;
           const sunGrad = skyCtx.createRadialGradient(sunX, sunY, 5, sunX, sunY, w * 0.42);
           sunGrad.addColorStop(0, "#fff5ea");
           sunGrad.addColorStop(0.18, "rgba(255, 180, 150, 0.85)");
@@ -6303,144 +6184,65 @@
           sunGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
           skyCtx.fillStyle = sunGrad;
           skyCtx.fillRect(0, 0, w, h);
-        } else if (d.particleType === "dust") {
-          // Utah Sunset Sun Disk & Solar Corona
-          const sunX = w * 0.5 + farOffX;
-          const sunY = horizonY - h * 0.10 + farOffY;
-          const sunGrad = skyCtx.createRadialGradient(sunX, sunY, 5, sunX, sunY, w * 0.46);
-          sunGrad.addColorStop(0, "#fff8dd");
-          sunGrad.addColorStop(0.16, "rgba(255, 185, 80, 0.88)");
-          sunGrad.addColorStop(0.55, "rgba(225, 75, 45, 0.25)");
-          sunGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-          skyCtx.fillStyle = sunGrad;
-          skyCtx.fillRect(0, 0, w, h);
-
-          // Distant Plateau Mesas (Deep Horizon Layer)
-          skyCtx.fillStyle = "rgba(45, 15, 22, 0.72)";
-          skyCtx.beginPath();
-          skyCtx.moveTo(0, h);
-          skyCtx.lineTo(0, horizonY - 18 + farOffY);
-          skyCtx.lineTo(w * 0.22, horizonY - 18 + farOffY);
-          skyCtx.lineTo(w * 0.29, horizonY - 38 + farOffY);
-          skyCtx.lineTo(w * 0.44, horizonY - 38 + farOffY);
-          skyCtx.lineTo(w * 0.51, horizonY - 18 + farOffY);
-          skyCtx.lineTo(w * 0.72, horizonY - 18 + farOffY);
-          skyCtx.lineTo(w * 0.81, horizonY - 48 + farOffY);
-          skyCtx.lineTo(w * 0.94, horizonY - 48 + farOffY);
-          skyCtx.lineTo(w, horizonY - 22 + farOffY);
-          skyCtx.lineTo(w, h);
-          skyCtx.closePath();
-          skyCtx.fill();
-
         } else if (d.particleType === "balloons") {
-          // Cappadocia Soft Dawn Radial Sun Glow
-          const dawnGrad = skyCtx.createRadialGradient(w * 0.5 + farOffX, horizonY - 25, 5, w * 0.5, horizonY - 25, w * 0.58);
+          const dawnGrad = skyCtx.createRadialGradient(w * 0.5, horizonY - 25, 5, w * 0.5, horizonY - 25, w * 0.58);
           dawnGrad.addColorStop(0, "rgba(255, 235, 195, 0.75)");
           dawnGrad.addColorStop(0.38, "rgba(230, 135, 165, 0.35)");
           dawnGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
           skyCtx.fillStyle = dawnGrad;
           skyCtx.fillRect(0, 0, w, h);
-
-          // Distant Volcanic Ridge (Mount Erciyes)
-          skyCtx.fillStyle = "rgba(48, 26, 58, 0.60)";
-          skyCtx.beginPath();
-          skyCtx.moveTo(0, h);
-          skyCtx.lineTo(0, horizonY - 12 + farOffY);
-          skyCtx.lineTo(w * 0.36 + farOffX, horizonY - 12 + farOffY);
-          skyCtx.lineTo(w * 0.50 + farOffX, horizonY - 105 + farOffY);
-          skyCtx.lineTo(w * 0.64 + farOffX, horizonY - 12 + farOffY);
-          skyCtx.lineTo(w, horizonY - 12 + farOffY);
-          skyCtx.lineTo(w, h);
-          skyCtx.closePath();
-          skyCtx.fill();
-
         } else if (d.particleType === "fireflies") {
-          // Kyoto Silver Crescent Moon & Misty Corona
-          const moonX = w * 0.74 + farOffX;
-          const moonY = h * 0.22 + farOffY;
+          const moonX = w * 0.74;
+          const moonY = h * 0.22;
           skyCtx.fillStyle = "rgba(225, 255, 240, 0.92)";
-          skyCtx.shadowColor = "rgba(140, 255, 190, 0.85)";
-          skyCtx.shadowBlur = 20;
           skyCtx.beginPath();
           skyCtx.arc(moonX, moonY, 17, 0, Math.PI * 2);
           skyCtx.fill();
           skyCtx.fillStyle = "#091c15";
-          skyCtx.shadowBlur = 0;
           skyCtx.beginPath();
           skyCtx.arc(moonX + 6, moonY - 3, 16, 0, Math.PI * 2);
           skyCtx.fill();
-
-          // Distant Mountain Ridge
-          skyCtx.fillStyle = "rgba(11, 34, 24, 0.68)";
-          skyCtx.beginPath();
-          skyCtx.moveTo(0, h);
-          skyCtx.lineTo(0, horizonY - 22 + farOffY);
-          skyCtx.bezierCurveTo(w * 0.28, horizonY - 65 + farOffY, w * 0.66, horizonY - 15 + farOffY, w, horizonY - 38 + farOffY);
-          skyCtx.lineTo(w, h);
-          skyCtx.closePath();
-          skyCtx.fill();
-
         } else if (d.particleType === "stars") {
-          // Salar de Uyuni Deep Space Nebula Dust Clouds
-          const nebulaGrad = skyCtx.createRadialGradient(w * 0.42 + farOffX, h * 0.24 + farOffY, 10, w * 0.42, h * 0.24, w * 0.58);
+          const nebulaGrad = skyCtx.createRadialGradient(w * 0.42, h * 0.24, 10, w * 0.42, h * 0.24, w * 0.58);
           nebulaGrad.addColorStop(0, "rgba(110, 65, 205, 0.5)");
           nebulaGrad.addColorStop(0.35, "rgba(40, 150, 230, 0.32)");
           nebulaGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
           skyCtx.fillStyle = nebulaGrad;
           skyCtx.fillRect(0, 0, w, h);
-
-          // Horizon Aurora Australis Wave
-          skyCtx.strokeStyle = "rgba(65, 230, 220, 0.48)";
-          skyCtx.lineWidth = 16;
-          skyCtx.beginPath();
-          skyCtx.moveTo(0, horizonY - 9);
-          for (let ax = 0; ax <= w; ax += 30) {
-            skyCtx.lineTo(ax, horizonY - 15 + Math.sin(ax * 0.02 + cosmicTick * 0.02) * 12);
-          }
-          skyCtx.stroke();
-
         } else if (d.particleType === "embers") {
-          // Destination 5: Petra Terracotta Twilight & High Gorge Atmospheric Glow
-          const twilightGrad = skyCtx.createRadialGradient(w * 0.5 + farOffX, horizonY - 35 + farOffY, 10, w * 0.5, horizonY - 35, w * 0.52);
+          const twilightGrad = skyCtx.createRadialGradient(w * 0.5, horizonY - 35, 10, w * 0.5, horizonY - 35, w * 0.52);
           twilightGrad.addColorStop(0, "rgba(255, 145, 75, 0.42)");
           twilightGrad.addColorStop(0.42, "rgba(165, 45, 35, 0.20)");
           twilightGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
           skyCtx.fillStyle = twilightGrad;
           skyCtx.fillRect(0, 0, w, h);
-
         } else if (d.particleType === "snow") {
-          // Matterhorn Undulating Aurora Borealis Curtains
           for (let a = 0; a < 3; a++) {
             const auroraY = h * 0.22 + a * 26;
             skyCtx.strokeStyle = a === 0 ? "rgba(75, 245, 195, 0.38)" : a === 1 ? "rgba(95, 165, 255, 0.32)" : "rgba(185, 85, 245, 0.24)";
-            skyCtx.lineWidth = 20;
+            skyCtx.lineWidth = 18;
             skyCtx.beginPath();
             skyCtx.moveTo(0, auroraY);
             for (let x = 0; x <= w; x += 32) {
-              const wav = Math.sin(x * 0.014 + cosmicTick * 0.015 + a * 1.5) * 24;
-              skyCtx.lineTo(x, auroraY + wav);
+              skyCtx.lineTo(x, auroraY + Math.sin(x * 0.014 + a * 1.5) * 20);
             }
             skyCtx.stroke();
           }
         }
       }
 
-      // ----------------------------------------------------
-      // Layer 2: Midground Landmarks & Animated World Canvas
-      // ----------------------------------------------------
-      function renderWorld(w, h, d, midOffX, midOffY) {
+      // Static Layer 2: Authentic Photographic Landscape Rendered ONCE upon change
+      function renderWorldPhotoStatic(w, h, d) {
         if (!worldCtx) return;
         worldCtx.clearRect(0, 0, w, h);
 
-        const horizonY = h * d.horizonY;
         const curImg = destinationImages[currentIndex];
         const hasRealImg = curImg && curImg.complete && curImg.naturalWidth > 0;
 
-        // Render authentic photographic high-resolution landscape for ALL 6 destinations
         if (hasRealImg) {
           worldCtx.save();
           worldCtx.globalAlpha = 1.0;
-          const bleed = 0.06;
+          const bleed = 0.08;
           const targetW = w * (1 + bleed * 2);
           const targetH = h * (1 + bleed * 2);
           const imgRatio = curImg.naturalWidth / curImg.naturalHeight;
@@ -6449,16 +6251,15 @@
           if (targetRatio > imgRatio) {
             dw = targetW;
             dh = targetW / imgRatio;
-            dx = -bleed * w + midOffX * 0.45;
-            dy = -bleed * h + midOffY * 0.45 - (dh - targetH) * 0.5;
+            dx = -bleed * w;
+            dy = -bleed * h - (dh - targetH) * 0.5;
           } else {
             dh = targetH;
             dw = targetH * imgRatio;
-            dx = -bleed * w + midOffX * 0.45 - (dw - targetW) * 0.5;
-            dy = -bleed * h + midOffY * 0.45;
+            dx = -bleed * w - (dw - targetW) * 0.5;
+            dy = -bleed * h;
           }
           worldCtx.drawImage(curImg, dx, dy, dw, dh);
-          // Destination-specific subtle atmospheric light grading
           const atmoGrad = worldCtx.createLinearGradient(0, 0, 0, h);
           atmoGrad.addColorStop(0, "rgba(5, 7, 10, 0.18)");
           atmoGrad.addColorStop(0.68, "transparent");
@@ -6466,198 +6267,123 @@
           worldCtx.fillStyle = atmoGrad;
           worldCtx.fillRect(0, 0, w, h);
           worldCtx.restore();
+        } else if (curImg) {
+          curImg.onload = () => {
+            needsWorldRedraw = true;
+          };
         }
+      }
 
-        if (d.particleType === "dust") {
-          // Destination 1: Monument Valley
-          if (!hasRealImg) {
-            worldCtx.fillStyle = "rgba(24, 7, 11, 0.92)";
-            worldCtx.beginPath();
-            worldCtx.moveTo(0, h);
-            worldCtx.lineTo(0, horizonY + 8 + midOffY);
-            // West Mitten
-            worldCtx.lineTo(w * 0.22 + midOffX, horizonY + 8 + midOffY);
-            worldCtx.lineTo(w * 0.26 + midOffX, horizonY - 52 + midOffY);
-            worldCtx.lineTo(w * 0.28 + midOffX, horizonY - 52 + midOffY);
-            worldCtx.lineTo(w * 0.29 + midOffX, horizonY - 88 + midOffY);
-            worldCtx.lineTo(w * 0.31 + midOffX, horizonY - 88 + midOffY);
-            worldCtx.lineTo(w * 0.32 + midOffX, horizonY - 52 + midOffY);
-            worldCtx.lineTo(w * 0.36 + midOffX, horizonY - 52 + midOffY);
-            worldCtx.lineTo(w * 0.40 + midOffX, horizonY + 8 + midOffY);
-            // Merrick Butte
-            worldCtx.lineTo(w * 0.65 + midOffX, horizonY + 8 + midOffY);
-            worldCtx.lineTo(w * 0.69 + midOffX, horizonY - 68 + midOffY);
-            worldCtx.lineTo(w * 0.77 + midOffX, horizonY - 68 + midOffY);
-            worldCtx.lineTo(w * 0.82 + midOffX, horizonY + 8 + midOffY);
-            worldCtx.lineTo(w, horizonY + 8 + midOffY);
-            worldCtx.lineTo(w, h);
-            worldCtx.closePath();
-            worldCtx.fill();
-          }
+      // Static Layer 4: Foreground Obsidian Dunes Rendered ONCE upon change
+      function renderForegroundStatic(w, h, d) {
+        if (!fgCtx) return;
+        fgCtx.clearRect(0, 0, w, h);
+        const duneY = h * 0.88;
+        fgCtx.fillStyle = "rgba(4, 5, 7, 0.88)";
+        fgCtx.beginPath();
+        fgCtx.moveTo(0, h);
+        fgCtx.lineTo(0, duneY + 12);
+        fgCtx.bezierCurveTo(w * 0.28, duneY - 4, w * 0.72, duneY + 16, w, duneY + 6);
+        fgCtx.lineTo(w, h);
+        fgCtx.closePath();
+        fgCtx.fill();
 
-        } else if (d.particleType === "balloons") {
-          // Destination 2: Cappadocia Floating Hot Air Balloons over the real photograph
+        fgCtx.strokeStyle = "rgba(223, 183, 108, 0.22)";
+        fgCtx.lineWidth = 1.0;
+        fgCtx.beginPath();
+        fgCtx.moveTo(0, duneY + 12);
+        fgCtx.bezierCurveTo(w * 0.28, duneY - 4, w * 0.72, duneY + 16, w, duneY + 6);
+        fgCtx.stroke();
+      }
+
+      // Dynamic Layer 3: High-Performance Atmosphere & Particles on petalsCanvas (Batched & Zero shadowBlur)
+      function renderPortalAtmosphere(w, h, tick, d) {
+        if (!petalsCtx || !petalsCanvas) return;
+        petalsCtx.clearRect(0, 0, w, h);
+
+        const curD = d || destinations[currentIndex];
+
+        // 1. Universal Golden Stardust (Batched single path!)
+        petalsCtx.fillStyle = "rgba(223, 183, 108, 0.42)";
+        petalsCtx.beginPath();
+        portalAtmosphere.stardust.forEach(star => {
+          star.y += star.speedY;
+          star.x += star.speedX;
+          if (star.y < 0) star.y = h;
+          if (star.x < 0) star.x = w;
+          if (star.x > w) star.x = 0;
+          petalsCtx.moveTo((star.x % w) + star.radius, star.y % h);
+          petalsCtx.arc(star.x % w, star.y % h, star.radius, 0, Math.PI * 2);
+        });
+        petalsCtx.fill();
+
+        // 2. Destination-Specific Particles
+        if (curD.particleType === "sakura") {
+          portalAtmosphere.petals.forEach(petal => {
+            petal.y += petal.speedY;
+            petal.x += petal.speedX + Math.sin(petal.y * petal.swayFreq + tick * 0.02) * petal.swayAmp;
+            petal.rotation += petal.rotSpeed;
+            if (petal.y > h + 20) { petal.y = -20; petal.x = Math.random() * w; }
+            if (petal.x < -20) petal.x = w + 20;
+            if (petal.x > w + 20) petal.x = -20;
+
+            petalsCtx.save();
+            petalsCtx.translate(petal.x, petal.y);
+            petalsCtx.rotate(petal.rotation);
+            petalsCtx.fillStyle = `rgba(255, 192, 203, ${petal.alpha.toFixed(2)})`;
+            petalsCtx.beginPath();
+            petalsCtx.moveTo(0, -petal.size);
+            petalsCtx.bezierCurveTo(petal.size * 0.8, -petal.size * 0.6, petal.size * 0.8, petal.size * 0.6, 0, petal.size);
+            petalsCtx.bezierCurveTo(-petal.size * 0.8, petal.size * 0.6, -petal.size * 0.8, -petal.size * 0.6, 0, -petal.size);
+            petalsCtx.fill();
+            petalsCtx.restore();
+          });
+        } else if (curD.particleType === "balloons") {
           balloons.forEach(bal => {
             bal.x += bal.driftSpeed;
             if (bal.x < -bal.size) bal.x = w + bal.size;
             if (bal.x > w + bal.size) bal.x = -bal.size;
 
-            const bob = Math.sin(cosmicTick * bal.bobSpeed + bal.bobPhase) * 10;
-            const bx = bal.x + midOffX;
-            const by = bal.baseY + bob + midOffY;
+            const bob = Math.sin(tick * bal.bobSpeed + bal.bobPhase) * 8;
+            const bx = bal.x;
+            const by = bal.baseY + bob;
             const rad = bal.size;
 
-            worldCtx.save();
-            worldCtx.translate(bx, by);
+            petalsCtx.save();
+            petalsCtx.translate(bx, by);
+            petalsCtx.fillStyle = bal.colors[0];
+            petalsCtx.beginPath();
+            petalsCtx.arc(0, 0, rad, Math.PI * 0.85, Math.PI * 0.15, false);
+            petalsCtx.lineTo(0, rad * 1.55);
+            petalsCtx.closePath();
+            petalsCtx.fill();
 
-            // Balloon Envelope
-            worldCtx.fillStyle = bal.colors[0];
-            worldCtx.beginPath();
-            worldCtx.arc(0, 0, rad, Math.PI * 0.85, Math.PI * 0.15, false);
-            worldCtx.lineTo(0, rad * 1.55);
-            worldCtx.closePath();
-            worldCtx.fill();
+            petalsCtx.fillStyle = bal.colors[1];
+            petalsCtx.beginPath();
+            petalsCtx.ellipse(0, 0, rad * 0.45, rad, 0, 0, Math.PI * 2);
+            petalsCtx.fill();
 
-            // Decorative Center Stripe
-            worldCtx.fillStyle = bal.colors[1];
-            worldCtx.beginPath();
-            worldCtx.ellipse(0, 0, rad * 0.45, rad, 0, 0, Math.PI * 2);
-            worldCtx.fill();
-
-            // Burner Flame Glow
-            if (bal.hasFlame && Math.sin(cosmicTick * 0.12 + bal.bobPhase) > 0.2) {
-              worldCtx.fillStyle = "#fff4cc";
-              worldCtx.beginPath();
-              worldCtx.arc(0, rad * 1.62, rad * 0.26, 0, Math.PI * 2);
-              worldCtx.fill();
-            }
-
-            // Suspension Lines & Wicker Basket
-            worldCtx.strokeStyle = "rgba(32, 22, 42, 0.75)";
-            worldCtx.lineWidth = 0.8;
-            worldCtx.beginPath();
-            worldCtx.moveTo(-rad * 0.35, rad * 1.55);
-            worldCtx.lineTo(-rad * 0.2, rad * 1.95);
-            worldCtx.moveTo(rad * 0.35, rad * 1.55);
-            worldCtx.lineTo(rad * 0.2, rad * 1.95);
-            worldCtx.stroke();
-
-            worldCtx.fillStyle = "#4a2a18";
-            worldCtx.fillRect(-rad * 0.25, rad * 1.95, rad * 0.5, rad * 0.35);
-
-            worldCtx.restore();
+            petalsCtx.fillStyle = "#4a2a18";
+            petalsCtx.fillRect(-rad * 0.25, rad * 1.85, rad * 0.5, rad * 0.35);
+            petalsCtx.restore();
           });
-
-          if (!hasRealImg) {
-            worldCtx.fillStyle = "rgba(18, 12, 28, 0.94)";
-            worldCtx.beginPath();
-            worldCtx.moveTo(0, h);
-            worldCtx.lineTo(0, horizonY + 15 + midOffY);
-            for (let cx = 0; cx <= w; cx += 40) {
-              const hVar = Math.sin(cx * 0.04) * 26 + Math.cos(cx * 0.08) * 16;
-              worldCtx.lineTo(cx + 10 + midOffX, horizonY - 48 + hVar + midOffY);
-              worldCtx.lineTo(cx + 26 + midOffX, horizonY - 54 + hVar + midOffY);
-              worldCtx.lineTo(cx + 36 + midOffX, horizonY + 15 + midOffY);
-            }
-            worldCtx.lineTo(w, horizonY + 15 + midOffY);
-            worldCtx.lineTo(w, h);
-            worldCtx.closePath();
-            worldCtx.fill();
-          }
-
-        } else if (d.particleType === "fireflies") {
-          // Destination 3: Kyoto Arashiyama Bioluminescent Fireflies over the real photograph
-          if (!hasRealImg) {
-            worldCtx.strokeStyle = "rgba(6, 22, 15, 0.95)";
-            worldCtx.fillStyle = "rgba(6, 22, 15, 0.95)";
-            const stalkCount = 28;
-            for (let s = 0; s < stalkCount; s++) {
-              const bx = (s / stalkCount) * w + (s % 3) * 8 + midOffX;
-              const sway = Math.sin(cosmicTick * 0.02 + s * 0.7) * 13;
-              worldCtx.lineWidth = 4.5 + (s % 3);
-              worldCtx.beginPath();
-              worldCtx.moveTo(bx, h);
-              worldCtx.quadraticCurveTo(bx + sway * 0.4, horizonY - 30, bx + sway, horizonY - 145 - (s % 5) * 20);
-              worldCtx.stroke();
-
-              const tipX = bx + sway;
-              const tipY = horizonY - 145 - (s % 5) * 20;
-              worldCtx.beginPath();
-              worldCtx.ellipse(tipX - 10, tipY + 10, 13, 3, Math.PI / 4, 0, Math.PI * 2);
-              worldCtx.ellipse(tipX + 10, tipY + 15, 13, 3, -Math.PI / 4, 0, Math.PI * 2);
-              worldCtx.fill();
-            }
-
-            [w * 0.18 + midOffX, w * 0.82 + midOffX].forEach((lx) => {
-              const ly = horizonY + 30;
-              const glow = worldCtx.createRadialGradient(lx, ly, 2, lx, ly, 40);
-              glow.addColorStop(0, "rgba(255, 225, 135, 0.95)");
-              glow.addColorStop(0.45, "rgba(255, 160, 50, 0.38)");
-              glow.addColorStop(1, "rgba(0, 0, 0, 0)");
-              worldCtx.fillStyle = glow;
-              worldCtx.beginPath();
-              worldCtx.arc(lx, ly, 40, 0, Math.PI * 2);
-              worldCtx.fill();
-
-              worldCtx.fillStyle = "#050d09";
-              worldCtx.fillRect(lx - 12, ly + 6, 24, 22);
-              worldCtx.fillRect(lx - 8, ly - 8, 16, 14);
-              worldCtx.beginPath();
-              worldCtx.moveTo(lx - 18, ly - 8);
-              worldCtx.lineTo(lx, ly - 22);
-              worldCtx.lineTo(lx + 18, ly - 8);
-              worldCtx.closePath();
-              worldCtx.fill();
-            });
-          }
-
-          // Bioluminescent Fireflies
+        } else if (curD.particleType === "fireflies") {
           fireflies.forEach(f => {
-            f.x += f.vx + Math.sin(cosmicTick * 0.04 + f.glowPhase) * 0.55;
-            f.y += f.vy + Math.cos(cosmicTick * 0.03 + f.glowPhase) * 0.45;
+            f.x += f.vx + Math.sin(tick * 0.04 + f.glowPhase) * 0.55;
+            f.y += f.vy + Math.cos(tick * 0.03 + f.glowPhase) * 0.45;
             if (f.x < 0) f.x = w;
             if (f.x > w) f.x = 0;
             if (f.y < h * 0.22) f.y = h * 0.82;
             if (f.y > h * 0.88) f.y = h * 0.32;
 
-            const pulse = 0.5 + 0.5 * Math.sin(cosmicTick * f.glowSpeed + f.glowPhase);
-            worldCtx.fillStyle = `rgba(180, 255, 190, ${pulse * 0.92})`;
-            worldCtx.shadowColor = "rgba(125, 255, 165, 0.95)";
-            worldCtx.shadowBlur = 12 * pulse;
-            worldCtx.beginPath();
-            worldCtx.arc(f.x + midOffX * 0.5, f.y + midOffY * 0.5, f.radius * (0.8 + pulse * 0.4), 0, Math.PI * 2);
-            worldCtx.fill();
-            worldCtx.shadowBlur = 0;
+            const pulse = 0.5 + 0.5 * Math.sin(tick * f.glowSpeed + f.glowPhase);
+            petalsCtx.fillStyle = `rgba(180, 255, 190, ${(pulse * 0.85).toFixed(2)})`;
+            petalsCtx.beginPath();
+            petalsCtx.arc(f.x, f.y, f.radius * (0.8 + pulse * 0.4), 0, Math.PI * 2);
+            petalsCtx.fill();
           });
-
-        } else if (d.particleType === "stars") {
-          // Destination 4: Salar de Uyuni Shooting Stars & Mirror Reflections over the real photograph
-          if (!hasRealImg) {
-            worldCtx.strokeStyle = "rgba(185, 235, 255, 0.38)";
-            worldCtx.lineWidth = 1.0;
-            worldCtx.beginPath();
-            worldCtx.moveTo(0, horizonY);
-            worldCtx.lineTo(w, horizonY);
-            worldCtx.stroke();
-
-            worldCtx.strokeStyle = "rgba(145, 205, 245, 0.14)";
-            worldCtx.lineWidth = 0.9;
-            for (let row = 0; row < 6; row++) {
-              const ry = horizonY + 20 + row * 26;
-              worldCtx.beginPath();
-              for (let col = 0; col <= w; col += 60) {
-                const shift = (row % 2) * 30;
-                worldCtx.moveTo(col + shift - 15, ry);
-                worldCtx.lineTo(col + shift, ry - 8);
-                worldCtx.lineTo(col + shift + 15, ry);
-                worldCtx.lineTo(col + shift + 15, ry + 12);
-              }
-              worldCtx.stroke();
-            }
-          }
-
-          // Shooting Stars
-          if (Math.random() < 0.025 && meteors.length < 3) {
+        } else if (curD.particleType === "stars") {
+          if (Math.random() < 0.02 && meteors.length < 3) {
             meteors.push({
               x: Math.random() * w * 0.8,
               y: Math.random() * h * 0.35,
@@ -6674,213 +6400,55 @@
               meteors.splice(idx, 1);
               return;
             }
-            worldCtx.strokeStyle = `rgba(255, 255, 255, ${m.alpha})`;
-            worldCtx.lineWidth = 1.5;
-            worldCtx.beginPath();
-            worldCtx.moveTo(m.x, m.y);
-            worldCtx.lineTo(m.x - m.vx * 4, m.y - m.vy * 4);
-            worldCtx.stroke();
-
-            // Water Mirror Reflection
-            const refY = horizonY + (horizonY - m.y);
-            worldCtx.strokeStyle = `rgba(185, 235, 255, ${m.alpha * 0.65})`;
-            worldCtx.beginPath();
-            worldCtx.moveTo(m.x, refY);
-            worldCtx.lineTo(m.x - m.vx * 4, refY + m.vy * 4);
-            worldCtx.stroke();
+            petalsCtx.strokeStyle = `rgba(255, 255, 255, ${m.alpha.toFixed(2)})`;
+            petalsCtx.lineWidth = 1.5;
+            petalsCtx.beginPath();
+            petalsCtx.moveTo(m.x, m.y);
+            petalsCtx.lineTo(m.x - m.vx * 3, m.y - m.vy * 3);
+            petalsCtx.stroke();
           });
-
-        } else if (d.particleType === "embers") {
-          // Destination 5: Petra Treasury Living Candlelight Pools over the real photograph
-          if (!hasRealImg) {
-            worldCtx.fillStyle = "rgba(18, 6, 8, 0.95)";
-            worldCtx.beginPath();
-            worldCtx.moveTo(0, 0);
-            worldCtx.lineTo(w * 0.32 + midOffX, 0);
-            worldCtx.bezierCurveTo(w * 0.28 + midOffX, h * 0.4, w * 0.35 + midOffX, h * 0.7, w * 0.30 + midOffX, h);
-            worldCtx.lineTo(0, h);
-            worldCtx.closePath();
-            worldCtx.fill();
-
-            worldCtx.beginPath();
-            worldCtx.moveTo(w, 0);
-            worldCtx.lineTo(w * 0.68 + midOffX, 0);
-            worldCtx.bezierCurveTo(w * 0.72 + midOffX, h * 0.4, w * 0.65 + midOffX, h * 0.7, w * 0.70 + midOffX, h);
-            worldCtx.lineTo(w, h);
-            worldCtx.closePath();
-            worldCtx.fill();
-
-            const tx = w * 0.5 + midOffX * 0.4;
-            const ty = horizonY - 15 + midOffY * 0.4;
-            worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
-            worldCtx.beginPath();
-            worldCtx.moveTo(tx - 68, ty);
-            worldCtx.lineTo(tx, ty - 58);
-            worldCtx.lineTo(tx + 68, ty);
-            worldCtx.lineTo(tx + 62, ty + 68);
-            worldCtx.lineTo(tx - 62, ty + 68);
-            worldCtx.closePath();
-            worldCtx.fill();
-
-            worldCtx.strokeStyle = "rgba(75, 26, 30, 0.88)";
-            worldCtx.lineWidth = 3.2;
-            for (let c = -48; c <= 48; c += 19) {
-              worldCtx.beginPath();
-              worldCtx.moveTo(tx + c, ty + 10);
-              worldCtx.lineTo(tx + c, ty + 68);
-              worldCtx.stroke();
-            }
-
-            worldCtx.fillStyle = "rgba(42, 14, 18, 0.94)";
-            worldCtx.fillRect(tx - 24, ty - 105, 48, 48);
-            worldCtx.beginPath();
-            worldCtx.arc(tx, ty - 114, 9, 0, Math.PI * 2);
-            worldCtx.fill();
+        } else if (curD.particleType === "embers") {
+          petalsCtx.fillStyle = "rgba(255, 185, 95, 0.75)";
+          petalsCtx.beginPath();
+          for (let c = 0; c < 16; c++) {
+            const cx = (w * 0.33) + (c / 15) * (w * 0.34) + (Math.sin(c * 2.2) * 12);
+            const cy = (h * 0.65) + 36 + (c % 4) * 16;
+            const flicker = 0.7 + 0.3 * Math.sin(tick * 0.12 + c);
+            petalsCtx.moveTo(cx + 3 * flicker, cy);
+            petalsCtx.arc(cx, cy, 3 * flicker, 0, Math.PI * 2);
           }
+          petalsCtx.fill();
+        } else if (curD.particleType === "snow") {
+          petalsCtx.fillStyle = "rgba(240, 248, 255, 0.75)";
+          petalsCtx.beginPath();
+          particles.forEach(p => {
+            p.y += p.vy;
+            p.x += p.vx;
+            if (p.y > h) p.y = 0;
+            if (p.x < 0) p.x = w;
+            if (p.x > w) p.x = 0;
+            petalsCtx.moveTo(p.x + p.radius, p.y);
+            petalsCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          });
+          petalsCtx.fill();
+        }
+      }
 
-          // Living Candlelight Pools on Canyon Floor
-          for (let c = 0; c < 20; c++) {
-            const cx = (w * 0.33) + (c / 19) * (w * 0.34) + (Math.sin(c * 2.2) * 14);
-            const cy = horizonY + 36 + (c % 4) * 18;
-            const flicker = 0.7 + 0.3 * Math.sin(cosmicTick * 0.12 + c);
-            const cGlow = worldCtx.createRadialGradient(cx, cy, 1, cx, cy, 24 * flicker);
-            cGlow.addColorStop(0, "rgba(255, 225, 145, 0.95)");
-            cGlow.addColorStop(0.35, "rgba(240, 115, 45, 0.48)");
-            cGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
-            worldCtx.fillStyle = cGlow;
-            worldCtx.beginPath();
-            worldCtx.arc(cx, cy, 24 * flicker, 0, Math.PI * 2);
-            worldCtx.fill();
-          }
-
-        } else if (d.particleType === "snow") {
-          // Destination 6: Matterhorn Summit Spindrift over the real photograph
-          const peakX = w * 0.5 + midOffX * 0.5;
-          const peakY = horizonY - 155 + midOffY * 0.5;
-
-          if (!hasRealImg) {
-            worldCtx.fillStyle = "rgba(8, 15, 26, 0.96)";
-            worldCtx.beginPath();
-            worldCtx.moveTo(peakX, peakY);
-            worldCtx.lineTo(peakX - 115, horizonY + 22);
-            worldCtx.lineTo(peakX + 135, horizonY + 22);
-            worldCtx.closePath();
-            worldCtx.fill();
-
-            worldCtx.fillStyle = "rgba(220, 242, 255, 0.90)";
-            worldCtx.beginPath();
-            worldCtx.moveTo(peakX, peakY);
-            worldCtx.lineTo(peakX - 10, peakY + 46);
-            worldCtx.lineTo(peakX + 38, horizonY - 32);
-            worldCtx.lineTo(peakX + 120, horizonY + 22);
-            worldCtx.lineTo(peakX, horizonY + 22);
-            worldCtx.closePath();
-            worldCtx.fill();
-          }
-
-          // Summit Spindrift Snow Banner
-          worldCtx.strokeStyle = "rgba(240, 248, 255, 0.48)";
-          worldCtx.lineWidth = 2.0;
-          for (let b = 0; b < 6; b++) {
-            worldCtx.beginPath();
-            worldCtx.moveTo(peakX, peakY + b * 4);
-            worldCtx.quadraticCurveTo(peakX + 48 + b * 8, peakY - 12 + b * 5, peakX + 100 + b * 12, peakY - 6 + b * 7);
-            worldCtx.stroke();
-          }
+      // ----------------------------------------------------
+      // Main 60+ FPS Animation Frame Loop (Zero Jank / Zero Freezing)
+      // ----------------------------------------------------
+      let portalRafId = null;
+      function animLoop() {
+        if (!isPortalVisible) {
+          portalRafId = null;
+          return;
         }
 
-        // Ambient World Particles
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.rot !== undefined) p.rot += p.vRot;
-          if (p.x < -10) p.x = w + 10;
-          if (p.x > w + 10) p.x = -10;
-          if (p.y < -10) p.y = h + 10;
-          if (p.y > h + 10) p.y = -10;
-
-          const currentAlpha = p.alpha * (0.7 + 0.3 * Math.sin(cosmicTick * p.pulseSpeed + p.pulsePhase));
-          worldCtx.fillStyle = d.particleColor;
-          worldCtx.globalAlpha = Math.max(0, Math.min(1, currentAlpha));
-
-          worldCtx.save();
-          worldCtx.translate(p.x + midOffX * p.depth, p.y + midOffY * p.depth);
-          if (d.particleType === "sakura") {
-            worldCtx.rotate(p.rot || 0);
-            worldCtx.beginPath();
-            worldCtx.ellipse(0, 0, p.radius * 1.4, p.radius * 0.8, 0, 0, Math.PI * 2);
-            worldCtx.fill();
-          } else {
-            worldCtx.beginPath();
-            worldCtx.arc(0, 0, p.radius, 0, Math.PI * 2);
-            worldCtx.fill();
-          }
-          worldCtx.restore();
-        });
-        worldCtx.globalAlpha = 1.0;
-      }
-
-      // ----------------------------------------------------
-      // Layer 4: Foreground Obsidian Dunes Canvas Renderer (Z: +75px)
-      // ----------------------------------------------------
-      function renderForeground(w, h, d, fgOffX, fgOffY) {
-        if (!fgCtx) return;
-        fgCtx.clearRect(0, 0, w, h);
-
-        const horizonY = h * d.horizonY;
-
-        const duneY = h * 0.88;
-
-        // Grounding atmospheric dunes at very bottom of viewport
-        fgCtx.fillStyle = "rgba(4, 5, 7, 0.88)";
-        fgCtx.beginPath();
-        fgCtx.moveTo(0, h);
-        fgCtx.lineTo(0, duneY + 12 + fgOffY);
-        fgCtx.bezierCurveTo(
-          w * 0.28 + fgOffX, duneY - 4 + fgOffY,
-          w * 0.72 + fgOffX, duneY + 16 + fgOffY,
-          w, duneY + 6 + fgOffY
-        );
-        fgCtx.lineTo(w, h);
-        fgCtx.closePath();
-        fgCtx.fill();
-
-        // Subtle bronze/gold dune rim illumination
-        fgCtx.strokeStyle = "rgba(223, 183, 108, 0.22)";
-        fgCtx.lineWidth = 1.0;
-        fgCtx.beginPath();
-        fgCtx.moveTo(0, duneY + 12 + fgOffY);
-        fgCtx.bezierCurveTo(
-          w * 0.28 + fgOffX, duneY - 4 + fgOffY,
-          w * 0.72 + fgOffX, duneY + 16 + fgOffY,
-          w, duneY + 6 + fgOffY
-        );
-        fgCtx.stroke();
-
-        // Foreground Floating Dust Motes
-        foregroundParticles.forEach(fp => {
-          fp.x += fp.vx;
-          fp.y += fp.vy;
-          if (fp.x < 0) fp.x = w;
-          if (fp.x > w) fp.x = 0;
-          if (fp.y < horizonY + 20) fp.y = h;
-
-          fgCtx.fillStyle = "rgba(223, 183, 108, " + (fp.alpha * 0.8) + ")";
-          fgCtx.beginPath();
-          fgCtx.arc(fp.x, fp.y, fp.radius, 0, Math.PI * 2);
-          fgCtx.fill();
-        });
-      }
-
-      // ----------------------------------------------------
-      // Main Animation Frame Loop (4-Layer Parallax Dispatcher)
-      // ----------------------------------------------------
-      function animLoop() {
         // Differential Physics Parallax Lerp
         mouse.x += (mouse.targetX - mouse.x) * 0.08;
         mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
-        // Apply true 4-tier differential 3D transforms
+        // Hardware-accelerated CSS 3D transforms
         if (skyCanvas) {
           skyCanvas.style.transform = `translate3d(${-mouse.x * 12}px, ${-mouse.y * 8}px, -60px) scale(1.06)`;
         }
@@ -6907,54 +6475,37 @@
           portalCue.style.transform = `translate3d(calc(-50% + ${mouse.x * 22}px), ${mouse.y * 12}px, 90px)`;
         }
 
-        // Programmatic Runes Ring Orbit & Liquid Ripple Update
-        runeSpeed += (targetRuneSpeed - runeSpeed) * 0.06;
-        runeRotation = (runeRotation + runeSpeed) % 360;
-        if (runesGroup) {
-          runesGroup.setAttribute("transform", `rotate(${runeRotation} 100 100)`);
-        }
-        runeDisplacementScale += (targetDisplacementScale - runeDisplacementScale) * 0.1;
-        if (targetDisplacementScale > 0.05) targetDisplacementScale *= 0.93;
-        if (runeDisplacement) {
-          runeDisplacement.setAttribute("scale", runeDisplacementScale.toFixed(2));
-        }
-        if (runeTurbulence && runeDisplacementScale > 0.1) {
-          runeTurbulence.setAttribute("baseFrequency", (0.04 + Math.sin(cosmicTick * 0.08) * 0.012).toFixed(4));
-        }
-
         const d = destinations[currentIndex];
         const w = worldCanvas ? worldCanvas.width : 800;
         const h = worldCanvas ? worldCanvas.height : 600;
 
-        const farOffX = -mouse.x * w * 0.015;
-        const farOffY = -mouse.y * h * 0.01;
-        const midOffX = -mouse.x * w * 0.035;
-        const midOffY = -mouse.y * h * 0.02;
-        const fgOffX = mouse.x * w * 0.055;
-        const fgOffY = mouse.y * h * 0.025;
+        // Static layers only redrawn on dirty state
+        if (needsSkyRedraw) {
+          renderSkyStatic(w, h, d);
+          needsSkyRedraw = false;
+        }
+        if (needsWorldRedraw) {
+          renderWorldPhotoStatic(w, h, d);
+          needsWorldRedraw = false;
+        }
+        if (needsForegroundRedraw) {
+          renderForegroundStatic(w, h, d);
+          needsForegroundRedraw = false;
+        }
 
-        renderSky(w, h, d, farOffX, farOffY);
-        renderWorld(w, h, d, midOffX, midOffY);
-        renderForeground(w, h, d, fgOffX, fgOffY);
+        // Active lightweight layers
         renderNeonCosmicPortal();
         updateHangingThreadsPhysics(cosmicTick);
         renderHangingThreads();
-        renderPortalAtmosphere(w, h, cosmicTick);
-
-        requestAnimationFrame(animLoop);
+        renderPortalAtmosphere(w, h, cosmicTick, d);
+        portalRafId = requestAnimationFrame(animLoop);
       }
-      requestAnimationFrame(animLoop);
+      portalRafId = requestAnimationFrame(animLoop);
 
-      // ----------------------------------------------------
       // Transition to Destination with Quantum Warp FX
-      // ----------------------------------------------------
       function setDestination(newIndex, direction = 1) {
         if (isTeleporting) return;
         isTeleporting = true;
-
-        // Trigger dynamic runes liquid shockwave ripple & vortex hyper-acceleration
-        targetDisplacementScale = 28.0;
-        targetRuneSpeed = 2.6;
         targetVortexSpeed = 3.6;
 
         if (portalCue) {
@@ -6966,10 +6517,8 @@
           statusPill.style.color = "#ffddaa";
         }
 
-        // Trigger Rich Audio Feedback
         playTeleportWarpSound();
 
-        // Singularity Gravitational Collapse & Expansion Animation
         if (gateWrap) {
           gsap.timeline()
             .to(gateWrap, { scale: 0.94, duration: 0.18, ease: "power2.in" })
@@ -6977,7 +6526,6 @@
             .to(gateWrap, { scale: 1.0, duration: 0.35, ease: "power2.out" });
         }
 
-        // Shockwave Ripple Ring FX
         if (rippleFx) {
           gsap.fromTo(rippleFx,
             { scale: 0.1, opacity: 0.95 },
@@ -6985,7 +6533,6 @@
           );
         }
 
-        // Quantum Warp Flash Layer
         if (warpFx) {
           gsap.fromTo(warpFx,
             { opacity: 0, scale: 0.95 },
@@ -6995,11 +6542,9 @@
               duration: 0.28,
               ease: "power2.inOut",
               onComplete() {
-                // Swap State at Peak Flash
                 currentIndex = (newIndex + destinations.length) % destinations.length;
                 const d = destinations[currentIndex];
 
-                // Update Left HUD
                 if (kickerIndexEl) kickerIndexEl.textContent = d.kicker;
                 if (placeTitleEl) {
                   gsap.fromTo(placeTitleEl,
@@ -7011,19 +6556,19 @@
                 if (indexNumEl) indexNumEl.textContent = d.num;
                 if (indexFillEl) indexFillEl.style.width = ((currentIndex + 1) / destinations.length * 100) + "%";
 
-                // Digital HUD Scramble on Right Telemetry Panel
                 if (coordsEl) scrambleText(coordsEl, d.coords, 380);
                 if (altEl) scrambleText(altEl, d.altitude, 320);
                 if (atmoEl) scrambleText(atmoEl, d.atmosphere, 420);
                 if (windowEl) scrambleText(windowEl, d.temporal, 350);
 
-                // Update Tabs & Pills
                 navTabs.forEach((tab, idx) => tab.classList.toggle("active", idx === currentIndex));
                 pills.forEach((pill, idx) => pill.classList.toggle("active", idx === currentIndex));
 
+                needsSkyRedraw = true;
+                needsWorldRedraw = true;
+                needsForegroundRedraw = true;
                 initWorldParticles();
 
-                // Fade out Warp Flash
                 gsap.to(warpFx, {
                   opacity: 0,
                   scale: 1,
@@ -7032,7 +6577,6 @@
                   onComplete() {
                     isTeleporting = false;
                     targetVortexSpeed = isGateHovered ? 2.4 : 1.0;
-                    targetRuneSpeed = isGateHovered ? 1.6 : 0.28;
                     if (statusPill) {
                       statusPill.innerHTML = '<span class="portal-status-dot"></span>ONLINE';
                       statusPill.style.color = "#777";
@@ -7045,36 +6589,31 @@
         } else {
           currentIndex = (newIndex + destinations.length) % destinations.length;
           isTeleporting = false;
+          needsSkyRedraw = true;
+          needsWorldRedraw = true;
+          needsForegroundRedraw = true;
           targetVortexSpeed = isGateHovered ? 2.4 : 1.0;
-          targetRuneSpeed = isGateHovered ? 1.6 : 0.28;
         }
       }
 
-      // ----------------------------------------------------
-      // Interactive Event Listeners
-      // ----------------------------------------------------
-      // Click Gate Arch to Teleport to Next Destination
       if (gateWrap) {
         gateWrap.addEventListener("click", () => {
           setDestination(currentIndex + 1, 1);
         });
       }
 
-      // Click Cue Badge to Teleport
       if (portalCue) {
         portalCue.addEventListener("click", () => {
           setDestination(currentIndex + 1, 1);
         });
       }
 
-      // CTA Teleport Button
       if (teleportBtn) {
         teleportBtn.addEventListener("click", () => {
           setDestination(currentIndex + 1, 1);
         });
       }
 
-      // Nav Arrows
       if (btnPrev) {
         btnPrev.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -7090,7 +6629,6 @@
         });
       }
 
-      // Top Tabs
       navTabs.forEach(tab => {
         tab.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -7102,7 +6640,6 @@
         });
       });
 
-      // Bottom Pills
       pills.forEach(pill => {
         pill.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -7114,7 +6651,6 @@
         });
       });
 
-      // Keyboard Arrow Navigation
       window.addEventListener("keydown", (e) => {
         if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
           const isNearPortal = document.activeElement === viewport || isGateHovered || Math.abs(mouse.x) > 0.05 || Math.abs(mouse.y) > 0.05;
@@ -7130,12 +6666,18 @@
       }
     })();
 
-/* ============================================================
-       PROJECT 02: SSENSE ATELIER LUXURY FOOTWEAR ENGINE (S-TIER)
-       ============================================================ */
     (function initSneakerApp() {
       const sneakerApp = document.getElementById("sneaker-app");
       if (!sneakerApp) return;
+
+      // Visibility Guard for Project 2: Halts RAF particles when offscreen
+      let isSneakerVisible = true;
+      if (window.IntersectionObserver) {
+        const snkObs = new IntersectionObserver(([entry]) => {
+          isSneakerVisible = entry.isIntersecting;
+        }, { threshold: 0.04 });
+        snkObs.observe(sneakerApp);
+      }
 
       const SNEAKERS = [
         {
@@ -8043,37 +7585,34 @@
       }));
 
       function renderSnkParticles() {
+        requestAnimationFrame(renderSnkParticles);
+        if (!isSneakerVisible) return;
         if (!snkParticlesCanvas || !snkParticlesCtx) return;
         const w = snkCanvasW;
         const h = snkCanvasH;
         snkParticlesCtx.clearRect(0, 0, w, h);
 
+        // Batched motes without software shadowBlur (instant 60 FPS)
+        snkParticlesCtx.fillStyle = "rgba(223, 183, 108, 0.45)";
+        snkParticlesCtx.beginPath();
         snkMotes.forEach(m => {
           m.y += m.speedY;
           m.x += m.speedX;
           if (m.y < 0) { m.y = h; m.x = Math.random() * w; }
           if (m.x < 0) m.x = w;
           if (m.x > w) m.x = 0;
-
-          snkParticlesCtx.save();
-          snkParticlesCtx.fillStyle = `rgba(223, 183, 108, ${m.alpha.toFixed(3)})`;
-          snkParticlesCtx.shadowColor = "rgba(223, 183, 108, 0.6)";
-          snkParticlesCtx.shadowBlur = 4;
-          snkParticlesCtx.beginPath();
+          snkParticlesCtx.moveTo(m.x + m.r, m.y);
           snkParticlesCtx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-          snkParticlesCtx.fill();
-          snkParticlesCtx.restore();
         });
+        snkParticlesCtx.fill();
 
-        // Update specular spot lerp (Feature 2)
+        // Update specular spot lerp
         snkSpot.x += (snkSpot.targetX - snkSpot.x) * 0.15;
         snkSpot.y += (snkSpot.targetY - snkSpot.y) * 0.15;
         if (snkLightSpot) {
           snkLightSpot.style.left = `${snkSpot.x.toFixed(1)}px`;
           snkLightSpot.style.top = `${snkSpot.y.toFixed(1)}px`;
         }
-
-        requestAnimationFrame(renderSnkParticles);
       }
       requestAnimationFrame(renderSnkParticles);
 
@@ -9503,14 +9042,26 @@
       if (solarInfoCloseBtn && solarInfoPanel && solarInfoOpenBtn) {
         solarInfoCloseBtn.addEventListener("click", () => {
           solarInfoPanel.classList.add("is-collapsed");
+          solarInfoPanel.classList.remove("is-expanded");
           solarInfoOpenBtn.classList.add("is-active");
+          solarInfoOpenBtn.classList.remove("is-hidden");
           playCelestialHarmonic(330, "sine", 0.4, 0.04);
         });
         solarInfoOpenBtn.addEventListener("click", () => {
           solarInfoPanel.classList.remove("is-collapsed");
+          solarInfoPanel.classList.add("is-expanded");
           solarInfoOpenBtn.classList.remove("is-active");
+          solarInfoOpenBtn.classList.add("is-hidden");
           playCelestialHarmonic(440, "sine", 0.4, 0.05);
         });
+
+        // Automatically start collapsed on mobile viewports (< 768px) so 3D space is open
+        if (window.innerWidth < 768) {
+          solarInfoPanel.classList.add("is-collapsed");
+          solarInfoPanel.classList.remove("is-expanded");
+          solarInfoOpenBtn.classList.add("is-active");
+          solarInfoOpenBtn.classList.remove("is-hidden");
+        }
       }
 
       // Action Buttons
@@ -9624,6 +9175,13 @@
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             isVisible = entry.isIntersecting;
+            if (isVisible) {
+              clock.getDelta(); // flush delta
+              if (!solarRafId) solarRafId = requestAnimationFrame(animate);
+            } else if (solarRafId) {
+              cancelAnimationFrame(solarRafId);
+              solarRafId = null;
+            }
           });
         }, { threshold: 0.05 });
         observer.observe(appContainer);
@@ -9635,9 +9193,12 @@
       // Main Animation Loop
       let clock = new THREE.Clock();
 
+      let solarRafId = null;
       function animate() {
-        requestAnimationFrame(animate);
-        if (!isVisible) return;
+        if (!isVisible) {
+          solarRafId = null;
+          return;
+        }
 
         const delta = clock.getDelta();
         const simDelta = isPaused ? 0 : delta * timeSpeed;
@@ -9720,10 +9281,11 @@
 
         // Render High-Performance Frame
         renderer.render(scene, camera);
+        solarRafId = requestAnimationFrame(animate);
       }
 
       // Kick off render loop
-      animate();
+      solarRafId = requestAnimationFrame(animate);
     })();
 
     /* Resize */
