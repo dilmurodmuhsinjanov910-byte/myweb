@@ -2289,9 +2289,48 @@
       pointer-events: none;
       transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 25;
-      background: radial-gradient(circle at 50% 50%, rgba(12, 16, 24, 0.85) 0%, rgba(6, 7, 10, 0.95) 100%);
+      background: transparent;
       border-radius: 16px;
       overflow: hidden;
+    }
+    .hw-xray-video {
+      width: 100%;
+      height: 100%;
+      max-width: 96%;
+      max-height: 94%;
+      object-fit: contain;
+      background: transparent;
+      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95)) brightness(1.04);
+      transition: transform 0.3s ease;
+    }
+    .hw-hud-scroll-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(8, 11, 16, 0.85);
+      border: 1px solid rgba(223, 183, 108, 0.35);
+      border-radius: 20px;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      transition: all 0.3s ease;
+    }
+    .hw-hud-scroll-badge.active {
+      border-color: #38bdf8;
+      color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+    .hw-hud-scroll-badge .scroll-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+      animation: badgePulse 1.8s ease-in-out infinite;
     }
     .hardware-app-container.xray-active .hw-video-layer {
       opacity: 1;
@@ -3986,6 +4025,10 @@
                   <!-- Top Stage HUD Indicators -->
                   <div class="hw-stage-hud">
                     <div class="hw-hud-tag" id="hw-hud-angle">TURNTABLE // 0° PROFILE</div>
+                    <div class="hw-hud-scroll-badge" id="hw-scroll-badge" title="Scroll Page to Scrub 3D Teardown & Rotate Turntable">
+                      <span class="scroll-dot"></span>
+                      <span id="hw-scroll-badge-text">SCROLL-LINKED: READY</span>
+                    </div>
                     <div class="hw-hud-controls">
                       <button class="hw-hud-btn" id="hw-btn-rot-left" title="Rotate Counter-Clockwise">↺ -15°</button>
                       <button class="hw-hud-btn" id="hw-btn-rot-reset" title="Reset Alignment">ALIGN</button>
@@ -4000,14 +4043,15 @@
                     <div class="hw-ground-grid"></div>
                     <div class="hw-contact-shadow" id="hw-contact-shadow"></div>
 
-                    <!-- AI High-Definition Video Teardown Layer -->
+                    <!-- AI High-Definition Transparent WebM Video Teardown Layer -->
                     <div class="hw-video-layer" id="hw-video-layer">
-                      <video id="hw-xray-video" class="hw-xray-video" playsinline muted loop preload="auto" poster="assets/video_thumbs/Apple_AirPods_Max_Exploded_View_20260912183607.jpg">
+                      <video id="hw-xray-video" class="hw-xray-video" playsinline muted loop preload="auto" poster="assets/video_thumbs_webm/Apple_AirPods_Max_Exploded_View_20260912183607.png">
+                        <source src="assets/videos_webm/Apple_AirPods_Max_Exploded_View_20260912183607.webm" type="video/webm">
                         <source src="assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4" type="video/mp4">
                       </video>
                       <div class="hw-video-play-badge" id="hw-video-badge">
                         <span class="pulse-dot"></span>
-                        <span class="badge-text" id="hw-video-badge-text">AI 3D EXPLODED CINEMA</span>
+                        <span class="badge-text" id="hw-video-badge-text">AI 3D EXPLODED CINEMA (WEBM ALPHA)</span>
                       </div>
                     </div>
 
@@ -8743,7 +8787,7 @@
       const hardwareApp = document.getElementById("hardware-app");
       if (!hardwareApp) return;
 
-      // 19 Iconic Photorealistic Flagships across 4 Luxury Categories with AI HD Teardown Videos
+      // 19 Iconic Photorealistic Flagships across 4 Luxury Categories with Transparent WebM & MP4 Video Teardowns
       const HARDWARE_CATALOG = {
         headphones: [
           {
@@ -8759,8 +8803,10 @@
             conn: "Bluetooth 5.0, AAC, Lightning",
             battery: "20h with ANC & Spatial Audio",
             image: "assets/hardware/apple_airpods_max.png",
-            video: "assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs/Apple_AirPods_Max_Exploded_View_20260912183607.jpg",
+            video: "assets/videos_webm/Apple_AirPods_Max_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Apple_AirPods_Max_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Apple_AirPods_Max_Exploded_View_20260912183607.jpg",
             chassisSpec: "Anodized Aluminum & Stainless Steel Canopy",
             driverSpec: "40mm Dual Neodymium Ring Magnet Motor",
             pcbSpec: "Dual Apple H1 10-Audio-Core Computational SIP",
@@ -8780,8 +8826,10 @@
             conn: "BT 5.2, LDAC, 3.5mm, USB-PD",
             battery: "30h Playtime (Fast Charge 3m=3h)",
             image: "assets/hardware/sony_wh1000xm5.png",
-            video: "assets/videos/Sony_WH-1000XM5_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs/Sony_WH-1000XM5_Exploded_View_20260912183606.jpg",
+            video: "assets/videos_webm/Sony_WH-1000XM5_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Sony_WH-1000XM5_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Sony_WH-1000XM5_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Sony_WH-1000XM5_Exploded_View_20260912183606.jpg",
             chassisSpec: "Stepless Slider & Soft Fit Leather Chassis",
             driverSpec: "30mm High-Rigidity Carbon Fiber Dome Transducer",
             pcbSpec: "Integrated Processor V1 + HD QN1 Dual DSP",
@@ -8801,8 +8849,10 @@
             conn: "BT 5.3, aptX Adaptive, 2.5/3.5mm",
             battery: "24h (18h Immersive Audio)",
             image: "assets/hardware/bose_qc_ultra.png",
-            video: "assets/videos/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.jpg",
+            video: "assets/videos_webm/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.jpg",
             chassisSpec: "Cast Aluminum Arms & Lightweight Polymer Shell",
             driverSpec: "35mm High-Resolution Bio-Cellulose Core",
             pcbSpec: "Custom Spatial Immersion DSP & Multi-Mic ANC",
@@ -8822,8 +8872,10 @@
             conn: "6.35mm Stereo, 4.4mm Pentaconn",
             battery: "Passive Audiophile 300-Ohm System",
             image: "assets/hardware/sennheiser_hd660s2.png",
-            video: "assets/videos/Sennheiser_HD_660S2_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs/Sennheiser_HD_660S2_Exploded_View_20260912183606.jpg",
+            video: "assets/videos_webm/Sennheiser_HD_660S2_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Sennheiser_HD_660S2_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Sennheiser_HD_660S2_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Sennheiser_HD_660S2_Exploded_View_20260912183606.jpg",
             chassisSpec: "Open-Back Acoustic Steel Mesh Grille",
             driverSpec: "38mm Transducer with Ultra-Light Aluminum Voice Coil",
             pcbSpec: "Precision Symmetrical OFC Audiophile Wiring",
@@ -8843,8 +8895,10 @@
             conn: "BT 5.1, aptX Adaptive, 3.5mm, USB-C",
             battery: "38h with ANC Active (50h std)",
             image: "assets/hardware/bo_h95.png",
-            video: "assets/videos/Headphones_exploded_view_animation_20260912183607.mp4",
-            thumb: "assets/video_thumbs/Headphones_exploded_view_animation_20260912183607.jpg",
+            video: "assets/videos_webm/Headphones_exploded_view_animation_20260912183607.webm",
+            videoMp4: "assets/videos/Headphones_exploded_view_animation_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Headphones_exploded_view_animation_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Headphones_exploded_view_animation_20260912183607.jpg",
             chassisSpec: "Brushed Aluminum & Lambskin Headband",
             driverSpec: "40mm Electro-Dynamic Titanium Core",
             pcbSpec: "B&O Custom Active Noise Cancelling DSP",
@@ -8866,8 +8920,10 @@
             conn: "LIGHTSPEED Wireless, USB-C",
             battery: "95h Continuous Motion",
             image: "assets/hardware/logitech_gpro_x.png",
-            video: "assets/videos/Logitech_G_Pro_X_Superlight_20260912183605.mp4",
-            thumb: "assets/video_thumbs/Logitech_G_Pro_X_Superlight_20260912183605.jpg",
+            video: "assets/videos_webm/Logitech_G_Pro_X_Superlight_20260912183605.webm",
+            videoMp4: "assets/videos/Logitech_G_Pro_X_Superlight_20260912183605.mp4",
+            thumb: "assets/video_thumbs_webm/Logitech_G_Pro_X_Superlight_20260912183605.png",
+            thumbJpg: "assets/video_thumbs/Logitech_G_Pro_X_Superlight_20260912183605.jpg",
             chassisSpec: "Ultra-Thin Lightweight Composite Structural Shell",
             driverSpec: "HERO 2 Next-Gen Sub-Micron Precision Sensor",
             pcbSpec: "LIGHTFORCE Hybrid Optical-Mechanical Switch PCB",
@@ -8887,8 +8943,10 @@
             conn: "HyperSpeed Wireless 2.4G, Type-C",
             battery: "90h Battery Life",
             image: "assets/hardware/razer_deathadder_v3.png",
-            video: "assets/videos/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.mp4",
-            thumb: "assets/video_thumbs/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.jpg",
+            video: "assets/videos_webm/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.webm",
+            videoMp4: "assets/videos/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.jpg",
             chassisSpec: "Ergonomic Sculpted Palm Shell with Zero-Creak Chassis",
             driverSpec: "Focus Pro 30K Optical Sensor Array",
             pcbSpec: "Gen-3 Optical Mouse Switches (90M Clicks)",
@@ -8908,8 +8966,10 @@
             conn: "Bluetooth LE, USB-C Charging",
             battery: "1 Month+ on Single Charge",
             image: "assets/hardware/apple_magic_mouse_2.png",
-            video: "assets/videos/Apple_Magic_Mouse_2_Exploded_20260912183605.mp4",
-            thumb: "assets/video_thumbs/Apple_Magic_Mouse_2_Exploded_20260912183605.jpg",
+            video: "assets/videos_webm/Apple_Magic_Mouse_2_Exploded_20260912183605.webm",
+            videoMp4: "assets/videos/Apple_Magic_Mouse_2_Exploded_20260912183605.mp4",
+            thumb: "assets/video_thumbs_webm/Apple_Magic_Mouse_2_Exploded_20260912183605.png",
+            thumbJpg: "assets/video_thumbs/Apple_Magic_Mouse_2_Exploded_20260912183605.jpg",
             chassisSpec: "Seamless Continuous Acrylic & Aluminum Unibody",
             driverSpec: "Full-Surface Capacitive Multi-Touch Subsystem",
             pcbSpec: "Apple Custom Low-Power Gesture Decoding Silicon",
@@ -8929,8 +8989,10 @@
             conn: "2.4G Standalone Wireless Receiver",
             battery: "70h Continuous Competitive Play",
             image: "assets/hardware/zowie_ec2_cw.png",
-            video: "assets/videos/ZOWIE_EC2-CW_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs/ZOWIE_EC2-CW_Exploded_View_20260912183606.jpg",
+            video: "assets/videos_webm/ZOWIE_EC2-CW_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/ZOWIE_EC2-CW_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/ZOWIE_EC2-CW_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/ZOWIE_EC2-CW_Exploded_View_20260912183606.jpg",
             chassisSpec: "Iconic Esports Asymmetrical Ergonomic Contouring",
             driverSpec: "Tuned PMW 3370 Optical Sensor with Anti-Jitter",
             pcbSpec: "Enhanced Wireless Antenna Isolation Controller",
@@ -8950,8 +9012,10 @@
             conn: "Logi Bolt 2.4GHz, Bluetooth LE, USB-C",
             battery: "70 Days on Full Charge",
             image: "assets/hardware/logitech_mx_master_3s.png",
-            video: "assets/videos/Mouse_disassembly_product_visual_20260912183605.mp4",
-            thumb: "assets/video_thumbs/Mouse_disassembly_product_visual_20260912183605.jpg",
+            video: "assets/videos_webm/Mouse_disassembly_product_visual_20260912183605.webm",
+            videoMp4: "assets/videos/Mouse_disassembly_product_visual_20260912183605.mp4",
+            thumb: "assets/video_thumbs_webm/Mouse_disassembly_product_visual_20260912183605.png",
+            thumbJpg: "assets/video_thumbs/Mouse_disassembly_product_visual_20260912183605.jpg",
             chassisSpec: "Ergonomic Thumb-Rest Sculpted Comfort Shell",
             driverSpec: "MagSpeed Machined Steel Magnetic Scroll Core",
             pcbSpec: "Darkfield Glass-Tracking Optical Sensing Engine",
@@ -8973,8 +9037,10 @@
             conn: "Wi-Fi 6, AirPlay 2, Bluetooth 5.0, USB-C",
             battery: "Continuous Audiophile Line Power",
             image: "assets/hardware/sonos_era_300.png",
-            video: "assets/videos/Sonos_Era_300_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs/Sonos_Era_300_Exploded_View_20260912183607.jpg",
+            video: "assets/videos_webm/Sonos_Era_300_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Sonos_Era_300_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Sonos_Era_300_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Sonos_Era_300_Exploded_View_20260912183607.jpg",
             chassisSpec: "Hourglass Acoustic Waveguide Enclosure",
             driverSpec: "6 Custom Drivers with Directional Horn Array",
             pcbSpec: "Quad-Core A55 SoC with Real-Time Trueplay DSP",
@@ -8994,8 +9060,10 @@
             conn: "BT 5.2, RCA, 3.5mm Aux",
             battery: "80 Watts Total Class D Power",
             image: "assets/hardware/marshall_stanmore_3.png",
-            video: "assets/videos/Marshall_Stanmore_III_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs/Marshall_Stanmore_III_Exploded_View_20260912183607.jpg",
+            video: "assets/videos_webm/Marshall_Stanmore_III_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Marshall_Stanmore_III_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Marshall_Stanmore_III_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Marshall_Stanmore_III_Exploded_View_20260912183607.jpg",
             chassisSpec: "Textured Vinyl Wrap & Brass-Finish Analog Controls",
             driverSpec: "50W Bass-Reflex Woofer & Outward-Angled Tweeters",
             pcbSpec: "Dynamic Loudness DSP with Placement Compensation",
@@ -9015,8 +9083,10 @@
             conn: "Bluetooth 5.1, USB-C Fast Charge",
             battery: "12h Playtime with IP67 Waterproofing",
             image: "assets/hardware/jbl_flip_6.png",
-            video: "assets/videos/JBL_Flip_6_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs/JBL_Flip_6_Exploded_View_20260912183607.jpg",
+            video: "assets/videos_webm/JBL_Flip_6_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/JBL_Flip_6_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/JBL_Flip_6_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/JBL_Flip_6_Exploded_View_20260912183607.jpg",
             chassisSpec: "Rugged Fabric Grille & Rubberized End Caps (IP67)",
             driverSpec: "Racetrack Woofer + 16mm High-Frequency Tweeter",
             pcbSpec: "Dual Passive Radiators with Dynamic Harman EQ",
@@ -9036,8 +9106,10 @@
             conn: "Bluetooth 4.2, 3.5mm, Micro-B",
             battery: "17h Rechargeable Lithium-Ion",
             image: "assets/hardware/bose_revolve_2.png",
-            video: "assets/videos/Bose_SoundLink_Revolve_II_Exploded_20260912183607.mp4",
-            thumb: "assets/video_thumbs/Bose_SoundLink_Revolve_II_Exploded_20260912183607.jpg",
+            video: "assets/videos_webm/Bose_SoundLink_Revolve_II_Exploded_20260912183607.webm",
+            videoMp4: "assets/videos/Bose_SoundLink_Revolve_II_Exploded_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Bose_SoundLink_Revolve_II_Exploded_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Bose_SoundLink_Revolve_II_Exploded_20260912183607.jpg",
             chassisSpec: "Seamless Aluminum Cylindrical Body with Flexible Handle",
             driverSpec: "Downward Full-Range Transducer + Omnidirectional Deflector",
             pcbSpec: "Dual-Opposing Passive Radiator Bass Processing",
@@ -9057,8 +9129,10 @@
             conn: "AirPlay 2, Spotify Connect, Roon, Optical",
             battery: "1,100 Watts RMS / 108 dB SPL",
             image: "assets/hardware/devialet_phantom_i.png",
-            video: "assets/videos/Speaker_exploded-view_product_vi_20260912183606.mp4",
-            thumb: "assets/video_thumbs/Speaker_exploded-view_product_vi_20260912183606.jpg",
+            video: "assets/videos_webm/Speaker_exploded-view_product_vi_20260912183606.webm",
+            videoMp4: "assets/videos/Speaker_exploded-view_product_vi_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Speaker_exploded-view_product_vi_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Speaker_exploded-view_product_vi_20260912183606.jpg",
             chassisSpec: "22-Carat Gold Leaf Side Plating & Composite Unibody",
             driverSpec: "Heart Bass Implosion (HBI®) Push-Push Woofers",
             pcbSpec: "Analog Digital Hybrid (ADH®) Processor Core",
@@ -9080,8 +9154,10 @@
             conn: "Bluetooth 5.1, USB Type-C Detachable",
             battery: "4000mAh Battery (300h RGB Off)",
             image: "assets/hardware/keychron_q1_pro.png",
-            video: "assets/videos/Keychron_Q1_Pro_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs/Keychron_Q1_Pro_Exploded_View_20260912183607.jpg",
+            video: "assets/videos_webm/Keychron_Q1_Pro_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Keychron_Q1_Pro_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Keychron_Q1_Pro_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Keychron_Q1_Pro_Exploded_View_20260912183607.jpg",
             chassisSpec: "Full 6063 CNC Machined Aluminum Double-Gasket Body",
             driverSpec: "Keychron K Pro Pre-Lubed Mechanical Switches",
             pcbSpec: "South-Facing RGB Hot-Swappable ARM Cortex MCU",
@@ -9101,8 +9177,10 @@
             conn: "LIGHTSPEED Wireless, Bluetooth, USB",
             battery: "40h Continuous RGB Playtime",
             image: "assets/hardware/logitech_g915_tkl.png",
-            video: "assets/videos/Logitech_G915_TKL_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs/Logitech_G915_TKL_Exploded_View_20260912183606.jpg",
+            video: "assets/videos_webm/Logitech_G915_TKL_Exploded_View_20260912183606.webm",
+            videoMp4: "assets/videos/Logitech_G915_TKL_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Logitech_G915_TKL_Exploded_View_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Logitech_G915_TKL_Exploded_View_20260912183606.jpg",
             chassisSpec: "Aircraft-Grade 5052 Aluminum-Magnesium Alloy Top Plate",
             driverSpec: "GL Clicky/Linear High-Performance Low-Profile Switches",
             pcbSpec: "Dual LIGHTSPEED + LIGHTSYNC RGB Embedded Logic",
@@ -9122,8 +9200,10 @@
             conn: "Bluetooth LE, USB-C to Lightning",
             battery: "Rechargeable Lithium (1 Month+)",
             image: "assets/hardware/apple_magic_keyboard.png",
-            video: "assets/videos/Apple_Magic_Keyboard_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs/Apple_Magic_Keyboard_Exploded_View_20260912183607.jpg",
+            video: "assets/videos_webm/Apple_Magic_Keyboard_Exploded_View_20260912183607.webm",
+            videoMp4: "assets/videos/Apple_Magic_Keyboard_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs_webm/Apple_Magic_Keyboard_Exploded_View_20260912183607.png",
+            thumbJpg: "assets/video_thumbs/Apple_Magic_Keyboard_Exploded_View_20260912183607.jpg",
             chassisSpec: "100% Recycled Precision Anodized Aluminum Top Case",
             driverSpec: "Low-Profile Scissor Mechanism with Optimized Travel",
             pcbSpec: "Integrated Biometric Touch ID Secure Enclave Subsystem",
@@ -9143,8 +9223,10 @@
             conn: "Detachable Braided Type-C Cable",
             battery: "Zero Latency Hardwire Esports Power",
             image: "assets/hardware/razer_huntsman_v3.png",
-            video: "assets/videos/Razer_Huntsman_V3_Pro_Exploded_20260912183606.mp4",
-            thumb: "assets/video_thumbs/Razer_Huntsman_V3_Pro_Exploded_20260912183606.jpg",
+            video: "assets/videos_webm/Razer_Huntsman_V3_Pro_Exploded_20260912183606.webm",
+            videoMp4: "assets/videos/Razer_Huntsman_V3_Pro_Exploded_20260912183606.mp4",
+            thumb: "assets/video_thumbs_webm/Razer_Huntsman_V3_Pro_Exploded_20260912183606.png",
+            thumbJpg: "assets/video_thumbs/Razer_Huntsman_V3_Pro_Exploded_20260912183606.jpg",
             chassisSpec: "Brushed 5052 Aluminum Top Plate & Textured Doubleshot PBT",
             driverSpec: "Razer Gen-2 Analog Optical Switches with Rapid Trigger",
             pcbSpec: "Dedicated Multi-Function Digital Dial & LED Telemetry",
@@ -9163,6 +9245,8 @@
       let targetAngle = 0;
       let velocity = 0;
       let isDragging = false;
+      let isUserManualInteracting = false;
+      let userInteractionTimeout = null;
       let startX = 0;
       let lastX = 0;
       let isAutoRotating = false;
@@ -9194,6 +9278,8 @@
       const hwMainImg = document.getElementById("hw-main-img");
       const hwXrayImgChassis = document.getElementById("hw-xray-img-chassis");
       const hudAngle = document.getElementById("hw-hud-angle");
+      const hwScrollBadge = document.getElementById("hw-scroll-badge");
+      const hwScrollBadgeText = document.getElementById("hw-scroll-badge-text");
       const btnRotLeft = document.getElementById("hw-btn-rot-left");
       const btnRotReset = document.getElementById("hw-btn-rot-reset");
       const btnRotRight = document.getElementById("hw-btn-rot-right");
@@ -9248,6 +9334,14 @@
       const modalSubmit = document.getElementById("hw-modal-submit");
       const engraveInput = document.getElementById("hw-engrave-input");
 
+      function markUserInteracting() {
+        isUserManualInteracting = true;
+        if (userInteractionTimeout) clearTimeout(userInteractionTimeout);
+        userInteractionTimeout = setTimeout(() => {
+          isUserManualInteracting = false;
+        }, 1800);
+      }
+
       // -------------------------------------------------------------
       // Synthesizer & Audio Engine
       // -------------------------------------------------------------
@@ -9289,7 +9383,7 @@
         try {
           const ctx = getAudioContext();
           if (!ctx) return;
-          const notes = [622.25, 830.61, 1046.50]; // Eb5, Ab5, C6
+          const notes = [622.25, 830.61, 1046.50];
           notes.forEach((freq, idx) => {
             const osc = ctx.createOscillator();
             const g = ctx.createGain();
@@ -9351,9 +9445,7 @@
         if (profile === "spatial") {
           const panner = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
           const targetNode = panner ? panner : masterGain;
-          if (panner) {
-            panner.connect(masterGain);
-          }
+          if (panner) panner.connect(masterGain);
 
           const tones = [220, 329.63, 440, 554.37];
           tones.forEach((freq, idx) => {
@@ -9581,17 +9673,18 @@
           hwXrayImgChassis.alt = model.name;
         }
 
-        // Update AI HD Video Teardown
-        if (hwXrayVideo && model.video) {
-          if (hwXrayVideo.src !== model.video && !hwXrayVideo.src.endsWith(model.video)) {
-            hwXrayVideo.src = model.video;
+        // Update AI HD Video Teardown (WebM with alpha)
+        if (hwXrayVideo) {
+          const targetVideo = model.video || model.videoMp4;
+          if (hwXrayVideo.src !== targetVideo && !hwXrayVideo.src.endsWith(targetVideo)) {
+            hwXrayVideo.src = targetVideo;
             if (model.thumb) hwXrayVideo.poster = model.thumb;
             hwXrayVideo.load();
             hwXrayVideo.currentTime = (xrayExpansion) * (hwXrayVideo.duration || 5);
           }
         }
         if (hwVideoBadgeText) {
-          hwVideoBadgeText.textContent = `AI 3D EXPLODED CINEMA // ${model.brand}`;
+          hwVideoBadgeText.textContent = `AI 3D EXPLODED CINEMA // ${model.brand} (WEBM ALPHA)`;
         }
 
         // Update Callouts Text
@@ -9655,6 +9748,7 @@
           card.addEventListener("click", () => {
             if (activeModelIdx !== idx) {
               activeModelIdx = idx;
+              markUserInteracting();
               playUiTick(1100, 0.03, 0.05);
               updateModelView();
             }
@@ -9665,7 +9759,7 @@
       }
 
       // -------------------------------------------------------------
-      // 360° Turntable Drag Physics & Inertia Engine
+      // 360° Turntable Physics & Inertia Engine
       // -------------------------------------------------------------
       function getCardinalPerspective(deg) {
         const norm = ((Math.round(deg) % 360) + 360) % 360;
@@ -9730,10 +9824,62 @@
         requestAnimationFrame(animateTurntableInertia);
       }
 
+      // -------------------------------------------------------------
+      // Scroll-Linked Video Teardown & Turntable Engine
+      // -------------------------------------------------------------
+      function handleScrollLinkUpdate() {
+        if (isUserManualInteracting || isDragging || isPlayingCinema) return;
+        const rect = hardwareApp.getBoundingClientRect();
+        const winH = window.innerHeight;
+
+        // Check if Cyber Studio is currently inside or near viewport
+        if (rect.bottom > 0 && rect.top < winH) {
+          const progress = Math.min(Math.max((winH - rect.top) / (winH + rect.height), 0), 1);
+
+          if (hwScrollBadge) {
+            hwScrollBadge.classList.add("active");
+            if (hwScrollBadgeText) hwScrollBadgeText.textContent = `SCROLL-LINKED: ${Math.round(progress * 100)}%`;
+          }
+
+          // Smoothly drive turntable 360 rotation by scroll
+          const scrollTargetAngle = (progress - 0.5) * 360 * 1.5;
+          currentAngle += (scrollTargetAngle - currentAngle) * 0.08;
+
+          // Smoothly scrub teardown expansion by scroll curve (parabolic arc)
+          const teardownProgress = Math.sin(Math.min(Math.max((progress - 0.1) / 0.8, 0), 1) * Math.PI);
+          xrayExpansion = teardownProgress;
+
+          if (xraySlider) xraySlider.value = (teardownProgress * 100).toFixed(1);
+          if (xraySliderVal) xraySliderVal.textContent = `${Math.round(teardownProgress * 100)}%`;
+
+          if (hwXrayVideo && hwXrayVideo.duration) {
+            const targetTime = teardownProgress * hwXrayVideo.duration;
+            if (!isNaN(targetTime) && Math.abs(hwXrayVideo.currentTime - targetTime) > 0.08) {
+              hwXrayVideo.currentTime = targetTime;
+            }
+          }
+
+          applyTurntableTransform();
+        } else {
+          if (hwScrollBadge) {
+            hwScrollBadge.classList.remove("active");
+            if (hwScrollBadgeText) hwScrollBadgeText.textContent = "SCROLL-LINKED: READY";
+          }
+        }
+      }
+
+      // Bind scroll updates to window scroll & Lenis
+      window.addEventListener("scroll", handleScrollLinkUpdate, { passive: true });
+      if (typeof lenis !== "undefined" && lenis && lenis.on) {
+        lenis.on("scroll", handleScrollLinkUpdate);
+      }
+
+      // Interactive Pointer Controls
       if (hwViewport) {
         hwViewport.addEventListener("pointerdown", e => {
           isDragging = true;
           isAutoRotating = false;
+          markUserInteracting();
           if (btnAutoRotate) btnAutoRotate.classList.remove("active");
           startX = e.clientX;
           lastX = e.clientX;
@@ -9743,6 +9889,7 @@
 
         hwViewport.addEventListener("pointermove", e => {
           if (!isDragging) return;
+          markUserInteracting();
           const delta = e.clientX - lastX;
           lastX = e.clientX;
           velocity = delta * 0.55;
@@ -9752,6 +9899,7 @@
 
         hwViewport.addEventListener("pointerup", e => {
           isDragging = false;
+          markUserInteracting();
           try { hwViewport.releasePointerCapture(e.pointerId); } catch(err) {}
         });
 
@@ -9764,6 +9912,7 @@
       // Rotate Controls
       if (btnRotLeft) {
         btnRotLeft.addEventListener("click", () => {
+          markUserInteracting();
           currentAngle -= 15;
           playUiTick(900, 0.02, 0.04);
           applyTurntableTransform();
@@ -9771,6 +9920,7 @@
       }
       if (btnRotRight) {
         btnRotRight.addEventListener("click", () => {
+          markUserInteracting();
           currentAngle += 15;
           playUiTick(900, 0.02, 0.04);
           applyTurntableTransform();
@@ -9778,6 +9928,7 @@
       }
       if (btnRotReset) {
         btnRotReset.addEventListener("click", () => {
+          markUserInteracting();
           currentAngle = 0;
           velocity = 0;
           playUiTick(1200, 0.03, 0.05);
@@ -9786,21 +9937,21 @@
       }
       if (btnAutoRotate) {
         btnAutoRotate.addEventListener("click", () => {
+          markUserInteracting();
           isAutoRotating = !isAutoRotating;
           btnAutoRotate.classList.toggle("active", isAutoRotating);
           playUiTick(isAutoRotating ? 1400 : 700, 0.03, 0.05);
         });
       }
 
-      // -------------------------------------------------------------
       // Mode & Category Switchers & Video Scrubbing Engine
-      // -------------------------------------------------------------
       catBtns.forEach(btn => {
         btn.addEventListener("click", () => {
           const cat = btn.getAttribute("data-cat");
           if (cat && cat !== activeCategory) {
             activeCategory = cat;
             activeModelIdx = 0;
+            markUserInteracting();
             catBtns.forEach(b => b.classList.toggle("active", b === btn));
             playUiTick(800, 0.03, 0.07);
             populateRoster();
@@ -9813,6 +9964,7 @@
         modeBtnStudio.addEventListener("click", () => {
           if (isXRayMode) {
             isXRayMode = false;
+            markUserInteracting();
             hardwareApp.classList.remove("xray-active");
             modeBtnStudio.classList.add("active");
             modeBtnXray.classList.remove("active");
@@ -9834,6 +9986,7 @@
         modeBtnXray.addEventListener("click", () => {
           if (!isXRayMode) {
             isXRayMode = true;
+            markUserInteracting();
             hardwareApp.classList.add("xray-active");
             modeBtnXray.classList.add("active");
             modeBtnStudio.classList.remove("active");
@@ -9847,9 +10000,10 @@
         });
       }
 
-      // Video Timeline Scrubbing
+      // Video Timeline Scrubbing via Slider
       if (xraySlider) {
         xraySlider.addEventListener("input", e => {
+          markUserInteracting();
           const val = parseFloat(e.target.value);
           xrayExpansion = val / 100;
           if (xraySliderVal) xraySliderVal.textContent = `${Math.round(val)}%`;
@@ -9867,6 +10021,7 @@
       // Play / Pause Video Cinema Mode
       if (hwBtnVideoPlay && hwXrayVideo) {
         hwBtnVideoPlay.addEventListener("click", () => {
+          markUserInteracting();
           if (!isPlayingCinema) {
             hwXrayVideo.play().then(() => {
               isPlayingCinema = true;
@@ -9900,6 +10055,7 @@
           const prof = btn.getAttribute("data-profile");
           if (prof) {
             activeSoundProfile = prof;
+            markUserInteracting();
             profileBtns.forEach(b => b.classList.toggle("active", b === btn));
             playUiTick(1000, 0.02, 0.04);
             if (isPlayingAudio) {
@@ -9911,6 +10067,7 @@
 
       if (audioPlayBtn) {
         audioPlayBtn.addEventListener("click", () => {
+          markUserInteracting();
           if (isPlayingAudio) {
             stopAcousticSynthesis();
             playUiTick(600, 0.03, 0.05);
@@ -9921,9 +10078,7 @@
         });
       }
 
-      // -------------------------------------------------------------
       // Hardware Reservation Suite Modal
-      // -------------------------------------------------------------
       if (reserveBtn) {
         reserveBtn.addEventListener("click", () => {
           if (modalBackdrop) {
