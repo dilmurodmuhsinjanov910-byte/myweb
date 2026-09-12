@@ -870,12 +870,12 @@
     .snk-viewer-area {
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at 50% 45%, #13141b 0%, #08090c 75%);
+      background: #070707;
       border-right: 1px solid rgba(255, 255, 255, 0.07);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 12px 14px;
+      padding: 14px 18px;
       user-select: none;
     }
     .snk-viewer-top {
@@ -979,17 +979,17 @@
       z-index: 1;
     }
     .snk-render-box {
-      width: 92%;
-      max-width: 480px;
-      height: 260px;
+      width: 96%;
+      max-width: 580px;
+      height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       z-index: 5;
       transform-origin: center center;
-      transition: transform 0.06s ease-out;
-      filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.85));
+      transition: transform 0.12s ease-out;
+      filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.95));
     }
     .snk-render-box svg,
     .snk-render-box img,
@@ -1002,8 +1002,10 @@
       user-select: none;
       -webkit-user-drag: none;
       pointer-events: none;
-      transition: filter 0.25s ease;
-      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75));
+      transition: opacity 0.25s ease, filter 0.25s ease;
+      filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.85));
+      mask-image: radial-gradient(circle at center, black 65%, rgba(0,0,0,0.82) 84%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle at center, black 65%, rgba(0,0,0,0.82) 84%, transparent 100%);
     }
     .snk-ground-shadow {
       position: absolute;
@@ -1063,10 +1065,7 @@
       font-weight: 700;
       box-shadow: 0 0 10px rgba(223, 183, 108, 0.35);
     }
-    .snk-angle-pill.ref-highlight {
-      border-color: rgba(223, 183, 108, 0.4);
-      color: var(--gold-light);
-    }
+    /* ref-highlight removed */
 
     /* Viewer Footer: Drag Hint & Zoom Mode */
     .snk-viewer-footer {
@@ -1850,6 +1849,8 @@
    PROJECT 03: CYBER STUDIO LUXURY HARDWARE SHOWCASE (S-TIER)
    ============================================================ */
     .hardware-app-container {
+      overflow-x: hidden;
+      overflow-y: hidden;
       position: absolute;
       right: calc(var(--pad) + 14px);
       top: 50%;
@@ -2137,7 +2138,7 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at 50% 45%, rgba(30, 35, 48, 0.25) 0%, transparent 70%);
+      background: #070707;
     }
     .hw-stage-hud {
       position: absolute;
@@ -2232,13 +2233,17 @@
     /* 3D Rig */
     .hw-rig {
       position: relative;
-      width: 320px;
-      height: 260px;
+      width: min(540px, 94%);
+      height: min(390px, 46vh);
       display: flex;
       align-items: center;
       justify-content: center;
       transform-style: preserve-3d;
       will-change: transform;
+    }
+    .hw-main-img, .hw-teardown-img, .hw-studio-img {
+      mask-image: radial-gradient(circle at center, black 65%, rgba(0,0,0,0.82) 84%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle at center, black 65%, rgba(0,0,0,0.82) 84%, transparent 100%);
     }
     .hw-layer {
       position: absolute;
@@ -3734,26 +3739,19 @@
               <div class="snk-main-stage">
                 
                 <!-- Left Column: Multi-Angle Sneaker Viewer with 3D Drag & 360 Turntable -->
-                <div class="snk-viewer-area" id="snk-viewer-area">
+                        <div class="snk-viewer-area" id="snk-viewer-area">
                   <div class="snk-viewer-top">
                     <div class="snk-viewer-badge">
                       <span class="snk-pulse-dot"></span>
                       <span id="snk-cert-badge">AUTHENTIC ARCHIVE // MILANO</span>
                     </div>
                     <div class="snk-turntable-hud">
-                      <div class="snk-degree-dial" id="snk-degree-dial">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 6 16 14 8 14 12 6"/></svg>
-                        <span id="snk-degree-val">0° // PROFILE</span>
-                      </div>
-                      <button class="snk-autospin-btn" id="snk-autospin-btn" title="Toggle 360 Auto-Rotation">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        <span id="snk-autospin-text">SPIN 360°</span>
-                      </button>
+                      <span id="snk-degree-val" style="font-size:8px;letter-spacing:0.16em;color:var(--gold);background:rgba(0,0,0,0.6);padding:4px 10px;border-radius:12px;border:1px solid rgba(223,183,108,0.3);font-weight:600;">0° // PROFILE</span>
                     </div>
                   </div>
 
-                  <!-- 3D Tilt Card & Stage Canvas Container -->
-                  <div class="snk-tilt-card" id="snk-tilt-card" title="Click and drag horizontally to rotate 360 degrees">
+                  <!-- 3D Studio Stage Container -->
+                  <div class="snk-tilt-card" id="snk-tilt-card">
                     <div class="snk-light-spot" id="snk-light-spot"></div>
                     <div class="snk-render-box" id="snk-render-box">
                       <img src="assets/sneakers/studio/palm-angels_profile.jpg" data-src="assets/sneakers/studio/palm-angels_profile.jpg" alt="PALM ANGELS Flame Low" class="snk-photo-render" draggable="false" />
@@ -3762,29 +3760,16 @@
                     <div class="snk-ground-reflection" id="snk-ground-reflection"></div>
                   </div>
 
-                  <!-- Angle Quick Select Pills -->
+                  <!-- Angle Quick Select Pills (Clean Studio Perspectives) -->
                   <div class="snk-angle-pills" id="snk-angle-pills">
                     <button class="snk-angle-pill active" data-angle="0">0° PROFILE</button>
                     <button class="snk-angle-pill" data-angle="45">45° 3/4 FRONT</button>
-                    <button class="snk-angle-pill ref-highlight" data-angle="270" title="Reference Luxury Archive Heel">★ 270° HEEL</button>
+                    <button class="snk-angle-pill" data-angle="270">270° HEEL</button>
                     <button class="snk-angle-pill" data-angle="top">AERIAL LACE</button>
-                  </div>
-
-                  <!-- Bottom Drag Hint & Zoom Mode -->
-                  <div class="snk-viewer-footer">
-                    <div class="snk-drag-hint">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M3 12h18"/></svg>
-                      <span>DRAG HORIZONTALLY TO ROTATE 360°</span>
-                    </div>
-                    <button class="snk-zoom-btn" id="snk-zoom-btn" title="Toggle Detail Zoom">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                      <span id="snk-zoom-text">ZOOM 1.4X</span>
-                    </button>
                   </div>
                 </div>
 
-                <!-- Right Column: Editorial Details, Colorway, Size & Accordions -->
-                <div class="snk-panel-area" id="snk-panel-area">
+                                <div class="snk-panel-area" id="snk-panel-area">
                   <div class="snk-meta-header">
                     <span class="snk-brand-tag" id="snk-brand-tag">PALM ANGELS // MILANO</span>
                     <h2 class="snk-product-title" id="snk-product-title">Flame Low Suede &amp; Leather Sneakers</h2>
@@ -4014,11 +3999,7 @@
                 </nav>
                 
                 <div class="hw-header-right">
-                  <!-- Mode Toggle: Studio 360 vs X-Ray Teardown -->
-                  <div class="hw-mode-toggle">
-                    <button class="hw-mode-btn active" id="hw-mode-studio">360° TURNTABLE</button>
-                    <button class="hw-mode-btn" id="hw-mode-xray">X-RAY TEARDOWN</button>
-                  </div>
+                  <span style="font-size:7.5px;letter-spacing:0.18em;color:var(--gold);background:rgba(223,183,108,0.1);padding:4px 10px;border-radius:12px;border:1px solid rgba(223,183,108,0.25);font-weight:600;">DARK OBSIDIAN STUDIO</span>
                 </div>
               </header>
 
@@ -4043,16 +4024,9 @@
                     
                     <!-- Multi-Angle Studio Rakurs Pills -->
                     <div class="hw-rakurs-pills" id="hw-rakurs-pills" style="display:flex;gap:6px;align-items:center;z-index:25;">
-                      <button class="hw-rakurs-btn active" data-rakurs="hero" style="background:rgba(223,183,108,0.18);border:1px solid rgba(223,183,108,0.45);color:#fff3d1;padding:4px 10px;font-size:7px;letter-spacing:0.12em;cursor:pointer;border-radius:12px;transition:all 0.25s;font-weight:600;">3/4 HERO</button>
-                      <button class="hw-rakurs-btn" data-rakurs="profile" style="background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);color:#888;padding:4px 10px;font-size:7px;letter-spacing:0.12em;cursor:pointer;border-radius:12px;transition:all 0.25s;">PROFILE</button>
-                      <button class="hw-rakurs-btn" data-rakurs="teardown" style="background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);color:#888;padding:4px 10px;font-size:7px;letter-spacing:0.12em;cursor:pointer;border-radius:12px;transition:all 0.25s;">EXPLODED TEARDOWN</button>
-                    </div>
-
-                    <div class="hw-hud-controls">
-                      <button class="hw-hud-btn" id="hw-btn-rot-left" title="Rotate Counter-Clockwise">↺ -15°</button>
-                      <button class="hw-hud-btn" id="hw-btn-rot-reset" title="Reset Alignment">ALIGN</button>
-                      <button class="hw-hud-btn" id="hw-btn-rot-right" title="Rotate Clockwise">↻ +15°</button>
-                      <button class="hw-hud-btn" id="hw-btn-autorotate" title="Toggle Auto-Orbit">ORBIT</button>
+                      <button class="hw-rakurs-btn active" data-rakurs="hero" style="background:rgba(223,183,108,0.22);border:1px solid rgba(223,183,108,0.5);color:#fff3d1;padding:4px 12px;font-size:7.5px;letter-spacing:0.14em;cursor:pointer;border-radius:12px;transition:all 0.25s;font-weight:700;">3/4 HERO</button>
+                      <button class="hw-rakurs-btn" data-rakurs="profile" style="background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.12);color:#888;padding:4px 12px;font-size:7.5px;letter-spacing:0.14em;cursor:pointer;border-radius:12px;transition:all 0.25s;font-weight:600;">PROFILE</button>
+                      <button class="hw-rakurs-btn" data-rakurs="teardown" style="background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.12);color:#888;padding:4px 12px;font-size:7.5px;letter-spacing:0.14em;cursor:pointer;border-radius:12px;transition:all 0.25s;font-weight:600;">EXPLODED TEARDOWN</button>
                     </div>
                   </div>
 
@@ -8388,867 +8362,340 @@
         }
 ];
 
-      let activeSneakerIdx = 0;
+            let activeSneakerIdx = 0;
       let activeColorwayIdx = 0;
-      let currentAngle = 0; // 0..360 deg
+      let activeAngle = "0"; // "0", "45", "270", "top"
       let isAerialView = false;
-      let isAutoSpinning = false;
-      let autoSpinTimer = null;
-      let isZoomed = false;
       let isAudioEnabled = true;
       let selectedSize = 43;
-      const wishlistedSneakers = new Set();
-      let isHoveringCard = false;
+      let wishlistItems = new Set();
       let cart = [];
 
-      // Drag / Physics State
-      let isDragging = false;
-      let dragStartX = 0;
-      let dragStartAngle = 0;
-      let dragVelocity = 0;
-      let lastDragX = 0;
-      let lastDragTime = 0;
-      let inertiaAnimationId = null;
-
       // DOM Elements
-      const modelTabs = Array.from(document.querySelectorAll(".snk-model-tab"));
-      const anglePills = Array.from(document.querySelectorAll(".snk-angle-pill"));
-      const renderBox = document.getElementById("snk-render-box");
-      const snkVideo = document.getElementById("snk-video");
-      const groundShadow = document.getElementById("snk-ground-shadow");
-      const lightSpot = document.getElementById("snk-light-spot");
-      const tiltCard = document.getElementById("snk-tilt-card");
-      const degreeVal = document.getElementById("snk-degree-val");
-      const autospinBtn = document.getElementById("snk-autospin-btn");
-      const autospinText = document.getElementById("snk-autospin-text");
-      const zoomBtn = document.getElementById("snk-zoom-btn");
-      const zoomText = document.getElementById("snk-zoom-text");
       const certBadge = document.getElementById("snk-cert-badge");
-
-      // Transparent poster constant (prevents initial and transition frame flash)
-      const TRANSPARENT_POSTER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E";
-
-      // Instantiate 3-Tier Video Scrub Engine & Dual-Control Physics State Machine
-      const snkVideoEngine = new VideoScrubEngine(snkVideo, {
-        fps: 60,
-        lerpFactor: 0.12,
-        quantizeDelta: 0.038
-      });
-
-      const snkPhysics = new DualControlPhysics({
-        cooldownDuration: 1800,
-        blendDuration: 300,
-        videoEngine: snkVideoEngine
-      });
-
-      window.snkVideoEngine = snkVideoEngine;
-      window.snkPhysics = snkPhysics;
-
-      function syncTurntableVideoTime(angleDeg) {
-        updateSneakerVisual();
-      }
-
+      const degreeVal = document.getElementById("snk-degree-val");
+      const tiltCard = document.getElementById("snk-tilt-card");
+      const renderBox = document.getElementById("snk-render-box");
+      const anglePills = document.querySelectorAll(".snk-angle-pill");
+      const modelTabs = document.querySelectorAll(".snk-model-tab");
       const brandTagEl = document.getElementById("snk-brand-tag");
-      const productTitleEl = document.getElementById("snk-product-title");
+      const titleEl = document.getElementById("snk-title");
       const priceValEl = document.getElementById("snk-price-val");
-      const colorNameEl = document.getElementById("snk-color-name");
-      const swatchesListEl = document.getElementById("snk-swatches-list");
-      const sizePills = Array.from(document.querySelectorAll(".snk-size-pill"));
-      const stockTextEl = document.getElementById("snk-stock-text");
-      const addCartBtn = document.getElementById("snk-add-cart-btn");
-      const addCartText = document.getElementById("snk-add-cart-text");
-      const wishlistBtn = document.getElementById("snk-wishlist-btn");
-      const wishlistBadge = document.getElementById("snk-wishlist-badge");
-      const editorialDescEl = document.getElementById("snk-editorial-desc");
-
-      const accDetailsEl = document.getElementById("snk-acc-details");
-      const accMaterialEl = document.getElementById("snk-acc-material");
-      const accShippingEl = document.getElementById("snk-acc-shipping");
-      const accReviewsEl = document.getElementById("snk-acc-reviews");
+      const swatchesWrap = document.getElementById("snk-swatches");
+      const cwLabel = document.getElementById("snk-colorway-label");
+      const sizeBtns = document.querySelectorAll(".snk-size-btn");
+      const fitNote = document.getElementById("snk-fit-note");
+      const addToCartBtn = document.getElementById("snk-add-to-cart-btn");
+      const wishBtn = document.getElementById("snk-wishlist-btn");
+      const wishBadge = document.getElementById("snk-wishlist-badge");
+      const descEl = document.getElementById("snk-desc");
+      const accDetails = document.getElementById("snk-acc-details");
+      const accMaterial = document.getElementById("snk-acc-material");
+      const accShipping = document.getElementById("snk-acc-shipping");
+      const accReviews = document.getElementById("snk-acc-reviews");
       const accReviewsTitle = document.getElementById("snk-acc-reviews-title");
-
+      const audioToggleBtn = document.getElementById("snk-sound-toggle");
+      const audioLabel = document.getElementById("snk-audio-label");
       const cartTrigger = document.getElementById("snk-cart-trigger");
-      const cartDrawer = document.getElementById("snk-cart-drawer");
       const cartBackdrop = document.getElementById("snk-cart-backdrop");
+      const cartDrawer = document.getElementById("snk-cart-drawer");
       const cartCloseBtn = document.getElementById("snk-cart-close-btn");
-      const cartCountEl = document.getElementById("snk-cart-count");
-      const cartTotalItemsEl = document.getElementById("snk-cart-total-items");
-      const cartItemsListEl = document.getElementById("snk-cart-items-list");
-      const cartSubtotalEl = document.getElementById("snk-cart-subtotal");
-      const cartFinalTotalEl = document.getElementById("snk-cart-final-total");
+      const cartCountBadge = document.getElementById("snk-cart-count");
+      const cartItemsList = document.getElementById("snk-cart-items-list");
+      const cartTotalItems = document.getElementById("snk-cart-total-items");
+      const cartSubtotal = document.getElementById("snk-cart-subtotal");
+      const cartFinalTotal = document.getElementById("snk-cart-final-total");
       const checkoutBtn = document.getElementById("snk-checkout-btn");
-
       const modalBackdrop = document.getElementById("snk-modal-backdrop");
       const modalCloseBtn = document.getElementById("snk-modal-close-btn");
-      const trackIdEl = document.getElementById("snk-track-id");
+      const modalTrackId = document.getElementById("snk-track-id");
 
-      const soundToggleBtn = document.getElementById("snk-sound-toggle");
-      const audioLabel = document.getElementById("snk-audio-label");
-      const backBtn = document.getElementById("snk-back-btn");
-
-      // ----------------------------------------------------
-      // Web Audio API Procedural Luxury Synthesizer
-      // ----------------------------------------------------
+      // Audio Context Synthesis
       let audioCtx = null;
       function getAudioContext() {
+        if (!isAudioEnabled) return null;
         if (!audioCtx) {
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
           if (AudioContextClass) audioCtx = new AudioContextClass();
         }
-        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+        if (audioCtx && audioCtx.state === "suspended") {
+          audioCtx.resume().catch(() => {});
+        }
         return audioCtx;
       }
 
-      function playUiTick(freq = 950, duration = 0.035, gainVal = 0.08) {
+      function playUiTick(freq = 900, duration = 0.03, gain = 0.06) {
         if (!isAudioEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
         try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
           const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
+          const g = ctx.createGain();
           osc.type = "sine";
           osc.frequency.setValueAtTime(freq, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(freq * 0.45, ctx.currentTime + duration);
-          gain.gain.setValueAtTime(gainVal, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.5, ctx.currentTime + duration);
+          g.gain.setValueAtTime(gain, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+          osc.connect(g);
+          g.connect(ctx.destination);
           osc.start();
           osc.stop(ctx.currentTime + duration);
-        } catch(e) {}
-      }
-
-      function playSwatchPluck(freq = 240) {
-        if (!isAudioEnabled) return;
-        try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = "triangle";
-          osc.frequency.setValueAtTime(freq, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(freq * 1.5, ctx.currentTime + 0.05);
-          gain.gain.setValueAtTime(0.12, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + 0.06);
-        } catch(e) {}
+        } catch (e) {}
       }
 
       function playCartChime() {
         if (!isAudioEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
         try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
-          const freqs = [523.25, 659.25, 783.99, 1046.50];
-          freqs.forEach((f, i) => {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
             const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.04);
-            gain.gain.setValueAtTime(0, ctx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.08 / (i + 1), ctx.currentTime + i * 0.04 + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.7);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(ctx.currentTime + i * 0.04);
-            osc.stop(ctx.currentTime + 0.75);
+            const g = ctx.createGain();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.05);
+            g.gain.setValueAtTime(0, ctx.currentTime + i * 0.05);
+            g.gain.linearRampToValueAtTime(0.08, ctx.currentTime + i * 0.05 + 0.02);
+            g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.05 + 0.35);
+            osc.connect(g);
+            g.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.05);
+            osc.stop(ctx.currentTime + i * 0.05 + 0.4);
           });
-        } catch(e) {}
+        } catch (e) {}
       }
 
-      function playDrawerSwoosh() {
-        if (!isAudioEnabled) return;
-        try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
-          const bufferSize = ctx.sampleRate * 0.16;
-          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-          const data = buffer.getChannelData(0);
-          for (let i = 0; i < bufferSize; i++) {
-            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.4));
-          }
-          const noise = ctx.createBufferSource();
-          noise.buffer = buffer;
-          const filter = ctx.createBiquadFilter();
-          filter.type = "bandpass";
-          filter.frequency.setValueAtTime(900, ctx.currentTime);
-          filter.frequency.linearRampToValueAtTime(350, ctx.currentTime + 0.16);
-          filter.Q.value = 2.0;
-          const gain = ctx.createGain();
-          gain.gain.setValueAtTime(0.07, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
-          noise.connect(filter);
-          filter.connect(gain);
-          gain.connect(ctx.destination);
-          noise.start();
-        } catch(e) {}
-      }
+      // Smooth 3D Mouse Parallax Tilt
+      if (tiltCard && renderBox) {
+        tiltCard.addEventListener("mousemove", (e) => {
+          const rect = tiltCard.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          const tiltX = (x * 12).toFixed(2);
+          const tiltY = (-y * 12).toFixed(2);
+          renderBox.style.transform = `perspective(1000px) rotateX(${tiltY}deg) rotateY(${tiltX}deg) scale(1.02)`;
+        });
 
-      function playCheckoutSuccess() {
-        if (!isAudioEnabled) return;
-        try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
-          const notes = [440, 554.37, 659.25, 880];
-          notes.forEach((f, i) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.07);
-            gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.07);
-            gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + i * 0.07 + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(ctx.currentTime + i * 0.07);
-            osc.stop(ctx.currentTime + 1.3);
-          });
-        } catch(e) {}
-      }
-
-      if (soundToggleBtn) {
-        soundToggleBtn.addEventListener("click", () => {
-          isAudioEnabled = !isAudioEnabled;
-          soundToggleBtn.classList.toggle("active", isAudioEnabled);
-          if (audioLabel) audioLabel.textContent = isAudioEnabled ? "AUDIO ON" : "AUDIO MUTED";
-          if (isAudioEnabled) playUiTick(1100, 0.04, 0.1);
+        tiltCard.addEventListener("mouseleave", () => {
+          renderBox.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
         });
       }
 
-      if (backBtn) {
-        backBtn.addEventListener("click", () => {
-          playUiTick(750, 0.03, 0.06);
-          const workSection = document.getElementById("work");
-          if (workSection) workSection.scrollIntoView({ behavior: "smooth" });
-        });
+      // Multi-Angle Studio Viewport Update
+      function getSneakerPhoto(snkId, angleKey) {
+        return `assets/sneakers/studio/${snkId}_${angleKey}.jpg`;
       }
 
-      // ----------------------------------------------------
-      // Luxury Photorealistic Atelier Render Engine (360° Multi-Angle)
-      // Genuine Ultra-High-Resolution Studio Cutout Perspectives
-      // ----------------------------------------------------
-      const PRELOAD_SNEAKER_ASSETS = [
-        "balenciaga_front3q.png", "balenciaga_heel.png", "balenciaga_profile.png", "balenciaga_toe.png", "balenciaga_top.png",
-        "bottega_front3q.png", "bottega_heel.png", "bottega_profile.png", "bottega_toe.png", "bottega_top.png",
-        "margiela_front3q.png", "margiela_heel.png", "margiela_profile.png", "margiela_toe.png", "margiela_top.png",
-        "off_white_front3q.png", "off_white_heel.png", "off_white_profile.png", "off_white_toe.png", "off_white_top.png",
-        "palm_angels_front3q.png", "palm_angels_heel.png", "palm_angels_profile.png", "palm_angels_toe.png", "palm_angels_top.png",
-        "rick_owens_front3q.png", "rick_owens_heel.png", "rick_owens_profile.png", "rick_owens_toe.png", "rick_owens_top.png"
-      ];
-      try {
-        PRELOAD_SNEAKER_ASSETS.forEach(imgFile => {
-          const img = new Image();
-          img.src = "assets/sneakers/" + imgFile;
-        });
-      } catch(e) {}
-
-      function getSneakerPhotoData(sneaker, cw, angleDeg, isAerial) {
-        const norm = (Math.round(angleDeg) % 360 + 360) % 360;
-        const snkId = sneaker.id;
-        let angleKey = "profile";
-        let flipX = false;
-        let angleName = "0° // LATERAL PROFILE";
-
-        if (isAerial) {
-          angleKey = "top";
-          angleName = "TOP // AERIAL LACE";
-        } else if (norm >= 225 && norm <= 315) {
-          angleKey = "heel";
-          angleName = "270° // HEEL ARCHIVE";
-        } else if (norm >= 25 && norm <= 110) {
-          angleKey = "threequarter";
-          angleName = "45° // 3/4 FRONT";
-        } else if (norm >= 111 && norm <= 224) {
-          angleKey = "threequarter";
-          flipX = true;
-          angleName = "135° // 3/4 MEDIAL";
-        } else {
-          angleKey = "profile";
-          angleName = "0° // PROFILE";
-        }
-
-        const src = `assets/sneakers/studio/${snkId}_${angleKey}.jpg`;
-        const filter = (cw && cw.filter) ? cw.filter : "none";
-        const transform = flipX ? "scaleX(-1)" : "none";
-
-        return { src, angleKey, flipX, angleName, filter, transform };
-      }
-
-      function renderSneakerPhoto(sneaker, cw, angleDeg, isAerial, isThumb) {
-        if (isThumb) {
-          const pfx = sneaker.id.replace(/-/g, "_");
-          const filter = (cw && cw.filter) ? cw.filter : "none";
-          return `<img src="assets/sneakers/${pfx}_profile.png" alt="${sneaker.brand} ${sneaker.model}" class="snk-cart-thumb-img" style="filter: ${filter};" draggable="false" />`;
-        }
-        const data = getSneakerPhotoData(sneaker, cw, angleDeg, isAerial);
-        return `<img src="${data.src}" data-src="${data.src}" alt="${sneaker.brand} ${sneaker.model}" class="snk-photo-render" style="transform: ${data.transform}; filter: ${data.filter};" draggable="false" />`;
-      }
-
-      function renderSneakerSvg(sneaker, cw, angleDeg, isAerial, pfx) {
-        const isThumb = typeof pfx === "string" && pfx.startsWith("cart_");
-        return renderSneakerPhoto(sneaker, cw, angleDeg, isAerial, isThumb);
-      }
-
-      // ----------------------------------------------------
-      // UI Update & Synchronization Function
-      // ----------------------------------------------------
-      let lastLoadedSneakerId = null;
       function updateSneakerView() {
         const sneaker = SNEAKERS[activeSneakerIdx];
         const colorway = sneaker.colorways[activeColorwayIdx];
-        const photo = getSneakerPhotoData(sneaker, colorway, currentAngle, isAerialView);
+        
+        let angleKey = "profile";
+        let angleLabel = "0° // PROFILE";
 
-        if (renderBox) {
-          let img = renderBox.querySelector("img.snk-photo-render");
-          if (!img) {
-            img = document.createElement("img");
-            img.className = "snk-photo-render";
-            img.id = "snk-photo-render";
-            img.alt = `${sneaker.brand} ${sneaker.model}`;
-            img.draggable = false;
-            renderBox.appendChild(img);
-          }
-          if (img.getAttribute("data-src") !== photo.src) {
-            img.src = photo.src;
-            img.setAttribute("data-src", photo.src);
-          }
-          img.style.transform = photo.transform;
-          img.style.filter = photo.filter;
-          img.style.opacity = "1";
+        if (isAerialView || activeAngle === "top") {
+          angleKey = "top";
+          angleLabel = "TOP // AERIAL LACE";
+        } else if (activeAngle === "270") {
+          angleKey = "heel";
+          angleLabel = "270° // HEEL ARCHIVE";
+        } else if (activeAngle === "45") {
+          angleKey = "threequarter";
+          angleLabel = "45° // 3/4 FRONT";
+        } else {
+          angleKey = "profile";
+          angleLabel = "0° // PROFILE";
         }
 
-        const normAngle = (Math.round(currentAngle) % 360 + 360) % 360;
-        const angleName = photo.angleName;
+        const targetSrc = getSneakerPhoto(sneaker.id, angleKey);
+        const img = renderBox ? renderBox.querySelector("img.snk-photo-render") : null;
+        if (img) {
+          if (img.getAttribute("data-src") !== targetSrc) {
+            img.style.opacity = "0.7";
+            img.src = targetSrc;
+            img.setAttribute("data-src", targetSrc);
+            img.onload = () => { img.style.opacity = "1"; };
+          }
+        }
 
         if (degreeVal) {
-          degreeVal.textContent = isAerialView ? "TOP // AERIAL LACE" : normAngle + "° // " + angleName;
+          degreeVal.textContent = angleLabel;
         }
 
+        // Update angle pill active state
         anglePills.forEach(pill => {
           const pAngle = pill.getAttribute("data-angle");
-          if (pAngle === "top") {
-            pill.classList.toggle("active", isAerialView);
-          } else {
-            const deg = parseInt(pAngle, 10);
-            const diff = Math.abs(normAngle - deg);
-            const circularDiff = Math.min(diff, 360 - diff);
-            const isActive = !isAerialView && circularDiff <= 40;
-            pill.classList.toggle("active", isActive);
-          }
+          pill.classList.toggle("active", pAngle === activeAngle);
         });
 
-        if (renderBox && !isHoveringCard) {
-          const zoomScale = isZoomed ? 1.38 : 1.0;
-          const rotY = isAerialView ? 0 : Math.sin(normAngle * Math.PI / 180) * 8;
-          renderBox.style.transform = "scale(" + zoomScale + ") rotateY(" + rotY + "deg)";
-        }
-        if (groundShadow) {
-          if (isAerialView) {
-            groundShadow.style.transform = "scale(1.05, 1.05)";
-            groundShadow.style.opacity = "0.75";
-          } else {
-            const rad = normAngle * Math.PI / 180;
-            const absCos = Math.abs(Math.cos(rad));
-            const absSin = Math.abs(Math.sin(rad));
-            const scaleX = 0.70 + absCos * 0.38;
-            const scaleY = 0.72 + absSin * 0.42;
-            groundShadow.style.transform = "scale(" + scaleX.toFixed(3) + ", " + scaleY.toFixed(3) + ")";
-            groundShadow.style.opacity = (0.78 + absCos * 0.18).toFixed(2);
-          }
-        }
-
-        if (brandTagEl) brandTagEl.textContent = sneaker.brandTag;
-        if (productTitleEl) productTitleEl.textContent = sneaker.model;
-        if (priceValEl) priceValEl.textContent = sneaker.currency + sneaker.price;
-        if (colorNameEl) colorNameEl.textContent = colorway.name;
-        if (editorialDescEl) editorialDescEl.textContent = sneaker.desc;
+        // Update model metadata
         if (certBadge) certBadge.textContent = sneaker.badge;
+        if (brandTagEl) brandTagEl.textContent = sneaker.brandTag;
+        if (titleEl) titleEl.textContent = `${sneaker.brand} ${sneaker.model}`;
+        if (priceValEl) priceValEl.textContent = `${sneaker.currency}${sneaker.price.toLocaleString()}`;
+        if (descEl) descEl.textContent = sneaker.desc;
+        if (cwLabel && colorway) cwLabel.textContent = colorway.name;
 
-        if (stockTextEl) {
-          stockTextEl.textContent = "Size EU " + selectedSize + " in stock \u2022 Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
+        // Render accordions
+        if (accDetails && sneaker.details) {
+          accDetails.innerHTML = "<ul>" + sneaker.details.map(d => `<li>${d}</li>`).join("") + "</ul>";
         }
-
-        modelTabs.forEach((tab, i) => {
-          tab.classList.toggle("active", i === activeSneakerIdx);
-        });
-
-        if (swatchesListEl) {
-          swatchesListEl.innerHTML = "";
-          sneaker.colorways.forEach((cw, idx) => {
-            const btn = document.createElement("button");
-            btn.className = "snk-swatch-disc" + (idx === activeColorwayIdx ? " active" : "");
-            btn.title = cw.name;
-            btn.innerHTML = "<span class='snk-swatch-half' style='background:" + cw.dot1 + "'></span><span class='snk-swatch-half' style='background:" + cw.dot2 + "'></span>";
-            btn.addEventListener("click", () => {
-              activeColorwayIdx = idx;
-              playSwatchPluck(220 + idx * 40);
-              updateSneakerView();
-            });
-            swatchesListEl.appendChild(btn);
-          });
-        }
-
-        if (wishlistBtn) {
-          wishlistBtn.classList.toggle("active", wishlistedSneakers.has(sneaker.id));
-        }
-        if (wishlistBadge) {
-          wishlistBadge.textContent = wishlistedSneakers.size;
-        }
-
-        if (accDetailsEl) {
-          accDetailsEl.innerHTML = "<ul>" + sneaker.details.map(d => "<li>" + d + "</li>").join("") + "</ul>";
-        }
-        if (accMaterialEl) accMaterialEl.textContent = sneaker.craftsmanship;
-        if (accShippingEl) accShippingEl.textContent = sneaker.shipping;
-        if (accReviewsEl) {
-          if (accReviewsTitle) {
-            accReviewsTitle.textContent = "Reviews (" + sneaker.reviews.count + ") \u2605 " + sneaker.reviews.rating;
-          }
-          accReviewsEl.innerHTML = sneaker.reviews.items.map(r => `
+        if (accMaterial) accMaterial.textContent = sneaker.craftsmanship || "";
+        if (accShipping) accShipping.textContent = sneaker.shipping || "";
+        if (accReviews && sneaker.reviews) {
+          if (accReviewsTitle) accReviewsTitle.textContent = `Reviews (${sneaker.reviews.count}) ★ ${sneaker.reviews.rating}`;
+          accReviews.innerHTML = sneaker.reviews.items.map(r => `
             <div class="snk-review-entry">
-              <div class="snk-review-stars">${r.stars}</div>
-              <div class="snk-review-quote">"${r.quote}"</div>
-              <div class="snk-review-author">— ${r.author}</div>
+              <div class="snk-rev-meta"><span class="snk-rev-author">${r.author}</span><span class="snk-rev-stars">${r.stars}</span></div>
+              <p class="snk-rev-quote">"${r.quote}"</p>
             </div>
           `).join("");
         }
-      }
 
-      // ----------------------------------------------------
-      // Interactive 360 Turntable Drag & Physics
-      // ----------------------------------------------------
-      function stopInertia() {
-        if (inertiaAnimationId) {
-          cancelAnimationFrame(inertiaAnimationId);
-          inertiaAnimationId = null;
+        // Update colorway swatches
+        if (swatchesWrap) {
+          swatchesWrap.innerHTML = "";
+          sneaker.colorways.forEach((cw, idx) => {
+            const sw = document.createElement("button");
+            sw.className = `snk-swatch ${idx === activeColorwayIdx ? "active" : ""}`;
+            sw.style.background = `linear-gradient(135deg, ${cw.upper} 50%, ${cw.heel || cw.flame || "#222"} 50%)`;
+            sw.setAttribute("title", cw.name);
+            sw.addEventListener("click", () => {
+              activeColorwayIdx = idx;
+              playUiTick(1100, 0.02, 0.04);
+              updateSneakerView();
+            });
+            swatchesWrap.appendChild(sw);
+          });
         }
       }
 
-      function onPointerDown(e) {
-        isDragging = true;
-        isAerialView = false;
-        snkPhysics.markUserInteracting('turntable');
-        stopInertia();
-        stopAutoSpin();
-        if (tiltCard) tiltCard.classList.add("grabbing");
-        dragStartX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-        lastDragX = dragStartX;
-        dragStartAngle = currentAngle;
-        lastDragTime = performance.now();
-        dragVelocity = 0;
-      }
-
-      let lastClickThreshold = 0;
-      function onPointerMove(e) {
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-        const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
-
-        if (!isDragging) {
-          if (isHoveringCard && renderBox && tiltCard && !isZoomed) {
-            const rect = tiltCard.getBoundingClientRect();
-            const relX = Math.max(-0.5, Math.min(0.5, (clientX - rect.left) / rect.width - 0.5));
-            const relY = Math.max(-0.5, Math.min(0.5, (clientY - rect.top) / rect.height - 0.5));
-            renderBox.style.transform = "perspective(1000px) rotateY(" + (relX * 10) + "deg) rotateX(" + (-relY * 8) + "deg)";
-            if (lightSpot) {
-              lightSpot.style.left = (clientX - rect.left) + "px";
-              lightSpot.style.top = (clientY - rect.top) + "px";
-            }
-          }
-          return;
-        }
-
-        const now = performance.now();
-        const dt = now - lastDragTime || 16;
-        const dx = clientX - lastDragX;
-        dragVelocity = dx / dt;
-        lastDragX = clientX;
-        lastDragTime = now;
-
-        const totalDelta = clientX - dragStartX;
-        currentAngle = dragStartAngle + totalDelta * 0.72;
-
-        snkPhysics.markUserInteracting('turntable');
-        syncTurntableVideoTime(currentAngle);
-
-        const currentMilestone = Math.floor(currentAngle / 45);
-        if (currentMilestone !== lastClickThreshold) {
-          lastClickThreshold = currentMilestone;
-          playUiTick(1100, 0.02, 0.05);
-        }
-
-        updateSneakerView();
-      }
-
-      function onPointerUp() {
-        if (!isDragging) return;
-        isDragging = false;
-        if (tiltCard) tiltCard.classList.remove("grabbing");
-        snkPhysics.releaseInteraction();
-
-        let velocity = dragVelocity * 18;
-        function stepInertia() {
-          if (Math.abs(velocity) < 0.15) {
-            stopInertia();
-            snkPhysics.releaseInteraction();
-            return;
-          }
-          currentAngle += velocity;
-          velocity *= 0.88;
-          syncTurntableVideoTime(currentAngle);
-          updateSneakerView();
-          inertiaAnimationId = requestAnimationFrame(stepInertia);
-        }
-        stepInertia();
-      }
-
-      if (tiltCard) {
-        tiltCard.addEventListener("mouseenter", () => {
-          isHoveringCard = true;
-        });
-        tiltCard.addEventListener("mouseleave", () => {
-          isHoveringCard = false;
-          if (!isDragging && renderBox) {
-            const zoomScale = isZoomed ? 1.38 : 1.0;
-            const normAngle = (Math.round(currentAngle) % 360 + 360) % 360;
-            const rotY = isAerialView ? 0 : Math.sin(normAngle * Math.PI / 180) * 8;
-            renderBox.style.transition = "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)";
-            renderBox.style.transform = "scale(" + zoomScale + ") rotateY(" + rotY + "deg)";
-            setTimeout(() => {
-              if (renderBox) renderBox.style.transition = "none";
-            }, 350);
-          }
-        });
-
-        tiltCard.addEventListener("mousedown", onPointerDown);
-        window.addEventListener("mousemove", onPointerMove);
-        window.addEventListener("mouseup", onPointerUp);
-
-        tiltCard.addEventListener("touchstart", onPointerDown, { passive: true });
-        window.addEventListener("touchmove", onPointerMove, { passive: true });
-        window.addEventListener("touchend", onPointerUp);
-        window.addEventListener("touchcancel", onPointerUp);
-        window.addEventListener("blur", onPointerUp);
-      }
-
-      // Scroll-Linked 360° Perspective for Sneakers Atelier
-      function handleSneakerScrollLink() {
-        const canScroll = snkPhysics.notifyScroll();
-        if (!canScroll || isDragging || isAutoSpinning || isHoveringCard) return;
-        const snkContainer = document.getElementById("sneaker-app");
-        if (!snkContainer) return;
-        const rect = snkContainer.getBoundingClientRect();
-        const winH = window.innerHeight;
-        if (rect.bottom > 0 && rect.top < winH) {
-          const progress = Math.min(Math.max((winH - rect.top) / (winH + rect.height), 0), 1);
-          currentAngle = progress * 360;
-          snkVideoEngine.setTargetProgress(progress);
-          updateSneakerView();
-        }
-      }
-      window.addEventListener("scroll", handleSneakerScrollLink, { passive: true });
-      if (typeof lenis !== "undefined" && lenis && lenis.on) {
-        lenis.on("scroll", handleSneakerScrollLink);
-      }
-
-      function startAutoSpin() {
-        isAutoSpinning = true;
-        isAerialView = false;
-        snkPhysics.markUserInteracting('turntable');
-        if (autospinBtn) autospinBtn.classList.add("active");
-        if (autospinText) autospinText.textContent = "PAUSE";
-        stopInertia();
-
-        function spinLoop() {
-          if (!isAutoSpinning) return;
-          currentAngle += 0.45;
-          syncTurntableVideoTime(currentAngle);
-          updateSneakerView();
-          autoSpinTimer = requestAnimationFrame(spinLoop);
-        }
-        spinLoop();
-      }
-
-      function stopAutoSpin() {
-        isAutoSpinning = false;
-        if (autoSpinTimer) {
-          cancelAnimationFrame(autoSpinTimer);
-          autoSpinTimer = null;
-        }
-        if (autospinBtn) autospinBtn.classList.remove("active");
-        if (autospinText) autospinText.textContent = "SPIN 360°";
-        snkPhysics.releaseInteraction();
-      }
-
-      if (autospinBtn) {
-        autospinBtn.addEventListener("click", () => {
-          playUiTick(1000, 0.03, 0.08);
-          if (isAutoSpinning) stopAutoSpin();
-          else startAutoSpin();
-        });
-      }
-
+      // Angle Pills Click Binding
       anglePills.forEach(pill => {
         pill.addEventListener("click", () => {
-          playUiTick(900, 0.03, 0.07);
-          snkPhysics.markUserInteracting('turntable');
-          stopAutoSpin();
-          stopInertia();
+          playUiTick(950, 0.03, 0.06);
           const pAngle = pill.getAttribute("data-angle");
-          if (pAngle === "top") {
-            isAerialView = true;
-          } else {
-            isAerialView = false;
-            currentAngle = parseInt(pAngle, 10);
-            syncTurntableVideoTime(currentAngle);
-          }
+          activeAngle = pAngle;
+          isAerialView = (pAngle === "top");
           updateSneakerView();
-          snkPhysics.releaseInteraction();
         });
       });
 
-      if (zoomBtn) {
-        zoomBtn.addEventListener("click", () => {
-          isZoomed = !isZoomed;
-          zoomBtn.classList.toggle("active", isZoomed);
-          if (zoomText) zoomText.textContent = isZoomed ? "RESET 1X" : "ZOOM 1.4X";
-          playUiTick(isZoomed ? 1300 : 800, 0.04, 0.09);
-          updateSneakerView();
-        });
-      }
-
-      function switchSneaker(idx) {
-        const clampedIdx = Math.max(0, Math.min(SNEAKERS.length - 1, idx));
-        activeSneakerIdx = clampedIdx;
-        activeColorwayIdx = 0;
-        isAerialView = false;
-        const sneaker = SNEAKERS[activeSneakerIdx];
-        if (snkVideoEngine && sneaker && sneaker.video) {
-          snkVideoEngine.loadSource(sneaker.video, sneaker.videoMp4, snkVideoEngine.TRANSPARENT_POSTER);
-        }
-        updateSneakerView();
-      }
-      window.switchSneaker = switchSneaker;
-
+      // Model Switch Binding
       modelTabs.forEach(tab => {
         tab.addEventListener("click", () => {
-          playUiTick(850, 0.04, 0.08);
-          const idx = parseInt(tab.getAttribute("data-idx"), 10) || 0;
-          switchSneaker(idx);
-        });
-      });
-
-      sizePills.forEach(pill => {
-        pill.addEventListener("click", () => {
-          sizePills.forEach(p => p.classList.remove("active"));
-          pill.classList.add("active");
-          selectedSize = parseInt(pill.getAttribute("data-size"), 10) || 43;
-          playUiTick(1200, 0.035, 0.09);
-          const sneaker = SNEAKERS[activeSneakerIdx];
-          if (stockTextEl) {
-            stockTextEl.textContent = "Size EU " + selectedSize + " in stock \u2022 Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
+          const idx = parseInt(tab.getAttribute("data-idx"), 10);
+          if (activeSneakerIdx !== idx) {
+            activeSneakerIdx = idx;
+            activeColorwayIdx = 0;
+            modelTabs.forEach(t => t.classList.toggle("active", t === tab));
+            playUiTick(800, 0.04, 0.08);
+            updateSneakerView();
           }
         });
       });
 
-      if (wishlistBtn) {
-        wishlistBtn.addEventListener("click", () => {
-          const sneaker = SNEAKERS[activeSneakerIdx];
-          if (wishlistedSneakers.has(sneaker.id)) {
-            wishlistedSneakers.delete(sneaker.id);
-            playSwatchPluck(220);
-          } else {
-            wishlistedSneakers.add(sneaker.id);
-            playSwatchPluck(440);
-          }
-          const isNowWishlisted = wishlistedSneakers.has(sneaker.id);
-          wishlistBtn.classList.toggle("active", isNowWishlisted);
-          if (wishlistBadge) {
-            wishlistBadge.textContent = wishlistedSneakers.size;
-            wishlistBadge.style.transform = "scale(1.4)";
-            setTimeout(() => { wishlistBadge.style.transform = "scale(1)"; }, 250);
-          }
+      // Size Selector Binding
+      sizeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedSize = parseInt(btn.getAttribute("data-size"), 10);
+          sizeBtns.forEach(b => b.classList.toggle("active", b === btn));
+          if (fitNote) fitNote.textContent = `Size EU ${selectedSize} in stock • Only 2 pairs left in PALM atelier`;
+          playUiTick(1200, 0.02, 0.04);
         });
-      }
+      });
 
-      const accItems = Array.from(document.querySelectorAll(".snk-acc-item"));
-      accItems.forEach(item => {
-        const trigger = item.querySelector(".snk-acc-trigger");
-        if (trigger) {
-          trigger.addEventListener("click", () => {
-            playUiTick(900, 0.02, 0.05);
-            item.classList.toggle("active");
+      // Accordion Toggle
+      document.querySelectorAll(".snk-acc-item").forEach(item => {
+        const trig = item.querySelector(".snk-acc-trigger");
+        if (trig) {
+          trig.addEventListener("click", () => {
+            const isOpen = item.classList.contains("open");
+            document.querySelectorAll(".snk-acc-item").forEach(i => i.classList.remove("open"));
+            if (!isOpen) item.classList.add("open");
+            playUiTick(700, 0.02, 0.03);
           });
         }
       });
+      // Open details accordion by default
+      const firstAcc = document.querySelector(".snk-acc-item");
+      if (firstAcc) firstAcc.classList.add("open");
+
+      // Wishlist
+      if (wishBtn) {
+        wishBtn.addEventListener("click", () => {
+          const id = SNEAKERS[activeSneakerIdx].id;
+          if (wishlistItems.has(id)) {
+            wishlistItems.delete(id);
+            wishBtn.classList.remove("active");
+          } else {
+            wishlistItems.add(id);
+            wishBtn.classList.add("active");
+            playUiTick(1300, 0.04, 0.08);
+          }
+          if (wishBadge) wishBadge.textContent = wishlistItems.size;
+        });
+      }
+
+      // Add To Cart & Flying Shoe Animation
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener("click", () => {
+          const snk = SNEAKERS[activeSneakerIdx];
+          const cw = snk.colorways[activeColorwayIdx];
+          cart.push({
+            id: snk.id,
+            brand: snk.brand,
+            model: snk.model,
+            price: snk.price,
+            size: selectedSize,
+            colorway: cw ? cw.name : "",
+            image: `assets/sneakers/studio/${snk.id}_profile.jpg`
+          });
+          playCartChime();
+          updateCartUI();
+          openCart();
+        });
+      }
 
       function updateCartUI() {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        if (cartCountBadge) cartCountBadge.textContent = cart.length;
+        if (cartTotalItems) cartTotalItems.textContent = `(${cart.length} ITEMS)`;
+        const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
+        if (cartSubtotal) cartSubtotal.textContent = `$${subtotal.toLocaleString()}`;
+        if (cartFinalTotal) cartFinalTotal.textContent = `$${subtotal.toLocaleString()}`;
 
-        if (cartCountEl) {
-          cartCountEl.textContent = totalItems;
-          cartCountEl.style.transform = "scale(1.4)";
-          setTimeout(() => { cartCountEl.style.transform = "scale(1)"; }, 260);
-        }
-        if (cartTotalItemsEl) cartTotalItemsEl.textContent = "(" + totalItems + " ITEMS)";
-        if (cartSubtotalEl) cartSubtotalEl.textContent = "$" + subtotal.toLocaleString();
-        if (cartFinalTotalEl) cartFinalTotalEl.textContent = "$" + subtotal.toLocaleString();
-
-        if (cartItemsListEl) {
+        if (cartItemsList) {
           if (cart.length === 0) {
-            cartItemsListEl.innerHTML = `
-              <div class="snk-cart-empty-state">
-                <p>YOUR SHOPPING BAG IS CURRENTLY EMPTY</p>
-                <span style="font-size:7.5px;color:#888;">Discover exclusive atelier releases</span>
-              </div>
-            `;
+            cartItemsList.innerHTML = '<div class="snk-cart-empty">Your shopping bag is currently empty.</div>';
           } else {
-            cartItemsListEl.innerHTML = cart.map((item, idx) => `
+            cartItemsList.innerHTML = cart.map((item, idx) => `
               <div class="snk-cart-item">
-                <div class="snk-cart-thumb">
-                  ${item.svgThumb}
-                </div>
+                <img src="${item.image}" alt="${item.model}" class="snk-cart-item-thumb" />
                 <div class="snk-cart-item-info">
                   <span class="snk-cart-item-brand">${item.brand}</span>
-                  <div class="snk-cart-item-title">${item.model}</div>
-                  <div class="snk-cart-item-meta">${item.colorwayName} · Size EU ${item.size}</div>
-                  <div class="snk-cart-item-price-row">
-                    <span class="snk-cart-item-price">$${(item.price * item.quantity).toLocaleString()}</span>
-                    <div class="snk-cart-qty-btns">
-                      <button class="snk-cart-qty-btn" data-action="dec" data-idx="${idx}">−</button>
-                      <span class="snk-cart-qty-val">${item.quantity}</span>
-                      <button class="snk-cart-qty-btn" data-action="inc" data-idx="${idx}">+</button>
-                    </div>
-                    <button class="snk-cart-item-remove" data-action="remove" data-idx="${idx}" title="Remove">✕</button>
-                  </div>
+                  <span class="snk-cart-item-title">${item.model}</span>
+                  <span class="snk-cart-item-spec">Size EU ${item.size} • ${item.colorway}</span>
+                  <span class="snk-cart-item-price">$${item.price.toLocaleString()}</span>
                 </div>
+                <button class="snk-cart-item-remove" data-idx="${idx}" title="Remove item">&times;</button>
               </div>
             `).join("");
 
-            const qtyBtns = cartItemsListEl.querySelectorAll(".snk-cart-qty-btn");
-            qtyBtns.forEach(btn => {
-              btn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const action = btn.getAttribute("data-action");
-                const itemIdx = parseInt(btn.getAttribute("data-idx"), 10);
-                if (action === "inc") {
-                  cart[itemIdx].quantity += 1;
-                  playUiTick(1100, 0.03, 0.06);
-                } else if (action === "dec") {
-                  cart[itemIdx].quantity -= 1;
-                  if (cart[itemIdx].quantity <= 0) cart.splice(itemIdx, 1);
-                  playUiTick(800, 0.03, 0.06);
-                }
-                updateCartUI();
-              });
-            });
-
-            const removeBtns = cartItemsListEl.querySelectorAll(".snk-cart-item-remove");
-            removeBtns.forEach(btn => {
-              btn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const itemIdx = parseInt(btn.getAttribute("data-idx"), 10);
-                cart.splice(itemIdx, 1);
-                playUiTick(700, 0.04, 0.08);
+            cartItemsList.querySelectorAll(".snk-cart-item-remove").forEach(btn => {
+              btn.addEventListener("click", () => {
+                const idx = parseInt(btn.getAttribute("data-idx"), 10);
+                cart.splice(idx, 1);
+                playUiTick(600, 0.03, 0.04);
                 updateCartUI();
               });
             });
           }
         }
-      }
-
-      function triggerFlyingShoeAnimation() {
-        if (!tiltCard || !cartTrigger) return;
-        const cardRect = tiltCard.getBoundingClientRect();
-        const cartRect = cartTrigger.getBoundingClientRect();
-
-        const sneaker = SNEAKERS[activeSneakerIdx];
-        const colorway = sneaker.colorways[activeColorwayIdx];
-        const pfx = sneaker.id.replace(/-/g, "_");
-
-        const flyer = document.createElement("div");
-        flyer.className = "snk-fly-item";
-        flyer.innerHTML = `<img src="assets/sneakers/${pfx}_profile.png" alt="" style="width:100%;height:100%;object-fit:contain;filter:${colorway.filter || 'none'};" draggable="false" />`;
-        document.body.appendChild(flyer);
-
-        const startX = cardRect.left + cardRect.width / 2 - 20;
-        const startY = cardRect.top + cardRect.height / 2 - 20;
-        const endX = cartRect.left + cartRect.width / 2 - 10;
-        const endY = cartRect.top + cartRect.height / 2 - 10;
-
-        flyer.style.left = startX + "px";
-        flyer.style.top = startY + "px";
-        flyer.style.opacity = "1";
-        flyer.style.transform = "scale(1.2)";
-
-        const startTime = performance.now();
-        const duration = 600;
-
-        function animateFly(now) {
-          const progress = Math.min((now - startTime) / duration, 1);
-          const t = 1 - Math.pow(1 - progress, 3);
-          const curX = startX + (endX - startX) * t;
-          const arcHeight = -80 * Math.sin(progress * Math.PI);
-          const curY = startY + (endY - startY) * t + arcHeight;
-          const scale = 1.2 - 0.7 * t;
-
-          flyer.style.left = curX + "px";
-          flyer.style.top = curY + "px";
-          flyer.style.transform = "scale(" + scale + ") rotate(" + (t * 360) + "deg)";
-          flyer.style.opacity = (1 - progress * 0.2).toString();
-
-          if (progress < 1) {
-            requestAnimationFrame(animateFly);
-          } else {
-            if (flyer.parentNode) flyer.parentNode.removeChild(flyer);
-            updateCartUI();
-          }
-        }
-        requestAnimationFrame(animateFly);
-      }
-
-      if (addCartBtn) {
-        addCartBtn.addEventListener("click", () => {
-          const sneaker = SNEAKERS[activeSneakerIdx];
-          const colorway = sneaker.colorways[activeColorwayIdx];
-
-          playCartChime();
-
-          const existing = cart.find(item => item.id === sneaker.id && item.colorwayName === colorway.name && item.size === selectedSize);
-          if (existing) {
-            existing.quantity += 1;
-          } else {
-            cart.push({
-              id: sneaker.id,
-              brand: sneaker.brand,
-              model: sneaker.model,
-              price: sneaker.price,
-              colorwayName: colorway.name,
-              size: selectedSize,
-              quantity: 1,
-              svgThumb: renderSneakerSvg(sneaker, colorway, 0, false, "cart_" + Date.now() + "_" + Math.floor(Math.random() * 10000))
-            });
-          }
-
-          triggerFlyingShoeAnimation();
-
-          addCartBtn.classList.add("added");
-          if (addCartText) addCartText.textContent = "ADDED TO BAG \u2713";
-          setTimeout(() => {
-            addCartBtn.classList.remove("added");
-            if (addCartText) addCartText.textContent = "ADD TO CART";
-          }, 1800);
-        });
       }
 
       function openCart() {
         if (cartDrawer && cartBackdrop) {
           cartDrawer.classList.add("open");
           cartBackdrop.classList.add("open");
-          playDrawerSwoosh();
         }
       }
 
@@ -9256,7 +8703,6 @@
         if (cartDrawer && cartBackdrop) {
           cartDrawer.classList.remove("open");
           cartBackdrop.classList.remove("open");
-          playDrawerSwoosh();
         }
       }
 
@@ -9266,15 +8712,11 @@
 
       if (checkoutBtn) {
         checkoutBtn.addEventListener("click", () => {
-          if (cart.length === 0) return;
           closeCart();
           if (modalBackdrop) {
+            if (modalTrackId) modalTrackId.textContent = `DHL-EXPRESS-SSN-${Math.floor(100000 + Math.random() * 900000)}`;
             modalBackdrop.classList.add("open");
-            if (trackIdEl) {
-              const randCode = Math.floor(100000 + Math.random() * 900000);
-              trackIdEl.textContent = "DHL-EXPRESS-SSN-" + randCode;
-            }
-            playCheckoutSuccess();
+            playCartChime();
           }
         });
       }
@@ -9284,14 +8726,23 @@
           if (modalBackdrop) modalBackdrop.classList.remove("open");
           cart = [];
           updateCartUI();
-          playUiTick(900, 0.03, 0.07);
         });
       }
 
+      // Audio Toggle
+      if (audioToggleBtn) {
+        audioToggleBtn.addEventListener("click", () => {
+          isAudioEnabled = !isAudioEnabled;
+          audioToggleBtn.classList.toggle("active", isAudioEnabled);
+          if (audioLabel) audioLabel.textContent = isAudioEnabled ? "AUDIO ON" : "MUTED";
+          if (isAudioEnabled) playUiTick(1000, 0.03, 0.06);
+        });
+      }
+
+      // Initial Viewport Render
       updateSneakerView();
       updateCartUI();
     })();
-
 
 /* ============================================================
    PROJECT 03: CYBER STUDIO LUXURY HARDWARE ENGINE (S-TIER)
@@ -9300,7 +8751,7 @@
       const hardwareApp = document.getElementById("hardware-app");
       if (!hardwareApp) return;
 
-      // 19 Iconic Photorealistic Flagships across 4 Luxury Categories with Transparent WebM & MP4 Video Teardowns
+      // 19 Iconic Photorealistic Flagships across 4 Luxury Categories
       const HARDWARE_CATALOG = {
         headphones: [
           {
@@ -9315,11 +8766,7 @@
             latency: "12 ms / Dual H1 SIP",
             conn: "Bluetooth 5.0, AAC, Lightning",
             battery: "20h with ANC & Spatial Audio",
-            image: "assets/hardware/apple_airpods_max.png",
-            video: "assets/videos_webm/Apple_AirPods_Max_Exploded_View_20260912183607.webm",
-            videoMp4: "assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/Apple_AirPods_Max_Exploded_View_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/Apple_AirPods_Max_Exploded_View_20260912183607.jpg",
+            image: "assets/hardware/studio/apple-airpods-max_hero.jpg",
             chassisSpec: "Anodized Aluminum & Stainless Steel Canopy",
             driverSpec: "40mm Dual Neodymium Ring Magnet Motor",
             pcbSpec: "Dual Apple H1 10-Audio-Core Computational SIP",
@@ -9338,11 +8785,7 @@
             latency: "14 ms / LDAC 990kbps",
             conn: "BT 5.2, LDAC, 3.5mm, USB-PD",
             battery: "30h Playtime (Fast Charge 3m=3h)",
-            image: "assets/hardware/sony_wh1000xm5.png",
-            video: "assets/videos_webm/Sony_WH-1000XM5_Exploded_View_20260912183606.webm",
-            videoMp4: "assets/videos/Sony_WH-1000XM5_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/Sony_WH-1000XM5_Exploded_View_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/Sony_WH-1000XM5_Exploded_View_20260912183606.jpg",
+            image: "assets/hardware/studio/sony-wh1000xm5_hero.jpg",
             chassisSpec: "Stepless Slider & Soft Fit Leather Chassis",
             driverSpec: "30mm High-Rigidity Carbon Fiber Dome Transducer",
             pcbSpec: "Integrated Processor V1 + HD QN1 Dual DSP",
@@ -9361,182 +8804,226 @@
             latency: "15 ms / Snapdragon Sound",
             conn: "BT 5.3, aptX Adaptive, 2.5/3.5mm",
             battery: "24h (18h Immersive Audio)",
-            image: "assets/hardware/bose_qc_ultra.png",
-            video: "assets/videos_webm/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.webm",
-            videoMp4: "assets/videos/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.jpg",
-            chassisSpec: "Cast Aluminum Arms & Lightweight Polymer Shell",
-            driverSpec: "35mm High-Resolution Bio-Cellulose Core",
-            pcbSpec: "Custom Spatial Immersion DSP & Multi-Mic ANC",
-            baseSpec: "Ultra-Plush Protein Leather Seal Matrix",
-            frCurve: [1.8, 3.0, 3.4, 2.6, 1.7, 0.5, 0.0, 0.1, 1.6, 3.9, 2.7, -0.1, -1.9, -3.6]
+            image: "assets/hardware/studio/bose-qc-ultra_hero.jpg",
+            chassisSpec: "Ultra-lightweight Ergonomic Cast Aluminum Yoke",
+            driverSpec: "Custom Bio-Cellulose Transient Acoustic Diaphragm",
+            pcbSpec: "Qualcomm S5 Gen 2 Sound Platform with Custom Bose DSP",
+            baseSpec: "Protein Leather Pillow Cushions with Active Acoustic Seal",
+            frCurve: [3.1, 3.9, 3.5, 2.4, 1.2, 0.0, -0.2, 0.5, 2.1, 3.4, 1.8, -0.8, -1.9, -3.2]
           },
           {
-            id: "sennheiser-hd660s2",
-            name: "HD 660S2 Audiophile",
+            id: "sennheiser-hd820",
+            name: "HD 820 Audiophile",
             brand: "SENNHEISER",
             brandTag: "SENNHEISER // WEDEMARK",
-            price: 599,
-            weight: "260 g",
-            freq: "8 Hz – 41.5 kHz",
-            driver: "38mm High-Performance Transducer",
-            latency: "0 ms / Pure Analog Signal",
-            conn: "6.35mm Stereo, 4.4mm Pentaconn",
-            battery: "Passive Audiophile 300-Ohm System",
-            image: "assets/hardware/sennheiser_hd660s2.png",
-            video: "assets/videos_webm/Sennheiser_HD_660S2_Exploded_View_20260912183606.webm",
-            videoMp4: "assets/videos/Sennheiser_HD_660S2_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/Sennheiser_HD_660S2_Exploded_View_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/Sennheiser_HD_660S2_Exploded_View_20260912183606.jpg",
-            chassisSpec: "Open-Back Acoustic Steel Mesh Grille",
-            driverSpec: "38mm Transducer with Ultra-Light Aluminum Voice Coil",
-            pcbSpec: "Precision Symmetrical OFC Audiophile Wiring",
-            baseSpec: "Velour Ergonomic High-Breathability Ear Cushions",
-            frCurve: [0.9, 1.6, 2.1, 1.9, 1.4, 0.6, 0.0, -0.1, 1.0, 2.6, 1.6, -0.4, -1.5, -2.7]
+            price: 1999,
+            weight: "360 g",
+            freq: "6 Hz – 48 kHz",
+            driver: "56mm Ring Radiator Transducer",
+            latency: "0 ms / Balanced 4.4mm Pentaconn",
+            conn: "XLR-4, 4.4mm Pentaconn, 6.35mm",
+            battery: "Passive Reference Audiophile Studio",
+            image: "assets/hardware/studio/sennheiser-hd820_hero.jpg",
+            chassisSpec: "Concave Gorilla Glass Damping Chambers & Metal Frame",
+            driverSpec: "56mm Patented Ring Radiator Transducer",
+            pcbSpec: "Silver-Plated OFC Balanced Acoustic Signal Path",
+            baseSpec: "Handcrafted Microfibre & Synthetic Leather Comfort Pads",
+            frCurve: [0.5, 1.2, 1.5, 1.2, 0.8, 0.1, 0.0, 0.2, 1.1, 2.2, 1.5, 0.2, -0.8, -1.5]
           },
           {
             id: "bo-h95",
             name: "Beoplay H95",
             brand: "BANG & OLUFSEN",
-            brandTag: "BANG & OLUFSEN // STRUER",
+            brandTag: "B&O // STRUER",
             price: 999,
             weight: "323 g",
-            freq: "12 Hz – 22 kHz",
-            driver: "40mm Custom Titanium Drivers",
-            latency: "16 ms / aptX Adaptive",
-            conn: "BT 5.1, aptX Adaptive, 3.5mm, USB-C",
-            battery: "38h with ANC Active (50h std)",
-            image: "assets/hardware/bo_h95.png",
-            video: "assets/videos_webm/Headphones_exploded_view_animation_20260912183607.webm",
-            videoMp4: "assets/videos/Headphones_exploded_view_animation_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/Headphones_exploded_view_animation_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/Headphones_exploded_view_animation_20260912183607.jpg",
-            chassisSpec: "Brushed Aluminum & Lambskin Headband",
-            driverSpec: "40mm Electro-Dynamic Titanium Core",
-            pcbSpec: "B&O Custom Active Noise Cancelling DSP",
-            baseSpec: "Magnetic Lambskin Memory Foam Matrix",
-            frCurve: [2.0, 3.4, 3.8, 3.0, 2.0, 0.8, 0.2, 0.1, 1.8, 4.0, 3.0, 0.2, -1.8, -3.2]
+            freq: "20 Hz – 22 kHz",
+            driver: "40mm Electro-Dynamic Titanium Driver",
+            latency: "14 ms / aptX Adaptive Low Latency",
+            conn: "BT 5.1, aptX Adaptive, AAC, USB-C Audio",
+            battery: "38h with ANC (50h without ANC)",
+            image: "assets/hardware/studio/bo-h95_hero.jpg",
+            chassisSpec: "Brushed Aluminum Frame with Precision Rotary Dial Dials",
+            driverSpec: "40mm Custom Titanium Driver with Neodymium Magnets",
+            pcbSpec: "Dual Dedicated DSP Engine with 4 Digital MEMS Mics",
+            baseSpec: "Magnetically Detachable Lambskin & Memory Foam Cushions",
+            frCurve: [1.8, 2.9, 3.2, 2.6, 1.5, 0.3, 0.0, 0.4, 1.8, 2.8, 1.9, -0.4, -1.8, -2.8]
           }
         ],
         mice: [
           {
-            id: "logitech-gpro-x",
-            name: "G Pro X Superlight 2",
-            brand: "LOGITECH G",
-            brandTag: "LOGITECH // LAUSANNE",
-            price: 159,
-            weight: "60 g",
-            freq: "32,000 DPI / 500 IPS",
-            driver: "LIGHTFORCE Hybrid Optical-Mechanical",
-            latency: "0.25 ms / 4,000 Hz Polling",
-            conn: "LIGHTSPEED Wireless, USB-C",
-            battery: "95h Continuous Motion",
-            image: "assets/hardware/logitech_gpro_x.png",
-            video: "assets/videos_webm/Logitech_G_Pro_X_Superlight_20260912183605.webm",
-            videoMp4: "assets/videos/Logitech_G_Pro_X_Superlight_20260912183605.mp4",
-            thumb: "assets/video_thumbs_webm/Logitech_G_Pro_X_Superlight_20260912183605.png",
-            thumbJpg: "assets/video_thumbs/Logitech_G_Pro_X_Superlight_20260912183605.jpg",
-            chassisSpec: "Ultra-Thin Lightweight Composite Structural Shell",
-            driverSpec: "HERO 2 Next-Gen Sub-Micron Precision Sensor",
-            pcbSpec: "LIGHTFORCE Hybrid Optical-Mechanical Switch PCB",
-            baseSpec: "Zero-Additive Pure PTFE Low-Friction Glide Feet",
-            frCurve: [0.3, 0.6, 0.9, 0.7, 0.4, 0.2, 0.0, 0.1, 0.5, 0.9, 0.6, 0.3, 0.1, -0.1]
-          },
-          {
-            id: "razer-deathadder-v3",
-            name: "DeathAdder V3 Pro",
-            brand: "RAZER",
-            brandTag: "RAZER // IRVINE",
-            price: 169,
-            weight: "63 g",
-            freq: "30,000 DPI / 750 IPS",
-            driver: "Focus Pro 30K Optical Sensor",
-            latency: "0.125 ms / 8,000 Hz HyperPolling",
-            conn: "HyperSpeed Wireless 2.4G, Type-C",
-            battery: "90h Battery Life",
-            image: "assets/hardware/razer_deathadder_v3.png",
-            video: "assets/videos_webm/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.webm",
-            videoMp4: "assets/videos/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.jpg",
-            chassisSpec: "Ergonomic Sculpted Palm Shell with Zero-Creak Chassis",
-            driverSpec: "Focus Pro 30K Optical Sensor Array",
-            pcbSpec: "Gen-3 Optical Mouse Switches (90M Clicks)",
-            baseSpec: "100% Virgin PTFE Radius-Edge Glide Skates",
-            frCurve: [0.2, 0.5, 0.8, 0.6, 0.4, 0.2, 0.0, 0.1, 0.4, 0.8, 0.5, 0.2, 0.0, -0.1]
-          },
-          {
-            id: "apple-magic-mouse-2",
-            name: "Magic Mouse Multi-Touch",
-            brand: "APPLE",
-            brandTag: "APPLE // CUPERTINO",
-            price: 99,
-            weight: "99 g",
-            freq: "Multi-Touch Gesture Surface",
-            driver: "Laser-Etched Capacitive Sensor",
-            latency: "8 ms / macOS Native Handoff",
-            conn: "Bluetooth LE, USB-C Charging",
-            battery: "1 Month+ on Single Charge",
-            image: "assets/hardware/apple_magic_mouse_2.png",
-            video: "assets/videos_webm/Apple_Magic_Mouse_2_Exploded_20260912183605.webm",
-            videoMp4: "assets/videos/Apple_Magic_Mouse_2_Exploded_20260912183605.mp4",
-            thumb: "assets/video_thumbs_webm/Apple_Magic_Mouse_2_Exploded_20260912183605.png",
-            thumbJpg: "assets/video_thumbs/Apple_Magic_Mouse_2_Exploded_20260912183605.jpg",
-            chassisSpec: "Seamless Continuous Acrylic & Aluminum Unibody",
-            driverSpec: "Full-Surface Capacitive Multi-Touch Subsystem",
-            pcbSpec: "Apple Custom Low-Power Gesture Decoding Silicon",
-            baseSpec: "Dual Low-Resistance Acoustic Runner Skids",
-            frCurve: [0.1, 0.3, 0.5, 0.4, 0.2, 0.1, 0.0, 0.1, 0.3, 0.5, 0.4, 0.2, 0.0, -0.1]
-          },
-          {
-            id: "zowie-ec2-cw",
-            name: "EC2-CW Esports Wireless",
-            brand: "ZOWIE BENQ",
-            brandTag: "ZOWIE // TAIPEI",
-            price: 149,
-            weight: "77 g",
-            freq: "3,200 DPI Esports Tuned",
-            driver: "3370 Optical Sensor with Enhanced Rx",
-            latency: "1.0 ms / Enhanced Base Station",
-            conn: "2.4G Standalone Wireless Receiver",
-            battery: "70h Continuous Competitive Play",
-            image: "assets/hardware/zowie_ec2_cw.png",
-            video: "assets/videos_webm/ZOWIE_EC2-CW_Exploded_View_20260912183606.webm",
-            videoMp4: "assets/videos/ZOWIE_EC2-CW_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/ZOWIE_EC2-CW_Exploded_View_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/ZOWIE_EC2-CW_Exploded_View_20260912183606.jpg",
-            chassisSpec: "Iconic Esports Asymmetrical Ergonomic Contouring",
-            driverSpec: "Tuned PMW 3370 Optical Sensor with Anti-Jitter",
-            pcbSpec: "Enhanced Wireless Antenna Isolation Controller",
-            baseSpec: "High-Density Rounded Black PTFE Esports Glides",
-            frCurve: [0.4, 0.7, 1.0, 0.8, 0.5, 0.2, 0.0, 0.2, 0.6, 1.0, 0.7, 0.3, 0.1, -0.1]
-          },
-          {
             id: "logitech-mx-master-3s",
-            name: "MX Master 3S Ergonomic",
+            name: "MX Master 3S",
             brand: "LOGITECH",
             brandTag: "LOGITECH // LAUSANNE",
             price: 99,
             weight: "141 g",
-            freq: "8,000 DPI Darkfield Glass",
-            driver: "MagSpeed Electromagnetic Wheel",
-            latency: "8 ms / Logi Bolt 2.4G",
-            conn: "Logi Bolt 2.4GHz, Bluetooth LE, USB-C",
-            battery: "70 Days on Full Charge",
-            image: "assets/hardware/logitech_mx_master_3s.png",
-            video: "assets/videos_webm/Mouse_disassembly_product_visual_20260912183605.webm",
-            videoMp4: "assets/videos/Mouse_disassembly_product_visual_20260912183605.mp4",
-            thumb: "assets/video_thumbs_webm/Mouse_disassembly_product_visual_20260912183605.png",
-            thumbJpg: "assets/video_thumbs/Mouse_disassembly_product_visual_20260912183605.jpg",
-            chassisSpec: "Ergonomic Thumb-Rest Sculpted Comfort Shell",
-            driverSpec: "MagSpeed Machined Steel Magnetic Scroll Core",
-            pcbSpec: "Darkfield Glass-Tracking Optical Sensing Engine",
-            baseSpec: "Quiet-Click Acoustic Dampened Matrix Assembly",
-            frCurve: [0.5, 0.9, 1.2, 1.0, 0.7, 0.3, 0.0, 0.2, 0.6, 1.0, 0.8, 0.4, 0.1, -0.2]
+            freq: "8,000 DPI Darkfield Sensor",
+            driver: "MagSpeed Electromagnetic SmartShift",
+            latency: "1 ms / Logi Bolt & BT LE",
+            conn: "Logi Bolt, Bluetooth Low Energy, USB-C",
+            battery: "70 Days Full Charge (3h in 1 min)",
+            image: "assets/hardware/studio/logitech-mx-master-3s_hero.jpg",
+            chassisSpec: "Sculpted Ergonomic Silicone Thumb Rest & Magnesium Frame",
+            driverSpec: "MagSpeed Electromagnetic Steel Wheel (1,000 lines/sec)",
+            pcbSpec: "Darkfield 8K Glass Tracking Optical Subsystem",
+            baseSpec: "Quiet Click Tactile Dampened Membrane Switches",
+            frCurve: [0.5, 1.0, 1.2, 0.8, 0.3, 0.0, 0.1, 0.5, 1.0, 1.5, 1.0, 0.2, -0.4, -0.8]
+          },
+          {
+            id: "razer-viper-mini",
+            name: "Viper Mini Signature",
+            brand: "RAZER",
+            brandTag: "RAZER // IRVINE",
+            price: 279,
+            weight: "49 g",
+            freq: "30,000 DPI Focus Pro 30K",
+            driver: "Razer Optical Gen-3 90M Clicks",
+            latency: "0.125 ms / True 8000Hz HyperPolling",
+            conn: "Razer HyperSpeed Wireless 8K, Type-C",
+            battery: "60h Battery Life at 1000Hz Polling",
+            image: "assets/hardware/studio/razer-viper-mini_hero.jpg",
+            chassisSpec: "Magnesium-Alloy Exoskeleton Unibody Skeleton",
+            driverSpec: "Gen-3 Fast-Actuation Optical Switches (0.2ms zero debounce)",
+            pcbSpec: "Focus Pro 30K Optical Sensor with 99.8% Resolution Accuracy",
+            baseSpec: "Pure PTFE Arc Glides with Corner Rounded Radials",
+            frCurve: [0.2, 0.5, 0.8, 0.6, 0.2, 0.0, 0.1, 0.4, 0.9, 1.2, 0.8, 0.1, -0.2, -0.5]
+          },
+          {
+            id: "finalmouse-ultralightx",
+            name: "UltralightX Lion",
+            brand: "FINALMOUSE",
+            brandTag: "FINALMOUSE // LOS ANGELES",
+            price: 189,
+            weight: "31 g",
+            freq: "26,000 DPI Tournament Sensor",
+            driver: "Kailh Blue Sword Dustproof Binned",
+            latency: "0.125 ms / Dedicated 8K Wireless Dongle",
+            conn: "2.4GHz Ultrafast RF, Lightweight Paracord",
+            battery: "Up to 3 Weeks Wireless Playtime",
+            image: "assets/hardware/studio/finalmouse-ultralightx_hero.jpg",
+            chassisSpec: "Carbon Fiber Composite Structural Honeycomb Weave",
+            driverSpec: "Binned Mechanical Microswitches with Instant Tactile Feedback",
+            pcbSpec: "Nordic nRF52840 Low-Power High-Performance MCU",
+            baseSpec: "Zero-Friction Heat-Treated Virgin Grade PTFE Feet",
+            frCurve: [0.1, 0.4, 0.6, 0.5, 0.1, 0.0, 0.1, 0.3, 0.7, 1.0, 0.6, 0.0, -0.2, -0.4]
+          },
+          {
+            id: "angry-miao-am-hatsu",
+            name: "AM HATSU Split 3D",
+            brand: "ANGRY MIAO",
+            brandTag: "ANGRY MIAO // ZHUHAI",
+            price: 1600,
+            weight: "1,850 g",
+            freq: "Dual True 3D Sculpted Ortholinear",
+            driver: "Aviation-Grade 5-Axis CNC Aluminum",
+            latency: "1 ms / Nordic Advanced Wireless",
+            conn: "Bluetooth 5.0, 2.4G Low-Latency Wireless",
+            battery: "Dual Independent Li-Ion Battery Banks",
+            image: "assets/hardware/studio/angry-miao-am-hatsu_hero.jpg",
+            chassisSpec: "5-Axis CNC Carved Aerospace Aluminum Curved Monocoque",
+            driverSpec: "3D Organic Ergo Split Geometry with Custom Spring Assemblies",
+            pcbSpec: "Dual Independent Nordic Semiconductor Wireless Subsystems",
+            baseSpec: "Custom Mirror-Polished Stainless Steel Weighted Counter-Bases",
+            frCurve: [0.4, 0.8, 1.0, 0.7, 0.3, 0.0, 0.2, 0.6, 1.2, 1.4, 0.9, 0.1, -0.3, -0.6]
+          },
+          {
+            id: "logitech-gpro-x",
+            name: "G Pro X Superlight 2",
+            brand: "LOGITECH G",
+            brandTag: "LOGITECH G // LAUSANNE",
+            price: 159,
+            weight: "60 g",
+            freq: "32,000 DPI HERO 2 Sensor",
+            driver: "LIGHTFORCE Hybrid Optical-Mechanical",
+            latency: "0.25 ms / 4K/8K LIGHTSPEED Wireless",
+            conn: "LIGHTSPEED Wireless, USB-C Data/Charging",
+            battery: "95h Continuous Motion Battery Life",
+            image: "assets/hardware/studio/logitech-gpro-x_hero.jpg",
+            chassisSpec: "Zero-Additive Ultralight Structural Skeleton",
+            driverSpec: "LIGHTFORCE Hybrid Switches (Optical Speed + Mechanical Crisp)",
+            pcbSpec: "HERO 2 500+ IPS Sensor with Dynamic Sub-Micron Calibration",
+            baseSpec: "Zero-Additive PTFE Glides with Continuous Glide Ring",
+            frCurve: [0.3, 0.7, 0.9, 0.6, 0.2, 0.0, 0.1, 0.5, 1.0, 1.3, 0.8, 0.1, -0.3, -0.6]
           }
         ],
         speakers: [
+          {
+            id: "devialet-phantom-i",
+            name: "Phantom I 108dB",
+            brand: "DEVIALET",
+            brandTag: "DEVIALET // PARIS",
+            price: 3200,
+            weight: "11.4 kg",
+            freq: "14 Hz – 27 kHz",
+            driver: "Grade 1 Titanium Tweeter + Dual Aluminum Woofers",
+            latency: "0 ms (ADH Hybrid Analog-Digital)",
+            conn: "AirPlay 2, Roon Ready, Optical, BT 5.0, Wi-Fi",
+            battery: "1,100 Watts RMS Audiophile Amplification",
+            image: "assets/hardware/studio/devialet-phantom-i_hero.jpg",
+            chassisSpec: "White Matte Composite Body with 22-Carat Rose Gold Plated Sides",
+            driverSpec: "ADH (Analog Digital Hybrid) + SAM (Speaker Active Matching)",
+            pcbSpec: "Devialet Operating System 2 (DOS2) with ARM Cortex-A9 800MHz",
+            baseSpec: "Hermetically Sealed Dual-Woofer Push-Push Symmetrical Geometry",
+            frCurve: [4.8, 5.2, 4.5, 2.8, 1.2, 0.0, -0.1, 0.6, 2.2, 3.8, 2.9, 0.5, -1.2, -2.4]
+          },
+          {
+            id: "bo-beosound-a9",
+            name: "Beosound A9 (5th Gen)",
+            brand: "BANG & OLUFSEN",
+            brandTag: "B&O // STRUER",
+            price: 3999,
+            weight: "14.7 kg",
+            freq: "33 Hz – 23 kHz",
+            driver: "1x 8" Woofer, 2x 3" Mid, 2x 1.5" Full, 2x 0.75" Tweet",
+            latency: "1,500 Watts Total 7-Class-D Digital Power",
+            conn: "AirPlay 2, Chromecast, Beolink Multiroom, Wi-Fi 6",
+            battery: "Mains Powered Luxury Architectural Audio",
+            image: "assets/hardware/studio/bo-beosound-a9_hero.jpg",
+            chassisSpec: "Circular Anodized Aluminum Ring with Kvadrat Wool Cover & Oak Legs",
+            driverSpec: "Active Room Compensation Microphones Tuning Acoustic Reflection",
+            pcbSpec: "Mozart Platform Software Engine with Upgradable Processing Card",
+            baseSpec: "Solid Turned Nordic Oak Wood Tripod Assembly with Brass Dampeners",
+            frCurve: [3.6, 4.2, 3.8, 2.5, 1.1, 0.0, 0.1, 0.5, 1.9, 3.2, 2.4, 0.2, -1.0, -2.0]
+          },
+          {
+            id: "bowers-wilkins-zeppelin",
+            name: "Zeppelin Hi-Fi",
+            brand: "BOWERS & WILKINS",
+            brandTag: "B&W // WORTHING",
+            price: 799,
+            weight: "6.5 kg",
+            freq: "35 Hz – 24 kHz",
+            driver: "2x Decoupled Double Dome Tweeters + 6" Subwoofer",
+            latency: "24-bit/96kHz High-Resolution Audio Processing",
+            conn: "AirPlay 2, Spotify Connect, aptX Adaptive, Wi-Fi",
+            battery: "240 Watts Total Digital Amplification",
+            image: "assets/hardware/studio/bowers-wilkins-zeppelin_hero.jpg",
+            chassisSpec: "Aerodynamic Rigid Acoustic Polycarbonate Airship Chassis",
+            driverSpec: "Fixed Suspension Transducer (FST) Midrange from Reference 800 Series",
+            pcbSpec: "High-Performance 24-bit Digital Signal Processor (DSP) with Dynamic EQ",
+            baseSpec: "Integrated Polished Pedestal Stand with Ambient Halo Lighting",
+            frCurve: [3.2, 3.8, 3.4, 2.2, 1.0, 0.0, 0.2, 0.7, 2.0, 3.1, 2.1, 0.1, -0.9, -1.8]
+          },
+          {
+            id: "transparent-speaker",
+            name: "Transparent Acoustic Glass",
+            brand: "TRANSPARENT",
+            brandTag: "TRANSPARENT // STOCKHOLM",
+            price: 1100,
+            weight: "11 kg",
+            freq: "35 Hz – 20 kHz",
+            driver: "2x 3" Full-Range + 1x 6.5" Custom Subwoofer",
+            latency: "True Wireless Stereo (TWS) Dual Sync",
+            conn: "Bluetooth 5.0, 3.5mm In/Out, Modular Wi-Fi Bay",
+            battery: "140W Class-D Built-in Active Amplification",
+            image: "assets/hardware/studio/transparent-speaker_hero.jpg",
+            chassisSpec: "Tempered Glass Acoustic Panels & Single Aluminum Extrusion Unibody",
+            driverSpec: "Sealed Glass Enclosure with Custom Dampened Acoustic Drivers",
+            pcbSpec: "Modular Architecture with Upgradable Wireless Component Bay",
+            baseSpec: "Silicone Vibration Isolating Feet for Table Resonance Decoupling",
+            frCurve: [2.8, 3.4, 3.0, 1.9, 0.9, 0.0, 0.1, 0.6, 1.7, 2.8, 1.9, 0.0, -0.8, -1.6]
+          },
           {
             id: "sonos-era-300",
             name: "Era 300 Spatial Audio",
@@ -9544,162 +9031,20 @@
             brandTag: "SONOS // SANTA BARBARA",
             price: 449,
             weight: "4.47 kg",
-            freq: "30 Hz – 24 kHz",
-            driver: "6 Class-D Amplifiers + Up-Firing Compression",
-            latency: "0 ms Trueplay Room Tuning",
-            conn: "Wi-Fi 6, AirPlay 2, Bluetooth 5.0, USB-C",
-            battery: "Continuous Audiophile Line Power",
-            image: "assets/hardware/sonos_era_300.png",
-            video: "assets/videos_webm/Sonos_Era_300_Exploded_View_20260912183607.webm",
-            videoMp4: "assets/videos/Sonos_Era_300_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/Sonos_Era_300_Exploded_View_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/Sonos_Era_300_Exploded_View_20260912183607.jpg",
-            chassisSpec: "Hourglass Acoustic Waveguide Enclosure",
-            driverSpec: "6 Custom Drivers with Directional Horn Array",
-            pcbSpec: "Quad-Core A55 SoC with Real-Time Trueplay DSP",
-            baseSpec: "Acoustic Decoupled Anti-Vibration Footing",
-            frCurve: [3.8, 4.8, 5.2, 4.2, 3.1, 1.9, 1.1, 0.7, 2.0, 4.3, 3.3, 1.3, -0.7, -2.3]
-          },
-          {
-            id: "marshall-stanmore-3",
-            name: "Stanmore III Bluetooth",
-            brand: "MARSHALL",
-            brandTag: "MARSHALL // LONDON",
-            price: 379,
-            weight: "4.25 kg",
-            freq: "45 Hz – 20 kHz",
-            driver: "50W Woofer + Dual 15W Tweeters",
-            latency: "15 ms / BT 5.2 LE Audio",
-            conn: "BT 5.2, RCA, 3.5mm Aux",
-            battery: "80 Watts Total Class D Power",
-            image: "assets/hardware/marshall_stanmore_3.png",
-            video: "assets/videos_webm/Marshall_Stanmore_III_Exploded_View_20260912183607.webm",
-            videoMp4: "assets/videos/Marshall_Stanmore_III_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/Marshall_Stanmore_III_Exploded_View_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/Marshall_Stanmore_III_Exploded_View_20260912183607.jpg",
-            chassisSpec: "Textured Vinyl Wrap & Brass-Finish Analog Controls",
-            driverSpec: "50W Bass-Reflex Woofer & Outward-Angled Tweeters",
-            pcbSpec: "Dynamic Loudness DSP with Placement Compensation",
-            baseSpec: "Solid Wooden Cabinet with Ported Bass Duct",
-            frCurve: [4.2, 5.2, 5.6, 4.6, 3.4, 2.0, 1.0, 0.6, 1.8, 4.1, 3.1, 1.0, -1.0, -2.6]
-          },
-          {
-            id: "jbl-flip-6",
-            name: "Flip 6 Waterproof Portable",
-            brand: "JBL",
-            brandTag: "JBL // NORTHRIDGE",
-            price: 129,
-            weight: "550 g",
-            freq: "63 Hz – 20 kHz",
-            driver: "Racetrack Woofer + Separate Tweeter",
-            latency: "18 ms / PartyBoost 2.4G",
-            conn: "Bluetooth 5.1, USB-C Fast Charge",
-            battery: "12h Playtime with IP67 Waterproofing",
-            image: "assets/hardware/jbl_flip_6.png",
-            video: "assets/videos_webm/JBL_Flip_6_Exploded_View_20260912183607.webm",
-            videoMp4: "assets/videos/JBL_Flip_6_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/JBL_Flip_6_Exploded_View_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/JBL_Flip_6_Exploded_View_20260912183607.jpg",
-            chassisSpec: "Rugged Fabric Grille & Rubberized End Caps (IP67)",
-            driverSpec: "Racetrack Woofer + 16mm High-Frequency Tweeter",
-            pcbSpec: "Dual Passive Radiators with Dynamic Harman EQ",
-            baseSpec: "Silicone Anti-Roll Footing & Integrated Lanyard",
-            frCurve: [2.5, 3.4, 3.9, 3.1, 2.2, 1.2, 0.5, 0.2, 1.4, 3.2, 2.4, 0.8, -1.2, -3.0]
-          },
-          {
-            id: "bose-revolve-2",
-            name: "SoundLink Revolve+ II",
-            brand: "BOSE",
-            brandTag: "BOSE // FRAMINGHAM",
-            price: 329,
-            weight: "900 g",
-            freq: "50 Hz – 20 kHz",
-            driver: "360° Omnidirectional Acoustic Deflector",
-            latency: "16 ms / SimpleSync",
-            conn: "Bluetooth 4.2, 3.5mm, Micro-B",
-            battery: "17h Rechargeable Lithium-Ion",
-            image: "assets/hardware/bose_revolve_2.png",
-            video: "assets/videos_webm/Bose_SoundLink_Revolve_II_Exploded_20260912183607.webm",
-            videoMp4: "assets/videos/Bose_SoundLink_Revolve_II_Exploded_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/Bose_SoundLink_Revolve_II_Exploded_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/Bose_SoundLink_Revolve_II_Exploded_20260912183607.jpg",
-            chassisSpec: "Seamless Aluminum Cylindrical Body with Flexible Handle",
-            driverSpec: "Downward Full-Range Transducer + Omnidirectional Deflector",
-            pcbSpec: "Dual-Opposing Passive Radiator Bass Processing",
-            baseSpec: "IP55 Water-Resistant Rubberized Base Ring",
-            frCurve: [2.8, 3.8, 4.3, 3.5, 2.5, 1.5, 0.7, 0.4, 1.6, 3.6, 2.7, 0.9, -0.9, -2.7]
-          },
-          {
-            id: "devialet-phantom-i",
-            name: "Phantom I 108dB",
-            brand: "DEVIALET",
-            brandTag: "DEVIALET // PARIS",
-            price: 3800,
-            weight: "11.4 kg",
-            freq: "14 Hz – 27 kHz",
-            driver: "Titanium Tweeter + 2x Woofers",
-            latency: "0 ms Optical / AirPlay 2",
-            conn: "AirPlay 2, Spotify Connect, Roon, Optical",
-            battery: "1,100 Watts RMS / 108 dB SPL",
-            image: "assets/hardware/devialet_phantom_i.png",
-            video: "assets/videos_webm/Speaker_exploded-view_product_vi_20260912183606.webm",
-            videoMp4: "assets/videos/Speaker_exploded-view_product_vi_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/Speaker_exploded-view_product_vi_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/Speaker_exploded-view_product_vi_20260912183606.jpg",
-            chassisSpec: "22-Carat Gold Leaf Side Plating & Composite Unibody",
-            driverSpec: "Heart Bass Implosion (HBI®) Push-Push Woofers",
-            pcbSpec: "Analog Digital Hybrid (ADH®) Processor Core",
-            baseSpec: "Ultra-Rigid Sealed Acoustic Infrabass Chamber",
-            frCurve: [4.5, 5.8, 6.2, 5.0, 3.8, 2.1, 1.2, 0.8, 2.2, 4.8, 3.8, 1.5, -0.5, -2.0]
+            freq: "Dolby Atmos Spatial Acoustic Geometry",
+            driver: "6x Class-D Digital Amplifiers + 4 Tweeters + 2 Woofers",
+            latency: "Trueplay Room Tuning Microphone Array",
+            conn: "Wi-Fi 6, Bluetooth 5.0, USB-C Line-In, AirPlay 2",
+            battery: "Mains Powered Spatial Cinema Node",
+            image: "assets/hardware/studio/sonos-era-300_hero.jpg",
+            chassisSpec: "Hourglass Acoustic Baffle Minimizing Edge Diffraction",
+            driverSpec: "Six Optimally Positioned Compression Drivers for Dolby Atmos Channels",
+            pcbSpec: "Quad-Core A55 1.9GHz Processor with 2GB DDR4 Memory",
+            baseSpec: "Non-Resonant Polymer Housing with Micro-Drilled Acoustic Grille",
+            frCurve: [2.9, 3.5, 3.1, 2.0, 1.0, 0.0, 0.2, 0.6, 1.8, 2.9, 2.0, 0.1, -0.9, -1.7]
           }
         ],
         keyboards: [
-          {
-            id: "keychron-q1-pro",
-            name: "Q1 Pro QMK/VIA Wireless",
-            brand: "KEYCHRON",
-            brandTag: "KEYCHRON // KOWLOON",
-            price: 199,
-            weight: "1.73 kg",
-            freq: "1,000 Hz Polling Rate (Wired)",
-            driver: "Double-Gasket CNC Aluminum Chassis",
-            latency: "1.0 ms Wired / 8 ms BT 5.1",
-            conn: "Bluetooth 5.1, USB Type-C Detachable",
-            battery: "4000mAh Battery (300h RGB Off)",
-            image: "assets/hardware/keychron_q1_pro.png",
-            video: "assets/videos_webm/Keychron_Q1_Pro_Exploded_View_20260912183607.webm",
-            videoMp4: "assets/videos/Keychron_Q1_Pro_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/Keychron_Q1_Pro_Exploded_View_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/Keychron_Q1_Pro_Exploded_View_20260912183607.jpg",
-            chassisSpec: "Full 6063 CNC Machined Aluminum Double-Gasket Body",
-            driverSpec: "Keychron K Pro Pre-Lubed Mechanical Switches",
-            pcbSpec: "South-Facing RGB Hot-Swappable ARM Cortex MCU",
-            baseSpec: "Acoustic Poron Foam & Sound Absorbing Silicone Pad",
-            frCurve: [1.0, 1.8, 2.4, 2.0, 1.5, 0.8, 0.2, 0.3, 1.1, 2.5, 1.8, 0.6, -0.4, -1.8]
-          },
-          {
-            id: "logitech-g915-tkl",
-            name: "G915 TKL LIGHTSPEED",
-            brand: "LOGITECH G",
-            brandTag: "LOGITECH // LAUSANNE",
-            price: 229,
-            weight: "810 g",
-            freq: "GL Low-Profile Mechanical Switches",
-            driver: "Aircraft-Grade 5052 Aluminum Top Case",
-            latency: "1.0 ms Pro-Grade LIGHTSPEED",
-            conn: "LIGHTSPEED Wireless, Bluetooth, USB",
-            battery: "40h Continuous RGB Playtime",
-            image: "assets/hardware/logitech_g915_tkl.png",
-            video: "assets/videos_webm/Logitech_G915_TKL_Exploded_View_20260912183606.webm",
-            videoMp4: "assets/videos/Logitech_G915_TKL_Exploded_View_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/Logitech_G915_TKL_Exploded_View_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/Logitech_G915_TKL_Exploded_View_20260912183606.jpg",
-            chassisSpec: "Aircraft-Grade 5052 Aluminum-Magnesium Alloy Top Plate",
-            driverSpec: "GL Clicky/Linear High-Performance Low-Profile Switches",
-            pcbSpec: "Dual LIGHTSPEED + LIGHTSYNC RGB Embedded Logic",
-            baseSpec: "Steel-Reinforced Ultra-Slim Ergonomic Base Frame",
-            frCurve: [0.8, 1.5, 2.0, 1.7, 1.2, 0.6, 0.1, 0.2, 0.9, 2.2, 1.5, 0.5, -0.3, -1.5]
-          },
           {
             id: "apple-magic-keyboard",
             name: "Magic Keyboard with Touch ID",
@@ -9707,21 +9052,55 @@
             brandTag: "APPLE // CUPERTINO",
             price: 199,
             weight: "369 g",
-            freq: "Scissor-Mechanism Tactile Actuation",
-            driver: "Integrated Secure Enclave Touch ID",
-            latency: "8 ms / Ultra-Low Energy BLE",
-            conn: "Bluetooth LE, USB-C to Lightning",
-            battery: "Rechargeable Lithium (1 Month+)",
-            image: "assets/hardware/apple_magic_keyboard.png",
-            video: "assets/videos_webm/Apple_Magic_Keyboard_Exploded_View_20260912183607.webm",
-            videoMp4: "assets/videos/Apple_Magic_Keyboard_Exploded_View_20260912183607.mp4",
-            thumb: "assets/video_thumbs_webm/Apple_Magic_Keyboard_Exploded_View_20260912183607.png",
-            thumbJpg: "assets/video_thumbs/Apple_Magic_Keyboard_Exploded_View_20260912183607.jpg",
-            chassisSpec: "100% Recycled Precision Anodized Aluminum Top Case",
-            driverSpec: "Low-Profile Scissor Mechanism with Optimized Travel",
-            pcbSpec: "Integrated Biometric Touch ID Secure Enclave Subsystem",
-            baseSpec: "Precision Molded Low-Friction Silicone Baseline Ring",
-            frCurve: [0.4, 0.9, 1.3, 1.1, 0.8, 0.4, 0.1, 0.1, 0.6, 1.5, 1.0, 0.3, -0.2, -1.0]
+            freq: "Full-size with Numeric Keypad",
+            driver: "Scissor Mechanism with 1mm Low-Travel",
+            latency: "Secure Enclave Hardware Encrypted Biometric",
+            conn: "Bluetooth, Lightning/USB-C Woven Cable",
+            battery: "1 Month or More Per Full Recharge",
+            image: "assets/hardware/studio/apple-magic-keyboard_hero.jpg",
+            chassisSpec: "Seamless Anodized Aluminum Top Enclosure",
+            driverSpec: "Optimized Scissor Mechanism Keycaps with Tactile Spring Leaf",
+            pcbSpec: "Dedicated Secure Enclave Touch ID Fingerprint Coprocessor",
+            baseSpec: "Non-Slip Molded Polyurethane Foot Strip",
+            frCurve: [0.4, 0.7, 0.8, 0.5, 0.2, 0.0, 0.1, 0.4, 0.8, 1.1, 0.7, 0.1, -0.2, -0.4]
+          },
+          {
+            id: "keychron-q1-pro",
+            name: "Q1 Pro Custom Wireless",
+            brand: "KEYCHRON",
+            brandTag: "KEYCHRON // HONG KONG",
+            price: 199,
+            weight: "1,724 g",
+            freq: "75% Double-Gasket Acoustic Mount",
+            driver: "Keychron K Pro Banana / Red Binned",
+            latency: "1,000 Hz Polling Rate / Type-C & BT 5.1",
+            conn: "Bluetooth 5.1, Wired Type-C, macOS/Win Switch",
+            battery: "4000mAh Battery (300h RGB Off)",
+            image: "assets/hardware/studio/keychron-q1-pro_hero.jpg",
+            chassisSpec: "Full 6063 CNC Machined Aluminum Body with Anodized Finish",
+            driverSpec: "Double-Gasket Design with Sound Absorbing Foam & Silicone Pads",
+            pcbSpec: "South-Facing RGB Hot-Swappable PCB with QMK/VIA Open Source Support",
+            baseSpec: "Screw-In Gold-Plated PCB Stabilizers with Lubricated Stems",
+            frCurve: [0.6, 1.0, 1.2, 0.8, 0.3, 0.0, 0.1, 0.5, 1.1, 1.4, 0.9, 0.2, -0.3, -0.6]
+          },
+          {
+            id: "logitech-g915-tkl",
+            name: "G915 TKL LIGHTSPEED",
+            brand: "LOGITECH G",
+            brandTag: "LOGITECH G // LAUSANNE",
+            price: 229,
+            weight: "810 g",
+            freq: "Tenkeyless Ultra-Slim 22mm Profile",
+            driver: "GL Tactile Low-Profile Mechanical Switches",
+            latency: "1 ms Pro-Grade LIGHTSPEED Wireless",
+            conn: "LIGHTSPEED Wireless, Bluetooth, Micro-USB/Type-C",
+            battery: "40 Hours Non-Stop Play at 100% RGB",
+            image: "assets/hardware/studio/logitech-g915-tkl_hero.jpg",
+            chassisSpec: "Aircraft-Grade 5052 Aluminum-Magnesium Alloy Brushed Top Plate",
+            driverSpec: "GL Low Profile Mechanical Switches (Half-Height, Full Speed)",
+            pcbSpec: "LIGHTSPEED Wireless Engine with Onboard Profile Memory Storage",
+            baseSpec: "Dual-Angle Adjustable Rubber Tilt Feet (4° and 8°)",
+            frCurve: [0.5, 0.9, 1.1, 0.7, 0.3, 0.0, 0.1, 0.4, 1.0, 1.3, 0.8, 0.1, -0.3, -0.5]
           },
           {
             id: "razer-huntsman-v3",
@@ -9730,526 +9109,333 @@
             brandTag: "RAZER // IRVINE",
             price: 219,
             weight: "880 g",
-            freq: "Gen-2 Analog Optical Switches",
-            driver: "Rapid Trigger with 0.1mm-4.0mm Actuation",
-            latency: "0.125 ms / 8,000 Hz True Polling",
-            conn: "Detachable Braided Type-C Cable",
-            battery: "Zero Latency Hardwire Esports Power",
-            image: "assets/hardware/razer_huntsman_v3.png",
-            video: "assets/videos_webm/Razer_Huntsman_V3_Pro_Exploded_20260912183606.webm",
-            videoMp4: "assets/videos/Razer_Huntsman_V3_Pro_Exploded_20260912183606.mp4",
-            thumb: "assets/video_thumbs_webm/Razer_Huntsman_V3_Pro_Exploded_20260912183606.png",
-            thumbJpg: "assets/video_thumbs/Razer_Huntsman_V3_Pro_Exploded_20260912183606.jpg",
-            chassisSpec: "Brushed 5052 Aluminum Top Plate & Textured Doubleshot PBT",
-            driverSpec: "Razer Gen-2 Analog Optical Switches with Rapid Trigger",
-            pcbSpec: "Dedicated Multi-Function Digital Dial & LED Telemetry",
-            baseSpec: "Acoustic Dampening Foam & Snap-Fit Magnetic Wrist Rest",
-            frCurve: [1.2, 2.0, 2.6, 2.2, 1.7, 0.9, 0.3, 0.4, 1.3, 2.8, 2.0, 0.7, -0.3, -1.6]
+            freq: "Analog Optical Rapid Trigger (0.1mm - 4.0mm)",
+            driver: "2nd-Gen Razer Analog Optical Switches",
+            latency: "1,000 Hz True Polling Rate / Type-C Detachable",
+            conn: "Detachable Braided USB Type-C Cable",
+            battery: "Wired Tournament Speed Low-Latency",
+            image: "assets/hardware/studio/razer-huntsman-v3_hero.jpg",
+            chassisSpec: "5052 Brushed Aluminum Top Plate with Magnetic Leatherette Wrist Rest",
+            driverSpec: "Analog Optical Switches with Rapid Trigger & Stepless Actuation",
+            pcbSpec: "Multi-Function Digital Dial & Dedicated Macro Tactical Buttons",
+            baseSpec: "Textured Double-Shot PBT Keycaps Resistant to Wear & Shine",
+            frCurve: [0.5, 0.8, 1.0, 0.7, 0.3, 0.0, 0.1, 0.5, 1.0, 1.2, 0.8, 0.1, -0.3, -0.5]
           }
         ]
       };
 
-      // State Management
+      // State
       let activeCategory = "headphones";
       let activeModelIdx = 0;
+      let currentHardwareRakurs = "hero"; // "hero", "profile", "teardown"
       let isXRayMode = false;
-      let xrayExpansion = 0.50;
-      let currentAngle = 0;
-      let targetAngle = 0;
-      let velocity = 0;
-      let isDragging = false;
-      let isUserManualInteracting = false;
-      let userInteractionTimeout = null;
-      let startX = 0;
-      let lastX = 0;
-      let isAutoRotating = false;
-      let autoRotateId = null;
-      let isPlayingCinema = false;
-
-      // Web Audio State
-      let audioCtx = null;
-      let analyser = null;
-      let activeSoundProfile = "spatial";
       let isPlayingAudio = false;
-      let synthInterval = null;
-      let activeOscillators = [];
-      let activeGains = [];
-      let visualizerAnimId = null;
-      let idlePhase = 0;
+      let activeSoundProfile = "spatial";
 
       // DOM Elements
-      const catBtns = hardwareApp.querySelectorAll(".hw-cat-btn");
-      const modeBtnStudio = document.getElementById("hw-mode-studio");
-      const modeBtnXray = document.getElementById("hw-mode-xray");
+      const catBtns = document.querySelectorAll(".hw-cat-btn");
       const rosterList = document.getElementById("hw-roster-list");
       const modelCountEl = document.getElementById("hw-model-count");
-
-      // Stage Elements
-      const hwViewport = document.getElementById("hw-viewport");
-      const hwRig = document.getElementById("hw-rig");
-      const hwContactShadow = document.getElementById("hw-contact-shadow");
-      const hwMainImg = document.getElementById("hw-main-img");
-      const hwXrayImgChassis = document.getElementById("hw-xray-img-chassis");
+      const mainImg = document.getElementById("hw-main-img");
+      const teardownImg = document.getElementById("hw-teardown-img");
       const hudAngle = document.getElementById("hw-hud-angle");
-      const hwScrollBadge = document.getElementById("hw-scroll-badge");
-      const hwScrollBadgeText = document.getElementById("hw-scroll-badge-text");
-      const btnRotLeft = document.getElementById("hw-btn-rot-left");
-      const btnRotReset = document.getElementById("hw-btn-rot-reset");
-      const btnRotRight = document.getElementById("hw-btn-rot-right");
-      const btnAutoRotate = document.getElementById("hw-btn-autorotate");
-
-      // AI Video Teardown Layer
-      const hwVideoLayer = document.getElementById("hw-video-layer");
-      const hwXrayVideo = document.getElementById("hw-xray-video");
-      const hwBtnVideoPlay = document.getElementById("hw-btn-video-play");
-      const hwVideoBadgeText = document.getElementById("hw-video-badge-text");
-
-      // Transparent poster constant (prevents initial and transition frame flash)
-      const TRANSPARENT_POSTER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E";
-
-      // Instantiate 3-Tier Video Scrub Engine & Dual-Control Physics State Machine
-      const hwVideoEngine = new VideoScrubEngine(hwXrayVideo, {
-        fps: 60,
-        lerpFactor: 0.12,
-        quantizeDelta: 0.038,
-        onUpdate: (progress, time) => {
-          if (xraySlider && !isUserManualInteracting) {
-            xraySlider.value = (progress * 100).toFixed(1);
-          }
-          if (xraySliderVal && !isUserManualInteracting) {
-            xraySliderVal.textContent = `${Math.round(progress * 100)}%`;
-          }
-          xrayExpansion = progress;
-          applyTurntableTransform();
-        }
-      });
-
-      const hwPhysics = new DualControlPhysics({
-        cooldownDuration: 1800,
-        blendDuration: 300,
-        videoEngine: hwVideoEngine,
-        onStateChange: (newState, prevState, stateName) => {
-          if (newState === DualControlPhysics.CINEMA_PLAYBACK) {
-            isPlayingCinema = true;
-            if (hwBtnVideoPlay) {
-              hwBtnVideoPlay.textContent = "⏸ PAUSE CINEMA";
-              hwBtnVideoPlay.classList.add("playing");
-            }
-          } else if (prevState === DualControlPhysics.CINEMA_PLAYBACK) {
-            isPlayingCinema = false;
-            if (hwBtnVideoPlay) {
-              hwBtnVideoPlay.textContent = "▶ PLAY CINEMA";
-              hwBtnVideoPlay.classList.remove("playing");
-            }
-          }
-        }
-      });
-
-      window.hwVideoEngine = hwVideoEngine;
-      window.hwPhysics = hwPhysics;
-
-      // Coordinate #hw-main-img and .hw-video-layer to eliminate layout shifts and flashes
-      if (hwXrayVideo) {
-        const updateHwFallbackOpacity = () => {
-          if (hwXrayVideo.readyState >= 2) {
-            if (hwMainImg) hwMainImg.style.opacity = "0";
-            hwXrayVideo.style.opacity = "1";
-          } else {
-            if (hwMainImg) hwMainImg.style.opacity = "1";
-          }
-        };
-        hwXrayVideo.addEventListener("loadeddata", updateHwFallbackOpacity);
-        hwXrayVideo.addEventListener("canplay", updateHwFallbackOpacity);
-        hwXrayVideo.addEventListener("seeked", updateHwFallbackOpacity);
-        hwXrayVideo.addEventListener("error", () => {
-          if (hwMainImg) hwMainImg.style.opacity = "1";
-          hwXrayVideo.style.opacity = "0";
-        });
-      }
-
-      // X-Ray Layers & Slider
-      const xrayChassis = document.getElementById("xray-chassis");
-      const xrayDriver = document.getElementById("xray-driver");
-      const xrayCircuit = document.getElementById("xray-circuit");
-      const xrayBase = document.getElementById("xray-base");
+      const rakursBtns = document.querySelectorAll(".hw-rakurs-btn");
       const xraySlider = document.getElementById("hw-xray-slider");
-      const xraySliderVal = document.getElementById("hw-xray-slider-val");
+      const xraySliderVal = document.getElementById("hw-xray-val");
+      const xrayAssembly = document.getElementById("hw-xray-assembly");
+      const hwViewport = document.getElementById("hw-viewport");
+      const hwRotator = document.getElementById("hw-rotator");
 
-      // Callout Labels
-      const calloutChassisSpec = document.getElementById("callout-chassis-spec");
-      const calloutDriverSpec = document.getElementById("callout-driver-spec");
-      const calloutPcbSpec = document.getElementById("callout-pcb-spec");
-      const calloutBaseSpec = document.getElementById("callout-base-spec");
-
-      // Audio Chamber Elements
-      const profileBtns = hardwareApp.querySelectorAll(".hw-profile-btn");
-      const audioPlayBtn = document.getElementById("hw-audio-play-btn");
-      const visualizerCanvas = document.getElementById("hw-visualizer-canvas");
+      // Telemetry Fields
+      const telSeries = document.getElementById("hw-tel-series");
+      const telName = document.getElementById("hw-tel-name");
+      const telBrand = document.getElementById("hw-tel-brand");
+      const telPrice = document.getElementById("hw-tel-price");
+      const telWeight = document.getElementById("hw-tel-weight");
+      const telFreq = document.getElementById("hw-tel-freq");
+      const telDriver = document.getElementById("hw-tel-driver");
+      const telLatency = document.getElementById("hw-tel-latency");
+      const telConn = document.getElementById("hw-tel-conn");
+      const telBattery = document.getElementById("hw-tel-battery");
+      const specChassis = document.getElementById("callout-chassis-spec");
+      const specDriver = document.getElementById("callout-driver-spec");
+      const specPcb = document.getElementById("callout-pcb-spec");
+      const specBase = document.getElementById("callout-base-spec");
       const frCanvas = document.getElementById("hw-fr-canvas");
 
-      // Telemetry HUD Elements
-      const teleSerial = document.getElementById("hw-tele-serial");
-      const teleModel = document.getElementById("hw-tele-model");
-      const teleBrand = document.getElementById("hw-tele-brand");
-      const telePrice = document.getElementById("hw-tele-price");
-      const specWeight = document.getElementById("hw-spec-weight");
-      const specFreq = document.getElementById("hw-spec-freq");
-      const specDriver = document.getElementById("hw-spec-driver");
-      const specLatency = document.getElementById("hw-spec-latency");
-      const specConn = document.getElementById("hw-spec-conn");
-      const specBattery = document.getElementById("hw-spec-battery");
+      // Audio & Reservation
+      const profileBtns = document.querySelectorAll(".hw-profile-btn");
+      const audioPlayBtn = document.getElementById("hw-audio-play");
+      const visCanvas = document.getElementById("hw-vis-canvas");
       const reserveBtn = document.getElementById("hw-reserve-btn");
-
-      // Reservation Modal
       const modalBackdrop = document.getElementById("hw-modal-backdrop");
       const modalClose = document.getElementById("hw-modal-close");
-      const modalProductName = document.getElementById("hw-modal-product-name");
-      const modalImg = document.getElementById("hw-modal-img");
-      const modalSerialCode = document.getElementById("hw-modal-serial-code");
-      const modalPriceVal = document.getElementById("hw-modal-price-val");
       const modalSubmit = document.getElementById("hw-modal-submit");
-      const engraveInput = document.getElementById("hw-engrave-input");
+      const modalProdTitle = document.getElementById("hw-modal-product-title");
+      const modalPriceVal = document.getElementById("hw-modal-price-val");
+      const modalSerialCode = document.getElementById("hw-modal-serial-code");
 
-      function markUserInteracting(source = "turntable") {
-        isUserManualInteracting = true;
-        hwPhysics.markUserInteracting(source);
-        if (userInteractionTimeout) clearTimeout(userInteractionTimeout);
-        userInteractionTimeout = setTimeout(() => {
-          isUserManualInteracting = false;
-        }, 1800);
-      }
+      // Audio Synthesis System
+      let audioCtx = null;
+      let synthOsc1 = null;
+      let synthOsc2 = null;
+      let synthGain = null;
+      let synthFilter = null;
+      let synthPanner = null;
+      let analyser = null;
+      let panAngle = 0;
 
-      // -------------------------------------------------------------
-      // Synthesizer & Audio Engine
-      // -------------------------------------------------------------
       function getAudioContext() {
         if (!audioCtx) {
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-          if (AudioContextClass) {
-            audioCtx = new AudioContextClass();
-            analyser = audioCtx.createAnalyser();
-            analyser.fftSize = 128;
-            analyser.smoothingTimeConstant = 0.82;
-          }
+          if (AudioContextClass) audioCtx = new AudioContextClass();
         }
         if (audioCtx && audioCtx.state === "suspended") {
-          audioCtx.resume();
+          audioCtx.resume().catch(() => {});
         }
         return audioCtx;
       }
 
-      function playUiTick(freq = 1200, dur = 0.04, gainVal = 0.06) {
+      function playUiTick(freq = 1000, duration = 0.03, gain = 0.05) {
+        const ctx = getAudioContext();
+        if (!ctx) return;
         try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
           const osc = ctx.createOscillator();
           const g = ctx.createGain();
           osc.type = "sine";
           osc.frequency.setValueAtTime(freq, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(freq * 0.5, ctx.currentTime + dur);
-          g.gain.setValueAtTime(gainVal, ctx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.5, ctx.currentTime + duration);
+          g.gain.setValueAtTime(gain, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
           osc.connect(g);
           g.connect(ctx.destination);
           osc.start();
-          osc.stop(ctx.currentTime + dur);
-        } catch(e) {}
+          osc.stop(ctx.currentTime + duration);
+        } catch (e) {}
       }
 
       function playReservationChime() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
         try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
-          const notes = [622.25, 830.61, 1046.50];
-          notes.forEach((freq, idx) => {
+          [440, 554.37, 659.25, 880].forEach((freq, idx) => {
             const osc = ctx.createOscillator();
             const g = ctx.createGain();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
-            g.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.08);
-            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.6);
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.06);
+            g.gain.setValueAtTime(0, ctx.currentTime + idx * 0.06);
+            g.gain.linearRampToValueAtTime(0.07, ctx.currentTime + idx * 0.06 + 0.02);
+            g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + idx * 0.06 + 0.4);
             osc.connect(g);
             g.connect(ctx.destination);
-            osc.start(ctx.currentTime + idx * 0.08);
-            osc.stop(ctx.currentTime + idx * 0.08 + 0.65);
+            osc.start(ctx.currentTime + idx * 0.06);
+            osc.stop(ctx.currentTime + idx * 0.06 + 0.45);
           });
-        } catch(e) {}
-      }
-
-      function stopAcousticSynthesis() {
-        if (synthInterval) {
-          clearInterval(synthInterval);
-          synthInterval = null;
-        }
-        activeOscillators.forEach(osc => {
-          try { osc.stop(); osc.disconnect(); } catch(e) {}
-        });
-        activeGains.forEach(g => {
-          try { g.disconnect(); } catch(e) {}
-        });
-        activeOscillators = [];
-        activeGains = [];
-        isPlayingAudio = false;
-        if (audioPlayBtn) {
-          audioPlayBtn.classList.remove("playing");
-          const icon = audioPlayBtn.querySelector(".hw-play-icon");
-          const text = audioPlayBtn.querySelector(".hw-play-text");
-          if (icon) icon.textContent = "▶";
-          if (text) text.textContent = "SYNTHESIZE TEST";
-        }
+        } catch (e) {}
       }
 
       function startAcousticSynthesis(profile) {
-        stopAcousticSynthesis();
         const ctx = getAudioContext();
-        if (!ctx || !analyser) return;
+        if (!ctx) return;
+        stopAcousticSynthesis();
 
-        isPlayingAudio = true;
-        if (audioPlayBtn) {
-          audioPlayBtn.classList.add("playing");
-          const icon = audioPlayBtn.querySelector(".hw-play-icon");
-          const text = audioPlayBtn.querySelector(".hw-play-text");
-          if (icon) icon.textContent = "■";
-          if (text) text.textContent = "STOP CHAMBER";
-        }
+        try {
+          analyser = ctx.createAnalyser();
+          analyser.fftSize = 64;
 
-        const masterGain = ctx.createGain();
-        masterGain.gain.setValueAtTime(0.24, ctx.currentTime);
-        masterGain.connect(analyser);
-        analyser.connect(ctx.destination);
-        activeGains.push(masterGain);
+          synthGain = ctx.createGain();
+          synthGain.gain.setValueAtTime(0.001, ctx.currentTime);
+          synthGain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.2);
 
-        if (profile === "spatial") {
-          const panner = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
-          const targetNode = panner ? panner : masterGain;
-          if (panner) panner.connect(masterGain);
+          synthFilter = ctx.createBiquadFilter();
+          synthFilter.type = "lowpass";
+          synthFilter.frequency.setValueAtTime(2200, ctx.currentTime);
 
-          const tones = [220, 329.63, 440, 554.37];
-          tones.forEach((freq, idx) => {
-            const osc = ctx.createOscillator();
-            const g = ctx.createGain();
-            osc.type = idx % 2 === 0 ? "sine" : "triangle";
-            osc.frequency.setValueAtTime(freq, ctx.currentTime);
-            g.gain.setValueAtTime(0.08 / tones.length, ctx.currentTime);
-            osc.connect(g);
-            g.connect(targetNode);
-            osc.start();
-            activeOscillators.push(osc);
-            activeGains.push(g);
-          });
+          synthOsc1 = ctx.createOscillator();
+          synthOsc2 = ctx.createOscillator();
 
-          let panPhase = 0;
-          synthInterval = setInterval(() => {
-            panPhase += 0.05;
-            if (panner && panner.pan) {
-              panner.pan.setValueAtTime(Math.sin(panPhase), ctx.currentTime);
-            }
-          }, 30);
-
-        } else if (profile === "bass") {
-          const filter = ctx.createBiquadFilter();
-          filter.type = "lowpass";
-          filter.frequency.setValueAtTime(140, ctx.currentTime);
-          filter.Q.setValueAtTime(6.0, ctx.currentTime);
-          filter.connect(masterGain);
-
-          function triggerBassDrop() {
-            if (!isPlayingAudio) return;
-            const osc = ctx.createOscillator();
-            const g = ctx.createGain();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(95, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(28, ctx.currentTime + 1.2);
-            g.gain.setValueAtTime(0.35, ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
-            osc.connect(g);
-            g.connect(filter);
-            osc.start(ctx.currentTime);
-            osc.stop(ctx.currentTime + 1.45);
-            activeOscillators.push(osc);
+          if (profile === "bass") {
+            synthOsc1.type = "sine";
+            synthOsc1.frequency.setValueAtTime(55, ctx.currentTime);
+            synthOsc2.type = "triangle";
+            synthOsc2.frequency.setValueAtTime(110, ctx.currentTime);
+            synthFilter.frequency.setValueAtTime(600, ctx.currentTime);
+          } else if (profile === "treble") {
+            synthOsc1.type = "triangle";
+            synthOsc1.frequency.setValueAtTime(880, ctx.currentTime);
+            synthOsc2.type = "sine";
+            synthOsc2.frequency.setValueAtTime(1760, ctx.currentTime);
+            synthFilter.type = "highpass";
+            synthFilter.frequency.setValueAtTime(1000, ctx.currentTime);
+          } else {
+            synthOsc1.type = "sine";
+            synthOsc1.frequency.setValueAtTime(220, ctx.currentTime);
+            synthOsc2.type = "sine";
+            synthOsc2.frequency.setValueAtTime(440, ctx.currentTime);
           }
 
-          triggerBassDrop();
-          synthInterval = setInterval(triggerBassDrop, 1500);
+          synthOsc1.connect(synthFilter);
+          synthOsc2.connect(synthFilter);
+          synthFilter.connect(synthGain);
+          synthGain.connect(analyser);
+          analyser.connect(ctx.destination);
 
-        } else if (profile === "studio") {
-          const freqs = [100, 250, 600, 1200, 2800, 6000, 11000];
-          freqs.forEach(f => {
-            const osc = ctx.createOscillator();
-            const g = ctx.createGain();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(f, ctx.currentTime);
-            g.gain.setValueAtTime(0.025, ctx.currentTime);
-            osc.connect(g);
-            g.connect(masterGain);
-            osc.start();
-            activeOscillators.push(osc);
-            activeGains.push(g);
-          });
-
-        } else if (profile === "treble") {
-          const crystalNotes = [2400, 3600, 4800, 7200, 9600, 12000, 14400];
-          let step = 0;
-          function triggerChime() {
-            if (!isPlayingAudio) return;
-            const f = crystalNotes[step % crystalNotes.length];
-            step++;
-            const osc = ctx.createOscillator();
-            const g = ctx.createGain();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(f, ctx.currentTime);
-            g.gain.setValueAtTime(0.09, ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-            osc.connect(g);
-            g.connect(masterGain);
-            osc.start(ctx.currentTime);
-            osc.stop(ctx.currentTime + 0.4);
-            activeOscillators.push(osc);
-          }
-
-          triggerChime();
-          synthInterval = setInterval(triggerChime, 180);
-        }
-
-        setTimeout(() => {
-          if (isPlayingAudio) stopAcousticSynthesis();
-        }, 14000);
+          synthOsc1.start();
+          synthOsc2.start();
+          isPlayingAudio = true;
+          if (audioPlayBtn) audioPlayBtn.classList.add("active");
+        } catch (e) {}
       }
 
-      // -------------------------------------------------------------
-      // Real-Time Canvas Spectrum Visualizer
-      // -------------------------------------------------------------
+      function stopAcousticSynthesis() {
+        if (!isPlayingAudio && !synthOsc1) return;
+        if (synthGain && audioCtx) {
+          try {
+            synthGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
+            setTimeout(() => {
+              try {
+                if (synthOsc1) synthOsc1.stop();
+                if (synthOsc2) synthOsc2.stop();
+                synthOsc1 = null;
+                synthOsc2 = null;
+              } catch (e) {}
+            }, 120);
+          } catch (e) {}
+        }
+        isPlayingAudio = false;
+        if (audioPlayBtn) audioPlayBtn.classList.remove("active");
+      }
+
+      // Real-Time Canvas Visualizer
       function renderVisualizerLoop() {
-        visualizerAnimId = requestAnimationFrame(renderVisualizerLoop);
-        if (!visualizerCanvas) return;
-        const ctx = visualizerCanvas.getContext("2d");
-        if (!ctx) return;
+        if (visCanvas) {
+          const ctx = visCanvas.getContext("2d");
+          const w = visCanvas.width;
+          const h = visCanvas.height;
+          ctx.clearRect(0, 0, w, h);
 
-        const w = visualizerCanvas.width;
-        const h = visualizerCanvas.height;
-        ctx.clearRect(0, 0, w, h);
+          const barCount = 32;
+          const barWidth = w / barCount - 1;
 
-        const freqData = new Uint8Array(64);
-        let rms = 0;
-
-        if (isPlayingAudio && analyser) {
-          analyser.getByteFrequencyData(freqData);
-          let sum = 0;
-          for (let i = 0; i < freqData.length; i++) sum += freqData[i];
-          rms = sum / freqData.length;
-        } else {
-          idlePhase += 0.03;
-          for (let i = 0; i < 64; i++) {
-            freqData[i] = Math.max(0, Math.sin(idlePhase + i * 0.18) * 16 + 8);
+          let dataArray = null;
+          if (analyser && isPlayingAudio) {
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(dataArray);
           }
-          rms = 12;
+
+          for (let i = 0; i < barCount; i++) {
+            let barHeight = 3;
+            if (dataArray) {
+              const val = dataArray[i % dataArray.length] || 0;
+              barHeight = Math.max(3, (val / 255) * h * 0.9);
+            } else {
+              barHeight = 2 + Math.sin(Date.now() * 0.003 + i * 0.25) * 1.5;
+            }
+
+            const x = i * (barWidth + 1);
+            const y = h - barHeight;
+            ctx.fillStyle = isPlayingAudio ? "#dfb76c" : "rgba(255,255,255,0.15)";
+            ctx.fillRect(x, y, barWidth, barHeight);
+          }
         }
-
-        const numBars = 48;
-        const barWidth = (w - (numBars - 1) * 2) / numBars;
-
-        for (let i = 0; i < numBars; i++) {
-          const val = freqData[Math.floor((i / numBars) * freqData.length)] || 0;
-          const barHeight = Math.max(2, (val / 255) * (h - 8));
-          const x = i * (barWidth + 2);
-          const y = h - barHeight;
-
-          const grad = ctx.createLinearGradient(0, y, 0, h);
-          grad.addColorStop(0, "#38bdf8");
-          grad.addColorStop(0.5, "#dfb76c");
-          grad.addColorStop(1, "rgba(223, 183, 108, 0.15)");
-
-          ctx.fillStyle = grad;
-          ctx.fillRect(x, y, barWidth, barHeight);
-
-          ctx.fillStyle = val > 140 ? "#fff" : "#dfb76c";
-          ctx.fillRect(x, Math.max(0, y - 2), barWidth, 1.5);
-        }
-
-        const haloRadius = Math.min(24, Math.max(4, (rms / 255) * 24));
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(w / 2, h / 2, haloRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(56, 189, 248, ${Math.min(0.8, rms / 150)})`;
-        ctx.lineWidth = 1.5;
-        ctx.shadowColor = "#38bdf8";
-        ctx.shadowBlur = 10;
-        ctx.stroke();
-        ctx.restore();
+        requestAnimationFrame(renderVisualizerLoop);
       }
 
-      // -------------------------------------------------------------
-      // Target Frequency Response Curve Chart
-      // -------------------------------------------------------------
-      function drawFrequencyResponseCurve(curvePoints) {
-        if (!frCanvas) return;
+      // Draw Frequency Response Curve
+      function drawFrequencyResponseCurve(curve) {
+        if (!frCanvas || !curve) return;
         const ctx = frCanvas.getContext("2d");
-        if (!ctx) return;
-
         const w = frCanvas.width;
         const h = frCanvas.height;
         ctx.clearRect(0, 0, w, h);
 
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+        ctx.strokeStyle = "rgba(255,255,255,0.06)";
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(0, h * 0.5);
-        ctx.lineTo(w, h * 0.5);
+        ctx.moveTo(0, h / 2);
+        ctx.lineTo(w, h / 2);
         ctx.stroke();
-
-        ctx.beginPath();
-        const pts = curvePoints || [1, 2, 3, 2, 1, 0, 0, 1, 3, 2, 0, -1, -2, -3];
-        const step = w / (pts.length - 1);
-
-        pts.forEach((pt, idx) => {
-          const x = idx * step;
-          const y = (h * 0.5) - (pt * 4.5);
-          if (idx === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        });
 
         ctx.strokeStyle = "#dfb76c";
-        ctx.lineWidth = 2;
-        ctx.shadowColor = "rgba(223, 183, 108, 0.5)";
-        ctx.shadowBlur = 6;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
 
-        ctx.lineTo(w, h);
-        ctx.lineTo(0, h);
-        ctx.closePath();
-        const areaGrad = ctx.createLinearGradient(0, 0, 0, h);
-        areaGrad.addColorStop(0, "rgba(223, 183, 108, 0.2)");
-        areaGrad.addColorStop(1, "rgba(223, 183, 108, 0.0)");
-        ctx.fillStyle = areaGrad;
-        ctx.fill();
+        const step = w / (curve.length - 1);
+        curve.forEach((val, i) => {
+          const x = i * step;
+          const y = h / 2 - (val / 6) * (h / 2);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
       }
 
-      // -------------------------------------------------------------
-      // UI Update & View Synchronization
-      // -------------------------------------------------------------
-      let lastLoadedHardwareModelId = null;
+      // Smooth 3D Cursor Parallax Tilt
+      if (hwViewport && hwRotator) {
+        hwViewport.addEventListener("mousemove", (e) => {
+          const rect = hwViewport.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          const tiltX = (x * 10).toFixed(2);
+          const tiltY = (-y * 10).toFixed(2);
+          hwRotator.style.transform = `perspective(1000px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
+        });
 
-      let currentHardwareRakurs = "hero"; // "hero" | "profile" | "teardown"
+        hwViewport.addEventListener("mouseleave", () => {
+          hwRotator.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+        });
+      }
 
+      // Populate Left Arsenal Roster
+      function populateRoster() {
+        const list = HARDWARE_CATALOG[activeCategory] || [];
+        if (!rosterList) return;
+        rosterList.innerHTML = "";
+        if (modelCountEl) modelCountEl.textContent = `${list.length} MODELS`;
+
+        list.forEach((model, idx) => {
+          const card = document.createElement("div");
+          card.className = `hw-model-card ${idx === activeModelIdx ? "active" : ""}`;
+          card.innerHTML = `
+            <div class="hw-card-thumb" style="width:38px;height:38px;border-radius:6px;overflow:hidden;background:#0c0d10;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
+              <img src="${model.image}" alt="${model.name}" draggable="false" style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+            <div class="hw-card-info">
+              <span class="hw-card-brand">${model.brand}</span>
+              <span class="hw-card-name">${model.name}</span>
+              <div class="hw-card-meta">
+                <span class="hw-card-price">$${model.price.toLocaleString()}</span>
+                <span class="hw-card-spec">${model.weight}</span>
+              </div>
+            </div>
+          `;
+
+          card.addEventListener("click", () => {
+            if (activeModelIdx !== idx) {
+              activeModelIdx = idx;
+              playUiTick(1100, 0.03, 0.05);
+              updateModelView();
+            }
+          });
+
+          rosterList.appendChild(card);
+        });
+      }
+
+      // Update Viewport & Telemetry
       function updateModelView() {
         const list = HARDWARE_CATALOG[activeCategory];
         if (!list || list.length === 0) return;
         if (activeModelIdx >= list.length) activeModelIdx = 0;
         const model = list[activeModelIdx];
 
-        // Update Roster Highlight
-        const cards = rosterList.querySelectorAll(".hw-model-card");
-        cards.forEach((c, idx) => {
-          c.classList.toggle("active", idx === activeModelIdx);
-        });
+        // Roster highlight
+        if (rosterList) {
+          const cards = rosterList.querySelectorAll(".hw-model-card");
+          cards.forEach((c, idx) => c.classList.toggle("active", idx === activeModelIdx));
+        }
 
-        // Update Multi-Angle Studio Images
-        const mainImg = document.getElementById("hw-main-img");
-        const teardownImg = document.getElementById("hw-teardown-img");
-        const hudAngleTag = document.getElementById("hw-hud-angle");
-        const xrayOverlay = document.getElementById("hw-xray-assembly");
-
+        // Image Sources
         const heroSrc = `assets/hardware/studio/${model.id}_hero.jpg`;
         const profileSrc = `assets/hardware/studio/${model.id}_profile.jpg`;
         const teardownSrc = `assets/hardware/studio/${model.id}_teardown.jpg`;
@@ -10265,422 +9451,137 @@
           if (teardownImg.getAttribute("src") !== teardownSrc) {
             teardownImg.src = teardownSrc;
           }
-          const isTeardownActive = (currentHardwareRakurs === "teardown" || isXRayMode);
-          const depth = (xraySlider ? parseFloat(xraySlider.value) / 100 : 0);
-          const tOpacity = (currentHardwareRakurs === "teardown") ? 1 : depth;
-          teardownImg.style.opacity = tOpacity.toString();
-          if (mainImg) {
-            mainImg.style.opacity = (1 - tOpacity * 0.75).toString();
-          }
-          if (xrayOverlay) {
-            xrayOverlay.style.opacity = (tOpacity > 0.3 ? 1 : 0).toString();
-          }
         }
 
-        if (hudAngleTag) {
-          if (currentHardwareRakurs === "teardown" || isXRayMode) {
-            hudAngleTag.textContent = "STUDIO // EXPLODED TEARDOWN";
-          } else if (currentHardwareRakurs === "profile") {
-            hudAngleTag.textContent = "STUDIO // LATERAL PROFILE";
-          } else {
-            hudAngleTag.textContent = "STUDIO // 3/4 HERO PERSPECTIVE";
-          }
+        // Apply Opacity & Modes
+        if (currentHardwareRakurs === "teardown" || isXRayMode) {
+          if (teardownImg) teardownImg.style.opacity = "1";
+          if (mainImg) mainImg.style.opacity = "0.22";
+          if (xrayAssembly) xrayAssembly.style.opacity = "1";
+          if (hudAngle) hudAngle.textContent = "STUDIO // EXPLODED TEARDOWN";
+        } else if (currentHardwareRakurs === "profile") {
+          if (teardownImg) teardownImg.style.opacity = "0";
+          if (mainImg) mainImg.style.opacity = "1";
+          if (xrayAssembly) xrayAssembly.style.opacity = "0";
+          if (hudAngle) hudAngle.textContent = "STUDIO // LATERAL PROFILE";
+        } else {
+          if (teardownImg) teardownImg.style.opacity = "0";
+          if (mainImg) mainImg.style.opacity = "1";
+          if (xrayAssembly) xrayAssembly.style.opacity = "0";
+          if (hudAngle) hudAngle.textContent = "STUDIO // 3/4 HERO PERSPECTIVE";
         }
 
-        // Update Rakurs Buttons in HUD
-        const rakursBtns = document.querySelectorAll(".hw-rakurs-btn");
+        // Rakurs buttons active state
         rakursBtns.forEach(btn => {
           const r = btn.getAttribute("data-rakurs");
-          const active = (r === currentHardwareRakurs);
-          btn.classList.toggle("active", active);
-          if (active) {
-            btn.style.background = "rgba(223,183,108,0.18)";
-            btn.style.borderColor = "rgba(223,183,108,0.45)";
-            btn.style.color = "#fff3d1";
-            btn.style.fontWeight = "600";
-          } else {
-            btn.style.background = "rgba(0,0,0,0.5)";
-            btn.style.borderColor = "rgba(255,255,255,0.1)";
-            btn.style.color = "#888";
-            btn.style.fontWeight = "normal";
-          }
+          const isActive = (r === currentHardwareRakurs);
+          btn.classList.toggle("active", isActive);
+          btn.style.background = isActive ? "rgba(223,183,108,0.22)" : "rgba(0,0,0,0.6)";
+          btn.style.borderColor = isActive ? "rgba(223,183,108,0.5)" : "rgba(255,255,255,0.12)";
+          btn.style.color = isActive ? "#fff3d1" : "#888";
         });
 
-        // Update Callouts Text
-        if (calloutChassisSpec) calloutChassisSpec.textContent = model.chassisSpec;
-        if (calloutDriverSpec) calloutDriverSpec.textContent = model.driverSpec;
-        if (calloutPcbSpec) calloutPcbSpec.textContent = model.pcbSpec;
-        if (calloutBaseSpec) calloutBaseSpec.textContent = model.baseSpec;
+        // Telemetry updates
+        if (telSeries) telSeries.textContent = `SERIES // ${activeCategory.toUpperCase()}-0${activeModelIdx + 1}`;
+        if (telName) telName.textContent = model.name;
+        if (telBrand) telBrand.textContent = model.brandTag;
+        if (telPrice) telPrice.textContent = `$${model.price.toLocaleString()}`;
+        if (telWeight) telWeight.textContent = model.weight;
+        if (telFreq) telFreq.textContent = model.freq;
+        if (telDriver) telDriver.textContent = model.driver;
+        if (telLatency) telLatency.textContent = model.latency;
+        if (telConn) telConn.textContent = model.conn;
+        if (telBattery) telBattery.textContent = model.battery;
 
-        // Update Telemetry Header & Specs
-        if (teleSerial) teleSerial.textContent = `SERIES // ${activeCategory.toUpperCase()}-0${activeModelIdx + 1}`;
-        if (teleModel) teleModel.textContent = model.name;
-        if (teleBrand) teleBrand.textContent = model.brandTag;
-        if (telePrice) telePrice.textContent = `$${model.price.toLocaleString()}`;
+        if (specChassis) specChassis.textContent = model.chassisSpec;
+        if (specDriver) specDriver.textContent = model.driverSpec;
+        if (specPcb) specPcb.textContent = model.pcbSpec;
+        if (specBase) specBase.textContent = model.baseSpec;
 
-        if (specWeight) specWeight.textContent = model.weight;
-        if (specFreq) specFreq.textContent = model.freq;
-        if (specDriver) specDriver.textContent = model.driver;
-        if (specLatency) specLatency.textContent = model.latency;
-        if (specConn) specConn.textContent = model.conn;
-        if (specBattery) specBattery.textContent = model.battery;
-
-        // Update Target Curve
-        drawFrequencyResponseCurve(model.frCurve);
-
-        // Update Modal Preview
-        if (modalProductName) modalProductName.textContent = `${model.brand} ${model.name}`;
-        if (modalImg) modalImg.src = heroSrc;
+        if (modalProdTitle) modalProdTitle.textContent = `${model.brand} ${model.name}`;
         if (modalPriceVal) modalPriceVal.textContent = `$${model.price.toLocaleString()}`;
-        if (modalSerialCode) {
-          const code = 1000 + Math.floor(Math.random() * 9000);
-          modalSerialCode.textContent = `SN: CS-${code}-${model.brand.replace(/[^A-Z0-9]/gi, "").substring(0, 4).toUpperCase()}`;
-        }
+        if (modalSerialCode) modalSerialCode.textContent = `SN: CS-${Math.floor(1000 + Math.random() * 9000)}-${model.id.toUpperCase().slice(0, 8)}`;
 
-        applyTurntableTransform();
+        drawFrequencyResponseCurve(model.frCurve);
       }
 
-      function populateRoster() {
-        if (!rosterList) return;
-        const list = HARDWARE_CATALOG[activeCategory] || [];
-        rosterList.innerHTML = "";
-
-        if (modelCountEl) modelCountEl.textContent = `${list.length} MODELS`;
-
-        list.forEach((model, idx) => {
-          const card = document.createElement("div");
-          card.className = `hw-model-card ${idx === activeModelIdx ? "active" : ""}`;
-          card.innerHTML = `
-            <div class="hw-card-thumb">
-              <img src="${model.image}" alt="${model.name}" draggable="false" />
-            </div>
-            <div class="hw-card-info">
-              <span class="hw-card-brand">${model.brand}</span>
-              <span class="hw-card-name">${model.name}</span>
-              <div class="hw-card-meta">
-                <span class="hw-card-price">$${model.price.toLocaleString()}</span>
-                <span class="hw-card-spec">${model.weight}</span>
-              </div>
-            </div>
-          `;
-
-          card.addEventListener("click", () => {
-            if (activeModelIdx !== idx) {
-              activeModelIdx = idx;
-              markUserInteracting("model");
-              playUiTick(1100, 0.03, 0.05);
-              updateModelView();
-            }
-          });
-
-          rosterList.appendChild(card);
-        });
-      }
-
-      // -------------------------------------------------------------
-      // 360° Turntable Physics & Inertia Engine
-      // -------------------------------------------------------------
-      function getCardinalPerspective(deg) {
-        const norm = ((Math.round(deg) % 360) + 360) % 360;
-        if (norm >= 338 || norm <= 22) return `${norm}° // FRONTAL PROFILE`;
-        if (norm >= 23 && norm <= 67) return `${norm}° // 3/4 OBLIQUE`;
-        if (norm >= 68 && norm <= 112) return `${norm}° // LATERAL 90°`;
-        if (norm >= 113 && norm <= 157) return `${norm}° // REAR 3/4`;
-        if (norm >= 158 && norm <= 202) return `${norm}° // DORSAL 180°`;
-        if (norm >= 203 && norm <= 247) return `${norm}° // MEDIAL 3/4`;
-        if (norm >= 248 && norm <= 292) return `${norm}° // OPPOSITE LATERAL`;
-        return `${norm}° // OBLIQUE REAR`;
-      }
-
-      function applyTurntableTransform() {
-        const norm = ((Math.round(currentAngle) % 360) + 360) % 360;
-        if (hudAngle) {
-          hudAngle.textContent = `TURNTABLE // ${getCardinalPerspective(norm)}`;
-        }
-
-        const rad = (currentAngle * Math.PI) / 180;
-        const pitch = Math.sin(rad) * 4;
-
-        if (hwRig) {
-          hwRig.style.transform = `rotateY(${currentAngle}deg) rotateX(${pitch}deg)`;
-        }
-
-        if (hwContactShadow) {
-          const scaleX = 1 - Math.abs(Math.sin(rad)) * 0.15;
-          const scaleY = 1 - Math.abs(Math.sin(rad)) * 0.25;
-          hwContactShadow.style.transform = `scale(${scaleX}, ${scaleY}) rotate(${currentAngle * 0.15}deg)`;
-        }
-
-        // Apply X-Ray Exploded offsets
-        if (isXRayMode) {
-          const exp = xrayExpansion;
-          if (xrayChassis) {
-            xrayChassis.style.transform = `translate3d(0, ${-25 * exp}px, ${50 * exp}px)`;
+      // Rakurs Buttons Event Binding
+      rakursBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const r = btn.getAttribute("data-rakurs");
+          currentHardwareRakurs = r;
+          if (r === "teardown") {
+            isXRayMode = true;
+            if (xraySlider) xraySlider.value = 100;
+            if (xraySliderVal) xraySliderVal.textContent = "100%";
+          } else {
+            isXRayMode = false;
+            if (xraySlider) xraySlider.value = 0;
+            if (xraySliderVal) xraySliderVal.textContent = "0%";
           }
-          if (xrayDriver) {
-            xrayDriver.style.transform = `translate3d(0, ${-5 * exp}px, ${15 * exp}px)`;
+          playUiTick(650, 0.03, 0.05);
+          updateModelView();
+        });
+      });
+
+      // X-Ray Separation Slider Bar
+      if (xraySlider) {
+        xraySlider.addEventListener("input", (e) => {
+          const val = parseFloat(e.target.value);
+          if (xraySliderVal) xraySliderVal.textContent = `${Math.round(val)}%`;
+          const depth = val / 100;
+          
+          if (teardownImg) teardownImg.style.opacity = depth.toString();
+          if (mainImg) mainImg.style.opacity = (1 - depth * 0.75).toString();
+          if (xrayAssembly) xrayAssembly.style.opacity = (depth > 0.35 ? ((depth - 0.35) / 0.65).toString() : "0");
+
+          if (val > 65) {
+            currentHardwareRakurs = "teardown";
+            isXRayMode = true;
+          } else if (val === 0 && currentHardwareRakurs === "teardown") {
+            currentHardwareRakurs = "hero";
+            isXRayMode = false;
           }
-          if (xrayCircuit) {
-            xrayCircuit.style.transform = `translate3d(0, ${18 * exp}px, ${-20 * exp}px)`;
+          if (hudAngle) {
+            hudAngle.textContent = (depth > 0.35) ? "STUDIO // EXPLODED TEARDOWN" : "STUDIO // 3/4 HERO PERSPECTIVE";
           }
-          if (xrayBase) {
-            xrayBase.style.transform = `translate3d(0, ${38 * exp}px, ${-55 * exp}px)`;
-          }
-        }
-      }
-
-      function animateTurntableInertia() {
-        if (!isDragging) {
-          if (isAutoRotating) {
-            currentAngle += 0.35;
-            applyTurntableTransform();
-          } else if (Math.abs(velocity) > 0.05) {
-            currentAngle += velocity;
-            velocity *= 0.92;
-            applyTurntableTransform();
-          }
-        }
-        requestAnimationFrame(animateTurntableInertia);
-      }
-
-      // -------------------------------------------------------------
-      // Scroll-Linked Video Teardown & Turntable Engine
-      // -------------------------------------------------------------
-      function handleScrollLinkUpdate() {
-        const rect = hardwareApp.getBoundingClientRect();
-        const winH = window.innerHeight;
-
-        // Check if Cyber Studio is currently inside or near viewport
-        if (rect.bottom > 0 && rect.top < winH) {
-          const progress = Math.min(Math.max((winH - rect.top) / (winH + rect.height), 0), 1);
-          const canScroll = hwPhysics.notifyScroll(progress);
-          if (!canScroll || isDragging) return;
-
-          if (hwScrollBadge) {
-            hwScrollBadge.classList.add("active");
-            if (hwScrollBadgeText) hwScrollBadgeText.textContent = `SCROLL-LINKED: ${Math.round(progress * 100)}%`;
-          }
-
-          // Smoothly drive turntable 360 rotation by scroll
-          const scrollTargetAngle = (progress - 0.5) * 360 * 1.5;
-          currentAngle += (scrollTargetAngle - currentAngle) * 0.08;
-
-          // Progressively scrub the transparent video from 0% (assembled) to 100% (exploded teardown) in direct proportion to scroll progress at 60+ FPS
-          const teardownProgress = progress;
-          xrayExpansion = teardownProgress;
-
-          if (xraySlider) xraySlider.value = (teardownProgress * 100).toFixed(1);
-          if (xraySliderVal) xraySliderVal.textContent = `${Math.round(teardownProgress * 100)}%`;
-
-          // Ingest progress into Tier 1 non-blocking video scrub engine
-          hwVideoEngine.setTargetProgress(teardownProgress);
-
-          applyTurntableTransform();
-        } else {
-          if (hwScrollBadge) {
-            hwScrollBadge.classList.remove("active");
-            if (hwScrollBadgeText) hwScrollBadgeText.textContent = "SCROLL-LINKED: READY";
-          }
-        }
-      }
-
-      // Bind scroll updates to window scroll & Lenis
-      window.addEventListener("scroll", handleScrollLinkUpdate, { passive: true });
-      if (typeof lenis !== "undefined" && lenis && lenis.on) {
-        lenis.on("scroll", handleScrollLinkUpdate);
-      }
-
-      // Interactive Pointer Controls
-      if (hwViewport) {
-        hwViewport.addEventListener("pointerdown", e => {
-          isDragging = true;
-          isAutoRotating = false;
-          markUserInteracting("turntable");
-          if (btnAutoRotate) btnAutoRotate.classList.remove("active");
-          startX = e.clientX;
-          lastX = e.clientX;
-          velocity = 0;
-          hwViewport.setPointerCapture(e.pointerId);
-        });
-
-        hwViewport.addEventListener("pointermove", e => {
-          if (!isDragging) return;
-          markUserInteracting("turntable");
-          const delta = e.clientX - lastX;
-          lastX = e.clientX;
-          velocity = delta * 0.55;
-          currentAngle += velocity;
-          applyTurntableTransform();
-        });
-
-        hwViewport.addEventListener("pointerup", e => {
-          isDragging = false;
-          markUserInteracting("turntable");
-          hwPhysics.releaseInteraction();
-          try { hwViewport.releasePointerCapture(e.pointerId); } catch(err) {}
-        });
-
-        hwViewport.addEventListener("pointercancel", e => {
-          isDragging = false;
-          hwPhysics.releaseInteraction();
-          try { hwViewport.releasePointerCapture(e.pointerId); } catch(err) {}
         });
       }
 
-      // Rotate Controls
-      if (btnRotLeft) {
-        btnRotLeft.addEventListener("click", () => {
-          markUserInteracting();
-          currentAngle -= 15;
-          playUiTick(900, 0.02, 0.04);
-          applyTurntableTransform();
-        });
-      }
-      if (btnRotRight) {
-        btnRotRight.addEventListener("click", () => {
-          markUserInteracting();
-          currentAngle += 15;
-          playUiTick(900, 0.02, 0.04);
-          applyTurntableTransform();
-        });
-      }
-      if (btnRotReset) {
-        btnRotReset.addEventListener("click", () => {
-          markUserInteracting();
-          currentAngle = 0;
-          velocity = 0;
-          playUiTick(1200, 0.03, 0.05);
-          applyTurntableTransform();
-        });
-      }
-      if (btnAutoRotate) {
-        btnAutoRotate.addEventListener("click", () => {
-          markUserInteracting();
-          isAutoRotating = !isAutoRotating;
-          btnAutoRotate.classList.toggle("active", isAutoRotating);
-          playUiTick(isAutoRotating ? 1400 : 700, 0.03, 0.05);
-        });
-      }
-
-      // Mode & Category Switchers & Video Scrubbing Engine
+      // Category Navigation Dock
       catBtns.forEach(btn => {
         btn.addEventListener("click", () => {
           const cat = btn.getAttribute("data-cat");
           if (cat && cat !== activeCategory) {
             activeCategory = cat;
             activeModelIdx = 0;
-            markUserInteracting("category");
-            if (isPlayingCinema) {
-              hwPhysics.stopCinema();
-            }
+            currentHardwareRakurs = "hero";
+            isXRayMode = false;
+            if (xraySlider) xraySlider.value = 0;
+            if (xraySliderVal) xraySliderVal.textContent = "0%";
             catBtns.forEach(b => b.classList.toggle("active", b === btn));
-            playUiTick(800, 0.03, 0.07);
+            playUiTick(850, 0.04, 0.07);
             populateRoster();
             updateModelView();
           }
         });
       });
 
-      if (modeBtnStudio) {
-        modeBtnStudio.addEventListener("click", () => {
-          if (isXRayMode) {
-            isXRayMode = false;
-            markUserInteracting();
-            hardwareApp.classList.remove("xray-active");
-            modeBtnStudio.classList.add("active");
-            modeBtnXray.classList.remove("active");
-            if (isPlayingCinema) {
-              hwPhysics.stopCinema();
-            }
-            playUiTick(950, 0.03, 0.05);
-            applyTurntableTransform();
-          }
-        });
-      }
-
-      if (modeBtnXray) {
-        modeBtnXray.addEventListener("click", () => {
-          if (!isXRayMode) {
-            isXRayMode = true;
-            markUserInteracting();
-            hardwareApp.classList.add("xray-active");
-            modeBtnXray.classList.add("active");
-            modeBtnStudio.classList.remove("active");
-            playUiTick(1300, 0.04, 0.06);
-            if (hwXrayVideo) {
-              const dur = hwXrayVideo.duration || 5;
-              hwVideoEngine.seekImmediate(xrayExpansion * dur);
-            }
-            applyTurntableTransform();
-          }
-        });
-      }
-
-      // Video Timeline Scrubbing via Slider
-      if (xraySlider) {
-        xraySlider.addEventListener("input", e => {
-          markUserInteracting("slider");
-          const val = parseFloat(e.target.value);
-          xrayExpansion = val / 100;
-          if (xraySliderVal) xraySliderVal.textContent = `${Math.round(val)}%`;
-          
-          if (hwXrayVideo && !isPlayingCinema) {
-            const dur = hwXrayVideo.duration || 5;
-            if (!isNaN(dur) && dur > 0) {
-              hwVideoEngine.seekImmediate((val / 100) * dur);
-            }
-          }
-          applyTurntableTransform();
-        });
-
-        xraySlider.addEventListener("change", () => {
-          hwPhysics.releaseInteraction();
-        });
-      }
-
-      // Play / Pause Video Cinema Mode
-      if (hwBtnVideoPlay && hwXrayVideo) {
-        hwBtnVideoPlay.addEventListener("click", () => {
-          markUserInteracting("cinema");
-          if (!isPlayingCinema) {
-            hwPhysics.startCinema();
-            playUiTick(1400, 0.03, 0.05);
-          } else {
-            hwPhysics.stopCinema();
-            playUiTick(750, 0.03, 0.05);
-          }
-        });
-
-        hwXrayVideo.addEventListener("timeupdate", () => {
-          if (isPlayingCinema && hwXrayVideo.duration) {
-            const pct = (hwXrayVideo.currentTime / hwXrayVideo.duration) * 100;
-            if (xraySlider) xraySlider.value = pct.toFixed(1);
-            if (xraySliderVal) xraySliderVal.textContent = `${Math.round(pct)}%`;
-            xrayExpansion = pct / 100;
-            applyTurntableTransform();
-          }
-        });
-      }
-
-      // Sound Profile Toggles
+      // Sound Profiles
       profileBtns.forEach(btn => {
         btn.addEventListener("click", () => {
           const prof = btn.getAttribute("data-profile");
           if (prof) {
             activeSoundProfile = prof;
-            markUserInteracting();
             profileBtns.forEach(b => b.classList.toggle("active", b === btn));
             playUiTick(1000, 0.02, 0.04);
-            if (isPlayingAudio) {
-              startAcousticSynthesis(activeSoundProfile);
-            }
+            if (isPlayingAudio) startAcousticSynthesis(activeSoundProfile);
           }
         });
       });
 
       if (audioPlayBtn) {
         audioPlayBtn.addEventListener("click", () => {
-          markUserInteracting();
           if (isPlayingAudio) {
             stopAcousticSynthesis();
             playUiTick(600, 0.03, 0.05);
@@ -10691,7 +9592,7 @@
         });
       }
 
-      // Hardware Reservation Suite Modal
+      // Reservation Modal
       if (reserveBtn) {
         reserveBtn.addEventListener("click", () => {
           if (modalBackdrop) {
@@ -10703,15 +9604,13 @@
 
       if (modalClose) {
         modalClose.addEventListener("click", () => {
-          if (modalBackdrop) {
-            modalBackdrop.classList.remove("open");
-            playUiTick(700, 0.02, 0.04);
-          }
+          if (modalBackdrop) modalBackdrop.classList.remove("open");
+          playUiTick(700, 0.02, 0.04);
         });
       }
 
       if (modalBackdrop) {
-        modalBackdrop.addEventListener("click", e => {
+        modalBackdrop.addEventListener("click", (e) => {
           if (e.target === modalBackdrop) {
             modalBackdrop.classList.remove("open");
             playUiTick(700, 0.02, 0.04);
@@ -10723,9 +9622,9 @@
         modalSubmit.addEventListener("click", () => {
           playReservationChime();
           const origText = modalSubmit.innerHTML;
-          modalSubmit.innerHTML = "<span>PASS ALLOCATED // RESERVED</span>";
-          modalSubmit.style.background = "#38bdf8";
-          modalSubmit.style.color = "#040b16";
+          modalSubmit.innerHTML = "<span>ALLOCATION CONFIRMED // VIP PASS</span>";
+          modalSubmit.style.background = "#dfb76c";
+          modalSubmit.style.color = "#070707";
           setTimeout(() => {
             if (modalBackdrop) modalBackdrop.classList.remove("open");
             modalSubmit.innerHTML = origText;
@@ -10736,52 +9635,8 @@
       }
 
       // Initialize
-      // Rakurs Buttons Event Binding
-      const hwRakursBtns = document.querySelectorAll(".hw-rakurs-btn");
-      hwRakursBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const r = btn.getAttribute("data-rakurs");
-          currentHardwareRakurs = r;
-          if (r === "teardown") {
-            isXrayMode = true;
-            if (xraySlider) {
-              xraySlider.value = 100;
-              if (xraySliderVal) xraySliderVal.textContent = "100%";
-            }
-          } else {
-            isXrayMode = false;
-            if (xraySlider) {
-              xraySlider.value = 0;
-              if (xraySliderVal) xraySliderVal.textContent = "0%";
-            }
-          }
-          if (modeBtnStudio) modeBtnStudio.classList.toggle("active", !isXrayMode);
-          if (modeBtnXray) modeBtnXray.classList.toggle("active", isXrayMode);
-          playSnkClick(520, 0.04);
-          updateModelView();
-        });
-      });
-
-      // Wire X-Ray Slider to smoothly update teardown cross-fade
-      if (xraySlider) {
-        xraySlider.addEventListener("input", e => {
-          const val = parseFloat(e.target.value);
-          if (xraySliderVal) xraySliderVal.textContent = `${Math.round(val)}%`;
-          isXrayMode = (val > 15);
-          if (val > 60) {
-            currentHardwareRakurs = "teardown";
-          } else if (val === 0 && currentHardwareRakurs === "teardown") {
-            currentHardwareRakurs = "hero";
-          }
-          if (modeBtnStudio) modeBtnStudio.classList.toggle("active", !isXrayMode);
-          if (modeBtnXray) modeBtnXray.classList.toggle("active", isXrayMode);
-          updateModelView();
-        });
-      }
-
       populateRoster();
       updateModelView();
-      animateTurntableInertia();
       renderVisualizerLoop();
     })();
 
