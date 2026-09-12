@@ -2279,6 +2279,7 @@
     }
 
     /* AI Video Teardown Layer */
+    /* AI Video Teardown Layer */
     .hw-video-layer {
       position: absolute;
       inset: 0;
@@ -2292,16 +2293,37 @@
       background: transparent;
       border-radius: 16px;
       overflow: hidden;
+      aspect-ratio: 16/9;
+      contain: layout size;
     }
     .hw-xray-video {
       width: 100%;
       height: 100%;
       max-width: 96%;
       max-height: 94%;
+      aspect-ratio: 16/9;
       object-fit: contain;
       background: transparent;
-      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95)) brightness(1.04);
+      border: none;
+      outline: none;
+      contain: layout size;
       transition: transform 0.3s ease;
+    }
+    .snk-video-render {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      aspect-ratio: 16/9;
+      object-fit: contain;
+      background: transparent;
+      border: none;
+      outline: none;
+      contain: layout size;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+      transition: transform 0.06s ease-out;
     }
     .hw-hud-scroll-badge {
       display: inline-flex;
@@ -2335,15 +2357,6 @@
     .hardware-app-container.xray-active .hw-video-layer {
       opacity: 1;
       pointer-events: auto;
-    }
-    .hw-xray-video {
-      width: 100%;
-      height: 100%;
-      max-width: 96%;
-      max-height: 94%;
-      object-fit: contain;
-      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95)) brightness(1.04);
-      transition: transform 0.3s ease;
     }
     .hw-video-play-badge {
       position: absolute;
@@ -4045,7 +4058,7 @@
 
                     <!-- AI High-Definition Transparent WebM Video Teardown Layer -->
                     <div class="hw-video-layer" id="hw-video-layer">
-                      <video id="hw-xray-video" class="hw-xray-video" playsinline muted loop preload="auto" poster="assets/video_thumbs_webm/Apple_AirPods_Max_Exploded_View_20260912183607.png">
+                      <video id="hw-xray-video" class="hw-xray-video" playsinline muted loop preload="auto" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E">
                         <source src="assets/videos_webm/Apple_AirPods_Max_Exploded_View_20260912183607.webm" type="video/webm">
                         <source src="assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4" type="video/mp4">
                       </video>
@@ -4384,6 +4397,446 @@
       gsap.ticker.add((time)=>lenis.raf(time*1000));
       gsap.ticker.lagSmoothing(1000, 16);
     }
+
+    /* ============================================================
+       CORE VIDEO ENGINE & PHYSICS ARCHITECTURE (MILESTONE 1)
+       ============================================================ */
+
+    /**
+     * VideoScrubEngine
+     * 3-Tier Non-Blocking Scrubbing Pipeline:
+     * - Tier 1 (Scroll Ingestion): Normalizes and registers target progress [0, 1] without touching currentTime.
+     * - Tier 2 (RAF Lerping): 60+ FPS loop (gsap.ticker or requestAnimationFrame) with exponential smoothing (lambda ≈ 0.12).
+     * - Tier 3 (Seek-Lock Guard): Manages isSeeking state, buffers pendingTime, quantizes seek requests (delta >= 0.038s),
+     *   and uses video.fastSeek(targetTime) where supported with fallback to video.currentTime = targetTime.
+     */
+    class VideoScrubEngine {
+      constructor(videoElement, options = {}) {
+        this.video = videoElement;
+        this.fps = options.fps ?? 60;
+        this.lerpFactor = options.lerpFactor ?? 0.12;
+        this.quantizeDelta = options.quantizeDelta ?? 0.038;
+        this.onUpdate = typeof options.onUpdate === "function" ? options.onUpdate : null;
+
+        // Tier 1: Ingested scroll progress
+        this.targetProgress = 0;
+
+        // Tier 2: Lerp state
+        this.smoothProgress = 0;
+        this.targetTime = 0;
+        this.smoothTime = 0;
+
+        // Tier 3: Seek-lock state
+        this.isSeeking = false;
+        this.pendingTime = null;
+
+        // Cinema & blend state
+        this.isAutonomous = false;
+        this.isBlending = false;
+        this.blendStartTime = 0;
+        this.blendDuration = options.blendDuration ?? 300; // ms
+        this.blendStartProgress = 0;
+
+        // Transparent SVG 16:9 poster to eliminate dark frame flicker
+        this.TRANSPARENT_POSTER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E";
+
+        // Bindings
+        this._boundTick = this._tick.bind(this);
+        this._boundOnSeeking = () => {
+          this.isSeeking = true;
+        };
+        this._boundOnSeeked = () => {
+          this.isSeeking = false;
+          if (this.pendingTime !== null) {
+            const nextTime = this.pendingTime;
+            this.pendingTime = null;
+            this._executeSeek(nextTime);
+          }
+        };
+        this._boundOnLoadedMetadata = () => {
+          if (this.video && this.video.duration && !isNaN(this.video.duration)) {
+            const primeTime = Math.max(0.001, this.smoothProgress * this.video.duration);
+            this._requestSeek(primeTime);
+          }
+        };
+        this._boundOnPlay = () => {
+          this.isAutonomous = true;
+          this.isBlending = false;
+        };
+        this._boundOnPause = () => {
+          this.isAutonomous = false;
+        };
+        this._boundOnTimeUpdate = () => {
+          if (this.isAutonomous && this.video && this.video.duration && !isNaN(this.video.duration)) {
+            this.smoothProgress = this.video.currentTime / this.video.duration;
+            this.targetProgress = this.smoothProgress;
+            this.smoothTime = this.video.currentTime;
+            if (this.onUpdate) {
+              this.onUpdate(this.smoothProgress, this.video.currentTime);
+            }
+          }
+        };
+
+        this._initListeners();
+        this._startLoop();
+      }
+
+      _initListeners() {
+        if (!this.video) return;
+        this.video.addEventListener("seeking", this._boundOnSeeking);
+        this.video.addEventListener("seeked", this._boundOnSeeked);
+        this.video.addEventListener("loadedmetadata", this._boundOnLoadedMetadata);
+        this.video.addEventListener("play", this._boundOnPlay);
+        this.video.addEventListener("pause", this._boundOnPause);
+        this.video.addEventListener("timeupdate", this._boundOnTimeUpdate);
+      }
+
+      _startLoop() {
+        if (typeof gsap !== "undefined" && gsap.ticker) {
+          gsap.ticker.add(this._boundTick);
+        } else {
+          this._rafId = requestAnimationFrame(this._boundTick);
+        }
+      }
+
+      _tick(time, deltaTime, frame) {
+        if (typeof gsap === "undefined" || !gsap.ticker) {
+          this._rafId = requestAnimationFrame(this._boundTick);
+        }
+
+        if (!this.video) return;
+
+        // Autonomous cinema playback: native video decoding drives playback
+        if (this.isAutonomous) {
+          return;
+        }
+
+        const duration = this.video.duration;
+        if (!duration || isNaN(duration) || duration <= 0) {
+          return;
+        }
+
+        // Tier 2: RAF Lerp
+        if (this.isBlending) {
+          const now = performance.now();
+          const elapsed = now - this.blendStartTime;
+          const t = Math.min(1, Math.max(0, elapsed / this.blendDuration));
+          // Cubic Hermite smooth blending (easeInOut)
+          const ease = t * t * (3 - 2 * t);
+          this.smoothProgress = this.blendStartProgress + (this.targetProgress - this.blendStartProgress) * ease;
+          if (t >= 1) {
+            this.isBlending = false;
+          }
+        } else {
+          // Exponential smoothing filter
+          const diff = this.targetProgress - this.smoothProgress;
+          if (Math.abs(diff) > 0.0001) {
+            this.smoothProgress += diff * this.lerpFactor;
+          } else {
+            this.smoothProgress = this.targetProgress;
+          }
+        }
+
+        const desiredTime = this.smoothProgress * duration;
+        this.smoothTime = desiredTime;
+
+        // Tier 3: Seek-Lock Guard & Quantization
+        this._requestSeek(desiredTime);
+
+        if (this.onUpdate) {
+          this.onUpdate(this.smoothProgress, this.video.currentTime);
+        }
+      }
+
+      /**
+       * Tier 1: Scroll Ingestion
+       * Cleanly registers target progress [0, 1] without touching video currentTime
+       */
+      setTargetProgress(progress) {
+        const p = Math.min(Math.max(Number(progress) || 0, 0), 1);
+        this.targetProgress = p;
+      }
+
+      /**
+       * Tier 3: Seek-Lock Guard & Quantization
+       */
+      _requestSeek(targetTime) {
+        if (!this.video || !this.video.duration || isNaN(this.video.duration) || this.video.duration <= 0) return;
+        const clamped = Math.max(0, Math.min(this.video.duration, targetTime));
+
+        // Quantization: skip seek if delta is below threshold (0.038s)
+        if (Math.abs(this.video.currentTime - clamped) < this.quantizeDelta) {
+          return;
+        }
+
+        if (this.isSeeking) {
+          this.pendingTime = clamped;
+        } else {
+          this._executeSeek(clamped);
+        }
+      }
+
+      _executeSeek(targetTime) {
+        if (!this.video) return;
+        this.isSeeking = true;
+        if (typeof this.video.fastSeek === "function") {
+          try {
+            this.video.fastSeek(targetTime);
+          } catch (err) {
+            this.video.currentTime = targetTime;
+          }
+        } else {
+          this.video.currentTime = targetTime;
+        }
+      }
+
+      /**
+       * Immediate seek for manual timeline slider or pointer drag
+       */
+      seekImmediate(timeInSeconds) {
+        if (!this.video || !this.video.duration || isNaN(this.video.duration)) return;
+        const clamped = Math.max(0, Math.min(this.video.duration, Number(timeInSeconds) || 0));
+        this.targetTime = clamped;
+        this.smoothTime = clamped;
+        this.targetProgress = clamped / this.video.duration;
+        this.smoothProgress = this.targetProgress;
+        this.isBlending = false;
+
+        if (this.isSeeking) {
+          this.pendingTime = clamped;
+        } else {
+          this._executeSeek(clamped);
+        }
+
+        if (this.onUpdate) {
+          this.onUpdate(this.smoothProgress, clamped);
+        }
+      }
+
+      /**
+       * Cinema autonomous playback
+       */
+      playAutonomous() {
+        this.isAutonomous = true;
+        this.isBlending = false;
+        if (this.video) {
+          return this.video.play().catch(() => {});
+        }
+        return Promise.resolve();
+      }
+
+      /**
+       * Pauses autonomous cinema playback and smoothly blends back to scroll tracking over 300ms
+       */
+      pauseAutonomous() {
+        if (this.video) {
+          this.video.pause();
+        }
+        this.isAutonomous = false;
+        const curProg = (this.video && this.video.duration && !isNaN(this.video.duration))
+          ? (this.video.currentTime / this.video.duration)
+          : this.smoothProgress;
+
+        this.blendStartProgress = curProg;
+        this.smoothProgress = curProg;
+        this.blendStartTime = performance.now();
+        this.isBlending = true;
+      }
+
+      /**
+       * Smoothly load new video source with transparent poster shielding and metadata priming
+       */
+      loadSource(srcWebm, srcMp4, poster) {
+        if (!this.video) return;
+        this.video.poster = poster || this.TRANSPARENT_POSTER;
+
+        const sources = this.video.querySelectorAll("source");
+        if (sources.length > 0) {
+          sources.forEach(s => {
+            const type = s.getAttribute("type") || "";
+            if (type.includes("webm") && srcWebm) {
+              s.src = srcWebm;
+            } else if (type.includes("mp4") && srcMp4) {
+              s.src = srcMp4;
+            }
+          });
+        } else if (srcWebm) {
+          this.video.src = srcWebm;
+        }
+
+        const onLoaded = () => {
+          const primeTime = Math.max(0.001, this.smoothProgress * (this.video.duration || 1));
+          this._requestSeek(primeTime);
+        };
+        this.video.addEventListener("loadedmetadata", onLoaded, { once: true });
+        this.video.load();
+      }
+
+      destroy() {
+        if (this._rafId) {
+          cancelAnimationFrame(this._rafId);
+          this._rafId = null;
+        }
+        if (typeof gsap !== "undefined" && gsap.ticker) {
+          gsap.ticker.remove(this._boundTick);
+        }
+        if (this.video) {
+          this.video.removeEventListener("seeking", this._boundOnSeeking);
+          this.video.removeEventListener("seeked", this._boundOnSeeked);
+          this.video.removeEventListener("loadedmetadata", this._boundOnLoadedMetadata);
+          this.video.removeEventListener("play", this._boundOnPlay);
+          this.video.removeEventListener("pause", this._boundOnPause);
+          this.video.removeEventListener("timeupdate", this._boundOnTimeUpdate);
+        }
+      }
+    }
+
+    /**
+     * DualControlPhysics
+     * 5-State Finite State Machine:
+     * - State 0: IDLE_SCROLL_DRIVEN (Scroll progress drives video time and turntable angle)
+     * - State 1: MANUAL_TURNTABLE_DRAG (Pointer drag takes immediate priority, 1,800ms cooldown lock)
+     * - State 2: MANUAL_TIMELINE_SLIDER (Slider input takes immediate priority, 1,800ms cooldown lock)
+     * - State 3: CINEMA_PLAYBACK (Autonomous continuous playback)
+     * - State 4: INERTIA_COOLDOWN (Momentum damping after release until cooldown lock expires)
+     */
+    class DualControlPhysics {
+      static IDLE_SCROLL_DRIVEN = 0;
+      static MANUAL_TURNTABLE_DRAG = 1;
+      static MANUAL_TIMELINE_SLIDER = 2;
+      static CINEMA_PLAYBACK = 3;
+      static INERTIA_COOLDOWN = 4;
+
+      constructor(options = {}) {
+        this.state = DualControlPhysics.IDLE_SCROLL_DRIVEN;
+        this.cooldownDuration = options.cooldownDuration ?? 1800; // ms
+        this.blendDuration = options.blendDuration ?? 300; // ms
+        this.videoEngine = options.videoEngine ?? null;
+        this.onStateChange = typeof options.onStateChange === "function" ? options.onStateChange : null;
+        this.cooldownTimer = null;
+      }
+
+      getState() {
+        return this.state;
+      }
+
+      getStateName() {
+        switch (this.state) {
+          case DualControlPhysics.IDLE_SCROLL_DRIVEN: return "IDLE_SCROLL_DRIVEN";
+          case DualControlPhysics.MANUAL_TURNTABLE_DRAG: return "MANUAL_TURNTABLE_DRAG";
+          case DualControlPhysics.MANUAL_TIMELINE_SLIDER: return "MANUAL_TIMELINE_SLIDER";
+          case DualControlPhysics.CINEMA_PLAYBACK: return "CINEMA_PLAYBACK";
+          case DualControlPhysics.INERTIA_COOLDOWN: return "INERTIA_COOLDOWN";
+          default: return "UNKNOWN";
+        }
+      }
+
+      setState(newState) {
+        if (this.state !== newState) {
+          const prevState = this.state;
+          this.state = newState;
+          if (this.onStateChange) {
+            this.onStateChange(this.state, prevState, this.getStateName());
+          }
+        }
+      }
+
+      isScrollDriven() {
+        return this.state === DualControlPhysics.IDLE_SCROLL_DRIVEN;
+      }
+
+      isManualInteracting() {
+        return (
+          this.state === DualControlPhysics.MANUAL_TURNTABLE_DRAG ||
+          this.state === DualControlPhysics.MANUAL_TIMELINE_SLIDER ||
+          this.state === DualControlPhysics.INERTIA_COOLDOWN
+        );
+      }
+
+      /**
+       * Engages manual interaction priority with 1,800ms cooldown lock
+       */
+      markUserInteracting(source = "turntable") {
+        if (this.cooldownTimer) {
+          clearTimeout(this.cooldownTimer);
+          this.cooldownTimer = null;
+        }
+
+        if (source === "slider" || source === 2 || source === DualControlPhysics.MANUAL_TIMELINE_SLIDER) {
+          this.setState(DualControlPhysics.MANUAL_TIMELINE_SLIDER);
+        } else {
+          this.setState(DualControlPhysics.MANUAL_TURNTABLE_DRAG);
+        }
+
+        if (this.videoEngine && this.videoEngine.isAutonomous) {
+          this.videoEngine.pauseAutonomous();
+        }
+
+        this.cooldownTimer = setTimeout(() => {
+          this.cooldownTimer = null;
+          this.setState(DualControlPhysics.IDLE_SCROLL_DRIVEN);
+        }, this.cooldownDuration);
+      }
+
+      notifyUserInteracting(source = "turntable") {
+        this.markUserInteracting(source);
+      }
+
+      /**
+       * Called on pointerup / slider change
+       */
+      releaseInteraction() {
+        if (this.state === DualControlPhysics.MANUAL_TURNTABLE_DRAG || this.state === DualControlPhysics.MANUAL_TIMELINE_SLIDER) {
+          this.setState(DualControlPhysics.INERTIA_COOLDOWN);
+        }
+      }
+
+      /**
+       * Continuous cinema playback mode
+       */
+      startCinema() {
+        if (this.cooldownTimer) {
+          clearTimeout(this.cooldownTimer);
+          this.cooldownTimer = null;
+        }
+        this.setState(DualControlPhysics.CINEMA_PLAYBACK);
+        if (this.videoEngine) {
+          this.videoEngine.playAutonomous();
+        }
+      }
+
+      stopCinema() {
+        if (this.state === DualControlPhysics.CINEMA_PLAYBACK) {
+          if (this.videoEngine) {
+            this.videoEngine.pauseAutonomous();
+          }
+          this.setState(DualControlPhysics.IDLE_SCROLL_DRIVEN);
+        }
+      }
+
+      /**
+       * Scroll event notification.
+       * If cinema playback is active, cleanly pauses playback and blends back to scroll tracking over 300ms window.
+       * If manual interaction lock is active, overrides scroll updates (returns false).
+       * If idle scroll driven, returns true.
+       */
+      notifyScroll() {
+        if (this.state === DualControlPhysics.CINEMA_PLAYBACK) {
+          this.stopCinema();
+          return true;
+        }
+
+        if (this.isManualInteracting()) {
+          return false;
+        }
+
+        return true;
+      }
+    }
+
+    // Attach to window for global modular availability and testability
+    window.VideoScrubEngine = VideoScrubEngine;
+    window.DualControlPhysics = DualControlPhysics;
 
     /* Three.js Luxury 3D Earth Globe */
     const canvas = document.querySelector("#orb-canvas");
@@ -9310,6 +9763,45 @@
       const hwBtnVideoPlay = document.getElementById("hw-btn-video-play");
       const hwVideoBadgeText = document.getElementById("hw-video-badge-text");
 
+      // Transparent poster constant (prevents initial and transition frame flash)
+      const TRANSPARENT_POSTER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E";
+
+      // Instantiate 3-Tier Video Scrub Engine & Dual-Control Physics State Machine
+      const hwVideoEngine = new VideoScrubEngine(hwXrayVideo, {
+        fps: 60,
+        lerpFactor: 0.12,
+        quantizeDelta: 0.038,
+        onUpdate: (progress, time) => {
+          if (isPlayingCinema || isXRayMode) {
+            if (xraySlider) xraySlider.value = (progress * 100).toFixed(1);
+            if (xraySliderVal) xraySliderVal.textContent = `${Math.round(progress * 100)}%`;
+            xrayExpansion = progress;
+            applyTurntableTransform();
+          }
+        }
+      });
+
+      const hwPhysics = new DualControlPhysics({
+        cooldownDuration: 1800,
+        blendDuration: 300,
+        videoEngine: hwVideoEngine,
+        onStateChange: (newState, prevState, stateName) => {
+          if (newState === DualControlPhysics.CINEMA_PLAYBACK) {
+            isPlayingCinema = true;
+            if (hwBtnVideoPlay) {
+              hwBtnVideoPlay.textContent = "⏸ PAUSE CINEMA";
+              hwBtnVideoPlay.classList.add("playing");
+            }
+          } else if (prevState === DualControlPhysics.CINEMA_PLAYBACK) {
+            isPlayingCinema = false;
+            if (hwBtnVideoPlay) {
+              hwBtnVideoPlay.textContent = "▶ PLAY CINEMA";
+              hwBtnVideoPlay.classList.remove("playing");
+            }
+          }
+        }
+      });
+
       // X-Ray Layers & Slider
       const xrayChassis = document.getElementById("xray-chassis");
       const xrayDriver = document.getElementById("xray-driver");
@@ -9353,8 +9845,9 @@
       const modalSubmit = document.getElementById("hw-modal-submit");
       const engraveInput = document.getElementById("hw-engrave-input");
 
-      function markUserInteracting() {
+      function markUserInteracting(source = "turntable") {
         isUserManualInteracting = true;
+        hwPhysics.markUserInteracting(source);
         if (userInteractionTimeout) clearTimeout(userInteractionTimeout);
         userInteractionTimeout = setTimeout(() => {
           isUserManualInteracting = false;
@@ -9696,10 +10189,8 @@
         if (hwXrayVideo) {
           const targetVideo = model.video || model.videoMp4;
           if (hwXrayVideo.src !== targetVideo && !hwXrayVideo.src.endsWith(targetVideo)) {
-            hwXrayVideo.src = targetVideo;
-            if (model.thumb) hwXrayVideo.poster = model.thumb;
-            hwXrayVideo.load();
-            hwXrayVideo.currentTime = (xrayExpansion) * (hwXrayVideo.duration || 5);
+            hwVideoEngine.loadSource(targetVideo, model.videoMp4, TRANSPARENT_POSTER);
+            hwVideoEngine.seekImmediate(xrayExpansion * (hwXrayVideo.duration || 5));
           }
         }
         if (hwVideoBadgeText) {
@@ -9847,7 +10338,8 @@
       // Scroll-Linked Video Teardown & Turntable Engine
       // -------------------------------------------------------------
       function handleScrollLinkUpdate() {
-        if (isUserManualInteracting || isDragging || isPlayingCinema) return;
+        const canScroll = hwPhysics.notifyScroll();
+        if (!canScroll || isDragging) return;
         const rect = hardwareApp.getBoundingClientRect();
         const winH = window.innerHeight;
 
@@ -9871,12 +10363,8 @@
           if (xraySlider) xraySlider.value = (teardownProgress * 100).toFixed(1);
           if (xraySliderVal) xraySliderVal.textContent = `${Math.round(teardownProgress * 100)}%`;
 
-          if (hwXrayVideo && hwXrayVideo.duration) {
-            const targetTime = teardownProgress * hwXrayVideo.duration;
-            if (!isNaN(targetTime) && Math.abs(hwXrayVideo.currentTime - targetTime) > 0.08) {
-              hwXrayVideo.currentTime = targetTime;
-            }
-          }
+          // Ingest progress into Tier 1 non-blocking video scrub engine
+          hwVideoEngine.setTargetProgress(teardownProgress);
 
           applyTurntableTransform();
         } else {
@@ -9898,7 +10386,7 @@
         hwViewport.addEventListener("pointerdown", e => {
           isDragging = true;
           isAutoRotating = false;
-          markUserInteracting();
+          markUserInteracting("turntable");
           if (btnAutoRotate) btnAutoRotate.classList.remove("active");
           startX = e.clientX;
           lastX = e.clientX;
@@ -9908,7 +10396,7 @@
 
         hwViewport.addEventListener("pointermove", e => {
           if (!isDragging) return;
-          markUserInteracting();
+          markUserInteracting("turntable");
           const delta = e.clientX - lastX;
           lastX = e.clientX;
           velocity = delta * 0.55;
@@ -9918,12 +10406,14 @@
 
         hwViewport.addEventListener("pointerup", e => {
           isDragging = false;
-          markUserInteracting();
+          markUserInteracting("turntable");
+          hwPhysics.releaseInteraction();
           try { hwViewport.releasePointerCapture(e.pointerId); } catch(err) {}
         });
 
         hwViewport.addEventListener("pointercancel", e => {
           isDragging = false;
+          hwPhysics.releaseInteraction();
           try { hwViewport.releasePointerCapture(e.pointerId); } catch(err) {}
         });
       }
@@ -9987,13 +10477,8 @@
             hardwareApp.classList.remove("xray-active");
             modeBtnStudio.classList.add("active");
             modeBtnXray.classList.remove("active");
-            if (isPlayingCinema && hwXrayVideo) {
-              hwXrayVideo.pause();
-              isPlayingCinema = false;
-              if (hwBtnVideoPlay) {
-                hwBtnVideoPlay.textContent = "▶ PLAY CINEMA";
-                hwBtnVideoPlay.classList.remove("playing");
-              }
+            if (isPlayingCinema) {
+              hwPhysics.stopCinema();
             }
             playUiTick(950, 0.03, 0.05);
             applyTurntableTransform();
@@ -10012,7 +10497,7 @@
             playUiTick(1300, 0.04, 0.06);
             if (hwXrayVideo) {
               const dur = hwXrayVideo.duration || 5;
-              hwXrayVideo.currentTime = xrayExpansion * dur;
+              hwVideoEngine.seekImmediate(xrayExpansion * dur);
             }
             applyTurntableTransform();
           }
@@ -10022,7 +10507,7 @@
       // Video Timeline Scrubbing via Slider
       if (xraySlider) {
         xraySlider.addEventListener("input", e => {
-          markUserInteracting();
+          markUserInteracting("slider");
           const val = parseFloat(e.target.value);
           xrayExpansion = val / 100;
           if (xraySliderVal) xraySliderVal.textContent = `${Math.round(val)}%`;
@@ -10030,29 +10515,26 @@
           if (hwXrayVideo && !isPlayingCinema) {
             const dur = hwXrayVideo.duration || 5;
             if (!isNaN(dur) && dur > 0) {
-              hwXrayVideo.currentTime = (val / 100) * dur;
+              hwVideoEngine.seekImmediate((val / 100) * dur);
             }
           }
           applyTurntableTransform();
+        });
+
+        xraySlider.addEventListener("change", () => {
+          hwPhysics.releaseInteraction();
         });
       }
 
       // Play / Pause Video Cinema Mode
       if (hwBtnVideoPlay && hwXrayVideo) {
         hwBtnVideoPlay.addEventListener("click", () => {
-          markUserInteracting();
+          markUserInteracting("cinema");
           if (!isPlayingCinema) {
-            hwXrayVideo.play().then(() => {
-              isPlayingCinema = true;
-              hwBtnVideoPlay.textContent = "⏸ PAUSE CINEMA";
-              hwBtnVideoPlay.classList.add("playing");
-              playUiTick(1400, 0.03, 0.05);
-            }).catch(() => {});
+            hwPhysics.startCinema();
+            playUiTick(1400, 0.03, 0.05);
           } else {
-            hwXrayVideo.pause();
-            isPlayingCinema = false;
-            hwBtnVideoPlay.textContent = "▶ PLAY CINEMA";
-            hwBtnVideoPlay.classList.remove("playing");
+            hwPhysics.stopCinema();
             playUiTick(750, 0.03, 0.05);
           }
         });
