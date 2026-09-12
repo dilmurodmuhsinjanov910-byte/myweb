@@ -279,29 +279,43 @@
     #about{padding:10vh var(--pad) 18vh}
     .about-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;align-items:start}
     .about-image-wrap{
-      grid-column:1/span 5;position:sticky;top:13vh;height:70vh;overflow:hidden;background:#101010;
-      clip-path:inset(0 0 0 0);
+      grid-column:1/span 5;position:sticky;top:13vh;height:70vh;overflow:hidden;background:#0c0c0c;
+      clip-path:inset(0 0 0 0);border:1px solid rgba(255,255,255,0.08);border-radius:4px;
     }
     .about-image{
       position:absolute;inset:-6%;
-      background:
-        radial-gradient(circle at 35% 30%,rgba(255,255,255,.14),transparent 16%),
-        linear-gradient(145deg,#1d1d1d,#0c0c0c 45%,#101010 68%,#1b1b1b);
+      background-image:
+        linear-gradient(180deg, rgba(8,8,8,0.06) 0%, rgba(8,8,8,0.42) 100%),
+        radial-gradient(circle at 50% 35%, rgba(223,183,108,0.05) 0%, transparent 65%),
+        url('assets/portrait_dilmurod.jpg');
+      background-size:cover;
+      background-position:center 15%;
+      background-repeat:no-repeat;
       transform:scale(1.08);
+      transition:filter 0.45s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1);
     }
     .about-image::before{
       content:"";position:absolute;inset:0;
-      background:linear-gradient(118deg,transparent 34%,rgba(255,255,255,.05),transparent 63%);
-      transform:translateX(-32%);
+      background:linear-gradient(118deg,transparent 34%,rgba(255,255,255,.04),transparent 63%);
+      transform:translateX(-32%);pointer-events:none;
     }
     .about-image::after{
-      content:"";position:absolute;left:16%;top:14%;width:55%;height:66%;
-      border:1px solid rgba(223,183,108,.15);
-      background:radial-gradient(circle at 60% 40%,rgba(223,183,108,.09),transparent 34%);
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(to top, rgba(8,8,8,0.7) 0%, transparent 35%),
+                 radial-gradient(ellipse at center, transparent 55%, rgba(8,8,8,0.45) 100%);
+      pointer-events:none;
     }
     .portrait-tag{
-      position:absolute;z-index:2;left:19px;bottom:18px;font-size:8px;text-transform:uppercase;letter-spacing:.2em;color:#6d6d6d
+      position:absolute;z-index:3;left:18px;bottom:18px;font-size:9px;text-transform:uppercase;letter-spacing:.18em;
+      color:rgba(223,183,108,0.92);font-family:var(--sans);display:flex;align-items:center;gap:7px;
+      background:rgba(8,8,8,0.72);padding:4px 10px;border-radius:20px;backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);border:1px solid rgba(223,183,108,0.22);pointer-events:none;
     }
+    .portrait-tag::before{
+      content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#dfb76c;
+      box-shadow:0 0 6px rgba(223,183,108,0.7);
+    }
+
     .about-content{grid-column:7/span 6;padding-top:2vh}
     .about-title{
       margin:30px 0 58px;font-family:var(--serif);font-size:clamp(46px,5.4vw,80px);
@@ -3210,8 +3224,8 @@
     <section id="about">
       <div class="about-grid">
         <div class="about-image-wrap">
-          <div class="about-image"></div>
-          <div class="portrait-tag" data-i18n="about.portrait">Portret / 01</div>
+          <div class="about-image" id="about-portrait-img"></div>
+          <div class="portrait-tag" id="portrait-tag" data-i18n="about.portrait">Portret / 01</div>
         </div>
 
         <div class="about-content">
@@ -4025,17 +4039,17 @@
       <button class="sheet-close magnetic" id="close-sheet">Close</button>
     </div>
 
-    <a href="https://t.me/dilmurod_muhsinjonov" target="_blank" rel="noopener noreferrer" class="channel magnetic">
-      <span class="channel-name">Telegram</span><span class="channel-preview">@dilmurod_muhsinjonov (Tezkor aloqa)</span>
+    <a href="https://t.me/dilmurod_muxsinjonov" target="_blank" rel="noopener noreferrer" class="channel magnetic">
+      <span class="channel-name">Telegram</span><span class="channel-preview">@dilmurod_muxsinjonov</span>
     </a>
-    <a href="mailto:contact@dilmurod.uz" class="channel magnetic">
-      <span class="channel-name">Email</span><span class="channel-preview">contact@dilmurod.uz (Loyiha muhokamasi)</span>
+    <a href="mailto:muxsinjonovdilmurod@gmail.com" class="channel magnetic">
+      <span class="channel-name">Email</span><span class="channel-preview">muxsinjonovdilmurod@gmail.com</span>
     </a>
     <a href="https://github.com/dilmurodmuhsinjanov910-byte" target="_blank" rel="noopener noreferrer" class="channel magnetic">
       <span class="channel-name">GitHub</span><span class="channel-preview">github.com/dilmurodmuhsinjanov910-byte</span>
     </a>
-    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="channel magnetic">
-      <span class="channel-name">LinkedIn</span><span class="channel-preview">Professional Network</span>
+    <a href="https://www.linkedin.com/in/dilmurod-muhsinjanov-dm093zzz" target="_blank" rel="noopener noreferrer" class="channel magnetic">
+      <span class="channel-name">LinkedIn</span><span class="channel-preview">in/dilmurod-muhsinjanov-dm093zzz</span>
     </a>
   </aside>
 
@@ -9766,6 +9780,8 @@
         const key = el.getAttribute('data-i18n-html');
         if (dict[key]) el.innerHTML = dict[key];
       });
+
+      window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
     }
 
     // Initialize Language Switcher
