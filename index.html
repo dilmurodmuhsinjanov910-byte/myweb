@@ -8457,6 +8457,25 @@
         window.addEventListener("blur", onPointerUp);
       }
 
+      // Scroll-Linked 360° Perspective for Sneakers Atelier
+      function handleSneakerScrollLink() {
+        if (isDragging || isAutoSpinning || isHoveringCard) return;
+        const snkContainer = document.getElementById("sneaker-app");
+        if (!snkContainer) return;
+        const rect = snkContainer.getBoundingClientRect();
+        const winH = window.innerHeight;
+        if (rect.bottom > 0 && rect.top < winH) {
+          const progress = Math.min(Math.max((winH - rect.top) / (winH + rect.height), 0), 1);
+          const targetAngle = (progress - 0.5) * 360 * 1.8;
+          currentAngle += (targetAngle - currentAngle) * 0.08;
+          updateSneakerView();
+        }
+      }
+      window.addEventListener("scroll", handleSneakerScrollLink, { passive: true });
+      if (typeof lenis !== "undefined" && lenis && lenis.on) {
+        lenis.on("scroll", handleSneakerScrollLink);
+      }
+
       function startAutoSpin() {
         isAutoSpinning = true;
         isAerialView = false;
