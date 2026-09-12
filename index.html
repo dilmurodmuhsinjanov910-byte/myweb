@@ -1786,12 +1786,12 @@
 
     /* Kinetic Flying Shoe Animation Particle */
     .snk-fly-item {
-      position: absolute;
+      position: fixed;
       width: 42px;
       height: 42px;
       pointer-events: none;
-      z-index: 70;
-      filter: drop-shadow(0 0 14px rgba(223, 183, 108, 0.8));
+      z-index: 99999;
+      filter: drop-shadow(0 0 16px rgba(223, 183, 108, 0.95));
       transition: none;
     }
     .snk-fly-item svg {
@@ -2435,11 +2435,11 @@
                     <div class="snk-turntable-hud">
                       <div class="snk-degree-dial" id="snk-degree-dial">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 6 16 14 8 14 12 6"/></svg>
-                        <span id="snk-degree-val">0? // PROFILE</span>
+                        <span id="snk-degree-val">0° // PROFILE</span>
                       </div>
                       <button class="snk-autospin-btn" id="snk-autospin-btn" title="Toggle 360 Auto-Rotation">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        <span id="snk-autospin-text">SPIN 360?</span>
+                        <span id="snk-autospin-text">SPIN 360°</span>
                       </button>
                     </div>
                   </div>
@@ -2454,12 +2454,13 @@
 
                   <!-- Angle Quick Select Pills -->
                   <div class="snk-angle-pills" id="snk-angle-pills">
-                    <button class="snk-angle-pill active" data-angle="0">0? PROFILE</button>
-                    <button class="snk-angle-pill" data-angle="45">45? 3/4 FRONT</button>
-                    <button class="snk-angle-pill" data-angle="90">90? TOE</button>
-                    <button class="snk-angle-pill" data-angle="180">180? MEDIAL</button>
+                    <button class="snk-angle-pill active" data-angle="0">0° PROFILE</button>
+                    <button class="snk-angle-pill" data-angle="45">45° 3/4 FRONT</button>
+                    <button class="snk-angle-pill" data-angle="90">90° TOE</button>
+                    <button class="snk-angle-pill" data-angle="135">135° 3/4 MEDIAL</button>
+                    <button class="snk-angle-pill" data-angle="180">180° MEDIAL</button>
                     <button class="snk-angle-pill ref-highlight" data-angle="270" title="Reference Video Matching Angle">★ 270° HEEL</button>
-                    <button class="snk-angle-pill" data-angle="315">315? 3/4 REAR</button>
+                    <button class="snk-angle-pill" data-angle="315">315° 3/4 REAR</button>
                     <button class="snk-angle-pill" data-angle="top">AERIAL LACE</button>
                   </div>
 
@@ -2467,7 +2468,7 @@
                   <div class="snk-viewer-footer">
                     <div class="snk-drag-hint">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M3 12h18"/></svg>
-                      <span>DRAG HORIZONTALLY TO ROTATE 360?</span>
+                      <span>DRAG HORIZONTALLY TO ROTATE 360°</span>
                     </div>
                     <button class="snk-zoom-btn" id="snk-zoom-btn" title="Toggle Detail Zoom">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
@@ -2513,7 +2514,7 @@
                     </div>
                     <div class="snk-stock-status" id="snk-stock-status">
                       <span class="snk-stock-dot"></span>
-                      <span id="snk-stock-text">Size EU 43 in stock ? Only 2 pairs left in atelier</span>
+                      <span id="snk-stock-text">Size EU 43 in stock • Only 2 pairs left in atelier</span>
                     </div>
                   </div>
 
@@ -6312,8 +6313,8 @@
       let isZoomed = false;
       let isAudioEnabled = true;
       let selectedSize = 43;
-      let isWishlisted = false;
-      let wishlistCount = 0;
+      const wishlistedSneakers = new Set();
+      let isHoveringCard = false;
       let cart = [];
 
       // Drag / Physics State
@@ -6518,25 +6519,26 @@
       }
 
       // ----------------------------------------------------
-      // Photorealistic Vector Render Engine (360? Multi-Angle)
+      // Photorealistic Vector Render Engine (360° Multi-Angle)
       // ----------------------------------------------------
-      function renderSneakerSvg(sneaker, cw, angleDeg, isAerial) {
+      function renderSneakerSvg(sneaker, cw, angleDeg, isAerial, pfx) {
+        pfx = pfx || ("snk_" + sneaker.id + "_" + Math.floor(Math.random() * 1000000));
         if (isAerial) {
           return `
             <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="aerialSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="${pfx}_aerialSole" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="${cw.sole}" />
                   <stop offset="100%" stop-color="${cw.soleBottom}" />
                 </linearGradient>
-                <linearGradient id="aerialLeatherGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="${pfx}_aerialLeather" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stop-color="${cw.upper}" />
                   <stop offset="70%" stop-color="${cw.suede}" />
                   <stop offset="100%" stop-color="${cw.upper}" />
                 </linearGradient>
               </defs>
-              <path d="M 120,140 C 120,80 200,60 330,65 C 430,70 480,95 480,140 C 480,185 430,210 330,215 C 200,220 120,200 120,140 Z" fill="url(#aerialSoleGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
-              <path d="M 140,140 C 140,95 210,75 330,80 C 410,85 460,105 460,140 C 460,175 410,195 330,200 C 210,205 140,185 140,140 Z" fill="url(#aerialLeatherGrad)" />
+              <path d="M 120,140 C 120,80 200,60 330,65 C 430,70 480,95 480,140 C 480,185 430,210 330,215 C 200,220 120,200 120,140 Z" fill="url(#${pfx}_aerialSole)" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+              <path d="M 140,140 C 140,95 210,75 330,80 C 410,85 460,105 460,140 C 460,175 410,195 330,200 C 210,205 140,185 140,140 Z" fill="url(#${pfx}_aerialLeather)" />
               <path d="M 400,100 C 440,110 460,125 460,140 C 460,155 440,170 400,180 C 390,150 390,130 400,100 Z" fill="${cw.suede}" opacity="0.9" />
               <g fill="rgba(0,0,0,0.25)">
                 <circle cx="430" cy="140" r="2.5" /><circle cx="420" cy="130" r="2.5" /><circle cx="420" cy="150" r="2.5" />
@@ -6559,21 +6561,21 @@
         const norm = (angleDeg % 360 + 360) % 360;
 
         // HEEL / BACK VIEW (Matching reference image videoframe_11402.png)
-        if (norm >= 235 && norm <= 305) {
+        if (norm >= 235 && norm <= 295) {
           const isPalmAngels = sneaker.id === "palm-angels";
           return `
             <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="heelSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="${pfx}_heelSole" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="${cw.sole}" />
                   <stop offset="85%" stop-color="${cw.sole}" />
                   <stop offset="100%" stop-color="${cw.soleBottom}" />
                 </linearGradient>
-                <linearGradient id="heelCapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="${pfx}_heelCap" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="${cw.heelLight}" />
                   <stop offset="100%" stop-color="${cw.heel}" />
                 </linearGradient>
-                <filter id="badgeShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <filter id="${pfx}_badgeShadow" x="-20%" y="-20%" width="140%" height="140%">
                   <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.6)" />
                 </filter>
               </defs>
@@ -6585,12 +6587,12 @@
                 <path d="M -60,200 C -62,150 -50,95 0,90 C 50,95 62,150 60,200 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
                 <path d="M -38,96 C -38,78 38,78 38,96 C 38,106 -38,106 -38,96 Z" fill="#141418" />
                 <path d="M -44,95 C -44,70 44,70 44,95 C 40,84 -40,84 -44,95 Z" fill="#ffffff" />
-                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#heelCapGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#${pfx}_heelCap)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
                 <path d="M -52,198 C -52,168 -40,132 0,130 C 40,132 52,168 52,198" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3 3" />
                 <path d="M -60,202 L 60,202 L 62,212 L -62,212 Z" fill="${cw.heel}" />
-                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#heelSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
+                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#${pfx}_heelSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
                 <line x1="-58" y1="220" x2="58" y2="220" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
-                <g filter="url(#badgeShadow)">
+                <g filter="url(#${pfx}_badgeShadow)">
                   <rect x="-42" y="160" width="84" height="26" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
                   <rect x="-40" y="162" width="80" height="22" rx="2" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1" />
                   <text x="0" y="177" font-family="Georgia, serif" font-size="11.5" font-weight="900" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="0.5">
@@ -6606,12 +6608,12 @@
                 <path d="M -60,200 C -62,150 -50,95 0,90 C 50,95 62,150 60,200 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
                 <path d="M -38,96 C -38,78 38,78 38,96 C 38,106 -38,106 -38,96 Z" fill="#141418" />
                 <path d="M -44,95 C -44,70 44,70 44,95 C 40,84 -40,84 -44,95 Z" fill="#ffffff" />
-                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#heelCapGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#${pfx}_heelCap)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
                 <path d="M -52,198 C -52,168 -40,132 0,130 C 40,132 52,168 52,198" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3 3" />
                 <path d="M -60,202 L 60,202 L 62,212 L -62,212 Z" fill="${cw.heel}" />
-                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#heelSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
+                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#${pfx}_heelSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
                 <line x1="-58" y1="220" x2="58" y2="220" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
-                <g filter="url(#badgeShadow)">
+                <g filter="url(#${pfx}_badgeShadow)">
                   <rect x="-42" y="160" width="84" height="26" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
                   <rect x="-40" y="162" width="80" height="22" rx="2" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1" />
                   <text x="0" y="177" font-family="Georgia, serif" font-size="11.5" font-weight="900" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="0.5">
@@ -6623,18 +6625,18 @@
           `;
         }
 
-        // FRONT / TOE VIEW (68? to 112?)
+        // FRONT / TOE VIEW (68° to 112°)
         if (norm >= 68 && norm <= 112) {
           return `
             <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="frontSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="${pfx}_frontSole" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="${cw.sole}" />
                   <stop offset="100%" stop-color="${cw.soleBottom}" />
                 </linearGradient>
               </defs>
               <g transform="translate(240, 0)">
-                <path d="M -80,210 C -82,228 -50,232 0,233 C 50,232 82,228 80,210 Z" fill="url(#frontSoleGrad)" />
+                <path d="M -80,210 C -82,228 -50,232 0,233 C 50,232 82,228 80,210 Z" fill="url(#${pfx}_frontSole)" />
                 <path d="M -76,198 L 76,198 L 80,210 L -80,210 Z" fill="${cw.sole}" stroke="rgba(0,0,0,0.15)" stroke-width="1" />
                 <path d="M -72,198 C -70,160 -45,140 0,138 C 45,140 70,160 72,198 Z" fill="${cw.suede}" />
                 <path d="M -56,196 C -55,168 -35,152 0,150 C 35,152 55,168 56,196 Z" fill="${cw.upper}" />
@@ -6658,25 +6660,58 @@
           `;
         }
 
-        // FRONT 3/4 (23? to 67?)
+        // MEDIAL 3/4 FRONT (113° to 157°) - Mirrored Medial Perspective
+        if (norm >= 113 && norm <= 157) {
+          return `
+            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="${pfx}_threeQMedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="${cw.suede}" />
+                  <stop offset="40%" stop-color="${cw.upper}" />
+                  <stop offset="100%" stop-color="${cw.upper}" />
+                </linearGradient>
+                <linearGradient id="${pfx}_threeQMedSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(460, 10) scale(-1, 1)">
+                <path d="M 50,195 Q 180,185 360,192 Q 400,196 410,210 Q 380,222 250,225 Q 70,225 45,212 Z" fill="url(#${pfx}_threeQMedSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                <path d="M 55,185 Q 180,175 360,182 L 360,195 Q 180,185 50,195 Z" fill="${cw.sole}" />
+                <path d="M 55,185 C 50,140 70,95 120,90 C 150,90 170,120 240,135 C 310,150 365,160 360,182 Q 180,175 55,185 Z" fill="url(#${pfx}_threeQMedGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+                <path d="M 55,185 C 50,140 70,95 105,92 L 115,182 Z" fill="${cw.heel}" />
+                <path d="M 125,180 Q 180,140 280,150 Q 230,130 195,135 Q 260,115 310,138 Q 230,120 160,140 Z" fill="${cw.flame}" opacity="0.85" />
+                <path d="M 280,150 C 330,155 370,165 360,182 Q 320,180 280,175 Z" fill="${cw.suede}" />
+                <path d="M 105,92 C 110,80 150,80 155,94 L 195,125 L 140,115 Z" fill="#141418" />
+                <path d="M 140,90 L 175,70 L 210,115 L 175,128 Z" fill="#1f2026" />
+                <g stroke="${cw.laces}" stroke-width="4" stroke-linecap="round">
+                  <line x1="160" y1="110" x2="195" y2="128" /><line x1="180" y1="100" x2="215" y2="120" />
+                  <line x1="200" y1="92" x2="235" y2="114" />
+                </g>
+              </g>
+            </svg>
+          `;
+        }
+
+        // FRONT 3/4 (23° to 67°)
         if (norm >= 23 && norm <= 67) {
           return `
             <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="threeQGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="${pfx}_threeQGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stop-color="${cw.upper}" />
                   <stop offset="60%" stop-color="${cw.upper}" />
                   <stop offset="100%" stop-color="${cw.suede}" />
                 </linearGradient>
-                <linearGradient id="threeQSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="${pfx}_threeQSole" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="${cw.sole}" />
                   <stop offset="100%" stop-color="${cw.soleBottom}" />
                 </linearGradient>
               </defs>
               <g transform="translate(60, 10)">
-                <path d="M 50,195 Q 180,185 360,192 Q 400,196 410,210 Q 380,222 250,225 Q 70,225 45,212 Z" fill="url(#threeQSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                <path d="M 50,195 Q 180,185 360,192 Q 400,196 410,210 Q 380,222 250,225 Q 70,225 45,212 Z" fill="url(#${pfx}_threeQSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
                 <path d="M 55,185 Q 180,175 360,182 L 360,195 Q 180,185 50,195 Z" fill="${cw.sole}" />
-                <path d="M 55,185 C 50,140 70,95 120,90 C 150,90 170,120 240,135 C 310,150 365,160 360,182 Q 180,175 55,185 Z" fill="url(#threeQGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+                <path d="M 55,185 C 50,140 70,95 120,90 C 150,90 170,120 240,135 C 310,150 365,160 360,182 Q 180,175 55,185 Z" fill="url(#${pfx}_threeQGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
                 <path d="M 55,185 C 50,140 70,95 105,92 L 115,182 Z" fill="${cw.heel}" />
                 <rect x="62" y="125" width="38" height="18" rx="2" fill="${cw.badgeBg}" />
                 <path d="M 125,180 Q 180,140 280,150 Q 230,130 195,135 Q 260,115 310,138 Q 230,120 160,140 Z" fill="${cw.flame}" />
@@ -6692,20 +6727,20 @@
           `;
         }
 
-        // MEDIAL (158? to 202?)
+        // MEDIAL (158° to 202°)
         if (norm >= 158 && norm <= 202) {
           const isRick = sneaker.id === "rick-owens";
           return `
             <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="medialSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="${pfx}_medialSole" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="${cw.sole}" />
                   <stop offset="85%" stop-color="${cw.sole}" />
                   <stop offset="100%" stop-color="${cw.soleBottom}" />
                 </linearGradient>
               </defs>
               <g transform="translate(480, 0) scale(-1, 1)">
-                <path d="M 70,192 C 150,190 220,182 300,188 C 380,194 440,195 445,190 C 445,212 430,222 390,224 C 280,226 150,225 65,218 Z" fill="url(#medialSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M 70,192 C 150,190 220,182 300,188 C 380,194 440,195 445,190 C 445,212 430,222 390,224 C 280,226 150,225 65,218 Z" fill="url(#${pfx}_medialSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
                 <path d="M 72,192 C 65,140 85,85 145,82 C 185,82 205,120 290,135 C 370,150 435,165 440,188 C 390,184 270,182 72,192 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
                 <path d="M 360,158 C 410,165 442,175 440,188 C 400,186 360,184 350,175 Z" fill="${cw.suede}" />
                 <path d="M 72,192 C 65,140 85,85 125,84 L 132,190 Z" fill="${cw.heel}" />
@@ -6724,18 +6759,39 @@
           `;
         }
 
-        // REAR 3/4 (306? to 337?)
-        if (norm > 305 && norm <= 337) {
+        // MEDIAL 3/4 REAR (203° to 234°) - Mirrored Medial Rear Perspective
+        if (norm >= 203 && norm <= 234) {
           return `
             <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="rear3QSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="${pfx}_rear3QMedSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(420, 10) scale(-1, 1)">
+                <path d="M 70,188 C 110,182 220,175 350,186 C 360,205 340,222 240,225 C 140,227 60,224 55,205 Z" fill="url(#${pfx}_rear3QMedSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M 65,188 C 55,130 90,85 140,84 C 200,84 250,115 320,150 C 355,168 355,185 350,186 Z" fill="${cw.upper}" />
+                <path d="M 65,188 C 55,130 90,85 140,84 L 165,185 Z" fill="${cw.heel}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                <path d="M 160,182 Q 220,140 310,155 Q 260,135 220,145 Z" fill="${cw.flame}" opacity="0.8" />
+                <ellipse cx="150" cy="85" rx="30" ry="16" fill="#141418" stroke="${cw.heel}" stroke-width="2" />
+              </g>
+            </svg>
+          `;
+        }
+
+        // REAR 3/4 (306° to 337°)
+        if (norm >= 296 && norm <= 337) {
+          return `
+            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="${pfx}_rear3QSole" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="${cw.sole}" />
                   <stop offset="100%" stop-color="${cw.soleBottom}" />
                 </linearGradient>
               </defs>
               <g transform="translate(100, 10)">
-                <path d="M 70,188 C 110,182 220,175 350,186 C 360,205 340,222 240,225 C 140,227 60,224 55,205 Z" fill="url(#rear3QSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M 70,188 C 110,182 220,175 350,186 C 360,205 340,222 240,225 C 140,227 60,224 55,205 Z" fill="url(#${pfx}_rear3QSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
                 <path d="M 65,188 C 55,130 90,85 140,84 C 200,84 250,115 320,150 C 355,168 355,185 350,186 Z" fill="${cw.upper}" />
                 <path d="M 65,188 C 55,130 90,85 140,84 L 165,185 Z" fill="${cw.heel}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
                 <rect x="75" y="125" width="60" height="22" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
@@ -6749,7 +6805,7 @@
           `;
         }
 
-        // DEFAULT: LATERAL PROFILE SIDE VIEW (Around 0? / 360?)
+        // DEFAULT: LATERAL PROFILE SIDE VIEW (Around 0° / 360°)
         const isPalm = sneaker.id === "palm-angels";
         const isBalenciaga = sneaker.id === "balenciaga";
         const isMargiela = sneaker.id === "margiela";
@@ -6760,16 +6816,16 @@
         return `
           <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="latSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <linearGradient id="${pfx}_latSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stop-color="${cw.sole}" />
                 <stop offset="85%" stop-color="${cw.sole}" />
                 <stop offset="100%" stop-color="${cw.soleBottom}" />
               </linearGradient>
-              <linearGradient id="flameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="${pfx}_flameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="${cw.flameLight}" />
                 <stop offset="100%" stop-color="${cw.flame}" />
               </linearGradient>
-              <linearGradient id="latUpperGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="${pfx}_latUpperGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="${cw.upper}" />
                 <stop offset="75%" stop-color="${cw.upper}" />
                 <stop offset="100%" stop-color="${cw.suede}" />
@@ -6780,10 +6836,10 @@
 
             <!-- Outsole Construction -->
             ${isBalenciaga ? `
-              <path d="M 52,204 Q 40,195 48,185 L 68,185 L 90,195 L 140,194 L 180,188 L 260,188 L 330,194 L 410,196 C 452,198 460,208 450,222 C 435,230 380,228 290,226 C 180,228 100,230 65,225 C 48,220 48,212 52,204 Z" fill="url(#latSoleGrad)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" />
+              <path d="M 52,204 Q 40,195 48,185 L 68,185 L 90,195 L 140,194 L 180,188 L 260,188 L 330,194 L 410,196 C 452,198 460,208 450,222 C 435,230 380,228 290,226 C 180,228 100,230 65,225 C 48,220 48,212 52,204 Z" fill="url(#${pfx}_latSoleGrad)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" />
               <path d="M 46,188 L 82,188 L 74,206 L 40,200 Z" fill="#1e293b" />
             ` : isRick ? `
-              <path d="M 64,190 L 440,190 C 455,190 460,202 452,216 L 440,225 C 380,226 220,226 65,225 C 55,220 54,200 64,190 Z" fill="url(#latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+              <path d="M 64,190 L 440,190 C 455,190 460,202 452,216 L 440,225 C 380,226 220,226 65,225 C 55,220 54,200 64,190 Z" fill="url(#${pfx}_latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
               <g fill="#18181c">
                 <polygon points="120,225 130,225 125,232" /><polygon points="150,225 160,225 155,232" />
                 <polygon points="180,225 190,225 185,232" /><polygon points="210,225 220,225 215,232" />
@@ -6791,13 +6847,13 @@
                 <polygon points="300,225 310,225 305,232" /><polygon points="330,225 340,225 335,232" />
               </g>
             ` : `
-              <path d="M 68,190 C 60,192 60,210 68,222 C 120,225 280,226 420,224 C 445,222 452,212 448,195 C 445,188 410,188 380,188 C 280,188 180,188 68,190 Z" fill="url(#latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+              <path d="M 68,190 C 60,192 60,210 68,222 C 120,225 280,226 420,224 C 445,222 452,212 448,195 C 445,188 410,188 380,188 C 280,188 180,188 68,190 Z" fill="url(#${pfx}_latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
               <line x1="68" y1="198" x2="445" y2="198" stroke="rgba(0,0,0,0.12)" stroke-width="1.5" />
               <path d="M 425,190 C 445,190 452,198 448,212 L 436,212 C 438,202 435,195 425,190 Z" fill="${cw.soleBottom}" opacity="0.6" />
             `}
 
             <!-- Main Upper Calfskin Hull -->
-            <path d="M 72,190 C 65,145 82,92 138,88 C 175,86 195,115 270,132 C 345,148 425,160 445,188 C 390,186 280,186 72,190 Z" fill="url(#latUpperGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+            <path d="M 72,190 C 65,145 82,92 138,88 C 175,86 195,115 270,132 C 345,148 425,160 445,188 C 390,186 280,186 72,190 Z" fill="url(#${pfx}_latUpperGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
 
             <!-- MODEL-SPECIFIC ICONIC ARTWORK -->
             ${isPalm ? `
@@ -6809,7 +6865,7 @@
                        C 185,130 225,115 285,130 C 240,118 200,128 175,138
                        C 220,115 270,105 340,135 C 290,120 230,130 190,150
                        C 235,142 290,145 355,165 C 310,158 240,162 180,175 Z" 
-                    fill="url(#flameGrad)" stroke="rgba(0,0,0,0.18)" stroke-width="1" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.3))" />
+                    fill="url(#${pfx}_flameGrad)" stroke="rgba(0,0,0,0.18)" stroke-width="1" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.3))" />
               <path d="M 132,168 C 170,158 215,125 280,128" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="0.8" stroke-dasharray="2 2" />
             ` : isBalenciaga ? `
               <path d="M 120,188 L 190,135 L 230,145 L 180,188 Z" fill="${cw.flame}" opacity="0.8" />
@@ -6868,20 +6924,24 @@
         let angleName = "PROFILE";
         if (isAerialView) {
           angleName = "AERIAL LACE";
-        } else if (normAngle >= 235 && normAngle <= 305) {
+        } else if (normAngle >= 235 && normAngle <= 295) {
           angleName = "HEEL ARCHIVE (REF)";
         } else if (normAngle >= 68 && normAngle <= 112) {
           angleName = "DIRECT TOE";
         } else if (normAngle >= 23 && normAngle <= 67) {
           angleName = "3/4 FRONT";
+        } else if (normAngle >= 113 && normAngle <= 157) {
+          angleName = "3/4 MEDIAL";
         } else if (normAngle >= 158 && normAngle <= 202) {
           angleName = "MEDIAL PROFILE";
-        } else if (normAngle > 305 && normAngle <= 337) {
+        } else if (normAngle >= 203 && normAngle <= 234) {
+          angleName = "3/4 REAR MEDIAL";
+        } else if (normAngle >= 296 && normAngle <= 337) {
           angleName = "3/4 REAR";
         }
 
         if (degreeVal) {
-          degreeVal.textContent = isAerialView ? "TOP // AERIAL LACE" : normAngle + "? // " + angleName;
+          degreeVal.textContent = isAerialView ? "TOP // AERIAL LACE" : normAngle + "\u00b0 // " + angleName;
         }
 
         anglePills.forEach(pill => {
@@ -6890,12 +6950,14 @@
             pill.classList.toggle("active", isAerialView);
           } else {
             const deg = parseInt(pAngle, 10);
-            const isActive = !isAerialView && Math.abs(normAngle - deg) <= 22.5;
+            const diff = Math.abs(normAngle - deg);
+            const circularDiff = Math.min(diff, 360 - diff);
+            const isActive = !isAerialView && circularDiff <= 22.5;
             pill.classList.toggle("active", isActive);
           }
         });
 
-        if (renderBox) {
+        if (renderBox && !isHoveringCard) {
           const zoomScale = isZoomed ? 1.38 : 1.0;
           const rotY = isAerialView ? 0 : Math.sin(normAngle * Math.PI / 180) * 8;
           renderBox.style.transform = "scale(" + zoomScale + ") rotateY(" + rotY + "deg)";
@@ -6913,7 +6975,7 @@
         if (certBadge) certBadge.textContent = sneaker.badge;
 
         if (stockTextEl) {
-          stockTextEl.textContent = "Size EU " + selectedSize + " in stock ? Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
+          stockTextEl.textContent = "Size EU " + selectedSize + " in stock \u2022 Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
         }
 
         modelTabs.forEach((tab, i) => {
@@ -6936,6 +6998,13 @@
           });
         }
 
+        if (wishlistBtn) {
+          wishlistBtn.classList.toggle("active", wishlistedSneakers.has(sneaker.id));
+        }
+        if (wishlistBadge) {
+          wishlistBadge.textContent = wishlistedSneakers.size;
+        }
+
         if (accDetailsEl) {
           accDetailsEl.innerHTML = "<ul>" + sneaker.details.map(d => "<li>" + d + "</li>").join("") + "</ul>";
         }
@@ -6943,7 +7012,7 @@
         if (accShippingEl) accShippingEl.textContent = sneaker.shipping;
         if (accReviewsEl) {
           if (accReviewsTitle) {
-            accReviewsTitle.textContent = "Reviews (" + sneaker.reviews.count + ") ? " + sneaker.reviews.rating;
+            accReviewsTitle.textContent = "Reviews (" + sneaker.reviews.count + ") \u2605 " + sneaker.reviews.rating;
           }
           accReviewsEl.innerHTML = sneaker.reviews.items.map(r => `
             <div class="snk-review-entry">
@@ -6983,18 +7052,16 @@
         const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
         const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
 
-        if (lightSpot && tiltCard) {
-          const rect = tiltCard.getBoundingClientRect();
-          lightSpot.style.left = (clientX - rect.left) + "px";
-          lightSpot.style.top = (clientY - rect.top) + "px";
-        }
-
         if (!isDragging) {
-          if (renderBox && tiltCard && !isZoomed) {
+          if (isHoveringCard && renderBox && tiltCard && !isZoomed) {
             const rect = tiltCard.getBoundingClientRect();
-            const relX = (clientX - rect.left) / rect.width - 0.5;
-            const relY = (clientY - rect.top) / rect.height - 0.5;
-            renderBox.style.transform = "perspective(1000px) rotateY(" + (relX * 14) + "deg) rotateX(" + (-relY * 10) + "deg)";
+            const relX = Math.max(-0.5, Math.min(0.5, (clientX - rect.left) / rect.width - 0.5));
+            const relY = Math.max(-0.5, Math.min(0.5, (clientY - rect.top) / rect.height - 0.5));
+            renderBox.style.transform = "perspective(1000px) rotateY(" + (relX * 10) + "deg) rotateX(" + (-relY * 8) + "deg)";
+            if (lightSpot) {
+              lightSpot.style.left = (clientX - rect.left) + "px";
+              lightSpot.style.top = (clientY - rect.top) + "px";
+            }
           }
           return;
         }
@@ -7038,6 +7105,23 @@
       }
 
       if (tiltCard) {
+        tiltCard.addEventListener("mouseenter", () => {
+          isHoveringCard = true;
+        });
+        tiltCard.addEventListener("mouseleave", () => {
+          isHoveringCard = false;
+          if (!isDragging && renderBox) {
+            const zoomScale = isZoomed ? 1.38 : 1.0;
+            const normAngle = (Math.round(currentAngle) % 360 + 360) % 360;
+            const rotY = isAerialView ? 0 : Math.sin(normAngle * Math.PI / 180) * 8;
+            renderBox.style.transition = "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)";
+            renderBox.style.transform = "scale(" + zoomScale + ") rotateY(" + rotY + "deg)";
+            setTimeout(() => {
+              if (renderBox) renderBox.style.transition = "none";
+            }, 350);
+          }
+        });
+
         tiltCard.addEventListener("mousedown", onPointerDown);
         window.addEventListener("mousemove", onPointerMove);
         window.addEventListener("mouseup", onPointerUp);
@@ -7045,6 +7129,8 @@
         tiltCard.addEventListener("touchstart", onPointerDown, { passive: true });
         window.addEventListener("touchmove", onPointerMove, { passive: true });
         window.addEventListener("touchend", onPointerUp);
+        window.addEventListener("touchcancel", onPointerUp);
+        window.addEventListener("blur", onPointerUp);
       }
 
       function startAutoSpin() {
@@ -7070,7 +7156,7 @@
           autoSpinTimer = null;
         }
         if (autospinBtn) autospinBtn.classList.remove("active");
-        if (autospinText) autospinText.textContent = "SPIN 360?";
+        if (autospinText) autospinText.textContent = "SPIN 360°";
       }
 
       if (autospinBtn) {
@@ -7125,22 +7211,28 @@
           playUiTick(1200, 0.035, 0.09);
           const sneaker = SNEAKERS[activeSneakerIdx];
           if (stockTextEl) {
-            stockTextEl.textContent = "Size EU " + selectedSize + " in stock ? Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
+            stockTextEl.textContent = "Size EU " + selectedSize + " in stock \u2022 Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
           }
         });
       });
 
       if (wishlistBtn) {
         wishlistBtn.addEventListener("click", () => {
-          isWishlisted = !isWishlisted;
-          wishlistBtn.classList.toggle("active", isWishlisted);
-          wishlistCount = isWishlisted ? 1 : 0;
+          const sneaker = SNEAKERS[activeSneakerIdx];
+          if (wishlistedSneakers.has(sneaker.id)) {
+            wishlistedSneakers.delete(sneaker.id);
+            playSwatchPluck(220);
+          } else {
+            wishlistedSneakers.add(sneaker.id);
+            playSwatchPluck(440);
+          }
+          const isNowWishlisted = wishlistedSneakers.has(sneaker.id);
+          wishlistBtn.classList.toggle("active", isNowWishlisted);
           if (wishlistBadge) {
-            wishlistBadge.textContent = wishlistCount;
+            wishlistBadge.textContent = wishlistedSneakers.size;
             wishlistBadge.style.transform = "scale(1.4)";
             setTimeout(() => { wishlistBadge.style.transform = "scale(1)"; }, 250);
           }
-          playSwatchPluck(isWishlisted ? 440 : 220);
         });
       }
 
@@ -7296,14 +7388,14 @@
               colorwayName: colorway.name,
               size: selectedSize,
               quantity: 1,
-              svgThumb: renderSneakerSvg(sneaker, colorway, 0, false)
+              svgThumb: renderSneakerSvg(sneaker, colorway, 0, false, "cart_" + Date.now() + "_" + Math.floor(Math.random() * 10000))
             });
           }
 
           triggerFlyingShoeAnimation();
 
           addCartBtn.classList.add("added");
-          if (addCartText) addCartText.textContent = "ADDED TO BAG ✓";
+          if (addCartText) addCartText.textContent = "ADDED TO BAG \u2713";
           setTimeout(() => {
             addCartBtn.classList.remove("added");
             if (addCartText) addCartText.textContent = "ADD TO CART";
