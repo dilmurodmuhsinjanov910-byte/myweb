@@ -974,7 +974,7 @@
       width: 360px;
       height: 360px;
       border-radius: 50%;
-      background: radial-gradient(circle at center, rgba(255, 248, 230, 0.22) 0%, rgba(223, 183, 108, 0.12) 28%, rgba(223, 183, 108, 0.02) 58%, transparent 72%);
+      background: radial-gradient(circle at center, rgba(255, 248, 230, 0.24) 0%, rgba(223, 183, 108, 0.13) 28%, rgba(223, 183, 108, 0.02) 58%, transparent 72%);
       pointer-events: none;
       transform: translate(-50%, -50%);
       mix-blend-mode: screen;
@@ -983,7 +983,9 @@
       z-index: 4;
     }
     .snk-tilt-card:hover .snk-light-spot,
-    .hw-viewport:hover .hw-light-spot {
+    .snk-tilt-card.tracking .snk-light-spot,
+    .hw-viewport:hover .hw-light-spot,
+    .hw-viewport.tracking .hw-light-spot {
       opacity: 1;
     }
 
@@ -1007,7 +1009,7 @@
       text-shadow: 0 0 14px rgba(223, 183, 108, 0.65), 0 0 25px rgba(223, 183, 108, 0.35);
       color: #fff6de !important;
     }
-    .snk-price-val, .hw-card-price, #hw-tele-price, #snk-degree-val, #hw-hud-angle, #hw-spec-weight, #hw-xray-slider-val {
+    .snk-price-val, .hw-card-price, #hw-tele-price, #snk-degree-val, #hw-hud-angle, #hw-spec-weight, #hw-spec-freq, #hw-spec-latency, #hw-spec-conn, #hw-spec-battery, #hw-xray-slider-val {
       font-variant-numeric: tabular-nums;
     }
 
@@ -1034,9 +1036,72 @@
       will-change: transform;
       transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.35s ease;
     }
-    .hw-cat-btn, .hw-rakurs-btn, .hw-profile-btn, .snk-model-tab, .snk-angle-pill, .snk-size-pill, .hw-hud-btn, .hw-video-toggle-btn, .snk-autospin-btn {
+    .hw-depth-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      transform-style: preserve-3d;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      border-radius: 14px;
+    }
+    .hw-layer-chassis {
+      border: 1px dashed rgba(223, 183, 108, 0.18);
+      background: radial-gradient(circle at center, rgba(223, 183, 108, 0.035) 0%, transparent 70%);
+      box-shadow: inset 0 0 24px rgba(223, 183, 108, 0.035);
+    }
+    .hw-layer-driver {
+      border: 1px solid rgba(0, 229, 255, 0.16);
+      background: radial-gradient(circle at 45% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 65%);
+      box-shadow: 0 0 28px rgba(0, 229, 255, 0.06);
+    }
+    .hw-layer-magnets {
+      border: 1px dotted rgba(255, 170, 50, 0.18);
+      background: radial-gradient(circle at 55% 50%, rgba(255, 170, 50, 0.04) 0%, transparent 65%);
+      box-shadow: 0 0 22px rgba(255, 170, 50, 0.05);
+    }
+    .hw-layer-pcb {
+      border: 1px solid rgba(223, 183, 108, 0.26);
+      background: radial-gradient(circle at 50% 50%, rgba(223, 183, 108, 0.06) 0%, transparent 60%);
+      box-shadow: inset 0 0 32px rgba(223, 183, 108, 0.05);
+    }
+
+    /* Interactive Buttons States & Touch Ergonomics */
+    .hw-cat-btn, .hw-rakurs-btn, .hw-profile-btn, .snk-model-tab, .snk-angle-pill, .snk-size-btn, .hw-hud-btn, .hw-video-toggle-btn, .snk-autospin-btn {
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .hw-rakurs-btn:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(223, 183, 108, 0.45) !important;
+      color: #fff !important;
+      transform: translateY(-1px);
+    }
+    .hw-rakurs-btn:active {
+      transform: translateY(0px) scale(0.96);
+    }
+    .hw-rakurs-btn.active {
+      background: rgba(223, 183, 108, 0.22) !important;
+      border-color: rgba(223, 183, 108, 0.5) !important;
+      color: #fff3d1 !important;
+    }
+    .snk-angle-pill:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(223, 183, 108, 0.4) !important;
+      color: #fff !important;
+      transform: translateY(-1px);
+    }
+    .snk-angle-pill:active {
+      transform: translateY(0px) scale(0.96);
+    }
+    .snk-model-tab:hover:not(.active) {
+      border-color: rgba(223, 183, 108, 0.5) !important;
+      color: #fff !important;
+    }
+    .snk-size-btn:hover:not(.active) {
+      border-color: rgba(223, 183, 108, 0.45) !important;
+      color: #fff !important;
     }
     .snk-render-box {
       width: 96%;
@@ -3846,7 +3911,7 @@
                     <span class="snk-brand-tag" id="snk-brand-tag">PALM ANGELS // MILANO</span>
                     <h2 class="snk-product-title" id="snk-product-title">Flame Low Suede &amp; Leather Sneakers</h2>
                     <div class="snk-price-row">
-                      <span class="snk-price-val" id="snk-price-val">395$</span>
+                      <span class="snk-price-val" id="snk-price-val">$395</span>
                       <span class="snk-duty-note">Taxes &amp; Duties Included</span>
                     </div>
                   </div>
@@ -6891,6 +6956,7 @@
           foregroundCanvas.height = Math.max(rect.height * dpr, 300);
         }
         if (petalsCanvas) {
+          const rect = petalsCanvas.getBoundingClientRect();
           petalsCanvas.width = Math.max(rect.width * dpr, 400);
           petalsCanvas.height = Math.max(rect.height * dpr, 300);
         }
@@ -8716,10 +8782,42 @@
             requestAnimationFrame(stepOdo);
           } else {
             element.textContent = `${prefix}${targetNum.toLocaleString()}${suffix}`;
-            setTimeout(() => element.classList.remove("odometer-rolling"), 100);
+            setTimeout(() => element.classList.remove("odometer-rolling"), 120);
           }
         }
         requestAnimationFrame(stepOdo);
+      }
+
+      function rollAngleOdometer(element, targetLabel, duration = 350) {
+        if (!element || !targetLabel) return;
+        element.classList.add("odometer-rolling");
+        const curText = element.textContent || "";
+        const curDegMatch = curText.match(/^(\d+)°/);
+        const tgtDegMatch = targetLabel.match(/^(\d+)°/);
+
+        if (curDegMatch && tgtDegMatch) {
+          const startDeg = parseInt(curDegMatch[1], 10);
+          const targetDeg = parseInt(tgtDegMatch[1], 10);
+          const suffix = targetLabel.replace(/^\d+°/, "");
+          const startTime = performance.now();
+          function stepDeg(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(1, elapsed / duration);
+            const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+            const deg = Math.round(startDeg + (targetDeg - startDeg) * ease);
+            element.textContent = `${deg}°${suffix}`;
+            if (progress < 1) {
+              requestAnimationFrame(stepDeg);
+            } else {
+              element.textContent = targetLabel;
+              setTimeout(() => element.classList.remove("odometer-rolling"), 100);
+            }
+          }
+          requestAnimationFrame(stepDeg);
+        } else {
+          element.textContent = targetLabel;
+          setTimeout(() => element.classList.remove("odometer-rolling"), 150);
+        }
       }
 
       // Feature 2: Dynamic Specular Studio Lighting Flare (Sneakers)
@@ -8729,6 +8827,20 @@
       // Feature 4: Atmospheric Champagne-Gold Dust Micro-Particles (Sneakers)
       const snkParticlesCanvas = document.getElementById("snk-particles-canvas");
       const snkParticlesCtx = snkParticlesCanvas ? snkParticlesCanvas.getContext("2d") : null;
+      let snkCanvasW = 320;
+      let snkCanvasH = 260;
+
+      function updateSnkCanvasDimensions() {
+        if (!snkParticlesCanvas) return;
+        const rect = snkParticlesCanvas.getBoundingClientRect();
+        snkCanvasW = Math.max(Math.round(rect.width), 300);
+        snkCanvasH = Math.max(Math.round(rect.height), 240);
+        snkParticlesCanvas.width = snkCanvasW;
+        snkParticlesCanvas.height = snkCanvasH;
+      }
+      updateSnkCanvasDimensions();
+      window.addEventListener("resize", updateSnkCanvasDimensions);
+
       const snkMotes = Array.from({ length: 24 }, () => ({
         x: Math.random() * 320,
         y: Math.random() * 280,
@@ -8740,13 +8852,8 @@
 
       function renderSnkParticles() {
         if (!snkParticlesCanvas || !snkParticlesCtx) return;
-        const rect = snkParticlesCanvas.getBoundingClientRect();
-        if (snkParticlesCanvas.width !== Math.round(rect.width) || snkParticlesCanvas.height !== Math.round(rect.height)) {
-          snkParticlesCanvas.width = Math.max(Math.round(rect.width), 300);
-          snkParticlesCanvas.height = Math.max(Math.round(rect.height), 240);
-        }
-        const w = snkParticlesCanvas.width;
-        const h = snkParticlesCanvas.height;
+        const w = snkCanvasW;
+        const h = snkCanvasH;
         snkParticlesCtx.clearRect(0, 0, w, h);
 
         snkMotes.forEach(m => {
@@ -8766,7 +8873,7 @@
           snkParticlesCtx.restore();
         });
 
-        // Update specular spot lerp
+        // Update specular spot lerp (Feature 2)
         snkSpot.x += (snkSpot.targetX - snkSpot.x) * 0.15;
         snkSpot.y += (snkSpot.targetY - snkSpot.y) * 0.15;
         if (snkLightSpot) {
@@ -8781,6 +8888,7 @@
       // Smooth 3D Mouse / Touch Parallax Tilt with Specular Spot Tracking
       if (tiltCard && renderBox) {
         const handleCardPointer = (e) => {
+          tiltCard.classList.add("tracking");
           const rect = tiltCard.getBoundingClientRect();
           const clientX = e.touches ? e.touches[0].clientX : e.clientX;
           const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -8798,6 +8906,7 @@
         tiltCard.addEventListener("touchmove", handleCardPointer, { passive: true });
 
         const resetCardPointer = () => {
+          tiltCard.classList.remove("tracking");
           renderBox.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
         };
         tiltCard.addEventListener("mouseleave", resetCardPointer);
@@ -8848,7 +8957,7 @@
         }
 
         if (degreeVal) {
-          degreeVal.textContent = angleLabel;
+          rollAngleOdometer(degreeVal, angleLabel);
         }
 
         // Update angle pill active state
@@ -8891,7 +9000,7 @@
             sw.setAttribute("title", cw.name);
             sw.addEventListener("click", () => {
               activeColorwayIdx = idx;
-              playUiTick(1100, 0.02, 0.04);
+              playClothSwatchPluck(360 + idx * 40);
               updateSneakerView();
             });
             swatchesWrap.appendChild(sw);
@@ -9026,6 +9135,7 @@
         if (cartDrawer && cartBackdrop) {
           cartDrawer.classList.add("open");
           cartBackdrop.classList.add("open");
+          playDrawerGlide();
         }
       }
 
@@ -9033,6 +9143,7 @@
         if (cartDrawer && cartBackdrop) {
           cartDrawer.classList.remove("open");
           cartBackdrop.classList.remove("open");
+          playDrawerGlide();
         }
       }
 
@@ -9714,7 +9825,7 @@
         } catch (e) {}
       }
 
-      // Feature 3: Kinetic Typography Odometer (Hardware Studio)
+      // Feature 3: Kinetic Typography Odometer & Numeric Spec Roll (Hardware Studio)
       function rollHwOdometer(element, targetNum, prefix = "", suffix = "", duration = 400) {
         if (!element) return;
         const currentText = (element.textContent || "").replace(/[^0-9.]/g, "");
@@ -9735,10 +9846,58 @@
             requestAnimationFrame(stepOdo);
           } else {
             element.textContent = `${prefix}${targetNum.toLocaleString()}${suffix}`;
-            setTimeout(() => element.classList.remove("odometer-rolling"), 100);
+            setTimeout(() => element.classList.remove("odometer-rolling"), 120);
           }
         }
         requestAnimationFrame(stepOdo);
+      }
+
+      function rollNumericSpec(element, targetValStr, duration = 400) {
+        if (!element || !targetValStr) return;
+        const match = targetValStr.match(/^([^0-9.]*)([0-9]+(?:\.[0-9]+)?)(.*)$/);
+        if (!match) {
+          element.textContent = targetValStr;
+          return;
+        }
+        const prefix = match[1];
+        const targetNum = parseFloat(match[2]);
+        const suffix = match[3];
+        const isDecimal = match[2].includes(".");
+
+        const curText = element.textContent || "";
+        const curMatch = curText.match(/^([^0-9.]*)([0-9]+(?:\.[0-9]+)?)(.*)$/);
+        const startNum = curMatch ? (parseFloat(curMatch[2]) || 0) : targetNum;
+
+        if (startNum === targetNum) {
+          element.textContent = targetValStr;
+          return;
+        }
+
+        element.classList.add("odometer-rolling");
+        const startTime = performance.now();
+        function stepSpec(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const curVal = startNum + (targetNum - startNum) * ease;
+          const formatted = isDecimal ? curVal.toFixed(1) : Math.round(curVal).toLocaleString();
+          element.textContent = `${prefix}${formatted}${suffix}`;
+          if (progress < 1) {
+            requestAnimationFrame(stepSpec);
+          } else {
+            element.textContent = targetValStr;
+            setTimeout(() => element.classList.remove("odometer-rolling"), 120);
+          }
+        }
+        requestAnimationFrame(stepSpec);
+      }
+
+      function rollHudAngle(element, targetText) {
+        if (!element || !targetText) return;
+        if (element.textContent === targetText) return;
+        element.classList.add("odometer-rolling");
+        element.textContent = targetText;
+        setTimeout(() => element.classList.remove("odometer-rolling"), 180);
       }
 
       function startAcousticSynthesis(profile) {
@@ -9813,12 +9972,22 @@
         if (audioPlayBtn) audioPlayBtn.classList.remove("active");
       }
 
-      // Real-Time Canvas Visualizer
+      // Real-Time Canvas Visualizer with High-DPI Scaling
       function renderVisualizerLoop() {
         if (visCanvas) {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          const rect = visCanvas.getBoundingClientRect();
+          const rw = Math.round(rect.width || 600);
+          const rh = Math.round(rect.height || 62);
+          if (visCanvas.width !== rw * dpr || visCanvas.height !== rh * dpr) {
+            visCanvas.width = rw * dpr;
+            visCanvas.height = rh * dpr;
+          }
           const ctx = visCanvas.getContext("2d");
-          const w = visCanvas.width;
-          const h = visCanvas.height;
+          ctx.save();
+          ctx.scale(dpr, dpr);
+          const w = rw;
+          const h = rh;
           ctx.clearRect(0, 0, w, h);
 
           const barCount = 32;
@@ -9844,6 +10013,7 @@
             ctx.fillStyle = isPlayingAudio ? "#dfb76c" : "rgba(255,255,255,0.15)";
             ctx.fillRect(x, y, barWidth, barHeight);
           }
+          ctx.restore();
         }
         requestAnimationFrame(renderVisualizerLoop);
       }
@@ -9907,6 +10077,20 @@
       // Feature 4: Atmospheric Cyber Motes Micro-Particles (Hardware)
       const hwParticlesCanvas = document.getElementById("hw-particles-canvas");
       const hwParticlesCtx = hwParticlesCanvas ? hwParticlesCanvas.getContext("2d") : null;
+      let hwCanvasW = 500;
+      let hwCanvasH = 400;
+
+      function updateHwCanvasDimensions() {
+        if (!hwParticlesCanvas) return;
+        const rect = hwParticlesCanvas.getBoundingClientRect();
+        hwCanvasW = Math.max(Math.round(rect.width), 400);
+        hwCanvasH = Math.max(Math.round(rect.height), 300);
+        hwParticlesCanvas.width = hwCanvasW;
+        hwParticlesCanvas.height = hwCanvasH;
+      }
+      updateHwCanvasDimensions();
+      window.addEventListener("resize", updateHwCanvasDimensions);
+
       const hwMotes = Array.from({ length: 32 }, () => ({
         x: Math.random() * 500,
         y: Math.random() * 400,
@@ -9918,13 +10102,8 @@
 
       function renderHwParticles() {
         if (!hwParticlesCanvas || !hwParticlesCtx) return;
-        const rect = hwParticlesCanvas.getBoundingClientRect();
-        if (hwParticlesCanvas.width !== Math.round(rect.width) || hwParticlesCanvas.height !== Math.round(rect.height)) {
-          hwParticlesCanvas.width = Math.max(Math.round(rect.width), 400);
-          hwParticlesCanvas.height = Math.max(Math.round(rect.height), 300);
-        }
-        const w = hwParticlesCanvas.width;
-        const h = hwParticlesCanvas.height;
+        const w = hwCanvasW;
+        const h = hwCanvasH;
         hwParticlesCtx.clearRect(0, 0, w, h);
 
         hwMotes.forEach(m => {
@@ -9973,21 +10152,52 @@
           mainImg.style.transform = `translateZ(${zBack}px)`;
         }
 
-        if (layerChassis) layerChassis.style.transform = `translateZ(${(-22 * exp).toFixed(1)}px)`;
-        if (layerDriver) layerDriver.style.transform = `translateZ(${(16 * exp).toFixed(1)}px)`;
-        if (layerMagnets) layerMagnets.style.transform = `translateZ(${(36 * exp).toFixed(1)}px)`;
-        if (layerPcb) layerPcb.style.transform = `translateZ(${(56 * exp).toFixed(1)}px)`;
+        // Multi-Depth Differential 3D Parallax Offsets (Feature 1)
+        const dx = hwTilt.x * exp;
+        const dy = hwTilt.y * exp;
+        const layerOpacity = (exp > 0.05 ? Math.min(1, (exp - 0.05) * 1.5) : 0).toFixed(2);
 
-        if (hwCallout1) hwCallout1.style.transform = `translate3d(${(-16 * exp).toFixed(1)}px, ${(-10 * exp).toFixed(1)}px, ${(45 * exp).toFixed(1)}px)`;
-        if (hwCallout2) hwCallout2.style.transform = `translate3d(${(16 * exp).toFixed(1)}px, ${(-8 * exp).toFixed(1)}px, ${(55 * exp).toFixed(1)}px)`;
-        if (hwCallout3) hwCallout3.style.transform = `translate3d(${(-14 * exp).toFixed(1)}px, ${(12 * exp).toFixed(1)}px, ${(65 * exp).toFixed(1)}px)`;
-        if (hwCallout4) hwCallout4.style.transform = `translate3d(${(14 * exp).toFixed(1)}px, ${(16 * exp).toFixed(1)}px, ${(75 * exp).toFixed(1)}px)`;
+        if (layerChassis) {
+          layerChassis.style.opacity = layerOpacity;
+          layerChassis.style.transform = `translate3d(${(-14 * dx).toFixed(1)}px, ${(-14 * dy).toFixed(1)}px, ${(-22 * exp).toFixed(1)}px)`;
+        }
+        if (layerDriver) {
+          layerDriver.style.opacity = layerOpacity;
+          layerDriver.style.transform = `translate3d(${(12 * dx).toFixed(1)}px, ${(12 * dy).toFixed(1)}px, ${(16 * exp).toFixed(1)}px)`;
+        }
+        if (layerMagnets) {
+          layerMagnets.style.opacity = layerOpacity;
+          layerMagnets.style.transform = `translate3d(${(24 * dx).toFixed(1)}px, ${(24 * dy).toFixed(1)}px, ${(36 * exp).toFixed(1)}px)`;
+        }
+        if (layerPcb) {
+          layerPcb.style.opacity = layerOpacity;
+          layerPcb.style.transform = `translate3d(${(36 * dx).toFixed(1)}px, ${(36 * dy).toFixed(1)}px, ${(56 * exp).toFixed(1)}px)`;
+        }
+
+        if (hwCallout1) hwCallout1.style.transform = `translate3d(${(-16 * exp - 10 * dx).toFixed(1)}px, ${(-10 * exp - 8 * dy).toFixed(1)}px, ${(45 * exp).toFixed(1)}px)`;
+        if (hwCallout2) hwCallout2.style.transform = `translate3d(${(16 * exp + 10 * dx).toFixed(1)}px, ${(-8 * exp - 8 * dy).toFixed(1)}px, ${(55 * exp).toFixed(1)}px)`;
+        if (hwCallout3) hwCallout3.style.transform = `translate3d(${(-14 * exp - 12 * dx).toFixed(1)}px, ${(12 * exp + 10 * dy).toFixed(1)}px, ${(65 * exp).toFixed(1)}px)`;
+        if (hwCallout4) hwCallout4.style.transform = `translate3d(${(14 * exp + 12 * dx).toFixed(1)}px, ${(16 * exp + 10 * dy).toFixed(1)}px, ${(75 * exp).toFixed(1)}px)`;
 
         requestAnimationFrame(renderHwParticles);
       }
       requestAnimationFrame(renderHwParticles);
 
+      // Viewport Mouse & Touch Interaction with Direct Turntable Drag Rotation
       if (hwViewport) {
+        let isHwDragging = false;
+        let hwDragStartX = 0;
+        let hwDragStartDeg = 0;
+
+        const onHwPointerDown = (e) => {
+          isHwDragging = true;
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          hwDragStartX = clientX;
+          hwDragStartDeg = hwTurntableDeg;
+          hwViewport.classList.add("tracking");
+          hwViewport.style.cursor = "grabbing";
+        };
+
         const handleHwPointer = (e) => {
           const rect = hwViewport.getBoundingClientRect();
           const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -9996,17 +10206,31 @@
           hwTilt.targetY = (clientY - rect.top) / rect.height - 0.5;
           hwPointer.targetX = clientX - rect.left;
           hwPointer.targetY = clientY - rect.top;
+
+          if (isHwDragging) {
+            const deltaX = clientX - hwDragStartX;
+            hwTurntableDeg = (hwDragStartDeg + deltaX * 0.45) % 360;
+          }
         };
 
+        const onHwPointerUp = () => {
+          isHwDragging = false;
+          hwViewport.classList.remove("tracking");
+          hwViewport.style.cursor = "grab";
+        };
+
+        hwViewport.addEventListener("mousedown", onHwPointerDown);
+        hwViewport.addEventListener("touchstart", onHwPointerDown, { passive: true });
         hwViewport.addEventListener("mousemove", handleHwPointer);
         hwViewport.addEventListener("touchmove", handleHwPointer, { passive: true });
+        window.addEventListener("mouseup", onHwPointerUp);
+        window.addEventListener("touchend", onHwPointerUp);
 
         const resetHwPointer = () => {
           hwTilt.targetX = 0;
           hwTilt.targetY = 0;
         };
         hwViewport.addEventListener("mouseleave", resetHwPointer);
-        hwViewport.addEventListener("touchend", resetHwPointer);
       }
 
       // Populate Left Arsenal Roster
@@ -10066,7 +10290,14 @@
         if (mainImg) {
           const targetSrc = (currentHardwareRakurs === "profile") ? profileSrc : heroSrc;
           if (mainImg.getAttribute("src") !== targetSrc) {
+            mainImg.style.opacity = "0.35";
             mainImg.src = targetSrc;
+            mainImg.onload = () => {
+              mainImg.style.opacity = (currentHardwareRakurs === "teardown" || isXRayMode) ? "0.22" : "1";
+            };
+            if (mainImg.complete) {
+              mainImg.style.opacity = (currentHardwareRakurs === "teardown" || isXRayMode) ? "0.22" : "1";
+            }
           }
         }
 
@@ -10081,17 +10312,17 @@
           if (teardownImg) teardownImg.style.opacity = "1";
           if (mainImg) mainImg.style.opacity = "0.22";
           if (xrayAssembly) xrayAssembly.style.opacity = "1";
-          if (hudAngle) hudAngle.textContent = "STUDIO // EXPLODED TEARDOWN";
+          if (hudAngle) rollHudAngle(hudAngle, "STUDIO // EXPLODED TEARDOWN");
         } else if (currentHardwareRakurs === "profile") {
           if (teardownImg) teardownImg.style.opacity = "0";
           if (mainImg) mainImg.style.opacity = "1";
           if (xrayAssembly) xrayAssembly.style.opacity = "0";
-          if (hudAngle) hudAngle.textContent = "STUDIO // LATERAL PROFILE";
+          if (hudAngle) rollHudAngle(hudAngle, "STUDIO // LATERAL PROFILE");
         } else {
           if (teardownImg) teardownImg.style.opacity = "0";
           if (mainImg) mainImg.style.opacity = "1";
           if (xrayAssembly) xrayAssembly.style.opacity = "0";
-          if (hudAngle) hudAngle.textContent = "STUDIO // 3/4 HERO PERSPECTIVE";
+          if (hudAngle) rollHudAngle(hudAngle, "STUDIO // 3/4 HERO PERSPECTIVE");
         }
 
         // Rakurs buttons active state
@@ -10104,17 +10335,21 @@
           btn.style.color = isActive ? "#fff3d1" : "#888";
         });
 
-        // Telemetry updates
+        // Telemetry kinetic odometer & roll updates (Feature 3)
         if (telSeries) telSeries.textContent = `SERIES // ${activeCategory.toUpperCase()}-0${activeModelIdx + 1}`;
         if (telName) telName.textContent = model.name;
         if (telBrand) telBrand.textContent = model.brandTag;
         if (telPrice) rollHwOdometer(telPrice, model.price, "$");
-        if (telWeight) telWeight.textContent = model.weight;
-        if (telFreq) telFreq.textContent = model.freq;
+        if (telWeight) rollNumericSpec(telWeight, model.weight);
+        if (telFreq) {
+          telFreq.classList.add("odometer-rolling");
+          telFreq.textContent = model.freq;
+          setTimeout(() => telFreq.classList.remove("odometer-rolling"), 150);
+        }
         if (telDriver) telDriver.textContent = model.driver;
-        if (telLatency) telLatency.textContent = model.latency;
+        if (telLatency) rollNumericSpec(telLatency, model.latency);
         if (telConn) telConn.textContent = model.conn;
-        if (telBattery) telBattery.textContent = model.battery;
+        if (telBattery) rollNumericSpec(telBattery, model.battery);
 
         if (specChassis) specChassis.textContent = model.chassisSpec;
         if (specDriver) specDriver.textContent = model.driverSpec;
