@@ -1845,6 +1845,1152 @@
         display: none;
       }
     }
+
+/* ============================================================
+   PROJECT 03: CYBER STUDIO LUXURY HARDWARE SHOWCASE (S-TIER)
+   ============================================================ */
+    .hardware-app-container {
+      position: absolute;
+      right: calc(var(--pad) + 14px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(64vw, 1060px);
+      height: min(80vh, 650px);
+      z-index: 10;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(223, 183, 108, 0.35);
+      box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.98), 0 0 60px rgba(223, 183, 108, 0.12);
+      background: radial-gradient(circle at 50% 20%, #101218 0%, #08080b 60%, #040405 100%);
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      font-family: var(--sans);
+      color: #f1f1ee;
+    }
+
+    /* Header Dock */
+    .hw-header {
+      height: 48px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 12, 16, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 30;
+      gap: 12px;
+    }
+    .hw-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hw-brand-mark {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .hw-logo {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      color: #f1f1ee;
+    }
+    .hw-badge {
+      font-size: 7.5px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .hw-cat-dock {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hw-cat-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 20px;
+      padding: 4px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .hw-cat-btn:hover {
+      color: #fff;
+      border-color: rgba(223, 183, 108, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .hw-cat-btn.active {
+      color: #070707;
+      background: var(--gold-grad);
+      border-color: transparent;
+      box-shadow: 0 0 16px rgba(223, 183, 108, 0.4);
+      font-weight: 600;
+    }
+    .hw-cat-btn.active .hw-cat-sub {
+      color: rgba(0, 0, 0, 0.7);
+    }
+    .hw-cat-icon {
+      font-size: 12px;
+    }
+    .hw-cat-title {
+      font-size: 8.5px;
+      letter-spacing: 0.16em;
+      font-weight: 700;
+    }
+    .hw-cat-sub {
+      font-size: 7px;
+      letter-spacing: 0.1em;
+      color: #666;
+      text-transform: uppercase;
+    }
+    .hw-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hw-mode-toggle {
+      display: flex;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 2px;
+    }
+    .hw-mode-btn {
+      background: transparent;
+      border: none;
+      border-radius: 14px;
+      color: #777;
+      font-size: 7.5px;
+      letter-spacing: 0.15em;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+    .hw-mode-btn:hover {
+      color: #fff;
+    }
+    .hw-mode-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    .hw-mode-btn#hw-mode-xray.active {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+
+    /* Workspace Layout */
+    .hw-workspace {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 210px 1fr 265px;
+      min-height: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    /* Left: Model Roster */
+    .hw-roster-pane {
+      background: rgba(8, 9, 12, 0.75);
+      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .hw-roster-header {
+      padding: 12px 14px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .hw-roster-lbl {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      color: #777;
+      font-weight: 600;
+    }
+    .hw-roster-count {
+      font-size: 7px;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+    .hw-roster-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .hw-roster-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .hw-roster-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+    }
+    .hw-model-card {
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .hw-model-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(223, 183, 108, 0.35);
+      transform: translateX(2px);
+    }
+    .hw-model-card.active {
+      background: rgba(223, 183, 108, 0.08);
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(223, 183, 108, 0.15);
+    }
+    .hw-model-card.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 3px;
+      background: var(--gold-grad);
+      border-radius: 0 2px 2px 0;
+    }
+    .hw-card-thumb {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 3px;
+    }
+    .hw-card-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    }
+    .hw-card-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hw-card-brand {
+      font-size: 7px;
+      letter-spacing: 0.16em;
+      color: #888;
+      text-transform: uppercase;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hw-card-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: #eee;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hw-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 8px;
+    }
+    .hw-card-price {
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .hw-card-spec {
+      color: #666;
+      font-size: 7px;
+    }
+
+    /* Center Stage */
+    .hw-stage-pane {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 45%, rgba(30, 35, 48, 0.25) 0%, transparent 70%);
+    }
+    .hw-stage-hud {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .hw-hud-tag {
+      font-size: 7.5px;
+      letter-spacing: 0.2em;
+      color: #999;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: monospace;
+    }
+    .hw-hud-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: auto;
+    }
+    .hw-hud-btn {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #999;
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      padding: 3px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hw-hud-btn:hover {
+      color: #fff;
+      border-color: var(--gold);
+      background: rgba(223, 183, 108, 0.1);
+    }
+    .hw-hud-btn.active {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* 3D Turntable Viewport */
+    .hw-viewport {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      perspective: 1200px;
+      overflow: hidden;
+    }
+    .hw-viewport:active {
+      cursor: grabbing;
+    }
+    .hw-ground-grid {
+      position: absolute;
+      bottom: 0;
+      left: -20%;
+      width: 140%;
+      height: 60%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      transform: perspective(400px) rotateX(65deg);
+      transform-origin: bottom center;
+      mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 75%);
+      pointer-events: none;
+    }
+    .hw-contact-shadow {
+      position: absolute;
+      bottom: 16%;
+      width: 220px;
+      height: 24px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 75%);
+      border-radius: 50%;
+      filter: blur(8px);
+      pointer-events: none;
+      transition: transform 0.1s ease-out;
+    }
+
+    /* 3D Rig */
+    .hw-rig {
+      position: relative;
+      width: 320px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .hw-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .hw-layer-assembled img {
+      max-width: 92%;
+      max-height: 92%;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
+      transition: transform 0.3s ease;
+    }
+
+    /* X-Ray Teardown Assembly */
+    .hw-xray-assembly {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .hardware-app-container.xray-active .hw-layer-assembled {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .hardware-app-container.xray-active .hw-xray-assembly {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .hw-xray-layer {
+      position: absolute;
+      width: 260px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+
+    /* Layer 1: Chassis Outer Shell */
+    .hw-xray-layer.layer-chassis {
+      z-index: 14;
+    }
+    .hw-xray-layer.layer-chassis img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.35)) brightness(1.05);
+    }
+    .hw-xray-glow {
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      border: 1px dashed rgba(56, 189, 248, 0.25);
+      pointer-events: none;
+      animation: pulseRotate 12s linear infinite;
+    }
+    @keyframes pulseRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Layer 2: Transducer Driver Core */
+    .hw-xray-layer.layer-driver {
+      z-index: 12;
+    }
+    .hw-xray-driver-disc {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 2px solid rgba(223, 183, 108, 0.7);
+      background: radial-gradient(circle, rgba(223, 183, 108, 0.35) 0%, rgba(20, 20, 25, 0.85) 65%, #050508 100%);
+      box-shadow: 0 0 25px rgba(223, 183, 108, 0.45), inset 0 0 15px rgba(223, 183, 108, 0.4);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .driver-motor-ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px dashed rgba(56, 189, 248, 0.6);
+      animation: pulseRotate 8s linear infinite reverse;
+    }
+    .driver-diaphragm {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #dfb76c 0%, #b8860b 60%, transparent 100%);
+      box-shadow: 0 0 15px #dfb76c;
+    }
+    .driver-magnet {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 10px #38bdf8;
+    }
+
+    /* Layer 3: Cyber PCB Circuit */
+    .hw-xray-layer.layer-circuit {
+      z-index: 10;
+    }
+    .hw-circuit-board {
+      width: 180px;
+      height: 120px;
+      background: rgba(8, 20, 28, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.5);
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px;
+    }
+    .pcb-traces {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+        linear-gradient(45deg, transparent 48%, rgba(56, 189, 248, 0.3) 50%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(223, 183, 108, 0.25) 50%, transparent 52%);
+      background-size: 100% 100%, 18px 18px, 18px 18px;
+      pointer-events: none;
+    }
+    .dsp-chip, .dac-chip {
+      background: #0d121c;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      padding: 6px 10px;
+      border-radius: 4px;
+      color: #38bdf8;
+      font-size: 7.5px;
+      font-family: monospace;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+      z-index: 2;
+    }
+    .dac-chip {
+      border-color: rgba(223, 183, 108, 0.7);
+      color: var(--gold);
+      box-shadow: 0 0 10px rgba(223, 183, 108, 0.3);
+    }
+
+    /* Layer 4: Damping / Base Matrix */
+    .hw-xray-layer.layer-base {
+      z-index: 8;
+    }
+    .hw-cushion-ring {
+      width: 210px;
+      height: 160px;
+      border-radius: 45px;
+      border: 2px dashed rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    /* Technical Callout Badges */
+    .hw-callout {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+      z-index: 25;
+    }
+    .hw-callout.callout-right {
+      flex-direction: row-reverse;
+    }
+    .callout-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8;
+      flex-shrink: 0;
+      animation: calloutBlink 2s ease-in-out infinite alternate;
+    }
+    @keyframes calloutBlink {
+      from { transform: scale(0.85); opacity: 0.7; }
+      to { transform: scale(1.25); opacity: 1; }
+    }
+    .callout-line {
+      width: 32px;
+      height: 1px;
+      background: linear-gradient(90deg, #38bdf8, rgba(56, 189, 248, 0.2));
+    }
+    .hw-callout.callout-right .callout-line {
+      background: linear-gradient(270deg, #38bdf8, rgba(56, 189, 248, 0.2));
+    }
+    .callout-card {
+      background: rgba(8, 12, 18, 0.92);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 6px;
+      padding: 4px 8px;
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+    }
+    .callout-card strong {
+      display: block;
+      font-size: 7.5px;
+      letter-spacing: 0.15em;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+    .callout-card span {
+      display: block;
+      font-size: 7px;
+      color: #bbb;
+      letter-spacing: 0.06em;
+    }
+
+    /* X-Ray Slider Bar */
+    .hw-xray-slider-bar {
+      position: absolute;
+      bottom: 95px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 14, 20, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      backdrop-filter: blur(12px);
+      padding: 4px 14px;
+      border-radius: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 25;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+    .hardware-app-container.xray-active .hw-xray-slider-bar {
+      display: flex;
+    }
+    .hw-slider-lbl {
+      font-size: 7px;
+      letter-spacing: 0.16em;
+      color: #38bdf8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    #hw-xray-slider {
+      width: 110px;
+      accent-color: #38bdf8;
+      cursor: pointer;
+    }
+    .hw-slider-val {
+      font-size: 7.5px;
+      font-family: monospace;
+      color: #fff;
+      min-width: 26px;
+    }
+
+    /* Bottom Audio Frequency Visualizer Chamber */
+    .hw-audio-chamber {
+      height: 90px;
+      background: rgba(7, 8, 12, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      padding: 6px 12px;
+      gap: 12px;
+      align-items: center;
+      z-index: 20;
+    }
+    .hw-audio-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hw-audio-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hw-audio-pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: calloutBlink 1.5s ease infinite;
+    }
+    .hw-audio-title {
+      font-size: 7.5px;
+      letter-spacing: 0.18em;
+      color: #999;
+      font-weight: 600;
+    }
+    .hw-sound-profiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+    .hw-profile-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #777;
+      font-size: 6.5px;
+      letter-spacing: 0.12em;
+      padding: 3px 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      text-align: center;
+      transition: all 0.2s ease;
+      font-weight: 600;
+    }
+    .hw-profile-btn:hover {
+      color: #fff;
+      border-color: rgba(223, 183, 108, 0.3);
+    }
+    .hw-profile-btn.active {
+      background: rgba(223, 183, 108, 0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .hw-audio-play-btn {
+      background: var(--gold-grad);
+      border: none;
+      border-radius: 4px;
+      color: #070707;
+      font-size: 7.5px;
+      letter-spacing: 0.14em;
+      font-weight: 800;
+      padding: 4px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px rgba(223, 183, 108, 0.3);
+    }
+    .hw-audio-play-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+    .hw-audio-play-btn.playing {
+      background: #38bdf8;
+      color: #030a14;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+    }
+
+    .hw-visualizer-wrap {
+      flex: 1;
+      height: 76px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    #hw-visualizer-canvas {
+      width: 100%;
+      height: 62px;
+      display: block;
+    }
+    .hw-visualizer-labels {
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      font-size: 6.5px;
+      letter-spacing: 0.1em;
+      color: #555;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      font-family: monospace;
+    }
+
+    /* Right: Telemetry HUD & Reservation */
+    .hw-telemetry-pane {
+      background: rgba(8, 9, 12, 0.85);
+      border-left: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      gap: 12px;
+    }
+    .hw-telemetry-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 8px;
+    }
+    .hw-tele-serial {
+      font-size: 7px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      font-weight: 700;
+      display: block;
+    }
+    .hw-tele-model {
+      margin: 2px 0 0;
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .hw-tele-brand {
+      font-size: 7.5px;
+      letter-spacing: 0.16em;
+      color: #888;
+      margin-top: 2px;
+    }
+    .hw-tele-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Telemetry Grid */
+    .hw-specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .hw-spec-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: border-color 0.2s;
+    }
+    .hw-spec-card:hover {
+      border-color: rgba(223, 183, 108, 0.3);
+    }
+    .hw-spec-lbl {
+      font-size: 6.5px;
+      letter-spacing: 0.16em;
+      color: #666;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .hw-spec-val {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #ddd;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* FR Curve Chart */
+    .hw-fr-chart-wrap {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 6px 8px;
+    }
+    .hw-fr-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 6.5px;
+      letter-spacing: 0.14em;
+      color: #777;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    #hw-fr-canvas {
+      width: 100%;
+      height: 52px;
+      display: block;
+    }
+
+    /* Reservation Action */
+    .hw-reserve-box {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .hw-reserve-btn {
+      width: 100%;
+      background: var(--gold-grad);
+      border: none;
+      border-radius: 8px;
+      color: #080808;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      padding: 9px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 0 20px rgba(223, 183, 108, 0.35);
+      transition: all 0.25s ease;
+    }
+    .hw-reserve-btn:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 28px rgba(223, 183, 108, 0.55);
+      transform: translateY(-1px);
+    }
+    .hw-reserve-arrow {
+      font-size: 11px;
+    }
+    .hw-reserve-note {
+      font-size: 6.5px;
+      letter-spacing: 0.14em;
+      color: #555;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* Hardware Reservation Modal */
+    .hw-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .hw-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .hw-modal {
+      width: min(520px, 90%);
+      background: #0d0f14;
+      border: 1px solid rgba(223, 183, 108, 0.4);
+      border-radius: 14px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(223, 183, 108, 0.15);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hw-modal-backdrop.open .hw-modal {
+      transform: scale(1);
+    }
+    .hw-modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+    .hw-modal-subtitle {
+      font-size: 7.5px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      font-weight: 700;
+      display: block;
+    }
+    .hw-modal-title {
+      margin: 4px 0 0;
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: #fff;
+    }
+    .hw-modal-close {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #888;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .hw-modal-close:hover {
+      color: #fff;
+      border-color: var(--gold);
+    }
+    .hw-modal-body {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+    .hw-modal-visual {
+      height: 140px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      position: relative;
+    }
+    .hw-modal-visual img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.7));
+    }
+    .hw-modal-serial-badge {
+      position: absolute;
+      bottom: 6px;
+      font-size: 6.5px;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      font-family: monospace;
+    }
+    .hw-modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .hw-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hw-field-group label {
+      font-size: 7px;
+      letter-spacing: 0.18em;
+      color: #777;
+      font-weight: 600;
+    }
+    .hw-field-group input {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 6px 10px;
+      color: #fff;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .hw-field-group input:focus {
+      border-color: var(--gold);
+    }
+    .hw-dispatch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 8px;
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 4px;
+    }
+    .hw-modal-summary {
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 6px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 8px;
+      color: #888;
+    }
+    .summary-row.total {
+      font-weight: 700;
+      color: #fff;
+      font-size: 9px;
+      padding-top: 2px;
+    }
+    .hw-modal-submit {
+      background: var(--gold-grad);
+      border: none;
+      border-radius: 6px;
+      color: #080808;
+      font-size: 8.5px;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      padding: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 0 15px rgba(223, 183, 108, 0.3);
+    }
+    .hw-modal-submit:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 25px rgba(223, 183, 108, 0.5);
+    }
+
+    /* Responsive Queries for Hardware App */
+    @media (max-width: 960px) {
+      .hardware-app-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: calc(100% - 30px);
+        margin: 20px auto 0;
+        height: min(90vh, 740px);
+      }
+      .hw-workspace {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        overflow-y: auto;
+      }
+      .hw-roster-pane {
+        max-height: 120px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .hw-roster-list {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      .hw-model-card {
+        min-width: 140px;
+      }
+      .hw-telemetry-pane {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .hw-audio-chamber {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+
     .project-title{
       margin:0;font-family:var(--serif);font-size:clamp(58px,8.8vw,145px);line-height:.82;font-weight:400;
       letter-spacing:-.05em;color:var(--white);
@@ -2686,21 +3832,306 @@
         </div>
       </article>
 
-      <article class="project">
+            <article class="project" id="project-03">
         <div class="project-stage">
           <div class="project-visual">
             <div class="project-light"></div>
-            <div class="project-orb-art"></div>
+            <!-- S-Tier Interactive Cyber Studio Showcase: Luxury Hardware & Audio Chamber -->
+            <div class="project-app-container hardware-app-container" id="hardware-app">
+              <!-- Top Cyber Dock -->
+              <header class="hw-header">
+                <div class="hw-header-left">
+                  <div class="hw-brand-mark">
+                    <span class="hw-logo">CYBER<span class="gold">STUDIO</span></span>
+                    <span class="hw-badge">LAB 03 // LUXURY HARDWARE</span>
+                  </div>
+                </div>
+                
+                <!-- Category Navigation Dock -->
+                <nav class="hw-cat-dock" role="tablist">
+                  <button class="hw-cat-btn active" data-cat="headphones" role="tab">
+                    <span class="hw-cat-icon">🎧</span>
+                    <span class="hw-cat-title">HEADPHONES</span>
+                    <span class="hw-cat-sub">Spatial</span>
+                  </button>
+                  <button class="hw-cat-btn" data-cat="mice" role="tab">
+                    <span class="hw-cat-icon">🖱️</span>
+                    <span class="hw-cat-title">PRECISION MICE</span>
+                    <span class="hw-cat-sub">Kinetic</span>
+                  </button>
+                  <button class="hw-cat-btn" data-cat="speakers" role="tab">
+                    <span class="hw-cat-icon">🔊</span>
+                    <span class="hw-cat-title">HI-FI SPEAKERS</span>
+                    <span class="hw-cat-sub">Acoustic</span>
+                  </button>
+                </nav>
+                
+                <div class="hw-header-right">
+                  <!-- Mode Toggle: Studio 360 vs X-Ray Teardown -->
+                  <div class="hw-mode-toggle">
+                    <button class="hw-mode-btn active" id="hw-mode-studio">360° TURNTABLE</button>
+                    <button class="hw-mode-btn" id="hw-mode-xray">X-RAY TEARDOWN</button>
+                  </div>
+                </div>
+              </header>
+
+              <!-- Main Showcase Workspace -->
+              <div class="hw-workspace">
+                <!-- Left: Model Flagship Roster -->
+                <aside class="hw-roster-pane">
+                  <div class="hw-roster-header">
+                    <span class="hw-roster-lbl">FLAGSHIP ARSENAL</span>
+                    <span class="hw-roster-count" id="hw-model-count">5 MODELS</span>
+                  </div>
+                  <div class="hw-roster-list" id="hw-roster-list">
+                    <!-- Populated dynamically via JS -->
+                  </div>
+                </aside>
+
+                <!-- Center: Interactive Turntable & X-Ray Holographic Stage -->
+                <main class="hw-stage-pane" id="hw-stage">
+                  <!-- Top Stage HUD Indicators -->
+                  <div class="hw-stage-hud">
+                    <div class="hw-hud-tag" id="hw-hud-angle">TURNTABLE // 0° PROFILE</div>
+                    <div class="hw-hud-controls">
+                      <button class="hw-hud-btn" id="hw-btn-rot-left" title="Rotate Counter-Clockwise">↺ -15°</button>
+                      <button class="hw-hud-btn" id="hw-btn-rot-reset" title="Reset Alignment">ALIGN</button>
+                      <button class="hw-hud-btn" id="hw-btn-rot-right" title="Rotate Clockwise">↻ +15°</button>
+                      <button class="hw-hud-btn" id="hw-btn-autorotate" title="Toggle Auto-Orbit">ORBIT</button>
+                    </div>
+                  </div>
+
+                  <!-- 3D Turntable Viewport (Drag with inertia) -->
+                  <div class="hw-viewport" id="hw-viewport">
+                    <!-- Ground grid & dynamic contact shadow -->
+                    <div class="hw-ground-grid"></div>
+                    <div class="hw-contact-shadow" id="hw-contact-shadow"></div>
+
+                    <!-- 3D Product Rig -->
+                    <div class="hw-rig" id="hw-rig">
+                      <!-- Assembled Studio View Layer -->
+                      <div class="hw-layer hw-layer-assembled" id="hw-layer-assembled">
+                        <img id="hw-main-img" src="assets/hardware/apple_airpods_max.png" alt="Hardware Model" draggable="false" />
+                      </div>
+
+                      <!-- X-Ray Teardown Exploded Layers -->
+                      <div class="hw-xray-assembly" id="hw-xray-assembly">
+                        <!-- Layer 1: Outer Chassis Unibody -->
+                        <div class="hw-xray-layer layer-chassis" id="xray-chassis">
+                          <div class="hw-xray-glow"></div>
+                          <img id="hw-xray-img-chassis" src="assets/hardware/apple_airpods_max.png" alt="Chassis" draggable="false" />
+                          <div class="hw-callout callout-left" style="top: 20%; left: -14%;">
+                            <span class="callout-dot"></span>
+                            <span class="callout-line"></span>
+                            <div class="callout-card">
+                              <strong>UNIBODY HOUSING</strong>
+                              <span id="callout-chassis-spec">Aviation-Grade Anodized Alloy</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Layer 2: Transducer Driver Core -->
+                        <div class="hw-xray-layer layer-driver" id="xray-driver">
+                          <div class="hw-xray-driver-disc">
+                            <div class="driver-motor-ring"></div>
+                            <div class="driver-diaphragm"></div>
+                            <div class="driver-magnet"></div>
+                          </div>
+                          <div class="hw-callout callout-right" style="top: 40%; right: -18%;">
+                            <span class="callout-dot"></span>
+                            <span class="callout-line"></span>
+                            <div class="callout-card">
+                              <strong>ACOUSTIC CORE</strong>
+                              <span id="callout-driver-spec">40mm Beryllium Transducer</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Layer 3: Logic & DSP Circuit Board -->
+                        <div class="hw-xray-layer layer-circuit" id="xray-circuit">
+                          <div class="hw-circuit-board">
+                            <div class="pcb-traces"></div>
+                            <div class="dsp-chip"><span>DSP 384kHz</span></div>
+                            <div class="dac-chip"><span>DAC 32-BIT</span></div>
+                          </div>
+                          <div class="hw-callout callout-left" style="top: 65%; left: -12%;">
+                            <span class="callout-dot"></span>
+                            <span class="callout-line"></span>
+                            <div class="callout-card">
+                              <strong>LOGIC &amp; DSP CORE</strong>
+                              <span id="callout-pcb-spec">Dual-Core Low-Latency Architecture</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Layer 4: Damping / Base Matrix -->
+                        <div class="hw-xray-layer layer-base" id="xray-base">
+                          <div class="hw-cushion-ring"></div>
+                          <div class="hw-callout callout-right" style="top: 78%; right: -14%;">
+                            <span class="callout-dot"></span>
+                            <span class="callout-line"></span>
+                            <div class="callout-card">
+                              <strong>DAMPING MATRIX</strong>
+                              <span id="callout-base-spec">Acoustic Memory Foam / Glides</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- X-Ray Separation Slider Bar -->
+                  <div class="hw-xray-slider-bar" id="hw-xray-slider-bar">
+                    <span class="hw-slider-lbl">TEARDOWN EXPANSION</span>
+                    <input type="range" id="hw-xray-slider" min="15" max="100" value="65" />
+                    <span class="hw-slider-val" id="hw-xray-slider-val">65%</span>
+                  </div>
+
+                  <!-- Bottom Audio Frequency Visualizer Chamber -->
+                  <div class="hw-audio-chamber">
+                    <div class="hw-audio-controls">
+                      <div class="hw-audio-header">
+                        <span class="hw-audio-pulse-dot"></span>
+                        <span class="hw-audio-title">ACOUSTIC CHAMBER // LIVE SYNTH</span>
+                      </div>
+                      <!-- 4 Acoustic Profiles -->
+                      <div class="hw-sound-profiles" role="radiogroup">
+                        <button class="hw-profile-btn active" data-profile="spatial" title="Spatial 8D Binaural Acoustic Swirl">SPATIAL 8D</button>
+                        <button class="hw-profile-btn" data-profile="bass" title="Sub-Bass 20Hz-80Hz Sweep">BASS IMPLOSION</button>
+                        <button class="hw-profile-btn" data-profile="studio" title="Calibrated Studio Reference Spectrum">STUDIO FLAT</button>
+                        <button class="hw-profile-btn" data-profile="treble" title="Crystal Air-Band Harmonic Sparkle">CRYSTAL TREBLE</button>
+                      </div>
+                      <button class="hw-audio-play-btn" id="hw-audio-play-btn">
+                        <span class="hw-play-icon">▶</span>
+                        <span class="hw-play-text">SYNTHESIZE TEST</span>
+                      </button>
+                    </div>
+
+                    <!-- Real-Time Frequency Spectrum Canvas -->
+                    <div class="hw-visualizer-wrap">
+                      <canvas id="hw-visualizer-canvas" width="600" height="62"></canvas>
+                      <div class="hw-visualizer-labels">
+                        <span>20Hz</span>
+                        <span>100Hz</span>
+                        <span>500Hz</span>
+                        <span>1kHz</span>
+                        <span>5kHz</span>
+                        <span>12kHz</span>
+                        <span>20kHz</span>
+                      </div>
+                    </div>
+                  </div>
+                </main>
+
+                <!-- Right: Technical Specs Telemetry HUD & Reservation -->
+                <aside class="hw-telemetry-pane">
+                  <div class="hw-telemetry-header">
+                    <span class="hw-tele-serial" id="hw-tele-serial">SERIES // ARCHIVE-01</span>
+                    <h4 class="hw-tele-model" id="hw-tele-model">Apple AirPods Max</h4>
+                    <div class="hw-tele-brand" id="hw-tele-brand">APPLE // CUPERTINO</div>
+                    <div class="hw-tele-price" id="hw-tele-price">$549</div>
+                  </div>
+
+                  <!-- Telemetry Specs Grid -->
+                  <div class="hw-specs-grid">
+                    <div class="hw-spec-card">
+                      <span class="hw-spec-lbl">WEIGHT</span>
+                      <span class="hw-spec-val" id="hw-spec-weight">384.8 g</span>
+                    </div>
+                    <div class="hw-spec-card">
+                      <span class="hw-spec-lbl">FREQ RESPONSE</span>
+                      <span class="hw-spec-val" id="hw-spec-freq">20 Hz – 20 kHz</span>
+                    </div>
+                    <div class="hw-spec-card">
+                      <span class="hw-spec-lbl">DRIVER ARCHITECTURE</span>
+                      <span class="hw-spec-val" id="hw-spec-driver">40mm Dynamic Driver</span>
+                    </div>
+                    <div class="hw-spec-card">
+                      <span class="hw-spec-lbl">LATENCY / POLLING</span>
+                      <span class="hw-spec-val" id="hw-spec-latency">12 ms / Dual H1 Core</span>
+                    </div>
+                    <div class="hw-spec-card">
+                      <span class="hw-spec-lbl">CONNECTIVITY</span>
+                      <span class="hw-spec-val" id="hw-spec-conn">BT 5.0, AAC, Lightning</span>
+                    </div>
+                    <div class="hw-spec-card">
+                      <span class="hw-spec-lbl">BATTERY / POWER</span>
+                      <span class="hw-spec-val" id="hw-spec-battery">20h ANC &amp; Spatial</span>
+                    </div>
+                  </div>
+
+                  <!-- Target Frequency Response Curve Chart -->
+                  <div class="hw-fr-chart-wrap">
+                    <div class="hw-fr-header">
+                      <span>HARMAN ACOUSTIC TARGET</span>
+                      <span class="gold">±0.8 dB CALIBRATED</span>
+                    </div>
+                    <canvas id="hw-fr-canvas" width="280" height="52"></canvas>
+                  </div>
+
+                  <!-- Reservation Action -->
+                  <div class="hw-reserve-box">
+                    <button class="hw-reserve-btn" id="hw-reserve-btn">
+                      <span>RESERVE HARDWARE</span>
+                      <span class="hw-reserve-arrow">→</span>
+                    </button>
+                    <span class="hw-reserve-note">BESPOKE ARCHIVAL SUITE ALLOCATION // COMPLIMENTARY COURIER</span>
+                  </div>
+                </aside>
+              </div>
+
+              <!-- Hardware Reservation Confirmation Modal -->
+              <div class="hw-modal-backdrop" id="hw-modal-backdrop">
+                <div class="hw-modal">
+                  <div class="hw-modal-head">
+                    <div>
+                      <span class="hw-modal-subtitle">CYBER STUDIO ARCHIVE // BESPOKE RESERVATION</span>
+                      <h3 class="hw-modal-title" id="hw-modal-product-name">Apple AirPods Max</h3>
+                    </div>
+                    <button class="hw-modal-close" id="hw-modal-close">✕</button>
+                  </div>
+                  
+                  <div class="hw-modal-body">
+                    <div class="hw-modal-visual">
+                      <img id="hw-modal-img" src="assets/hardware/apple_airpods_max.png" alt="Hardware" />
+                      <div class="hw-modal-serial-badge" id="hw-modal-serial-code">SN: CS-7492-FLAGSHIP</div>
+                    </div>
+                    <div class="hw-modal-form">
+                      <div class="hw-field-group">
+                        <label>CUSTOM LASER ENGRAVING</label>
+                        <input type="text" id="hw-engrave-input" placeholder="e.g. DILMUROD // ARCHITECT" maxlength="32" />
+                      </div>
+                      <div class="hw-field-group">
+                        <label>SUITE COURIER DISPATCH</label>
+                        <div class="hw-dispatch-row">
+                          <span class="gold">DHL EXPRESS // PRIVATE VAULT</span>
+                          <span>COMPLIMENTARY</span>
+                        </div>
+                      </div>
+                      <div class="hw-modal-summary">
+                        <div class="summary-row"><span>Hardware Unit</span><span id="hw-modal-price-val">$549</span></div>
+                        <div class="summary-row"><span>Bespoke Laser Etch</span><span class="gold">INCLUDED</span></div>
+                        <div class="summary-row total"><span>Reservation Deposit</span><span class="gold" id="hw-modal-total-val">$0 (VIP ARCHIVE)</span></div>
+                      </div>
+                      <button class="hw-modal-submit" id="hw-modal-submit">
+                        <span>CONFIRM ALLOCATION PASS</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="project-content">
             <div class="project-number">PROJECT / 03</div>
-            <h3 class="project-title">Project<br>Three</h3>
+            <h3 class="project-title">Cyber<br><span class="gold">Studio</span></h3>
             <div class="project-meta">
-              <div class="meta-item"><small>Role</small><span>[Your role]</span></div>
-              <div class="meta-item"><small>Category</small><span>[Category]</span></div>
-              <div class="meta-item"><small>Year</small><span>[2026]</span></div>
+              <div class="meta-item"><small>Role</small><span>Lead Industrial Experience Architect</span></div>
+              <div class="meta-item"><small>Category</small><span>Luxury Hardware &amp; Acoustic Engineering</span></div>
+              <div class="meta-item"><small>Year</small><span>2026</span></div>
             </div>
-            <div class="impact">[Impact statement.]</div>
+            <div class="impact">High-fidelity cybernetic showroom showcasing flagship industrial acoustic hardware with 360° inertial turntable, interactive X-Ray mechanical teardown, and real-time Web Audio frequency synthesis.</div>
           </div>
           <div class="project-progress"><span>03 / 03</span><i></i></div>
         </div>
@@ -7197,6 +8628,1071 @@
 
       updateSneakerView();
       updateCartUI();
+    })();
+
+
+/* ============================================================
+   PROJECT 03: CYBER STUDIO LUXURY HARDWARE ENGINE (S-TIER)
+   ============================================================ */
+    (function initHardwareApp() {
+      const hardwareApp = document.getElementById("hardware-app");
+      if (!hardwareApp) return;
+
+      // 15 Iconic Photorealistic Flagships across 3 Luxury Categories
+      const HARDWARE_CATALOG = {
+        headphones: [
+          {
+            id: "apple-airpods-max",
+            name: "AirPods Max",
+            brand: "APPLE",
+            brandTag: "APPLE // CUPERTINO",
+            price: 549,
+            weight: "384.8 g",
+            freq: "20 Hz – 20 kHz",
+            driver: "40mm Apple Dynamic Transducer",
+            latency: "12 ms / Dual H1 SIP",
+            conn: "Bluetooth 5.0, AAC, Lightning",
+            battery: "20h with ANC & Spatial Audio",
+            image: "assets/hardware/apple_airpods_max.png",
+            chassisSpec: "Anodized Aluminum & Steel Canopy",
+            driverSpec: "40mm Beryllium-Plated Motor",
+            pcbSpec: "Dual Apple H1 Acoustic DSP SIP",
+            baseSpec: "Acoustically Tuned Memory Foam",
+            frCurve: [1.2, 2.5, 3.1, 2.8, 1.9, 0.4, 0.1, -0.2, 1.4, 3.6, 2.2, -1.0, -2.5, -4.0]
+          },
+          {
+            id: "bo-h95",
+            name: "Beoplay H95",
+            brand: "BANG & OLUFSEN",
+            brandTag: "BANG & OLUFSEN // STRUER",
+            price: 999,
+            weight: "323 g",
+            freq: "12 Hz – 22 kHz",
+            driver: "40mm Custom Titanium Drivers",
+            latency: "16 ms / aptX Adaptive",
+            conn: "BT 5.1, aptX Adaptive, 3.5mm, USB-C",
+            battery: "38h with ANC Active (50h std)",
+            image: "assets/hardware/bo_h95.png",
+            chassisSpec: "Brushed Aluminum & Lambskin Headband",
+            driverSpec: "40mm Electro-Dynamic Titanium Core",
+            pcbSpec: "B&O Custom Active Noise Cancelling DSP",
+            baseSpec: "Magnetic Lambskin Memory Foam Matrix",
+            frCurve: [2.0, 3.4, 3.8, 3.0, 2.0, 0.8, 0.2, 0.1, 1.8, 4.0, 3.0, 0.2, -1.8, -3.2]
+          },
+          {
+            id: "master-dynamic-mw75",
+            name: "MW75 ANC Flagship",
+            brand: "MASTER & DYNAMIC",
+            brandTag: "MASTER & DYNAMIC // NEW YORK",
+            price: 599,
+            weight: "338 g",
+            freq: "20 Hz – 20 kHz",
+            driver: "40mm Beryllium Transducers",
+            latency: "18 ms / 24-bit USB DAC",
+            conn: "BT 5.1, aptX Adaptive, USB-C 24b/96k",
+            battery: "32h Playtime (28h with ANC)",
+            image: "assets/hardware/master_dynamic_mw75.png",
+            chassisSpec: "Lightweight Aluminum & Tempered Glass",
+            driverSpec: "40mm Angled Beryllium Transducers",
+            pcbSpec: "Quad-Beamforming Noise Reduction DSP",
+            baseSpec: "Magnetic Replaceable Lambskin Cushions",
+            frCurve: [1.8, 2.8, 3.2, 2.4, 1.5, 0.6, 0.0, -0.4, 1.2, 3.2, 1.8, -1.4, -2.8, -4.5]
+          },
+          {
+            id: "sennheiser-hd820",
+            name: "HD 820 Reference",
+            brand: "SENNHEISER",
+            brandTag: "SENNHEISER // WEDEMARK",
+            price: 1999,
+            weight: "360 g",
+            freq: "6 Hz – 48 kHz",
+            driver: "56mm Ring Radiator Transducer",
+            latency: "0 ms / Pure Analog Signal",
+            conn: "6.35mm, 4.4mm Pentaconn, XLR-4",
+            battery: "Passive High-Current Audiophile",
+            image: "assets/hardware/sennheiser_hd820.png",
+            chassisSpec: "Concave Gorilla Glass Wave Reflectors",
+            driverSpec: "56mm Ring Radiator with Inverted Coil",
+            pcbSpec: "Silver-Plated OFC Symmetrical Wiring",
+            baseSpec: "Handcrafted Microfiber Synthetic Leather",
+            frCurve: [0.8, 1.5, 2.0, 1.8, 1.2, 0.5, 0.0, -0.2, 0.9, 2.4, 1.4, -0.5, -1.6, -2.8]
+          },
+          {
+            id: "focal-bathys",
+            name: "Bathys Hi-Fi Wireless",
+            brand: "FOCAL",
+            brandTag: "FOCAL // SAINT-ÉTIENNE",
+            price: 799,
+            weight: "350 g",
+            freq: "15 Hz – 22 kHz",
+            driver: "40mm 'M'-Shape Al/Mg Dome",
+            latency: "15 ms / 24-bit 192kHz DAC",
+            conn: "BT 5.1 Multipoint, USB-DAC, 3.5mm",
+            battery: "30h Bluetooth / 42h USB-DAC Mode",
+            image: "assets/hardware/focal_bathys.png",
+            chassisSpec: "Magnesium Yokes & Backlit Flame Logo",
+            driverSpec: "Patented 'M'-Shaped Aluminum-Magnesium",
+            pcbSpec: "Integrated 24-bit/192kHz Audiophile DAC",
+            baseSpec: "French Ergonomic Memory Foam Matrix",
+            frCurve: [1.6, 2.9, 3.5, 2.7, 1.8, 0.7, 0.1, 0.0, 1.5, 3.8, 2.6, -0.2, -2.0, -3.8]
+          }
+        ],
+        mice: [
+          {
+            id: "logitech-mx-master-3s",
+            name: "MX Master 3S",
+            brand: "LOGITECH",
+            brandTag: "LOGITECH // LAUSANNE",
+            price: 99,
+            weight: "141 g",
+            freq: "8,000 DPI Darkfield",
+            driver: "MagSpeed Electromagnetic Wheel",
+            latency: "8 ms / Logi Bolt 2.4G",
+            conn: "Logi Bolt 2.4GHz, Bluetooth LE, USB-C",
+            battery: "70 Days on Full Charge",
+            image: "assets/hardware/logitech_mx_master_3s.png",
+            chassisSpec: "Ergonomic Thumb-Rest Sculpted Shell",
+            driverSpec: "MagSpeed Machined Steel Magnetic Core",
+            pcbSpec: "Darkfield Glass-Tracking Optical Engine",
+            baseSpec: "Quiet-Click Acoustic Dampened Matrix",
+            frCurve: [0.5, 0.9, 1.2, 1.0, 0.7, 0.3, 0.0, 0.2, 0.6, 1.0, 0.8, 0.4, 0.1, -0.2]
+          },
+          {
+            id: "razer-viper-mini-se",
+            name: "Viper Mini Signature",
+            brand: "RAZER",
+            brandTag: "RAZER // IRVINE",
+            price: 280,
+            weight: "49 g",
+            freq: "30,000 DPI / 750 IPS",
+            driver: "Gen-3 Optical Switches (90M)",
+            latency: "0.125 ms / True 8,000 Hz",
+            conn: "HyperSpeed 8,000Hz Wireless, USB-C",
+            battery: "60h at 1,000Hz (12h at 8,000Hz)",
+            image: "assets/hardware/razer_viper_mini_se.png",
+            chassisSpec: "CNC Die-Cast Magnesium Alloy Exoskeleton",
+            driverSpec: "Focus Pro 30K Optical Sensor Array",
+            pcbSpec: "Ultra-Low-Latency 8K HyperSpeed PCB",
+            baseSpec: "Corning Gorilla Glass 3 / Virgin PTFE",
+            frCurve: [0.2, 0.5, 0.8, 0.6, 0.4, 0.2, 0.0, 0.1, 0.4, 0.8, 0.5, 0.2, 0.0, -0.1]
+          },
+          {
+            id: "finalmouse-ultralightx",
+            name: "UltralightX Carbon",
+            brand: "FINALMOUSE",
+            brandTag: "FINALMOUSE // LOS ANGELES",
+            price: 189,
+            weight: "31 g",
+            freq: "26,000 DPI / 650 IPS",
+            driver: "Gold-Plated Dustproof Mechanical",
+            latency: "0.125 ms / 8,000 Hz Wireless",
+            conn: "2.4GHz RF Ultra-Speed, Paracord",
+            battery: "2 Months Continuous Playtime",
+            image: "assets/hardware/finalmouse_ultralightx.png",
+            chassisSpec: "Honeycomb Carbon Fiber Composite Unibody",
+            driverSpec: "PixArt PAW3395 Tuned Finalsensor Core",
+            pcbSpec: "Ultra-Thin Carbon-Laminate Multi-Layer PCB",
+            baseSpec: "Zero-Flex Carbon Web Structural Lattice",
+            frCurve: [0.1, 0.3, 0.6, 0.4, 0.2, 0.1, 0.0, 0.1, 0.3, 0.6, 0.4, 0.1, -0.1, -0.2]
+          },
+          {
+            id: "angry-miao-am-hatsu",
+            name: "AM HATSU Split",
+            brand: "ANGRY MIAO",
+            brandTag: "ANGRY MIAO // ZHUHAI",
+            price: 1600,
+            weight: "185 g per station",
+            freq: "Dual-Channel 2.4G Split",
+            driver: "5-Axis Sculpted Cluster Array",
+            latency: "1.0 ms Ultra-Low Latency",
+            conn: "Bluetooth 5.0, 2.4G Private, USB-C",
+            battery: "Dual Rechargeable Lithium (60h)",
+            image: "assets/hardware/angry_miao_am_hatsu.png",
+            chassisSpec: "5-Axis CNC Aviation Aluminum 6063",
+            driverSpec: "Dual-Station Split Ergonomic Kinetic Form",
+            pcbSpec: "Embedded Dual LED Matrix Telemetry DSP",
+            baseSpec: "Vibration-Damping Pure Silicone Footing",
+            frCurve: [0.8, 1.4, 1.8, 1.5, 1.1, 0.6, 0.2, 0.4, 0.9, 1.5, 1.2, 0.7, 0.3, 0.0]
+          },
+          {
+            id: "steelseries-aerox-9",
+            name: "Aerox 9 Wireless",
+            brand: "STEELSERIES",
+            brandTag: "STEELSERIES // COPENHAGEN",
+            price: 149,
+            weight: "89 g",
+            freq: "18,000 CPI / 400 IPS",
+            driver: "18 Programmable Tactical Buttons",
+            latency: "1.0 ms / Quantum 2.0 2.4G",
+            conn: "2.4GHz Quantum 2.0, Bluetooth 5.0",
+            battery: "180h Wireless (Fast Charge 15m=40h)",
+            image: "assets/hardware/steelseries_aerox_9.png",
+            chassisSpec: "Perforated Honeycomb Shell with IP54",
+            driverSpec: "TrueMove Air 18K Optical Sensor",
+            pcbSpec: "Golden Micro IP54 Dust & Water Switches",
+            baseSpec: "3-Zone Dynamic PrismSync RGB Lightpipes",
+            frCurve: [0.4, 0.7, 1.0, 0.8, 0.5, 0.2, 0.0, 0.2, 0.5, 0.9, 0.7, 0.3, 0.1, -0.1]
+          }
+        ],
+        speakers: [
+          {
+            id: "devialet-phantom-i",
+            name: "Phantom I 108dB",
+            brand: "DEVIALET",
+            brandTag: "DEVIALET // PARIS",
+            price: 3800,
+            weight: "11.4 kg",
+            freq: "14 Hz – 27 kHz",
+            driver: "Titanium Tweeter + 2x Woofers",
+            latency: "0 ms Optical / AirPlay 2",
+            conn: "AirPlay 2, Spotify Connect, Roon, Optical",
+            battery: "1,100 Watts RMS / 108 dB SPL",
+            image: "assets/hardware/devialet_phantom_i.png",
+            chassisSpec: "22-Carat Gold Leaf Side Plating & Composite",
+            driverSpec: "Heart Bass Implosion (HBI®) Push-Push Woofers",
+            pcbSpec: "Analog Digital Hybrid (ADH®) Processor Core",
+            baseSpec: "Ultra-Rigid Sealed Acoustic Infrabass Chamber",
+            frCurve: [4.5, 5.8, 6.2, 5.0, 3.8, 2.1, 1.2, 0.8, 2.2, 4.8, 3.8, 1.5, -0.5, -2.0]
+          },
+          {
+            id: "bo-beosound-a9",
+            name: "Beosound A9 Gen 5",
+            brand: "BANG & OLUFSEN",
+            brandTag: "BANG & OLUFSEN // STRUER",
+            price: 3799,
+            weight: "14.7 kg",
+            freq: "33 Hz – 23 kHz",
+            driver: "7 Driver Array (8" Sub, 2x Mid, 2x Tweeter)",
+            latency: "< 5 ms / Beolink Multiroom",
+            conn: "AirPlay 2, Chromecast, Beolink, Wi-Fi 6",
+            battery: "1,500 Watts Digital Class D System",
+            image: "assets/hardware/bo_beosound_a9.png",
+            chassisSpec: "Spun Aluminum Outer Ring & Solid Oak Legs",
+            driverSpec: "400W 8-Inch High-Excursion Subwoofer Core",
+            pcbSpec: "Mozart Modular Platform with Room Compensation",
+            baseSpec: "Custom Kvadrat Wool Acoustic Multi-Layer Cover",
+            frCurve: [3.8, 4.9, 5.4, 4.2, 3.1, 1.8, 1.0, 0.6, 1.9, 4.2, 3.2, 1.2, -0.8, -2.4]
+          },
+          {
+            id: "bowers-wilkins-zeppelin",
+            name: "Zeppelin Wireless",
+            brand: "BOWERS & WILKINS",
+            brandTag: "BOWERS & WILKINS // WORTHING",
+            price: 799,
+            weight: "6.5 kg",
+            freq: "35 Hz – 24 kHz",
+            driver: "2x 25mm Decoupled Tweeters + 150mm Sub",
+            latency: "16 ms / aptX Adaptive",
+            conn: "AirPlay 2, Spotify Connect, aptX, BT 5.0",
+            battery: "240 Watts Total Tri-Amplified Power",
+            image: "assets/hardware/bowers_wilkins_zeppelin.png",
+            chassisSpec: "Aerodynamic Elliptical Enclosure with Pedestal",
+            driverSpec: "150mm Central Subwoofer & Dual FST Midranges",
+            pcbSpec: "24-bit High-Resolution Digital Signal Processor",
+            baseSpec: "Internal FEA-Optimized Ribbed Bracing Matrix",
+            frCurve: [3.2, 4.2, 4.8, 3.6, 2.5, 1.4, 0.8, 0.4, 1.6, 3.8, 2.8, 0.9, -1.0, -2.8]
+          },
+          {
+            id: "transparent-speaker",
+            name: "Transparent Speaker",
+            brand: "TRANSPARENT",
+            brandTag: "TRANSPARENT // STOCKHOLM",
+            price: 550,
+            weight: "3.3 kg",
+            freq: "60 Hz – 20 kHz",
+            driver: "2x 3" Full Range L/R Drivers",
+            latency: "15 ms / True Wireless Stereo",
+            conn: "Bluetooth 5.0, 3.5mm Aux, Modular Wi-Fi",
+            battery: "2x 15W Class D Digital Audio Processing",
+            image: "assets/hardware/transparent_speaker.png",
+            chassisSpec: "Single Aluminum Frame with Tempered Glass",
+            driverSpec: "Dual 3-Inch High-Efficiency Neodymium Cones",
+            pcbSpec: "Upgradable Modular Electronics Bay Architecture",
+            baseSpec: "Silicone Vibration-Absorbing Isolation Feet",
+            frCurve: [1.8, 2.5, 3.0, 2.2, 1.6, 0.9, 0.3, 0.1, 1.2, 2.8, 2.0, 0.5, -1.2, -3.0]
+          },
+          {
+            id: "harman-kardon-soundsticks",
+            name: "SoundSticks 4",
+            brand: "HARMAN KARDON",
+            brandTag: "HARMAN KARDON // STAMFORD",
+            price: 299,
+            weight: "4.43 kg",
+            freq: "40 Hz – 20 kHz",
+            driver: "8x 1.4" Transducers + 1x 5.25" Sub",
+            latency: "18 ms / Bluetooth 4.2 A2DP",
+            conn: "Bluetooth 4.2, 3.5mm Auxiliary Port",
+            battery: "140 Watts RMS (100W Sub + 2x 20W Sats)",
+            image: "assets/hardware/harman_kardon_soundsticks.png",
+            chassisSpec: "Transparent Rippled Dome with Ambient White LED",
+            driverSpec: "5.25-Inch Down-Firing Subwoofer Chamber",
+            pcbSpec: "Harman Discrete Dynamic Bass Equalization DSP",
+            baseSpec: "Dual Quad-Transducer Satellite Acoustic Towers",
+            frCurve: [3.5, 4.6, 5.0, 3.9, 2.8, 1.5, 0.7, 0.3, 1.7, 3.9, 2.9, 1.0, -1.1, -2.9]
+          }
+        ]
+      };
+
+      // State Management
+      let activeCategory = "headphones";
+      let activeModelIdx = 0;
+      let isXRayMode = false;
+      let xrayExpansion = 0.65;
+      let currentAngle = 0;
+      let targetAngle = 0;
+      let velocity = 0;
+      let isDragging = false;
+      let startX = 0;
+      let lastX = 0;
+      let isAutoRotating = false;
+      let autoRotateId = null;
+
+      // Web Audio State
+      let audioCtx = null;
+      let analyser = null;
+      let activeSoundProfile = "spatial";
+      let isPlayingAudio = false;
+      let synthInterval = null;
+      let activeOscillators = [];
+      let activeGains = [];
+      let visualizerAnimId = null;
+      let idlePhase = 0;
+
+      // DOM Elements
+      const catBtns = hardwareApp.querySelectorAll(".hw-cat-btn");
+      const modeBtnStudio = document.getElementById("hw-mode-studio");
+      const modeBtnXray = document.getElementById("hw-mode-xray");
+      const rosterList = document.getElementById("hw-roster-list");
+      const modelCountEl = document.getElementById("hw-model-count");
+
+      // Stage Elements
+      const hwViewport = document.getElementById("hw-viewport");
+      const hwRig = document.getElementById("hw-rig");
+      const hwContactShadow = document.getElementById("hw-contact-shadow");
+      const hwMainImg = document.getElementById("hw-main-img");
+      const hwXrayImgChassis = document.getElementById("hw-xray-img-chassis");
+      const hudAngle = document.getElementById("hw-hud-angle");
+      const btnRotLeft = document.getElementById("hw-btn-rot-left");
+      const btnRotReset = document.getElementById("hw-btn-rot-reset");
+      const btnRotRight = document.getElementById("hw-btn-rot-right");
+      const btnAutoRotate = document.getElementById("hw-btn-autorotate");
+
+      // X-Ray Layers & Slider
+      const xrayChassis = document.getElementById("xray-chassis");
+      const xrayDriver = document.getElementById("xray-driver");
+      const xrayCircuit = document.getElementById("xray-circuit");
+      const xrayBase = document.getElementById("xray-base");
+      const xraySlider = document.getElementById("hw-xray-slider");
+      const xraySliderVal = document.getElementById("hw-xray-slider-val");
+
+      // Callout Labels
+      const calloutChassisSpec = document.getElementById("callout-chassis-spec");
+      const calloutDriverSpec = document.getElementById("callout-driver-spec");
+      const calloutPcbSpec = document.getElementById("callout-pcb-spec");
+      const calloutBaseSpec = document.getElementById("callout-base-spec");
+
+      // Audio Chamber Elements
+      const profileBtns = hardwareApp.querySelectorAll(".hw-profile-btn");
+      const audioPlayBtn = document.getElementById("hw-audio-play-btn");
+      const visualizerCanvas = document.getElementById("hw-visualizer-canvas");
+      const frCanvas = document.getElementById("hw-fr-canvas");
+
+      // Telemetry HUD Elements
+      const teleSerial = document.getElementById("hw-tele-serial");
+      const teleModel = document.getElementById("hw-tele-model");
+      const teleBrand = document.getElementById("hw-tele-brand");
+      const telePrice = document.getElementById("hw-tele-price");
+      const specWeight = document.getElementById("hw-spec-weight");
+      const specFreq = document.getElementById("hw-spec-freq");
+      const specDriver = document.getElementById("hw-spec-driver");
+      const specLatency = document.getElementById("hw-spec-latency");
+      const specConn = document.getElementById("hw-spec-conn");
+      const specBattery = document.getElementById("hw-spec-battery");
+      const reserveBtn = document.getElementById("hw-reserve-btn");
+
+      // Reservation Modal
+      const modalBackdrop = document.getElementById("hw-modal-backdrop");
+      const modalClose = document.getElementById("hw-modal-close");
+      const modalProductName = document.getElementById("hw-modal-product-name");
+      const modalImg = document.getElementById("hw-modal-img");
+      const modalSerialCode = document.getElementById("hw-modal-serial-code");
+      const modalPriceVal = document.getElementById("hw-modal-price-val");
+      const modalSubmit = document.getElementById("hw-modal-submit");
+      const engraveInput = document.getElementById("hw-engrave-input");
+
+      // -------------------------------------------------------------
+      // Synthesizer & Audio Engine
+      // -------------------------------------------------------------
+      function getAudioContext() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            audioCtx = new AudioContextClass();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 128;
+            analyser.smoothingTimeConstant = 0.82;
+          }
+        }
+        if (audioCtx && audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      function playUiTick(freq = 1200, dur = 0.04, gainVal = 0.06) {
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.5, ctx.currentTime + dur);
+          g.gain.setValueAtTime(gainVal, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + dur);
+        } catch(e) {}
+      }
+
+      function playReservationChime() {
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const notes = [622.25, 830.61, 1046.50]; // Eb5, Ab5, C6
+          notes.forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
+            g.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.08);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.6);
+            osc.connect(g);
+            g.connect(ctx.destination);
+            osc.start(ctx.currentTime + idx * 0.08);
+            osc.stop(ctx.currentTime + idx * 0.08 + 0.65);
+          });
+        } catch(e) {}
+      }
+
+      function stopAcousticSynthesis() {
+        if (synthInterval) {
+          clearInterval(synthInterval);
+          synthInterval = null;
+        }
+        activeOscillators.forEach(osc => {
+          try { osc.stop(); osc.disconnect(); } catch(e) {}
+        });
+        activeGains.forEach(g => {
+          try { g.disconnect(); } catch(e) {}
+        });
+        activeOscillators = [];
+        activeGains = [];
+        isPlayingAudio = false;
+        if (audioPlayBtn) {
+          audioPlayBtn.classList.remove("playing");
+          const icon = audioPlayBtn.querySelector(".hw-play-icon");
+          const text = audioPlayBtn.querySelector(".hw-play-text");
+          if (icon) icon.textContent = "▶";
+          if (text) text.textContent = "SYNTHESIZE TEST";
+        }
+      }
+
+      function startAcousticSynthesis(profile) {
+        stopAcousticSynthesis();
+        const ctx = getAudioContext();
+        if (!ctx || !analyser) return;
+
+        isPlayingAudio = true;
+        if (audioPlayBtn) {
+          audioPlayBtn.classList.add("playing");
+          const icon = audioPlayBtn.querySelector(".hw-play-icon");
+          const text = audioPlayBtn.querySelector(".hw-play-text");
+          if (icon) icon.textContent = "■";
+          if (text) text.textContent = "STOP CHAMBER";
+        }
+
+        const masterGain = ctx.createGain();
+        masterGain.gain.setValueAtTime(0.24, ctx.currentTime);
+        masterGain.connect(analyser);
+        analyser.connect(ctx.destination);
+        activeGains.push(masterGain);
+
+        if (profile === "spatial") {
+          // Spatial 8D: Swirling stereo panner with warm dual-tone harmonics
+          const panner = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+          const targetNode = panner ? panner : masterGain;
+          if (panner) {
+            panner.connect(masterGain);
+          }
+
+          const tones = [220, 329.63, 440, 554.37];
+          tones.forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = idx % 2 === 0 ? "sine" : "triangle";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            g.gain.setValueAtTime(0.08 / tones.length, ctx.currentTime);
+            osc.connect(g);
+            g.connect(targetNode);
+            osc.start();
+            activeOscillators.push(osc);
+            activeGains.push(g);
+          });
+
+          let panPhase = 0;
+          synthInterval = setInterval(() => {
+            panPhase += 0.05;
+            if (panner && panner.pan) {
+              panner.pan.setValueAtTime(Math.sin(panPhase), ctx.currentTime);
+            }
+          }, 30);
+
+        } else if (profile === "bass") {
+          // Bass Implosion: Low frequency sweep (85Hz down to 28Hz) with resonant pulse
+          const filter = ctx.createBiquadFilter();
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(140, ctx.currentTime);
+          filter.Q.setValueAtTime(6.0, ctx.currentTime);
+          filter.connect(masterGain);
+
+          function triggerBassDrop() {
+            if (!isPlayingAudio) return;
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(95, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(28, ctx.currentTime + 1.2);
+            g.gain.setValueAtTime(0.35, ctx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
+            osc.connect(g);
+            g.connect(filter);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 1.45);
+            activeOscillators.push(osc);
+          }
+
+          triggerBassDrop();
+          synthInterval = setInterval(triggerBassDrop, 1500);
+
+        } else if (profile === "studio") {
+          // Studio Flat: Calibrated multi-harmonic spectrum
+          const freqs = [100, 250, 600, 1200, 2800, 6000, 11000];
+          freqs.forEach(f => {
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(f, ctx.currentTime);
+            g.gain.setValueAtTime(0.025, ctx.currentTime);
+            osc.connect(g);
+            g.connect(masterGain);
+            osc.start();
+            activeOscillators.push(osc);
+            activeGains.push(g);
+          });
+
+        } else if (profile === "treble") {
+          // Crystal Treble: Sparkling arpeggios in air-band frequencies (2.4k - 15k)
+          const crystalNotes = [2400, 3600, 4800, 7200, 9600, 12000, 14400];
+          let step = 0;
+          function triggerChime() {
+            if (!isPlayingAudio) return;
+            const f = crystalNotes[step % crystalNotes.length];
+            step++;
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(f, ctx.currentTime);
+            g.gain.setValueAtTime(0.09, ctx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+            osc.connect(g);
+            g.connect(masterGain);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.4);
+            activeOscillators.push(osc);
+          }
+
+          triggerChime();
+          synthInterval = setInterval(triggerChime, 180);
+        }
+
+        // Auto-stop after 14 seconds to preserve audio context
+        setTimeout(() => {
+          if (isPlayingAudio) stopAcousticSynthesis();
+        }, 14000);
+      }
+
+      // -------------------------------------------------------------
+      // Real-Time Canvas Spectrum Visualizer
+      // -------------------------------------------------------------
+      function renderVisualizerLoop() {
+        visualizerAnimId = requestAnimationFrame(renderVisualizerLoop);
+        if (!visualizerCanvas) return;
+        const ctx = visualizerCanvas.getContext("2d");
+        if (!ctx) return;
+
+        const w = visualizerCanvas.width;
+        const h = visualizerCanvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const freqData = new Uint8Array(64);
+        let rms = 0;
+
+        if (isPlayingAudio && analyser) {
+          analyser.getByteFrequencyData(freqData);
+          let sum = 0;
+          for (let i = 0; i < freqData.length; i++) sum += freqData[i];
+          rms = sum / freqData.length;
+        } else {
+          // Subtle resting heartbeat idle wave
+          idlePhase += 0.03;
+          for (let i = 0; i < 64; i++) {
+            freqData[i] = Math.max(0, Math.sin(idlePhase + i * 0.18) * 16 + 8);
+          }
+          rms = 12;
+        }
+
+        // Draw frequency bars
+        const numBars = 48;
+        const barWidth = (w - (numBars - 1) * 2) / numBars;
+
+        for (let i = 0; i < numBars; i++) {
+          const val = freqData[Math.floor((i / numBars) * freqData.length)] || 0;
+          const barHeight = Math.max(2, (val / 255) * (h - 8));
+          const x = i * (barWidth + 2);
+          const y = h - barHeight;
+
+          // Gradient: Gold to Cyan
+          const grad = ctx.createLinearGradient(0, y, 0, h);
+          grad.addColorStop(0, "#38bdf8");
+          grad.addColorStop(0.5, "#dfb76c");
+          grad.addColorStop(1, "rgba(223, 183, 108, 0.15)");
+
+          ctx.fillStyle = grad;
+          ctx.fillRect(x, y, barWidth, barHeight);
+
+          // Peak cap
+          ctx.fillStyle = val > 140 ? "#fff" : "#dfb76c";
+          ctx.fillRect(x, Math.max(0, y - 2), barWidth, 1.5);
+        }
+
+        // Center Chamber Audio Halo
+        const haloRadius = Math.min(24, Math.max(4, (rms / 255) * 24));
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(w / 2, h / 2, haloRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(56, 189, 248, ${Math.min(0.8, rms / 150)})`;
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = "#38bdf8";
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // -------------------------------------------------------------
+      // Target Frequency Response Curve Chart
+      // -------------------------------------------------------------
+      function drawFrequencyResponseCurve(curvePoints) {
+        if (!frCanvas) return;
+        const ctx = frCanvas.getContext("2d");
+        if (!ctx) return;
+
+        const w = frCanvas.width;
+        const h = frCanvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        // Baseline zero grid
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, h * 0.5);
+        ctx.lineTo(w, h * 0.5);
+        ctx.stroke();
+
+        // Acoustic target curve
+        ctx.beginPath();
+        const pts = curvePoints || [1, 2, 3, 2, 1, 0, 0, 1, 3, 2, 0, -1, -2, -3];
+        const step = w / (pts.length - 1);
+
+        pts.forEach((pt, idx) => {
+          const x = idx * step;
+          const y = (h * 0.5) - (pt * 4.5);
+          if (idx === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+
+        ctx.strokeStyle = "#dfb76c";
+        ctx.lineWidth = 2;
+        ctx.shadowColor = "rgba(223, 183, 108, 0.5)";
+        ctx.shadowBlur = 6;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Area under curve
+        ctx.lineTo(w, h);
+        ctx.lineTo(0, h);
+        ctx.closePath();
+        const areaGrad = ctx.createLinearGradient(0, 0, 0, h);
+        areaGrad.addColorStop(0, "rgba(223, 183, 108, 0.2)");
+        areaGrad.addColorStop(1, "rgba(223, 183, 108, 0.0)");
+        ctx.fillStyle = areaGrad;
+        ctx.fill();
+      }
+
+      // -------------------------------------------------------------
+      // UI Update & View Synchronization
+      // -------------------------------------------------------------
+      function updateModelView() {
+        const list = HARDWARE_CATALOG[activeCategory];
+        if (!list || list.length === 0) return;
+        if (activeModelIdx >= list.length) activeModelIdx = 0;
+        const model = list[activeModelIdx];
+
+        // Update Roster Highlight
+        const cards = rosterList.querySelectorAll(".hw-model-card");
+        cards.forEach((c, idx) => {
+          c.classList.toggle("active", idx === activeModelIdx);
+        });
+
+        // Update Main Images
+        if (hwMainImg) {
+          hwMainImg.src = model.image;
+          hwMainImg.alt = model.name;
+        }
+        if (hwXrayImgChassis) {
+          hwXrayImgChassis.src = model.image;
+          hwXrayImgChassis.alt = model.name;
+        }
+
+        // Update Callouts Text
+        if (calloutChassisSpec) calloutChassisSpec.textContent = model.chassisSpec;
+        if (calloutDriverSpec) calloutDriverSpec.textContent = model.driverSpec;
+        if (calloutPcbSpec) calloutPcbSpec.textContent = model.pcbSpec;
+        if (calloutBaseSpec) calloutBaseSpec.textContent = model.baseSpec;
+
+        // Update Telemetry Header & Specs
+        if (teleSerial) teleSerial.textContent = `SERIES // ${activeCategory.toUpperCase()}-0${activeModelIdx + 1}`;
+        if (teleModel) teleModel.textContent = model.name;
+        if (teleBrand) teleBrand.textContent = model.brandTag;
+        if (telePrice) telePrice.textContent = `$${model.price.toLocaleString()}`;
+
+        if (specWeight) specWeight.textContent = model.weight;
+        if (specFreq) specFreq.textContent = model.freq;
+        if (specDriver) specDriver.textContent = model.driver;
+        if (specLatency) specLatency.textContent = model.latency;
+        if (specConn) specConn.textContent = model.conn;
+        if (specBattery) specBattery.textContent = model.battery;
+
+        // Update Target Curve
+        drawFrequencyResponseCurve(model.frCurve);
+
+        // Update Modal Preview
+        if (modalProductName) modalProductName.textContent = `${model.brand} ${model.name}`;
+        if (modalImg) modalImg.src = model.image;
+        if (modalPriceVal) modalPriceVal.textContent = `$${model.price.toLocaleString()}`;
+        if (modalSerialCode) {
+          const code = 1000 + Math.floor(Math.random() * 9000);
+          modalSerialCode.textContent = `SN: CS-${code}-${model.brand.substring(0, 4)}`;
+        }
+
+        applyTurntableTransform();
+      }
+
+      function populateRoster() {
+        if (!rosterList) return;
+        const list = HARDWARE_CATALOG[activeCategory] || [];
+        rosterList.innerHTML = "";
+
+        if (modelCountEl) modelCountEl.textContent = `${list.length} MODELS`;
+
+        list.forEach((model, idx) => {
+          const card = document.createElement("div");
+          card.className = `hw-model-card ${idx === activeModelIdx ? "active" : ""}`;
+          card.innerHTML = `
+            <div class="hw-card-thumb">
+              <img src="${model.image}" alt="${model.name}" draggable="false" />
+            </div>
+            <div class="hw-card-info">
+              <span class="hw-card-brand">${model.brand}</span>
+              <span class="hw-card-name">${model.name}</span>
+              <div class="hw-card-meta">
+                <span class="hw-card-price">$${model.price.toLocaleString()}</span>
+                <span class="hw-card-spec">${model.weight}</span>
+              </div>
+            </div>
+          `;
+
+          card.addEventListener("click", () => {
+            if (activeModelIdx !== idx) {
+              activeModelIdx = idx;
+              playUiTick(1100, 0.03, 0.05);
+              updateModelView();
+            }
+          });
+
+          rosterList.appendChild(card);
+        });
+      }
+
+      // -------------------------------------------------------------
+      // 360° Turntable Drag Physics & Inertia Engine
+      // -------------------------------------------------------------
+      function getCardinalPerspective(deg) {
+        const norm = ((Math.round(deg) % 360) + 360) % 360;
+        if (norm >= 338 || norm <= 22) return `${norm}° // FRONTAL PROFILE`;
+        if (norm >= 23 && norm <= 67) return `${norm}° // 3/4 OBLIQUE`;
+        if (norm >= 68 && norm <= 112) return `${norm}° // LATERAL 90°`;
+        if (norm >= 113 && norm <= 157) return `${norm}° // REAR 3/4`;
+        if (norm >= 158 && norm <= 202) return `${norm}° // DORSAL 180°`;
+        if (norm >= 203 && norm <= 247) return `${norm}° // MEDIAL 3/4`;
+        if (norm >= 248 && norm <= 292) return `${norm}° // OPPOSITE LATERAL`;
+        return `${norm}° // OBLIQUE REAR`;
+      }
+
+      function applyTurntableTransform() {
+        const norm = ((Math.round(currentAngle) % 360) + 360) % 360;
+        if (hudAngle) {
+          hudAngle.textContent = `TURNTABLE // ${getCardinalPerspective(norm)}`;
+        }
+
+        const rad = (currentAngle * Math.PI) / 180;
+        const pitch = Math.sin(rad) * 4;
+
+        if (hwRig) {
+          hwRig.style.transform = `rotateY(${currentAngle}deg) rotateX(${pitch}deg)`;
+        }
+
+        if (hwContactShadow) {
+          const scaleX = 1 - Math.abs(Math.sin(rad)) * 0.15;
+          const scaleY = 1 - Math.abs(Math.sin(rad)) * 0.25;
+          hwContactShadow.style.transform = `scale(${scaleX}, ${scaleY}) rotate(${currentAngle * 0.15}deg)`;
+        }
+
+        // Apply X-Ray Exploded offsets
+        if (isXRayMode) {
+          const exp = xrayExpansion;
+          if (xrayChassis) {
+            xrayChassis.style.transform = `translate3d(0, ${-25 * exp}px, ${50 * exp}px)`;
+          }
+          if (xrayDriver) {
+            xrayDriver.style.transform = `translate3d(0, ${-5 * exp}px, ${15 * exp}px)`;
+          }
+          if (xrayCircuit) {
+            xrayCircuit.style.transform = `translate3d(0, ${18 * exp}px, ${-20 * exp}px)`;
+          }
+          if (xrayBase) {
+            xrayBase.style.transform = `translate3d(0, ${38 * exp}px, ${-55 * exp}px)`;
+          }
+        }
+      }
+
+      function animateTurntableInertia() {
+        if (!isDragging) {
+          if (isAutoRotating) {
+            currentAngle += 0.35;
+            applyTurntableTransform();
+          } else if (Math.abs(velocity) > 0.05) {
+            currentAngle += velocity;
+            velocity *= 0.92;
+            applyTurntableTransform();
+          }
+        }
+        requestAnimationFrame(animateTurntableInertia);
+      }
+
+      if (hwViewport) {
+        hwViewport.addEventListener("pointerdown", e => {
+          isDragging = true;
+          isAutoRotating = false;
+          if (btnAutoRotate) btnAutoRotate.classList.remove("active");
+          startX = e.clientX;
+          lastX = e.clientX;
+          velocity = 0;
+          hwViewport.setPointerCapture(e.pointerId);
+        });
+
+        hwViewport.addEventListener("pointermove", e => {
+          if (!isDragging) return;
+          const delta = e.clientX - lastX;
+          lastX = e.clientX;
+          velocity = delta * 0.55;
+          currentAngle += velocity;
+          applyTurntableTransform();
+        });
+
+        hwViewport.addEventListener("pointerup", e => {
+          isDragging = false;
+          try { hwViewport.releasePointerCapture(e.pointerId); } catch(err) {}
+        });
+
+        hwViewport.addEventListener("pointercancel", e => {
+          isDragging = false;
+          try { hwViewport.releasePointerCapture(e.pointerId); } catch(err) {}
+        });
+      }
+
+      // Rotate Controls
+      if (btnRotLeft) {
+        btnRotLeft.addEventListener("click", () => {
+          currentAngle -= 15;
+          playUiTick(900, 0.02, 0.04);
+          applyTurntableTransform();
+        });
+      }
+      if (btnRotRight) {
+        btnRotRight.addEventListener("click", () => {
+          currentAngle += 15;
+          playUiTick(900, 0.02, 0.04);
+          applyTurntableTransform();
+        });
+      }
+      if (btnRotReset) {
+        btnRotReset.addEventListener("click", () => {
+          currentAngle = 0;
+          velocity = 0;
+          playUiTick(1200, 0.03, 0.05);
+          applyTurntableTransform();
+        });
+      }
+      if (btnAutoRotate) {
+        btnAutoRotate.addEventListener("click", () => {
+          isAutoRotating = !isAutoRotating;
+          btnAutoRotate.classList.toggle("active", isAutoRotating);
+          playUiTick(isAutoRotating ? 1400 : 700, 0.03, 0.05);
+        });
+      }
+
+      // -------------------------------------------------------------
+      // Mode & Category Switchers
+      // -------------------------------------------------------------
+      catBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const cat = btn.getAttribute("data-cat");
+          if (cat && cat !== activeCategory) {
+            activeCategory = cat;
+            activeModelIdx = 0;
+            catBtns.forEach(b => b.classList.toggle("active", b === btn));
+            playUiTick(800, 0.03, 0.07);
+            populateRoster();
+            updateModelView();
+          }
+        });
+      });
+
+      if (modeBtnStudio) {
+        modeBtnStudio.addEventListener("click", () => {
+          if (isXRayMode) {
+            isXRayMode = false;
+            hardwareApp.classList.remove("xray-active");
+            modeBtnStudio.classList.add("active");
+            modeBtnXray.classList.remove("active");
+            playUiTick(950, 0.03, 0.05);
+            applyTurntableTransform();
+          }
+        });
+      }
+
+      if (modeBtnXray) {
+        modeBtnXray.addEventListener("click", () => {
+          if (!isXRayMode) {
+            isXRayMode = true;
+            hardwareApp.classList.add("xray-active");
+            modeBtnXray.classList.add("active");
+            modeBtnStudio.classList.remove("active");
+            playUiTick(1300, 0.04, 0.06);
+            applyTurntableTransform();
+          }
+        });
+      }
+
+      if (xraySlider) {
+        xraySlider.addEventListener("input", e => {
+          xrayExpansion = parseFloat(e.target.value) / 100;
+          if (xraySliderVal) xraySliderVal.textContent = `${e.target.value}%`;
+          applyTurntableTransform();
+        });
+      }
+
+      // Sound Profile Toggles
+      profileBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const prof = btn.getAttribute("data-profile");
+          if (prof) {
+            activeSoundProfile = prof;
+            profileBtns.forEach(b => b.classList.toggle("active", b === btn));
+            playUiTick(1000, 0.02, 0.04);
+            if (isPlayingAudio) {
+              startAcousticSynthesis(activeSoundProfile);
+            }
+          }
+        });
+      });
+
+      if (audioPlayBtn) {
+        audioPlayBtn.addEventListener("click", () => {
+          if (isPlayingAudio) {
+            stopAcousticSynthesis();
+            playUiTick(600, 0.03, 0.05);
+          } else {
+            startAcousticSynthesis(activeSoundProfile);
+            playUiTick(1200, 0.04, 0.06);
+          }
+        });
+      }
+
+      // -------------------------------------------------------------
+      // Hardware Reservation Suite Modal
+      // -------------------------------------------------------------
+      if (reserveBtn) {
+        reserveBtn.addEventListener("click", () => {
+          if (modalBackdrop) {
+            modalBackdrop.classList.add("open");
+            playReservationChime();
+          }
+        });
+      }
+
+      if (modalClose) {
+        modalClose.addEventListener("click", () => {
+          if (modalBackdrop) {
+            modalBackdrop.classList.remove("open");
+            playUiTick(700, 0.02, 0.04);
+          }
+        });
+      }
+
+      if (modalBackdrop) {
+        modalBackdrop.addEventListener("click", e => {
+          if (e.target === modalBackdrop) {
+            modalBackdrop.classList.remove("open");
+            playUiTick(700, 0.02, 0.04);
+          }
+        });
+      }
+
+      if (modalSubmit) {
+        modalSubmit.addEventListener("click", () => {
+          playReservationChime();
+          const origText = modalSubmit.innerHTML;
+          modalSubmit.innerHTML = "<span>PASS ALLOCATED // RESERVED</span>";
+          modalSubmit.style.background = "#38bdf8";
+          modalSubmit.style.color = "#040b16";
+          setTimeout(() => {
+            if (modalBackdrop) modalBackdrop.classList.remove("open");
+            modalSubmit.innerHTML = origText;
+            modalSubmit.style.background = "";
+            modalSubmit.style.color = "";
+          }, 1600);
+        });
+      }
+
+      // Initialize
+      populateRoster();
+      updateModelView();
+      animateTurntableInertia();
+      renderVisualizerLoop();
     })();
 
     /* Resize */
