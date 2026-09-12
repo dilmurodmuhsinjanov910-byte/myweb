@@ -2278,6 +2278,94 @@
       pointer-events: auto;
     }
 
+    /* AI Video Teardown Layer */
+    .hw-video-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 25;
+      background: radial-gradient(circle at 50% 50%, rgba(12, 16, 24, 0.85) 0%, rgba(6, 7, 10, 0.95) 100%);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .hardware-app-container.xray-active .hw-video-layer {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .hw-xray-video {
+      width: 100%;
+      height: 100%;
+      max-width: 96%;
+      max-height: 94%;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95)) brightness(1.04);
+      transition: transform 0.3s ease;
+    }
+    .hw-video-play-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(8, 11, 16, 0.82);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 20px;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: #38bdf8;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      z-index: 28;
+    }
+    .hw-video-play-badge .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8;
+      animation: badgePulse 1.8s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1.25); }
+    }
+    .hw-video-toggle-btn {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      color: #38bdf8;
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .hw-video-toggle-btn:hover {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: #38bdf8;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+    .hw-video-toggle-btn.playing {
+      background: rgba(223, 183, 108, 0.22);
+      border-color: var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 12px rgba(223, 183, 108, 0.35);
+    }
+
     .hw-xray-layer {
       position: absolute;
       width: 260px;
@@ -3864,6 +3952,11 @@
                     <span class="hw-cat-title">HI-FI SPEAKERS</span>
                     <span class="hw-cat-sub">Acoustic</span>
                   </button>
+                  <button class="hw-cat-btn" data-cat="keyboards" role="tab">
+                    <span class="hw-cat-icon">⌨️</span>
+                    <span class="hw-cat-title">KEYBOARDS</span>
+                    <span class="hw-cat-sub">Tactile</span>
+                  </button>
                 </nav>
                 
                 <div class="hw-header-right">
@@ -3906,6 +3999,17 @@
                     <!-- Ground grid & dynamic contact shadow -->
                     <div class="hw-ground-grid"></div>
                     <div class="hw-contact-shadow" id="hw-contact-shadow"></div>
+
+                    <!-- AI High-Definition Video Teardown Layer -->
+                    <div class="hw-video-layer" id="hw-video-layer">
+                      <video id="hw-xray-video" class="hw-xray-video" playsinline muted loop preload="auto" poster="assets/video_thumbs/Apple_AirPods_Max_Exploded_View_20260912183607.jpg">
+                        <source src="assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4" type="video/mp4">
+                      </video>
+                      <div class="hw-video-play-badge" id="hw-video-badge">
+                        <span class="pulse-dot"></span>
+                        <span class="badge-text" id="hw-video-badge-text">AI 3D EXPLODED CINEMA</span>
+                      </div>
+                    </div>
 
                     <!-- 3D Product Rig -->
                     <div class="hw-rig" id="hw-rig">
@@ -3982,9 +4086,10 @@
 
                   <!-- X-Ray Separation Slider Bar -->
                   <div class="hw-xray-slider-bar" id="hw-xray-slider-bar">
-                    <span class="hw-slider-lbl">TEARDOWN EXPANSION</span>
-                    <input type="range" id="hw-xray-slider" min="15" max="100" value="65" />
-                    <span class="hw-slider-val" id="hw-xray-slider-val">65%</span>
+                    <span class="hw-slider-lbl">TEARDOWN TIMELINE</span>
+                    <button class="hw-video-toggle-btn" id="hw-btn-video-play" title="Play Full Cinematic Teardown Video">▶ PLAY CINEMA</button>
+                    <input type="range" id="hw-xray-slider" min="0" max="100" value="50" step="0.5" />
+                    <span class="hw-slider-val" id="hw-xray-slider-val">50%</span>
                   </div>
 
                   <!-- Bottom Audio Frequency Visualizer Chamber -->
@@ -8638,7 +8743,7 @@
       const hardwareApp = document.getElementById("hardware-app");
       if (!hardwareApp) return;
 
-      // 15 Iconic Photorealistic Flagships across 3 Luxury Categories
+      // 19 Iconic Photorealistic Flagships across 4 Luxury Categories with AI HD Teardown Videos
       const HARDWARE_CATALOG = {
         headphones: [
           {
@@ -8654,11 +8759,76 @@
             conn: "Bluetooth 5.0, AAC, Lightning",
             battery: "20h with ANC & Spatial Audio",
             image: "assets/hardware/apple_airpods_max.png",
-            chassisSpec: "Anodized Aluminum & Steel Canopy",
-            driverSpec: "40mm Beryllium-Plated Motor",
-            pcbSpec: "Dual Apple H1 Acoustic DSP SIP",
-            baseSpec: "Acoustically Tuned Memory Foam",
+            video: "assets/videos/Apple_AirPods_Max_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs/Apple_AirPods_Max_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Anodized Aluminum & Stainless Steel Canopy",
+            driverSpec: "40mm Dual Neodymium Ring Magnet Motor",
+            pcbSpec: "Dual Apple H1 10-Audio-Core Computational SIP",
+            baseSpec: "Acoustically Engineered Knit Mesh & Memory Foam",
             frCurve: [1.2, 2.5, 3.1, 2.8, 1.9, 0.4, 0.1, -0.2, 1.4, 3.6, 2.2, -1.0, -2.5, -4.0]
+          },
+          {
+            id: "sony-wh1000xm5",
+            name: "WH-1000XM5 ANC",
+            brand: "SONY",
+            brandTag: "SONY // TOKYO",
+            price: 399,
+            weight: "250 g",
+            freq: "4 Hz – 40 kHz",
+            driver: "30mm Carbon Fiber Composite Dome",
+            latency: "14 ms / LDAC 990kbps",
+            conn: "BT 5.2, LDAC, 3.5mm, USB-PD",
+            battery: "30h Playtime (Fast Charge 3m=3h)",
+            image: "assets/hardware/sony_wh1000xm5.png",
+            video: "assets/videos/Sony_WH-1000XM5_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs/Sony_WH-1000XM5_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Stepless Slider & Soft Fit Leather Chassis",
+            driverSpec: "30mm High-Rigidity Carbon Fiber Dome Transducer",
+            pcbSpec: "Integrated Processor V1 + HD QN1 Dual DSP",
+            baseSpec: "Acoustically Calibrated Synthetic Soft Leather",
+            frCurve: [2.2, 3.6, 4.0, 3.2, 2.1, 0.7, 0.1, -0.3, 1.2, 3.8, 2.5, -0.5, -2.1, -3.5]
+          },
+          {
+            id: "bose-qc-ultra",
+            name: "QuietComfort Ultra",
+            brand: "BOSE",
+            brandTag: "BOSE // FRAMINGHAM",
+            price: 429,
+            weight: "252 g",
+            freq: "10 Hz – 20 kHz",
+            driver: "35mm Custom Bio-Cellulose Driver",
+            latency: "15 ms / Snapdragon Sound",
+            conn: "BT 5.3, aptX Adaptive, 2.5/3.5mm",
+            battery: "24h (18h Immersive Audio)",
+            image: "assets/hardware/bose_qc_ultra.png",
+            video: "assets/videos/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs/Bose_QuietComfort_Ultra_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Cast Aluminum Arms & Lightweight Polymer Shell",
+            driverSpec: "35mm High-Resolution Bio-Cellulose Core",
+            pcbSpec: "Custom Spatial Immersion DSP & Multi-Mic ANC",
+            baseSpec: "Ultra-Plush Protein Leather Seal Matrix",
+            frCurve: [1.8, 3.0, 3.4, 2.6, 1.7, 0.5, 0.0, 0.1, 1.6, 3.9, 2.7, -0.1, -1.9, -3.6]
+          },
+          {
+            id: "sennheiser-hd660s2",
+            name: "HD 660S2 Audiophile",
+            brand: "SENNHEISER",
+            brandTag: "SENNHEISER // WEDEMARK",
+            price: 599,
+            weight: "260 g",
+            freq: "8 Hz – 41.5 kHz",
+            driver: "38mm High-Performance Transducer",
+            latency: "0 ms / Pure Analog Signal",
+            conn: "6.35mm Stereo, 4.4mm Pentaconn",
+            battery: "Passive Audiophile 300-Ohm System",
+            image: "assets/hardware/sennheiser_hd660s2.png",
+            video: "assets/videos/Sennheiser_HD_660S2_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs/Sennheiser_HD_660S2_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Open-Back Acoustic Steel Mesh Grille",
+            driverSpec: "38mm Transducer with Ultra-Light Aluminum Voice Coil",
+            pcbSpec: "Precision Symmetrical OFC Audiophile Wiring",
+            baseSpec: "Velour Ergonomic High-Breathability Ear Cushions",
+            frCurve: [0.9, 1.6, 2.1, 1.9, 1.4, 0.6, 0.0, -0.1, 1.0, 2.6, 1.6, -0.4, -1.5, -2.7]
           },
           {
             id: "bo-h95",
@@ -8673,168 +8843,207 @@
             conn: "BT 5.1, aptX Adaptive, 3.5mm, USB-C",
             battery: "38h with ANC Active (50h std)",
             image: "assets/hardware/bo_h95.png",
+            video: "assets/videos/Headphones_exploded_view_animation_20260912183607.mp4",
+            thumb: "assets/video_thumbs/Headphones_exploded_view_animation_20260912183607.jpg",
             chassisSpec: "Brushed Aluminum & Lambskin Headband",
             driverSpec: "40mm Electro-Dynamic Titanium Core",
             pcbSpec: "B&O Custom Active Noise Cancelling DSP",
             baseSpec: "Magnetic Lambskin Memory Foam Matrix",
             frCurve: [2.0, 3.4, 3.8, 3.0, 2.0, 0.8, 0.2, 0.1, 1.8, 4.0, 3.0, 0.2, -1.8, -3.2]
-          },
-          {
-            id: "master-dynamic-mw75",
-            name: "MW75 ANC Flagship",
-            brand: "MASTER & DYNAMIC",
-            brandTag: "MASTER & DYNAMIC // NEW YORK",
-            price: 599,
-            weight: "338 g",
-            freq: "20 Hz – 20 kHz",
-            driver: "40mm Beryllium Transducers",
-            latency: "18 ms / 24-bit USB DAC",
-            conn: "BT 5.1, aptX Adaptive, USB-C 24b/96k",
-            battery: "32h Playtime (28h with ANC)",
-            image: "assets/hardware/master_dynamic_mw75.png",
-            chassisSpec: "Lightweight Aluminum & Tempered Glass",
-            driverSpec: "40mm Angled Beryllium Transducers",
-            pcbSpec: "Quad-Beamforming Noise Reduction DSP",
-            baseSpec: "Magnetic Replaceable Lambskin Cushions",
-            frCurve: [1.8, 2.8, 3.2, 2.4, 1.5, 0.6, 0.0, -0.4, 1.2, 3.2, 1.8, -1.4, -2.8, -4.5]
-          },
-          {
-            id: "sennheiser-hd820",
-            name: "HD 820 Reference",
-            brand: "SENNHEISER",
-            brandTag: "SENNHEISER // WEDEMARK",
-            price: 1999,
-            weight: "360 g",
-            freq: "6 Hz – 48 kHz",
-            driver: "56mm Ring Radiator Transducer",
-            latency: "0 ms / Pure Analog Signal",
-            conn: "6.35mm, 4.4mm Pentaconn, XLR-4",
-            battery: "Passive High-Current Audiophile",
-            image: "assets/hardware/sennheiser_hd820.png",
-            chassisSpec: "Concave Gorilla Glass Wave Reflectors",
-            driverSpec: "56mm Ring Radiator with Inverted Coil",
-            pcbSpec: "Silver-Plated OFC Symmetrical Wiring",
-            baseSpec: "Handcrafted Microfiber Synthetic Leather",
-            frCurve: [0.8, 1.5, 2.0, 1.8, 1.2, 0.5, 0.0, -0.2, 0.9, 2.4, 1.4, -0.5, -1.6, -2.8]
-          },
-          {
-            id: "focal-bathys",
-            name: "Bathys Hi-Fi Wireless",
-            brand: "FOCAL",
-            brandTag: "FOCAL // SAINT-ÉTIENNE",
-            price: 799,
-            weight: "350 g",
-            freq: "15 Hz – 22 kHz",
-            driver: "40mm 'M'-Shape Al/Mg Dome",
-            latency: "15 ms / 24-bit 192kHz DAC",
-            conn: "BT 5.1 Multipoint, USB-DAC, 3.5mm",
-            battery: "30h Bluetooth / 42h USB-DAC Mode",
-            image: "assets/hardware/focal_bathys.png",
-            chassisSpec: "Magnesium Yokes & Backlit Flame Logo",
-            driverSpec: "Patented 'M'-Shaped Aluminum-Magnesium",
-            pcbSpec: "Integrated 24-bit/192kHz Audiophile DAC",
-            baseSpec: "French Ergonomic Memory Foam Matrix",
-            frCurve: [1.6, 2.9, 3.5, 2.7, 1.8, 0.7, 0.1, 0.0, 1.5, 3.8, 2.6, -0.2, -2.0, -3.8]
           }
         ],
         mice: [
           {
+            id: "logitech-gpro-x",
+            name: "G Pro X Superlight 2",
+            brand: "LOGITECH G",
+            brandTag: "LOGITECH // LAUSANNE",
+            price: 159,
+            weight: "60 g",
+            freq: "32,000 DPI / 500 IPS",
+            driver: "LIGHTFORCE Hybrid Optical-Mechanical",
+            latency: "0.25 ms / 4,000 Hz Polling",
+            conn: "LIGHTSPEED Wireless, USB-C",
+            battery: "95h Continuous Motion",
+            image: "assets/hardware/logitech_gpro_x.png",
+            video: "assets/videos/Logitech_G_Pro_X_Superlight_20260912183605.mp4",
+            thumb: "assets/video_thumbs/Logitech_G_Pro_X_Superlight_20260912183605.jpg",
+            chassisSpec: "Ultra-Thin Lightweight Composite Structural Shell",
+            driverSpec: "HERO 2 Next-Gen Sub-Micron Precision Sensor",
+            pcbSpec: "LIGHTFORCE Hybrid Optical-Mechanical Switch PCB",
+            baseSpec: "Zero-Additive Pure PTFE Low-Friction Glide Feet",
+            frCurve: [0.3, 0.6, 0.9, 0.7, 0.4, 0.2, 0.0, 0.1, 0.5, 0.9, 0.6, 0.3, 0.1, -0.1]
+          },
+          {
+            id: "razer-deathadder-v3",
+            name: "DeathAdder V3 Pro",
+            brand: "RAZER",
+            brandTag: "RAZER // IRVINE",
+            price: 169,
+            weight: "63 g",
+            freq: "30,000 DPI / 750 IPS",
+            driver: "Focus Pro 30K Optical Sensor",
+            latency: "0.125 ms / 8,000 Hz HyperPolling",
+            conn: "HyperSpeed Wireless 2.4G, Type-C",
+            battery: "90h Battery Life",
+            image: "assets/hardware/razer_deathadder_v3.png",
+            video: "assets/videos/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.mp4",
+            thumb: "assets/video_thumbs/Razer_DeathAdder_V3_Pro_Exploded_20260912183606.jpg",
+            chassisSpec: "Ergonomic Sculpted Palm Shell with Zero-Creak Chassis",
+            driverSpec: "Focus Pro 30K Optical Sensor Array",
+            pcbSpec: "Gen-3 Optical Mouse Switches (90M Clicks)",
+            baseSpec: "100% Virgin PTFE Radius-Edge Glide Skates",
+            frCurve: [0.2, 0.5, 0.8, 0.6, 0.4, 0.2, 0.0, 0.1, 0.4, 0.8, 0.5, 0.2, 0.0, -0.1]
+          },
+          {
+            id: "apple-magic-mouse-2",
+            name: "Magic Mouse Multi-Touch",
+            brand: "APPLE",
+            brandTag: "APPLE // CUPERTINO",
+            price: 99,
+            weight: "99 g",
+            freq: "Multi-Touch Gesture Surface",
+            driver: "Laser-Etched Capacitive Sensor",
+            latency: "8 ms / macOS Native Handoff",
+            conn: "Bluetooth LE, USB-C Charging",
+            battery: "1 Month+ on Single Charge",
+            image: "assets/hardware/apple_magic_mouse_2.png",
+            video: "assets/videos/Apple_Magic_Mouse_2_Exploded_20260912183605.mp4",
+            thumb: "assets/video_thumbs/Apple_Magic_Mouse_2_Exploded_20260912183605.jpg",
+            chassisSpec: "Seamless Continuous Acrylic & Aluminum Unibody",
+            driverSpec: "Full-Surface Capacitive Multi-Touch Subsystem",
+            pcbSpec: "Apple Custom Low-Power Gesture Decoding Silicon",
+            baseSpec: "Dual Low-Resistance Acoustic Runner Skids",
+            frCurve: [0.1, 0.3, 0.5, 0.4, 0.2, 0.1, 0.0, 0.1, 0.3, 0.5, 0.4, 0.2, 0.0, -0.1]
+          },
+          {
+            id: "zowie-ec2-cw",
+            name: "EC2-CW Esports Wireless",
+            brand: "ZOWIE BENQ",
+            brandTag: "ZOWIE // TAIPEI",
+            price: 149,
+            weight: "77 g",
+            freq: "3,200 DPI Esports Tuned",
+            driver: "3370 Optical Sensor with Enhanced Rx",
+            latency: "1.0 ms / Enhanced Base Station",
+            conn: "2.4G Standalone Wireless Receiver",
+            battery: "70h Continuous Competitive Play",
+            image: "assets/hardware/zowie_ec2_cw.png",
+            video: "assets/videos/ZOWIE_EC2-CW_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs/ZOWIE_EC2-CW_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Iconic Esports Asymmetrical Ergonomic Contouring",
+            driverSpec: "Tuned PMW 3370 Optical Sensor with Anti-Jitter",
+            pcbSpec: "Enhanced Wireless Antenna Isolation Controller",
+            baseSpec: "High-Density Rounded Black PTFE Esports Glides",
+            frCurve: [0.4, 0.7, 1.0, 0.8, 0.5, 0.2, 0.0, 0.2, 0.6, 1.0, 0.7, 0.3, 0.1, -0.1]
+          },
+          {
             id: "logitech-mx-master-3s",
-            name: "MX Master 3S",
+            name: "MX Master 3S Ergonomic",
             brand: "LOGITECH",
             brandTag: "LOGITECH // LAUSANNE",
             price: 99,
             weight: "141 g",
-            freq: "8,000 DPI Darkfield",
+            freq: "8,000 DPI Darkfield Glass",
             driver: "MagSpeed Electromagnetic Wheel",
             latency: "8 ms / Logi Bolt 2.4G",
             conn: "Logi Bolt 2.4GHz, Bluetooth LE, USB-C",
             battery: "70 Days on Full Charge",
             image: "assets/hardware/logitech_mx_master_3s.png",
-            chassisSpec: "Ergonomic Thumb-Rest Sculpted Shell",
-            driverSpec: "MagSpeed Machined Steel Magnetic Core",
-            pcbSpec: "Darkfield Glass-Tracking Optical Engine",
-            baseSpec: "Quiet-Click Acoustic Dampened Matrix",
+            video: "assets/videos/Mouse_disassembly_product_visual_20260912183605.mp4",
+            thumb: "assets/video_thumbs/Mouse_disassembly_product_visual_20260912183605.jpg",
+            chassisSpec: "Ergonomic Thumb-Rest Sculpted Comfort Shell",
+            driverSpec: "MagSpeed Machined Steel Magnetic Scroll Core",
+            pcbSpec: "Darkfield Glass-Tracking Optical Sensing Engine",
+            baseSpec: "Quiet-Click Acoustic Dampened Matrix Assembly",
             frCurve: [0.5, 0.9, 1.2, 1.0, 0.7, 0.3, 0.0, 0.2, 0.6, 1.0, 0.8, 0.4, 0.1, -0.2]
-          },
-          {
-            id: "razer-viper-mini-se",
-            name: "Viper Mini Signature",
-            brand: "RAZER",
-            brandTag: "RAZER // IRVINE",
-            price: 280,
-            weight: "49 g",
-            freq: "30,000 DPI / 750 IPS",
-            driver: "Gen-3 Optical Switches (90M)",
-            latency: "0.125 ms / True 8,000 Hz",
-            conn: "HyperSpeed 8,000Hz Wireless, USB-C",
-            battery: "60h at 1,000Hz (12h at 8,000Hz)",
-            image: "assets/hardware/razer_viper_mini_se.png",
-            chassisSpec: "CNC Die-Cast Magnesium Alloy Exoskeleton",
-            driverSpec: "Focus Pro 30K Optical Sensor Array",
-            pcbSpec: "Ultra-Low-Latency 8K HyperSpeed PCB",
-            baseSpec: "Corning Gorilla Glass 3 / Virgin PTFE",
-            frCurve: [0.2, 0.5, 0.8, 0.6, 0.4, 0.2, 0.0, 0.1, 0.4, 0.8, 0.5, 0.2, 0.0, -0.1]
-          },
-          {
-            id: "finalmouse-ultralightx",
-            name: "UltralightX Carbon",
-            brand: "FINALMOUSE",
-            brandTag: "FINALMOUSE // LOS ANGELES",
-            price: 189,
-            weight: "31 g",
-            freq: "26,000 DPI / 650 IPS",
-            driver: "Gold-Plated Dustproof Mechanical",
-            latency: "0.125 ms / 8,000 Hz Wireless",
-            conn: "2.4GHz RF Ultra-Speed, Paracord",
-            battery: "2 Months Continuous Playtime",
-            image: "assets/hardware/finalmouse_ultralightx.png",
-            chassisSpec: "Honeycomb Carbon Fiber Composite Unibody",
-            driverSpec: "PixArt PAW3395 Tuned Finalsensor Core",
-            pcbSpec: "Ultra-Thin Carbon-Laminate Multi-Layer PCB",
-            baseSpec: "Zero-Flex Carbon Web Structural Lattice",
-            frCurve: [0.1, 0.3, 0.6, 0.4, 0.2, 0.1, 0.0, 0.1, 0.3, 0.6, 0.4, 0.1, -0.1, -0.2]
-          },
-          {
-            id: "angry-miao-am-hatsu",
-            name: "AM HATSU Split",
-            brand: "ANGRY MIAO",
-            brandTag: "ANGRY MIAO // ZHUHAI",
-            price: 1600,
-            weight: "185 g per station",
-            freq: "Dual-Channel 2.4G Split",
-            driver: "5-Axis Sculpted Cluster Array",
-            latency: "1.0 ms Ultra-Low Latency",
-            conn: "Bluetooth 5.0, 2.4G Private, USB-C",
-            battery: "Dual Rechargeable Lithium (60h)",
-            image: "assets/hardware/angry_miao_am_hatsu.png",
-            chassisSpec: "5-Axis CNC Aviation Aluminum 6063",
-            driverSpec: "Dual-Station Split Ergonomic Kinetic Form",
-            pcbSpec: "Embedded Dual LED Matrix Telemetry DSP",
-            baseSpec: "Vibration-Damping Pure Silicone Footing",
-            frCurve: [0.8, 1.4, 1.8, 1.5, 1.1, 0.6, 0.2, 0.4, 0.9, 1.5, 1.2, 0.7, 0.3, 0.0]
-          },
-          {
-            id: "steelseries-aerox-9",
-            name: "Aerox 9 Wireless",
-            brand: "STEELSERIES",
-            brandTag: "STEELSERIES // COPENHAGEN",
-            price: 149,
-            weight: "89 g",
-            freq: "18,000 CPI / 400 IPS",
-            driver: "18 Programmable Tactical Buttons",
-            latency: "1.0 ms / Quantum 2.0 2.4G",
-            conn: "2.4GHz Quantum 2.0, Bluetooth 5.0",
-            battery: "180h Wireless (Fast Charge 15m=40h)",
-            image: "assets/hardware/steelseries_aerox_9.png",
-            chassisSpec: "Perforated Honeycomb Shell with IP54",
-            driverSpec: "TrueMove Air 18K Optical Sensor",
-            pcbSpec: "Golden Micro IP54 Dust & Water Switches",
-            baseSpec: "3-Zone Dynamic PrismSync RGB Lightpipes",
-            frCurve: [0.4, 0.7, 1.0, 0.8, 0.5, 0.2, 0.0, 0.2, 0.5, 0.9, 0.7, 0.3, 0.1, -0.1]
           }
         ],
         speakers: [
+          {
+            id: "sonos-era-300",
+            name: "Era 300 Spatial Audio",
+            brand: "SONOS",
+            brandTag: "SONOS // SANTA BARBARA",
+            price: 449,
+            weight: "4.47 kg",
+            freq: "30 Hz – 24 kHz",
+            driver: "6 Class-D Amplifiers + Up-Firing Compression",
+            latency: "0 ms Trueplay Room Tuning",
+            conn: "Wi-Fi 6, AirPlay 2, Bluetooth 5.0, USB-C",
+            battery: "Continuous Audiophile Line Power",
+            image: "assets/hardware/sonos_era_300.png",
+            video: "assets/videos/Sonos_Era_300_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs/Sonos_Era_300_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Hourglass Acoustic Waveguide Enclosure",
+            driverSpec: "6 Custom Drivers with Directional Horn Array",
+            pcbSpec: "Quad-Core A55 SoC with Real-Time Trueplay DSP",
+            baseSpec: "Acoustic Decoupled Anti-Vibration Footing",
+            frCurve: [3.8, 4.8, 5.2, 4.2, 3.1, 1.9, 1.1, 0.7, 2.0, 4.3, 3.3, 1.3, -0.7, -2.3]
+          },
+          {
+            id: "marshall-stanmore-3",
+            name: "Stanmore III Bluetooth",
+            brand: "MARSHALL",
+            brandTag: "MARSHALL // LONDON",
+            price: 379,
+            weight: "4.25 kg",
+            freq: "45 Hz – 20 kHz",
+            driver: "50W Woofer + Dual 15W Tweeters",
+            latency: "15 ms / BT 5.2 LE Audio",
+            conn: "BT 5.2, RCA, 3.5mm Aux",
+            battery: "80 Watts Total Class D Power",
+            image: "assets/hardware/marshall_stanmore_3.png",
+            video: "assets/videos/Marshall_Stanmore_III_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs/Marshall_Stanmore_III_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Textured Vinyl Wrap & Brass-Finish Analog Controls",
+            driverSpec: "50W Bass-Reflex Woofer & Outward-Angled Tweeters",
+            pcbSpec: "Dynamic Loudness DSP with Placement Compensation",
+            baseSpec: "Solid Wooden Cabinet with Ported Bass Duct",
+            frCurve: [4.2, 5.2, 5.6, 4.6, 3.4, 2.0, 1.0, 0.6, 1.8, 4.1, 3.1, 1.0, -1.0, -2.6]
+          },
+          {
+            id: "jbl-flip-6",
+            name: "Flip 6 Waterproof Portable",
+            brand: "JBL",
+            brandTag: "JBL // NORTHRIDGE",
+            price: 129,
+            weight: "550 g",
+            freq: "63 Hz – 20 kHz",
+            driver: "Racetrack Woofer + Separate Tweeter",
+            latency: "18 ms / PartyBoost 2.4G",
+            conn: "Bluetooth 5.1, USB-C Fast Charge",
+            battery: "12h Playtime with IP67 Waterproofing",
+            image: "assets/hardware/jbl_flip_6.png",
+            video: "assets/videos/JBL_Flip_6_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs/JBL_Flip_6_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Rugged Fabric Grille & Rubberized End Caps (IP67)",
+            driverSpec: "Racetrack Woofer + 16mm High-Frequency Tweeter",
+            pcbSpec: "Dual Passive Radiators with Dynamic Harman EQ",
+            baseSpec: "Silicone Anti-Roll Footing & Integrated Lanyard",
+            frCurve: [2.5, 3.4, 3.9, 3.1, 2.2, 1.2, 0.5, 0.2, 1.4, 3.2, 2.4, 0.8, -1.2, -3.0]
+          },
+          {
+            id: "bose-revolve-2",
+            name: "SoundLink Revolve+ II",
+            brand: "BOSE",
+            brandTag: "BOSE // FRAMINGHAM",
+            price: 329,
+            weight: "900 g",
+            freq: "50 Hz – 20 kHz",
+            driver: "360° Omnidirectional Acoustic Deflector",
+            latency: "16 ms / SimpleSync",
+            conn: "Bluetooth 4.2, 3.5mm, Micro-B",
+            battery: "17h Rechargeable Lithium-Ion",
+            image: "assets/hardware/bose_revolve_2.png",
+            video: "assets/videos/Bose_SoundLink_Revolve_II_Exploded_20260912183607.mp4",
+            thumb: "assets/video_thumbs/Bose_SoundLink_Revolve_II_Exploded_20260912183607.jpg",
+            chassisSpec: "Seamless Aluminum Cylindrical Body with Flexible Handle",
+            driverSpec: "Downward Full-Range Transducer + Omnidirectional Deflector",
+            pcbSpec: "Dual-Opposing Passive Radiator Bass Processing",
+            baseSpec: "IP55 Water-Resistant Rubberized Base Ring",
+            frCurve: [2.8, 3.8, 4.3, 3.5, 2.5, 1.5, 0.7, 0.4, 1.6, 3.6, 2.7, 0.9, -0.9, -2.7]
+          },
           {
             id: "devialet-phantom-i",
             name: "Phantom I 108dB",
@@ -8848,87 +9057,99 @@
             conn: "AirPlay 2, Spotify Connect, Roon, Optical",
             battery: "1,100 Watts RMS / 108 dB SPL",
             image: "assets/hardware/devialet_phantom_i.png",
-            chassisSpec: "22-Carat Gold Leaf Side Plating & Composite",
+            video: "assets/videos/Speaker_exploded-view_product_vi_20260912183606.mp4",
+            thumb: "assets/video_thumbs/Speaker_exploded-view_product_vi_20260912183606.jpg",
+            chassisSpec: "22-Carat Gold Leaf Side Plating & Composite Unibody",
             driverSpec: "Heart Bass Implosion (HBI®) Push-Push Woofers",
             pcbSpec: "Analog Digital Hybrid (ADH®) Processor Core",
             baseSpec: "Ultra-Rigid Sealed Acoustic Infrabass Chamber",
             frCurve: [4.5, 5.8, 6.2, 5.0, 3.8, 2.1, 1.2, 0.8, 2.2, 4.8, 3.8, 1.5, -0.5, -2.0]
+          }
+        ],
+        keyboards: [
+          {
+            id: "keychron-q1-pro",
+            name: "Q1 Pro QMK/VIA Wireless",
+            brand: "KEYCHRON",
+            brandTag: "KEYCHRON // KOWLOON",
+            price: 199,
+            weight: "1.73 kg",
+            freq: "1,000 Hz Polling Rate (Wired)",
+            driver: "Double-Gasket CNC Aluminum Chassis",
+            latency: "1.0 ms Wired / 8 ms BT 5.1",
+            conn: "Bluetooth 5.1, USB Type-C Detachable",
+            battery: "4000mAh Battery (300h RGB Off)",
+            image: "assets/hardware/keychron_q1_pro.png",
+            video: "assets/videos/Keychron_Q1_Pro_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs/Keychron_Q1_Pro_Exploded_View_20260912183607.jpg",
+            chassisSpec: "Full 6063 CNC Machined Aluminum Double-Gasket Body",
+            driverSpec: "Keychron K Pro Pre-Lubed Mechanical Switches",
+            pcbSpec: "South-Facing RGB Hot-Swappable ARM Cortex MCU",
+            baseSpec: "Acoustic Poron Foam & Sound Absorbing Silicone Pad",
+            frCurve: [1.0, 1.8, 2.4, 2.0, 1.5, 0.8, 0.2, 0.3, 1.1, 2.5, 1.8, 0.6, -0.4, -1.8]
           },
           {
-            id: "bo-beosound-a9",
-            name: "Beosound A9 Gen 5",
-            brand: "BANG & OLUFSEN",
-            brandTag: "BANG & OLUFSEN // STRUER",
-            price: 3799,
-            weight: "14.7 kg",
-            freq: "33 Hz – 23 kHz",
-            driver: "7 Driver Array (8-Inch Sub, 2x Mid, 2x Tweeter)",
-            latency: "< 5 ms / Beolink Multiroom",
-            conn: "AirPlay 2, Chromecast, Beolink, Wi-Fi 6",
-            battery: "1,500 Watts Digital Class D System",
-            image: "assets/hardware/bo_beosound_a9.png",
-            chassisSpec: "Spun Aluminum Outer Ring & Solid Oak Legs",
-            driverSpec: "400W 8-Inch High-Excursion Subwoofer Core",
-            pcbSpec: "Mozart Modular Platform with Room Compensation",
-            baseSpec: "Custom Kvadrat Wool Acoustic Multi-Layer Cover",
-            frCurve: [3.8, 4.9, 5.4, 4.2, 3.1, 1.8, 1.0, 0.6, 1.9, 4.2, 3.2, 1.2, -0.8, -2.4]
+            id: "logitech-g915-tkl",
+            name: "G915 TKL LIGHTSPEED",
+            brand: "LOGITECH G",
+            brandTag: "LOGITECH // LAUSANNE",
+            price: 229,
+            weight: "810 g",
+            freq: "GL Low-Profile Mechanical Switches",
+            driver: "Aircraft-Grade 5052 Aluminum Top Case",
+            latency: "1.0 ms Pro-Grade LIGHTSPEED",
+            conn: "LIGHTSPEED Wireless, Bluetooth, USB",
+            battery: "40h Continuous RGB Playtime",
+            image: "assets/hardware/logitech_g915_tkl.png",
+            video: "assets/videos/Logitech_G915_TKL_Exploded_View_20260912183606.mp4",
+            thumb: "assets/video_thumbs/Logitech_G915_TKL_Exploded_View_20260912183606.jpg",
+            chassisSpec: "Aircraft-Grade 5052 Aluminum-Magnesium Alloy Top Plate",
+            driverSpec: "GL Clicky/Linear High-Performance Low-Profile Switches",
+            pcbSpec: "Dual LIGHTSPEED + LIGHTSYNC RGB Embedded Logic",
+            baseSpec: "Steel-Reinforced Ultra-Slim Ergonomic Base Frame",
+            frCurve: [0.8, 1.5, 2.0, 1.7, 1.2, 0.6, 0.1, 0.2, 0.9, 2.2, 1.5, 0.5, -0.3, -1.5]
           },
           {
-            id: "bowers-wilkins-zeppelin",
-            name: "Zeppelin Wireless",
-            brand: "BOWERS & WILKINS",
-            brandTag: "BOWERS & WILKINS // WORTHING",
-            price: 799,
-            weight: "6.5 kg",
-            freq: "35 Hz – 24 kHz",
-            driver: "2x 25mm Decoupled Tweeters + 150mm Sub",
-            latency: "16 ms / aptX Adaptive",
-            conn: "AirPlay 2, Spotify Connect, aptX, BT 5.0",
-            battery: "240 Watts Total Tri-Amplified Power",
-            image: "assets/hardware/bowers_wilkins_zeppelin.png",
-            chassisSpec: "Aerodynamic Elliptical Enclosure with Pedestal",
-            driverSpec: "150mm Central Subwoofer & Dual FST Midranges",
-            pcbSpec: "24-bit High-Resolution Digital Signal Processor",
-            baseSpec: "Internal FEA-Optimized Ribbed Bracing Matrix",
-            frCurve: [3.2, 4.2, 4.8, 3.6, 2.5, 1.4, 0.8, 0.4, 1.6, 3.8, 2.8, 0.9, -1.0, -2.8]
+            id: "apple-magic-keyboard",
+            name: "Magic Keyboard with Touch ID",
+            brand: "APPLE",
+            brandTag: "APPLE // CUPERTINO",
+            price: 199,
+            weight: "369 g",
+            freq: "Scissor-Mechanism Tactile Actuation",
+            driver: "Integrated Secure Enclave Touch ID",
+            latency: "8 ms / Ultra-Low Energy BLE",
+            conn: "Bluetooth LE, USB-C to Lightning",
+            battery: "Rechargeable Lithium (1 Month+)",
+            image: "assets/hardware/apple_magic_keyboard.png",
+            video: "assets/videos/Apple_Magic_Keyboard_Exploded_View_20260912183607.mp4",
+            thumb: "assets/video_thumbs/Apple_Magic_Keyboard_Exploded_View_20260912183607.jpg",
+            chassisSpec: "100% Recycled Precision Anodized Aluminum Top Case",
+            driverSpec: "Low-Profile Scissor Mechanism with Optimized Travel",
+            pcbSpec: "Integrated Biometric Touch ID Secure Enclave Subsystem",
+            baseSpec: "Precision Molded Low-Friction Silicone Baseline Ring",
+            frCurve: [0.4, 0.9, 1.3, 1.1, 0.8, 0.4, 0.1, 0.1, 0.6, 1.5, 1.0, 0.3, -0.2, -1.0]
           },
           {
-            id: "transparent-speaker",
-            name: "Transparent Speaker",
-            brand: "TRANSPARENT",
-            brandTag: "TRANSPARENT // STOCKHOLM",
-            price: 550,
-            weight: "3.3 kg",
-            freq: "60 Hz – 20 kHz",
-            driver: "2x 3-Inch Full Range L/R Drivers",
-            latency: "15 ms / True Wireless Stereo",
-            conn: "Bluetooth 5.0, 3.5mm Aux, Modular Wi-Fi",
-            battery: "2x 15W Class D Digital Audio Processing",
-            image: "assets/hardware/transparent_speaker.png",
-            chassisSpec: "Single Aluminum Frame with Tempered Glass",
-            driverSpec: "Dual 3-Inch High-Efficiency Neodymium Cones",
-            pcbSpec: "Upgradable Modular Electronics Bay Architecture",
-            baseSpec: "Silicone Vibration-Absorbing Isolation Feet",
-            frCurve: [1.8, 2.5, 3.0, 2.2, 1.6, 0.9, 0.3, 0.1, 1.2, 2.8, 2.0, 0.5, -1.2, -3.0]
-          },
-          {
-            id: "kef-ls50-wireless-2",
-            name: "LS50 Wireless II",
-            brand: "KEF",
-            brandTag: "KEF // MAIDSTONE",
-            price: 2799,
-            weight: "20.1 kg (System Pair)",
-            freq: "40 Hz – 47 kHz (-6 dB)",
-            driver: "12th Gen Uni-Q with MAT™ Technology",
-            latency: "0 ms / 24-bit 384kHz Master Audio",
-            conn: "AirPlay 2, Chromecast, Roon, HDMI eARC",
-            battery: "760 Watts Dedicated Class D/AB Amplification",
-            image: "assets/hardware/kef_ls50_wireless_2.png",
-            chassisSpec: "Curved Baffle Enclosure with Cross-Bracing",
-            driverSpec: "12th Gen 5.25-Inch Uni-Q with Metamaterial MAT™",
-            pcbSpec: "KEF Music Integrity Engine® Custom DSP Matrix",
-            baseSpec: "Acoustic Decoupled Point-Source Resonator Footing",
-            frCurve: [3.4, 4.5, 5.1, 4.0, 2.9, 1.6, 0.8, 0.5, 1.8, 4.1, 3.0, 1.1, -0.9, -2.6]
+            id: "razer-huntsman-v3",
+            name: "Huntsman V3 Pro TKL",
+            brand: "RAZER",
+            brandTag: "RAZER // IRVINE",
+            price: 219,
+            weight: "880 g",
+            freq: "Gen-2 Analog Optical Switches",
+            driver: "Rapid Trigger with 0.1mm-4.0mm Actuation",
+            latency: "0.125 ms / 8,000 Hz True Polling",
+            conn: "Detachable Braided Type-C Cable",
+            battery: "Zero Latency Hardwire Esports Power",
+            image: "assets/hardware/razer_huntsman_v3.png",
+            video: "assets/videos/Razer_Huntsman_V3_Pro_Exploded_20260912183606.mp4",
+            thumb: "assets/video_thumbs/Razer_Huntsman_V3_Pro_Exploded_20260912183606.jpg",
+            chassisSpec: "Brushed 5052 Aluminum Top Plate & Textured Doubleshot PBT",
+            driverSpec: "Razer Gen-2 Analog Optical Switches with Rapid Trigger",
+            pcbSpec: "Dedicated Multi-Function Digital Dial & LED Telemetry",
+            baseSpec: "Acoustic Dampening Foam & Snap-Fit Magnetic Wrist Rest",
+            frCurve: [1.2, 2.0, 2.6, 2.2, 1.7, 0.9, 0.3, 0.4, 1.3, 2.8, 2.0, 0.7, -0.3, -1.6]
           }
         ]
       };
@@ -8937,7 +9158,7 @@
       let activeCategory = "headphones";
       let activeModelIdx = 0;
       let isXRayMode = false;
-      let xrayExpansion = 0.65;
+      let xrayExpansion = 0.50;
       let currentAngle = 0;
       let targetAngle = 0;
       let velocity = 0;
@@ -8946,6 +9167,7 @@
       let lastX = 0;
       let isAutoRotating = false;
       let autoRotateId = null;
+      let isPlayingCinema = false;
 
       // Web Audio State
       let audioCtx = null;
@@ -8976,6 +9198,12 @@
       const btnRotReset = document.getElementById("hw-btn-rot-reset");
       const btnRotRight = document.getElementById("hw-btn-rot-right");
       const btnAutoRotate = document.getElementById("hw-btn-autorotate");
+
+      // AI Video Teardown Layer
+      const hwVideoLayer = document.getElementById("hw-video-layer");
+      const hwXrayVideo = document.getElementById("hw-xray-video");
+      const hwBtnVideoPlay = document.getElementById("hw-btn-video-play");
+      const hwVideoBadgeText = document.getElementById("hw-video-badge-text");
 
       // X-Ray Layers & Slider
       const xrayChassis = document.getElementById("xray-chassis");
@@ -9121,7 +9349,6 @@
         activeGains.push(masterGain);
 
         if (profile === "spatial") {
-          // Spatial 8D: Swirling stereo panner with warm dual-tone harmonics
           const panner = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
           const targetNode = panner ? panner : masterGain;
           if (panner) {
@@ -9151,7 +9378,6 @@
           }, 30);
 
         } else if (profile === "bass") {
-          // Bass Implosion: Low frequency sweep (85Hz down to 28Hz) with resonant pulse
           const filter = ctx.createBiquadFilter();
           filter.type = "lowpass";
           filter.frequency.setValueAtTime(140, ctx.currentTime);
@@ -9178,7 +9404,6 @@
           synthInterval = setInterval(triggerBassDrop, 1500);
 
         } else if (profile === "studio") {
-          // Studio Flat: Calibrated multi-harmonic spectrum
           const freqs = [100, 250, 600, 1200, 2800, 6000, 11000];
           freqs.forEach(f => {
             const osc = ctx.createOscillator();
@@ -9194,7 +9419,6 @@
           });
 
         } else if (profile === "treble") {
-          // Crystal Treble: Sparkling arpeggios in air-band frequencies (2.4k - 15k)
           const crystalNotes = [2400, 3600, 4800, 7200, 9600, 12000, 14400];
           let step = 0;
           function triggerChime() {
@@ -9218,7 +9442,6 @@
           synthInterval = setInterval(triggerChime, 180);
         }
 
-        // Auto-stop after 14 seconds to preserve audio context
         setTimeout(() => {
           if (isPlayingAudio) stopAcousticSynthesis();
         }, 14000);
@@ -9246,7 +9469,6 @@
           for (let i = 0; i < freqData.length; i++) sum += freqData[i];
           rms = sum / freqData.length;
         } else {
-          // Subtle resting heartbeat idle wave
           idlePhase += 0.03;
           for (let i = 0; i < 64; i++) {
             freqData[i] = Math.max(0, Math.sin(idlePhase + i * 0.18) * 16 + 8);
@@ -9254,7 +9476,6 @@
           rms = 12;
         }
 
-        // Draw frequency bars
         const numBars = 48;
         const barWidth = (w - (numBars - 1) * 2) / numBars;
 
@@ -9264,7 +9485,6 @@
           const x = i * (barWidth + 2);
           const y = h - barHeight;
 
-          // Gradient: Gold to Cyan
           const grad = ctx.createLinearGradient(0, y, 0, h);
           grad.addColorStop(0, "#38bdf8");
           grad.addColorStop(0.5, "#dfb76c");
@@ -9273,12 +9493,10 @@
           ctx.fillStyle = grad;
           ctx.fillRect(x, y, barWidth, barHeight);
 
-          // Peak cap
           ctx.fillStyle = val > 140 ? "#fff" : "#dfb76c";
           ctx.fillRect(x, Math.max(0, y - 2), barWidth, 1.5);
         }
 
-        // Center Chamber Audio Halo
         const haloRadius = Math.min(24, Math.max(4, (rms / 255) * 24));
         ctx.save();
         ctx.beginPath();
@@ -9303,7 +9521,6 @@
         const h = frCanvas.height;
         ctx.clearRect(0, 0, w, h);
 
-        // Baseline zero grid
         ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -9311,7 +9528,6 @@
         ctx.lineTo(w, h * 0.5);
         ctx.stroke();
 
-        // Acoustic target curve
         ctx.beginPath();
         const pts = curvePoints || [1, 2, 3, 2, 1, 0, 0, 1, 3, 2, 0, -1, -2, -3];
         const step = w / (pts.length - 1);
@@ -9330,7 +9546,6 @@
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // Area under curve
         ctx.lineTo(w, h);
         ctx.lineTo(0, h);
         ctx.closePath();
@@ -9366,6 +9581,19 @@
           hwXrayImgChassis.alt = model.name;
         }
 
+        // Update AI HD Video Teardown
+        if (hwXrayVideo && model.video) {
+          if (hwXrayVideo.src !== model.video && !hwXrayVideo.src.endsWith(model.video)) {
+            hwXrayVideo.src = model.video;
+            if (model.thumb) hwXrayVideo.poster = model.thumb;
+            hwXrayVideo.load();
+            hwXrayVideo.currentTime = (xrayExpansion) * (hwXrayVideo.duration || 5);
+          }
+        }
+        if (hwVideoBadgeText) {
+          hwVideoBadgeText.textContent = `AI 3D EXPLODED CINEMA // ${model.brand}`;
+        }
+
         // Update Callouts Text
         if (calloutChassisSpec) calloutChassisSpec.textContent = model.chassisSpec;
         if (calloutDriverSpec) calloutDriverSpec.textContent = model.driverSpec;
@@ -9394,7 +9622,7 @@
         if (modalPriceVal) modalPriceVal.textContent = `$${model.price.toLocaleString()}`;
         if (modalSerialCode) {
           const code = 1000 + Math.floor(Math.random() * 9000);
-          modalSerialCode.textContent = `SN: CS-${code}-${model.brand.substring(0, 4)}`;
+          modalSerialCode.textContent = `SN: CS-${code}-${model.brand.replace(/[^A-Z0-9]/gi, "").substring(0, 4).toUpperCase()}`;
         }
 
         applyTurntableTransform();
@@ -9565,7 +9793,7 @@
       }
 
       // -------------------------------------------------------------
-      // Mode & Category Switchers
+      // Mode & Category Switchers & Video Scrubbing Engine
       // -------------------------------------------------------------
       catBtns.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -9588,6 +9816,14 @@
             hardwareApp.classList.remove("xray-active");
             modeBtnStudio.classList.add("active");
             modeBtnXray.classList.remove("active");
+            if (isPlayingCinema && hwXrayVideo) {
+              hwXrayVideo.pause();
+              isPlayingCinema = false;
+              if (hwBtnVideoPlay) {
+                hwBtnVideoPlay.textContent = "▶ PLAY CINEMA";
+                hwBtnVideoPlay.classList.remove("playing");
+              }
+            }
             playUiTick(950, 0.03, 0.05);
             applyTurntableTransform();
           }
@@ -9602,16 +9838,59 @@
             modeBtnXray.classList.add("active");
             modeBtnStudio.classList.remove("active");
             playUiTick(1300, 0.04, 0.06);
+            if (hwXrayVideo) {
+              const dur = hwXrayVideo.duration || 5;
+              hwXrayVideo.currentTime = xrayExpansion * dur;
+            }
             applyTurntableTransform();
           }
         });
       }
 
+      // Video Timeline Scrubbing
       if (xraySlider) {
         xraySlider.addEventListener("input", e => {
-          xrayExpansion = parseFloat(e.target.value) / 100;
-          if (xraySliderVal) xraySliderVal.textContent = `${e.target.value}%`;
+          const val = parseFloat(e.target.value);
+          xrayExpansion = val / 100;
+          if (xraySliderVal) xraySliderVal.textContent = `${Math.round(val)}%`;
+          
+          if (hwXrayVideo && !isPlayingCinema) {
+            const dur = hwXrayVideo.duration || 5;
+            if (!isNaN(dur) && dur > 0) {
+              hwXrayVideo.currentTime = (val / 100) * dur;
+            }
+          }
           applyTurntableTransform();
+        });
+      }
+
+      // Play / Pause Video Cinema Mode
+      if (hwBtnVideoPlay && hwXrayVideo) {
+        hwBtnVideoPlay.addEventListener("click", () => {
+          if (!isPlayingCinema) {
+            hwXrayVideo.play().then(() => {
+              isPlayingCinema = true;
+              hwBtnVideoPlay.textContent = "⏸ PAUSE CINEMA";
+              hwBtnVideoPlay.classList.add("playing");
+              playUiTick(1400, 0.03, 0.05);
+            }).catch(() => {});
+          } else {
+            hwXrayVideo.pause();
+            isPlayingCinema = false;
+            hwBtnVideoPlay.textContent = "▶ PLAY CINEMA";
+            hwBtnVideoPlay.classList.remove("playing");
+            playUiTick(750, 0.03, 0.05);
+          }
+        });
+
+        hwXrayVideo.addEventListener("timeupdate", () => {
+          if (isPlayingCinema && hwXrayVideo.duration) {
+            const pct = (hwXrayVideo.currentTime / hwXrayVideo.duration) * 100;
+            if (xraySlider) xraySlider.value = pct.toFixed(1);
+            if (xraySliderVal) xraySliderVal.textContent = `${Math.round(pct)}%`;
+            xrayExpansion = pct / 100;
+            applyTurntableTransform();
+          }
         });
       }
 
