@@ -2959,7 +2959,177 @@
       }
     }
 
-    </style>
+    
+    /* Luxury Minimalist Language Switcher */
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      background: rgba(16, 16, 16, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      margin-left: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      padding: 1px 3px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.2s ease;
+    }
+    .lang-btn:hover {
+      color: var(--white);
+      transform: translateY(-0.5px);
+    }
+    .lang-btn.active {
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(223, 183, 108, 0.5);
+    }
+    .lang-sep {
+      font-size: 9px;
+      color: rgba(255, 255, 255, 0.2);
+      user-select: none;
+    }
+
+    /* Services & Capabilities Section */
+    #services {
+      position: relative;
+      padding: clamp(70px, 10vw, 140px) var(--pad);
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .services-header {
+      margin-bottom: clamp(36px, 5vw, 64px);
+    }
+    .services-title {
+      font-family: var(--serif);
+      font-size: clamp(38px, 6.5vw, 78px);
+      font-weight: 400;
+      line-height: 1.05;
+      margin: 16px 0 0;
+      letter-spacing: -0.02em;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(16px, 2.5vw, 30px);
+    }
+    .service-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: clamp(26px, 3.5vw, 40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 310px;
+      transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(223, 183, 108, 0.45), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .service-card:hover {
+      border-color: rgba(223, 183, 108, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(223, 183, 108, 0.08);
+    }
+    .service-card:hover::before {
+      opacity: 1;
+    }
+    .service-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .service-num {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+    }
+    .service-badge {
+      font-size: 8.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8e8e8e;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .service-name {
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.8vw, 34px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 0 14px;
+      color: var(--white);
+    }
+    .service-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #9c9c9c;
+      margin: 0 0 24px;
+      flex: 1;
+    }
+    .service-tags {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .service-tags li {
+      font-size: 10px;
+      color: #b5b5b5;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      letter-spacing: 0.04em;
+    }
+    @media (max-width: 860px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .service-card {
+        min-height: auto;
+      }
+    }
+    @media (max-width: 600px) {
+      .lang-switch {
+        margin-left: 6px;
+        padding: 3px 7px;
+        gap: 3px;
+      }
+      .lang-btn {
+        font-size: 9px;
+      }
+    }
+
+  </style>
 </head>
 <body>
   <div class="ambient"></div>
@@ -2986,10 +3156,18 @@
   <nav id="nav">
     <a href="#hero" class="brand magnetic"><span class="brand-dot"></span>DM / 26</a>
     <div class="nav-right">
-      <a class="nav-link magnetic" href="#about">About</a>
-      <a class="nav-link magnetic" href="#work">Work</a>
-      <a class="nav-link magnetic" href="#journey">Journey</a>
-      <a class="nav-link magnetic" href="#contact">Contact</a>
+      <a class="nav-link magnetic" href="#about" data-i18n="nav.about">Haqida</a>
+      <a class="nav-link magnetic" href="#services" data-i18n="nav.services">Xizmatlar</a>
+      <a class="nav-link magnetic" href="#work" data-i18n="nav.work">Loyihalar</a>
+      <a class="nav-link magnetic" href="#journey" data-i18n="nav.journey">Tajriba</a>
+      <a class="nav-link magnetic" href="#contact" data-i18n="nav.contact">Aloqa</a>
+      <div class="lang-switch" role="group" aria-label="Language Selector">
+        <button type="button" class="lang-btn active" data-lang="uz">UZ</button>
+        <span class="lang-sep">/</span>
+        <button type="button" class="lang-btn" data-lang="ru">RU</button>
+        <span class="lang-sep">/</span>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
     </div>
   </nav>
 
@@ -3001,32 +3179,30 @@
         <canvas id="orb-canvas"></canvas>
 
         <div class="hero-content">
-          <div class="hero-kicker">Personal Brand / Uzbekistan</div>
+          <div class="hero-kicker" data-i18n="hero.kicker">Raqamli Arxitektura & Muhandislik</div>
           <h1 class="hero-name">
             <span class="mask-line"><span class="mask-inner silver">Dilmurod</span></span>
             <span class="mask-line"><span class="mask-inner gold">Muhsinjonov</span></span>
           </h1>
-          <p class="hero-tagline">
-            [Your professional identity]. Turning ideas into deliberate,
-            memorable digital experiences.
+          <p class="hero-tagline" data-i18n="hero.tagline">
+            G'oyalarni nufuzli, yuqori daromadli va unutilmas raqamli haqiqatga aylantiraman.
           </p>
         </div>
 
-        <div class="hero-scroll"><span>Scroll to explore</span><span class="scroll-line"></span></div>
-        <div class="hero-meta">Independent / Selected collaborations<br>Built with intention</div>
+        <div class="hero-scroll"><span data-i18n="hero.scroll">Kashf qilish uchun varaqlang</span><span class="scroll-line"></span></div>
+        <div class="hero-meta" data-i18n-html="hero.meta">Mustaqil ijro / Saralangan hamkorliklar<br>Aniq maqsad va sifat bilan</div>
       </div>
     </section>
 
     <section id="statement">
       <div class="statement-inner">
-        <div class="section-label">01 / Point of view</div>
-        <div class="statement-copy" id="statement-copy">
-          I believe meaningful work begins where <span class="gold">clarity</span>,
-          ambition and craftsmanship meet. I don't want to simply follow what comes next.
-          I want to help <span class="gold">shape it.</span>
+        <div class="section-label" data-i18n="statement.label">01 / Pozitsiya & Falsafa</div>
+        <div class="statement-copy" id="statement-copy" data-i18n-html="statement.copy">
+          Haqiqiy natija <span class="gold">aniqlik</span>, jur'at va yuqori mahorat birlashgan nuqtada boshlanadi.
+          Biznesingiz shunchaki sahifaga emas, balki nufuz va daromad keltiruvchi <span class="gold">tizimga</span> loyiq.
         </div>
-        <div class="statement-foot">
-          Not more noise. Not more decoration. Work with direction, purpose and presence.
+        <div class="statement-foot" data-i18n="statement.foot">
+          Ortiqcha shovqinlarsiz. Aniq yo'nalish, mazmun va mustahkam mavqe.
         </div>
       </div>
     </section>
@@ -3035,68 +3211,140 @@
       <div class="about-grid">
         <div class="about-image-wrap">
           <div class="about-image"></div>
-          <div class="portrait-tag">Portrait / 01</div>
+          <div class="portrait-tag" data-i18n="about.portrait">Portret / 01</div>
         </div>
 
         <div class="about-content">
-          <div class="section-label">02 / About</div>
-          <h2 class="about-title reveal">More than a résumé.<br><span class="gold">A point of view.</span></h2>
+          <div class="section-label" data-i18n="about.label">02 / Men Haqimda</div>
+          <h2 class="about-title reveal" data-i18n-html="about.title">Shunchaki rezyume emas.<br><span class="gold">Qat'iy pozitsiya.</span></h2>
 
-          <p class="about-copy reveal">
-            [Write your 80–150 word biography here.] This section should explain not only
-            what you do, but how you think, what you care about and why someone should want
-            to build something with you.
+          <p class="about-copy reveal" data-i18n="about.copy">
+            Men Dilmurod Muhsinjonov — mustaqil raqamli muhandis va tajriba me'mori. Mening maqsadim — murakkab biznes g'oyalaringizni nufuzli, yuqori daromad keltiruvchi va bozorda yaqqol ajralib turuvchi raqamli tizimlarga aylantirish. Shovqinli shablonlar davrida men betakror sifat, muhandislik aniqligi va sokin ustunlikka (quiet authority) tayanaman.
           </p>
 
           <div class="facts reveal">
-            <div class="fact"><span class="fact-label">Based</span><span class="fact-value">Uzbekistan</span></div>
-            <div class="fact"><span class="fact-label">Discipline</span><span class="fact-value">[Your profession]</span></div>
-            <div class="fact"><span class="fact-label">Experience</span><span class="fact-value">[X years]</span></div>
-            <div class="fact"><span class="fact-label">Focus</span><span class="fact-value">Digital / AI / Creative Systems</span></div>
-            <div class="fact"><span class="fact-label">Availability</span><span class="fact-value">Open to selected collaborations</span></div>
+            <div class="fact"><span class="fact-label" data-i18n="about.f1_l">Joylashuv</span><span class="fact-value" data-i18n="about.f1_v">O'zbekiston / Global</span></div>
+            <div class="fact"><span class="fact-label" data-i18n="about.f2_l">Yo'nalish</span><span class="fact-value" data-i18n="about.f2_v">Raqamli Muhandislik & Arxitektura</span></div>
+            <div class="fact"><span class="fact-label" data-i18n="about.f3_l">Tajriba</span><span class="fact-value" data-i18n="about.f3_v">5+ Yil Professional Amaliyot</span></div>
+            <div class="fact"><span class="fact-label" data-i18n="about.f4_l">Asosiy Fokus</span><span class="fact-value" data-i18n="about.f4_v">3D Veb, Telegram & Avtomatlashtirish</span></div>
+            <div class="fact"><span class="fact-label" data-i18n="about.f5_l">Hamkorlik</span><span class="fact-value" data-i18n="about.f5_v">Saralangan loyihalar uchun ochiq</span></div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Services & Offerings Section -->
+    <section id="services">
+      <div class="services-header">
+        <span class="section-label" data-i18n="services.label">03 / Imkoniyatlar & Xizmatlar</span>
+        <h2 class="services-title reveal" data-i18n-html="services.title">Mijozlarga nima<br><span class="gold">bera olaman?</span></h2>
+      </div>
+
+      <div class="services-grid">
+        <!-- Service 1: Bespoke Websites & 3D WebGL -->
+        <article class="service-card reveal">
+          <div class="service-top">
+            <span class="service-num">01</span>
+            <span class="service-badge" data-i18n="services.s1.badge">Full-Cycle Web</span>
+          </div>
+          <h3 class="service-name" data-i18n="services.s1.name">Har Qanday Veb-Saytlar</h3>
+          <p class="service-desc" data-i18n="services.s1.desc">Awwwards darajasidagi 3D interaktiv platformalar, korporativ saytlar, hashamatli e-commerce atelierlari va murakkab SaaS tizimlari. Har bir piksel va animatsiya 60+ FPS tezlikda, brendingiz nufuzini yuksaltirish uchun yaratiladi.</p>
+          <ul class="service-tags">
+            <li>Interactive 3D WebGL</li>
+            <li>Luxury E-Commerce</li>
+            <li>Corporate Portals</li>
+            <li>SaaS Platforms</li>
+          </ul>
+        </article>
+
+        <!-- Service 2: Digital Branding & Landings -->
+        <article class="service-card reveal">
+          <div class="service-top">
+            <span class="service-num">02</span>
+            <span class="service-badge" data-i18n="services.s2.badge">Visual Authority</span>
+          </div>
+          <h3 class="service-name" data-i18n="services.s2.name">Raqamli Brending & Lendinglar</h3>
+          <p class="service-desc" data-i18n="services.s2.desc">Nufuzli vizual identifikatsiya, dizayn tizimlari va yuqori konversiyali taqdimot sahifalari. Mijozni birinchi soniyadanoq mahliyo etuvchi va xaridga undovchi vizual storytelling.</p>
+          <ul class="service-tags">
+            <li>Brand Identity</li>
+            <li>Design Systems</li>
+            <li>High-Converting UI/UX</li>
+            <li>Visual Storytelling</li>
+          </ul>
+        </article>
+
+        <!-- Service 3: Telegram Bots & Mini Apps -->
+        <article class="service-card reveal">
+          <div class="service-top">
+            <span class="service-num">03</span>
+            <span class="service-badge" data-i18n="services.s3.badge">Telegram Ecosystem</span>
+          </div>
+          <h3 class="service-name" data-i18n="services.s3.name">Telegram Botlar & Mini Apps</h3>
+          <p class="service-desc" data-i18n="services.s3.desc">Yuqori yuklamali avtomatlashgan Telegram botlari, to'lov tizimlari integratsiyasi (Click, Payme, Stripe), zamonaviy Telegram WebApp / Mini App yechimlari va mijozlar bazasi bilan uzluksiz muloqot tizimlari.</p>
+          <ul class="service-tags">
+            <li>Telegram WebApps</li>
+            <li>Payment Integration</li>
+            <li>High-Load Architecture</li>
+            <li>Automated Funnels</li>
+          </ul>
+        </article>
+
+        <!-- Service 4: Business Process Automation -->
+        <article class="service-card reveal">
+          <div class="service-top">
+            <span class="service-num">04</span>
+            <span class="service-badge" data-i18n="services.s4.badge">Enterprise Systems</span>
+          </div>
+          <h3 class="service-name" data-i18n="services.s4.name">Biznesni Avtomatlashtirish</h3>
+          <p class="service-desc" data-i18n="services.s4.desc">Murakkab operatsion jarayonlarni to'liq avtomatlashtirish, maxsus CRM/ERP boshqaruv tizimlari, API ko'priklari, to'lov shlyuzlari va biznesingizni inson omilisiz xatosiz yurituvchi aqlli arxitektura.</p>
+          <ul class="service-tags">
+            <li>Custom CRM / ERP</li>
+            <li>API Integrations</li>
+            <li>Workflow Automation</li>
+            <li>Data Pipelines</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
     <section id="journey">
       <div class="journey-header">
-        <span class="section-label">03 / Journey</span>
-        <h2 class="journey-heading">The path<br><span class="gold">so far.</span></h2>
+        <span class="section-label" data-i18n="journey.label">04 / Bosib O'tilgan Yo'l</span>
+        <h2 class="journey-heading" data-i18n-html="journey.heading">Tajriba va<br><span class="gold">rivojlanish.</span></h2>
       </div>
 
       <article class="milestone">
         <div class="milestone-year">01</div>
         <div class="milestone-copy reveal">
-          <span class="section-label">[Year]</span>
-          <h3>Where it started.</h3>
-          <p>[First important professional milestone. What changed here? What did you learn? Keep it concise and story-driven.]</p>
+          <span class="section-label">2021</span>
+          <h3 data-i18n="journey.m1_t">Poydevor va Kod Arxitekturasi.</h3>
+          <p data-i18n="journey.m1_d">Murakkab veb-tizimlar va toza kodlash falsafasini o'zlashtirish. Shaxsiy kompyuter va algoritmlar dunyosiga chuqur sho'ng'ish orqali muhandislik intizomini shakllantirish.</p>
         </div>
       </article>
 
       <article class="milestone">
         <div class="milestone-year">02</div>
         <div class="milestone-copy reveal">
-          <span class="section-label">[Year]</span>
-          <h3>Building momentum.</h3>
-          <p>[Second important stage: work, business, major project or professional transition.]</p>
+          <span class="section-label">2023</span>
+          <h3 data-i18n="journey.m2_t">Masshtab va Telegram Ekotizimi.</h3>
+          <p data-i18n="journey.m2_d">Yuqori yuklamali Telegram botlar, Mini Apps, korporativ CRM va biznes jarayonlarini to'liq avtomatlashtirish integratsiyalari. Real biznes muammolarini hal etuvchi tizimlar yaratish.</p>
         </div>
       </article>
 
       <article class="milestone">
         <div class="milestone-year">03</div>
         <div class="milestone-copy reveal">
-          <span class="section-label">[Year]</span>
-          <h3>A different level.</h3>
-          <p>[The stage where your approach matured, your responsibilities increased or your direction became clearer.]</p>
+          <span class="section-label">2026</span>
+          <h3 data-i18n="journey.m3_t">Yangi Bosqich: 3D Spatial Web & Brending.</h3>
+          <p data-i18n="journey.m3_d">Awwwards darajasidagi 3D WebGL tajribalar, xalqaro e-commerce standartlari va brendlarni bozor yetakchisiga aylantiruvchi eksklyuziv raqamli platformalar arxitekturasi.</p>
         </div>
       </article>
     </section>
 
     <section id="work">
       <div class="work-intro">
-        <span class="section-label">04 / Selected Work</span>
-        <h2>Work that<br><span class="gold">left a mark.</span></h2>
+        <span class="section-label" data-i18n="work.label">05 / Saralangan Loyihalar</span>
+        <h2 data-i18n-html="work.heading">Natija bergan<br><span class="gold">amaliy ishlar.</span></h2>
       </div>
 
       <article class="project" id="project-01">
@@ -3718,54 +3966,54 @@
     </section>
 
     <section id="stats">
-      <span class="section-label">05 / In Numbers</span>
-      <h2 class="stats-title">Proof lives in <span class="gold">the work.</span></h2>
+      <span class="section-label" data-i18n="stats.label">06 / Raqamlarda</span>
+      <h2 class="stats-title" data-i18n-html="stats.title">Faktlar so'zlardan <span class="gold">kuchliroq.</span></h2>
 
       <div class="stats-grid">
         <div class="stat">
           <div class="stat-num"><span class="counter" data-target="5">0</span><span class="suffix">+</span></div>
-          <p class="stat-description">[Years building, creating or working in your professional field.]</p>
+          <p class="stat-description" data-i18n="stats.s1">Yillik professional muhandislik va raqamli arxitektura tajribasi</p>
         </div>
         <div class="stat">
-          <div class="stat-num"><span class="counter" data-target="24">0</span><span class="suffix">+</span></div>
-          <p class="stat-description">[Selected completed projects or major works.]</p>
-        </div>
-        <div class="stat">
-          <div class="stat-num"><span class="counter" data-target="10">0</span><span class="suffix">+</span></div>
-          <p class="stat-description">[AI systems, workflows, products or another relevant achievement.]</p>
+          <div class="stat-num"><span class="counter" data-target="30">0</span><span class="suffix">+</span></div>
+          <p class="stat-description" data-i18n="stats.s2">Muvaffaqiyatli ishga tushirilgan veb-saytlar, botlar va tizimlar</p>
         </div>
         <div class="stat">
           <div class="stat-num"><span class="counter" data-target="100">0</span><span class="suffix">%</span></div>
-          <p class="stat-description">[Replace this with a real measurable result.]</p>
+          <p class="stat-description" data-i18n="stats.s3">Noldan yozilgan toza kod, shablonlarsiz eksklyuziv arxitektura</p>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span class="counter" data-target="60">0</span><span class="suffix">+</span></div>
+          <p class="stat-description" data-i18n="stats.s4">FPS tezlik va barcha qurilmalarda qotishlarsiz ishlash kafolati</p>
         </div>
       </div>
     </section>
 
     <section id="closing">
       <div class="closing-orb"></div>
-      <div class="closing-text" id="closing-text">
-        The future is not something to stand back and watch.
-        It is something we can <span class="gold">shape together.</span>
+      <div class="closing-text" id="closing-text" data-i18n-html="closing.quote">
+        Kelajak shunchaki chetdan tomosha qilinmaydi.
+        Biz uni <span class="gold">birgalikda yaratamiz.</span>
       </div>
     </section>
 
     <section id="contact">
       <div class="contact-orb-line"></div>
       <div>
-        <span class="section-label">06 / Contact</span>
-        <h2 class="contact-heading reveal">
-          Bring the idea.<br>We'll give it <span class="gold">a presence.</span>
+        <span class="section-label" data-i18n="contact.label">07 / Aloqa</span>
+        <h2 class="contact-heading reveal" data-i18n-html="contact.heading">
+          G'oyangiz bormi?<br>Biz uni <span class="gold">nufuzli haqiqatga</span> aylantiramiz.
         </h2>
 
         <div class="cta-row">
-          <button class="contact-button magnetic" id="open-sheet"><span>Choose<br>a channel</span></button>
+          <button class="contact-button magnetic" id="open-sheet"><span data-i18n-html="contact.btn">Qulay aloqa<br>usulini tanlang</span></button>
         </div>
       </div>
 
       <footer class="footer">
         <span>© 2026 Dilmurod Muhsinjonov</span>
-        <span>Built with intention.</span>
-        <span>Uzbekistan</span>
+        <span data-i18n="footer.intention">Aniq maqsad va sifat bilan qurilgan.</span>
+        <span>Uzbekistan / Global</span>
       </footer>
     </section>
   </main>
@@ -3777,17 +4025,17 @@
       <button class="sheet-close magnetic" id="close-sheet">Close</button>
     </div>
 
-    <a href="mailto:YOURMAIL@example.com" class="channel magnetic">
-      <span class="channel-name">Email</span><span class="channel-preview">YOURMAIL@example.com</span>
+    <a href="https://t.me/dilmurod_muhsinjonov" target="_blank" rel="noopener noreferrer" class="channel magnetic">
+      <span class="channel-name">Telegram</span><span class="channel-preview">@dilmurod_muhsinjonov (Tezkor aloqa)</span>
     </a>
-    <a href="#" class="channel magnetic">
-      <span class="channel-name">Telegram</span><span class="channel-preview">@YOUR_USERNAME</span>
+    <a href="mailto:contact@dilmurod.uz" class="channel magnetic">
+      <span class="channel-name">Email</span><span class="channel-preview">contact@dilmurod.uz (Loyiha muhokamasi)</span>
     </a>
-    <a href="#" class="channel magnetic">
-      <span class="channel-name">LinkedIn</span><span class="channel-preview">Professional network</span>
+    <a href="https://github.com/dilmurodmuhsinjanov910-byte" target="_blank" rel="noopener noreferrer" class="channel magnetic">
+      <span class="channel-name">GitHub</span><span class="channel-preview">github.com/dilmurodmuhsinjanov910-byte</span>
     </a>
-    <a href="#" class="channel magnetic">
-      <span class="channel-name">GitHub</span><span class="channel-preview">Selected code & projects</span>
+    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="channel magnetic">
+      <span class="channel-name">LinkedIn</span><span class="channel-preview">Professional Network</span>
     </a>
   </aside>
 
@@ -9298,5 +9546,261 @@
       ScrollTrigger.refresh();
     });
   </script>
+
+  <!-- Multilingual i18n Engine (UZ / RU / EN) -->
+  <script>
+    const I18N = {
+      uz: {
+        "nav.about": "Haqida",
+        "nav.services": "Xizmatlar",
+        "nav.work": "Loyihalar",
+        "nav.journey": "Tajriba",
+        "nav.contact": "Aloqa",
+        "hero.kicker": "Raqamli Arxitektura & Muhandislik",
+        "hero.tagline": "G'oyalarni nufuzli, yuqori daromadli va unutilmas raqamli haqiqatga aylantiraman.",
+        "hero.scroll": "Kashf qilish uchun varaqlang",
+        "hero.meta": "Mustaqil ijro / Saralangan hamkorliklar<br>Aniq maqsad va sifat bilan",
+        "statement.label": "01 / Pozitsiya & Falsafa",
+        "statement.copy": "Haqiqiy natija <span class=\"gold\">aniqlik</span>, jur'at va yuqori mahorat birlashgan nuqtada boshlanadi. Biznesingiz shunchaki sahifaga emas, balki nufuz va daromad keltiruvchi <span class=\"gold\">tizimga</span> loyiq.",
+        "statement.foot": "Ortiqcha shovqinlarsiz. Aniq yo'nalish, mazmun va mustahkam mavqe.",
+        "about.portrait": "Portret / 01",
+        "about.label": "02 / Men Haqimda",
+        "about.title": "Shunchaki rezyume emas.<br><span class=\"gold\">Qat'iy pozitsiya.</span>",
+        "about.copy": "Men Dilmurod Muhsinjonov — mustaqil raqamli muhandis va tajriba me'mori. Mening maqsadim — murakkab biznes g'oyalaringizni nufuzli, yuqori daromad keltiruvchi va bozorda yaqqol ajralib turuvchi raqamli tizimlarga aylantirish. Shovqinli shablonlar davrida men betakror sifat, muhandislik aniqligi va sokin ustunlikka (quiet authority) tayanaman.",
+        "about.f1_l": "Joylashuv",
+        "about.f1_v": "O'zbekiston / Global",
+        "about.f2_l": "Yo'nalish",
+        "about.f2_v": "Raqamli Muhandislik & Arxitektura",
+        "about.f3_l": "Tajriba",
+        "about.f3_v": "5+ Yil Professional Amaliyot",
+        "about.f4_l": "Asosiy Fokus",
+        "about.f4_v": "3D Veb, Telegram & Avtomatlashtirish",
+        "about.f5_l": "Hamkorlik",
+        "about.f5_v": "Saralangan loyihalar uchun ochiq",
+        "services.label": "03 / Imkoniyatlar & Xizmatlar",
+        "services.title": "Mijozlarga nima<br><span class=\"gold\">bera olaman?</span>",
+        "services.s1.badge": "Full-Cycle Web",
+        "services.s1.name": "Har Qanday Veb-Saytlar",
+        "services.s1.desc": "Awwwards darajasidagi 3D interaktiv platformalar, korporativ saytlar, hashamatli e-commerce atelierlari va murakkab SaaS tizimlari. Har bir piksel va animatsiya 60+ FPS tezlikda, brendingiz nufuzini yuksaltirish uchun yaratiladi.",
+        "services.s2.badge": "Visual Authority",
+        "services.s2.name": "Raqamli Brending & Lendinglar",
+        "services.s2.desc": "Nufuzli vizual identifikatsiya, dizayn tizimlari va yuqori konversiyali taqdimot sahifalari. Mijozni birinchi soniyadanoq mahliyo etuvchi va xaridga undovchi vizual storytelling.",
+        "services.s3.badge": "Telegram Ecosystem",
+        "services.s3.name": "Telegram Botlar & Mini Apps",
+        "services.s3.desc": "Yuqori yuklamali avtomatlashgan Telegram botlari, to'lov tizimlari integratsiyasi (Click, Payme, Stripe), zamonaviy Telegram WebApp / Mini App yechimlari va mijozlar bazasi bilan uzluksiz muloqot tizimlari.",
+        "services.s4.badge": "Enterprise Systems",
+        "services.s4.name": "Biznesni Avtomatlashtirish",
+        "services.s4.desc": "Murakkab operatsion jarayonlarni to'liq avtomatlashtirish, maxsus CRM/ERP boshqaruv tizimlari, API ko'priklari, to'lov shlyuzlari va biznesingizni inson omilisiz xatosiz yurituvchi aqlli arxitektura.",
+        "journey.label": "04 / Bosib O'tilgan Yo'l",
+        "journey.heading": "Tajriba va<br><span class=\"gold\">rivojlanish.</span>",
+        "journey.m1_t": "Poydevor va Kod Arxitekturasi.",
+        "journey.m1_d": "Murakkab veb-tizimlar va toza kodlash falsafasini o'zlashtirish. Shaxsiy kompyuter va algoritmlar dunyosiga chuqur sho'ng'ish orqali muhandislik intizomini shakllantirish.",
+        "journey.m2_t": "Masshtab va Telegram Ekotizimi.",
+        "journey.m2_d": "Yuqori yuklamali Telegram botlar, Mini Apps, korporativ CRM va biznes jarayonlarini to'liq avtomatlashtirish integratsiyalari. Real biznes muammolarini hal etuvchi tizimlar yaratish.",
+        "journey.m3_t": "Yangi Bosqich: 3D Spatial Web & Brending.",
+        "journey.m3_d": "Awwwards darajasidagi 3D WebGL tajribalar, xalqaro e-commerce standartlari va brendlarni bozor yetakchisiga aylantiruvchi eksklyuziv raqamli platformalar arxitekturasi.",
+        "work.label": "05 / Saralangan Loyihalar",
+        "work.heading": "Natija bergan<br><span class=\"gold\">amaliy ishlar.</span>",
+        "stats.label": "06 / Raqamlarda",
+        "stats.title": "Faktlar so'zlardan <span class=\"gold\">kuchliroq.</span>",
+        "stats.s1": "Yillik professional muhandislik va raqamli arxitektura tajribasi",
+        "stats.s2": "Muvaffaqiyatli ishga tushirilgan veb-saytlar, botlar va tizimlar",
+        "stats.s3": "Noldan yozilgan toza kod, shablonlarsiz eksklyuziv arxitektura",
+        "stats.s4": "FPS tezlik va barcha qurilmalarda qotishlarsiz ishlash kafolati",
+        "closing.quote": "Kelajak shunchaki chetdan tomosha qilinmaydi.<br>Biz uni <span class=\"gold\">birgalikda yaratamiz.</span>",
+        "contact.label": "07 / Aloqa",
+        "contact.heading": "G'oyangiz bormi?<br>Biz uni <span class=\"gold\">nufuzli haqiqatga</span> aylantiramiz.",
+        "contact.btn": "Qulay aloqa<br>usulini tanlang",
+        "footer.intention": "Aniq maqsad va sifat bilan qurilgan."
+      },
+      ru: {
+        "nav.about": "О себе",
+        "nav.services": "Услуги",
+        "nav.work": "Проекты",
+        "nav.journey": "Опыт",
+        "nav.contact": "Контакты",
+        "hero.kicker": "Цифровая Архитектура & Разработка",
+        "hero.tagline": "Превращаю смелые идеи в безупречные цифровые экосистемы высшего уровня.",
+        "hero.scroll": "Листайте для изучения",
+        "hero.meta": "Независимый инженер / Избранные коллаборации<br>Создано с четким замыслом",
+        "statement.label": "01 / Точка Зрения",
+        "statement.copy": "Настоящий результат рождается там, где встречаются <span class=\"gold\">ясность</span>, смелость и высокое мастерство. Вашему бизнесу нужен не просто шаблон, а <span class=\"gold\">система</span>, создающая статус и приносящая прибыль.",
+        "statement.foot": "Никакого визуального шума. Только направление, смысл и авторитет.",
+        "about.portrait": "Портрет / 01",
+        "about.label": "02 / Обо Мне",
+        "about.title": "Больше, чем резюме.<br><span class=\"gold\">Четкая позиция.</span>",
+        "about.copy": "Я Дильмурод Мухсинжонов — независимый цифровой архитектор и инженер премиальных веб-систем. Моя цель — трансформировать амбициозные концепции в авторитетные, высокодоходные и узнаваемые цифровые платформы. В эпоху шаблонного фастфуда я создаю индивидуальные продукты с бескомпромиссным качеством и тихой уверенностью.",
+        "about.f1_l": "Локация",
+        "about.f1_v": "Узбекистан / Global",
+        "about.f2_l": "Специализация",
+        "about.f2_v": "Цифровая Архитектура & Разработка",
+        "about.f3_l": "Опыт",
+        "about.f3_v": "5+ Лет Практики",
+        "about.f4_l": "Основной Фокус",
+        "about.f4_v": "3D Web, Telegram Экосистема & Автоматизация",
+        "about.f5_l": "Сотрудничество",
+        "about.f5_v": "Открыт для избранных проектов",
+        "services.label": "03 / Возможности & Услуги",
+        "services.title": "Что я могу дать<br><span class=\"gold\">вашему бизнесу?</span>",
+        "services.s1.badge": "Full-Cycle Web",
+        "services.s1.name": "Веб-Сайты Любой Сложности",
+        "services.s1.desc": "Интерактивные 3D WebGL платформы уровня Awwwards, имиджевые сайты, люксовые e-commerce решения и сложные SaaS сервисы. Каждый пиксель и анимация работают со скоростью 60+ FPS для укрепления статуса вашего бренда.",
+        "services.s2.badge": "Visual Authority",
+        "services.s2.name": "Цифровой Брендинг & Landings",
+        "services.s2.desc": "Премиальная визуальная идентичность, дизайн-системы и высококонверсионные посадочные страницы. Сторителлинг, формирующий безусловное доверие и превращающий посетителей в клиентов.",
+        "services.s3.badge": "Telegram Ecosystem",
+        "services.s3.name": "Telegram Боты & Mini Apps",
+        "services.s3.desc": "Высоконагруженные боты, нативные Telegram WebApps, прием онлайн-платежей (Click, Payme, Stripe), сквозная автоматизация продаж и бесшовная интеграция с вашей CRM 24/7.",
+        "services.s4.badge": "Enterprise Systems",
+        "services.s4.name": "Автоматизация Бизнеса",
+        "services.s4.desc": "Индивидуальные CRM/ERP решения, API шлюзы, интеграция платежных систем, синхронизация баз данных и устранение человеческого фактора для максимизации чистой прибыли.",
+        "journey.label": "04 / Пройденный Путь",
+        "journey.heading": "Опыт и<br><span class=\"gold\">эволюция.</span>",
+        "journey.m1_t": "Фундамент и Архитектура Кода.",
+        "journey.m1_d": "Освоение фундаментальных стандартов веб-разработки и бескомпромиссной чистоты кода. Формирование строгой инженерной дисциплины.",
+        "journey.m2_t": "Масштабирование и Telegram Экосистема.",
+        "journey.m2_d": "Разработка высоконагруженных ботов, Telegram Mini Apps, корпоративных CRM и комплексной автоматизации бизнес-процессов под ключ.",
+        "journey.m3_t": "Новый Уровень: 3D Spatial Web & Брендинг.",
+        "journey.m3_d": "Создание 3D WebGL проектов мирового уровня Awwwards, люксовый digital-commerce и разработка платформ, выводящих бренды в безоговорочные лидеры рынка.",
+        "work.label": "05 / Избранные Работы",
+        "work.heading": "Проекты, оставившие<br><span class=\"gold\">яркий след.</span>",
+        "stats.label": "06 / В Цифрах",
+        "stats.title": "Факты громче <span class=\"gold\">любых слов.</span>",
+        "stats.s1": "Лет инженерного опыта и проектирования цифровой архитектуры",
+        "stats.s2": "Успешно запущенных веб-платформ, ботов и систем автоматизации",
+        "stats.s3": "Чистый код с нуля без конструкторов и шаблонного мусора",
+        "stats.s4": "FPS скорость и гарантия плавной работы без зависаний",
+        "closing.quote": "Будущее создается не теми, кто просто наблюдает.<br>Мы создаем его <span class=\"gold\">вместе с вами.</span>",
+        "contact.label": "07 / Контакты",
+        "contact.heading": "Есть идея?<br>Мы придадим ей <span class=\"gold\">статус и размах.</span>",
+        "contact.btn": "Выбрать способ<br>связи",
+        "footer.intention": "Создано с исключительным вниманием к деталям."
+      },
+      en: {
+        "nav.about": "About",
+        "nav.services": "Services",
+        "nav.work": "Work",
+        "nav.journey": "Journey",
+        "nav.contact": "Contact",
+        "hero.kicker": "Digital Architecture & Engineering",
+        "hero.tagline": "Transforming ambitious concepts into authoritative, high-yield digital experiences.",
+        "hero.scroll": "Scroll to explore",
+        "hero.meta": "Independent / Selected collaborations<br>Built with intention",
+        "statement.label": "01 / Point of View",
+        "statement.copy": "Meaningful impact begins where <span class=\"gold\">clarity</span>, ambition, and craftsmanship converge. Your business deserves an authoritative <span class=\"gold\">system</span> that commands respect and drives revenue.",
+        "statement.foot": "Zero decorative noise. Absolute direction, purpose, and presence.",
+        "about.portrait": "Portrait / 01",
+        "about.label": "02 / About",
+        "about.title": "More than a résumé.<br><span class=\"gold\">A point of view.</span>",
+        "about.copy": "I am Dilmurod Muhsinjonov — independent digital architect and experience engineer. My mission is to forge bold business visions into prestigious, high-yield, and unforgettable digital assets. In a market crowded with generic templates, I build bespoke instruments rooted in engineering integrity and quiet authority.",
+        "about.f1_l": "Location",
+        "about.f1_v": "Uzbekistan / Global",
+        "about.f2_l": "Discipline",
+        "about.f2_v": "Digital Architecture & Engineering",
+        "about.f3_l": "Experience",
+        "about.f3_v": "5+ Years Production Mastery",
+        "about.f4_l": "Core Focus",
+        "about.f4_v": "3D Web, Telegram Ecosystem & Automation",
+        "about.f5_l": "Availability",
+        "about.f5_v": "Open to selected collaborations",
+        "services.label": "03 / Capabilities & Offerings",
+        "services.title": "What I bring to<br><span class=\"gold\">your table?</span>",
+        "services.s1.badge": "Full-Cycle Web",
+        "services.s1.name": "Bespoke Web Development",
+        "services.s1.desc": "Award-winning 3D interactive WebGL platforms, corporate digital flagship portals, luxury e-commerce ateliers, and scalable SaaS architectures. Built at a fluid 60+ FPS to establish unmistakable market dominance.",
+        "services.s2.badge": "Visual Authority",
+        "services.s2.name": "Digital Branding & Landings",
+        "services.s2.desc": "Prestigious brand identities, design systems, and high-impact landing pages engineered with compelling visual storytelling to convert high-ticket clientele from the very first impression.",
+        "services.s3.badge": "Telegram Ecosystem",
+        "services.s3.name": "Telegram Bots & Mini Apps",
+        "services.s3.desc": "High-concurrency automated Telegram bots, native Telegram WebApps / Mini Apps, global payment integrations (Click, Payme, Stripe), and real-time CRM communication funnels.",
+        "services.s4.badge": "Enterprise Systems",
+        "services.s4.name": "Business Automation",
+        "services.s4.desc": "Custom CRM/ERP architectures, API bridges, financial gateways, and automated operational pipelines designed to eliminate human error and scale net profitability effortlessly.",
+        "journey.label": "04 / Journey",
+        "journey.heading": "The path<br><span class=\"gold\">so far.</span>",
+        "journey.m1_t": "Foundations & Code Architecture.",
+        "journey.m1_d": "Mastering engineering fundamentals, strict typing, and architectural elegance. Deep immersion into high-performance web systems.",
+        "journey.m2_t": "Momentum & Telegram Ecosystem.",
+        "journey.m2_d": "Building high-load Telegram infrastructure, native Mini Apps, corporate CRM systems, and end-to-end business automations.",
+        "journey.m3_t": "The Next Level: 3D Spatial Web & Branding.",
+        "journey.m3_d": "Crafting Awwwards-caliber 3D WebGL experiences, luxury digital commerce ateliers, and authoritative platforms that scale brands globally.",
+        "work.label": "05 / Selected Work",
+        "work.heading": "Work that<br><span class=\"gold\">left a mark.</span>",
+        "stats.label": "06 / In Numbers",
+        "stats.title": "Proof lives in <span class=\"gold\">the work.</span>",
+        "stats.s1": "Years of high-performance engineering & digital architecture",
+        "stats.s2": "Bespoke websites, bots, and automated systems deployed",
+        "stats.s3": "Handcrafted pure code with zero generic builder bloat",
+        "stats.s4": "FPS velocity with zero-lag performance guaranteed",
+        "closing.quote": "The future is not something to stand back and watch.<br>It is something we can <span class=\"gold\">shape together.</span>",
+        "contact.label": "07 / Contact",
+        "contact.heading": "Bring the idea.<br>We'll give it <span class=\"gold\">a presence.</span>",
+        "contact.btn": "Choose<br>a channel",
+        "footer.intention": "Crafted with deliberate intention."
+      }
+    };
+
+    let currentLang = 'uz';
+
+    function setLanguage(lang) {
+      if (!I18N[lang]) lang = 'uz';
+      currentLang = lang;
+      localStorage.setItem('preferred_lang', lang);
+      document.documentElement.lang = lang;
+
+      // Update active state on buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      // Update text nodes
+      const dict = I18N[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+
+      // Update HTML nodes
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+    }
+
+    // Initialize Language Switcher
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('preferred_lang') || 'uz';
+      setLanguage(savedLang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetLang = btn.dataset.lang;
+          if (targetLang !== currentLang) {
+            setLanguage(targetLang);
+            // Optional subtle audio feedback
+            try {
+              if (window.AudioContext || window.webkitAudioContext) {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(620, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.05);
+              }
+            } catch(err) {}
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>

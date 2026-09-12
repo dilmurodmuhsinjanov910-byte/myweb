@@ -93,9 +93,12 @@ const checks = [
   { name: 'Sneaker App Batched Motes Without ShadowBlur', test: () => html.includes('// Batched motes without software shadowBlur') },
   { name: 'Solar App IntersectionObserver', test: () => html.includes('if (!isVisible)') && html.includes('solarRafId') },
   { name: 'Solar App Collapsed on Mobile < 768px', test: () => html.includes('if (window.innerWidth < 768)') },
-  { name: 'Responsive Non-Blocking Watermark for P1 & P2', test: () => html.includes('#project-01 .project-content') && html.includes('pointer-events: none !important') },
+  { name: 'Responsive Non-Blocking Watermark for P1 & P2', test: () => html.includes('#project-01 .project-content') && html.includes('display: none !important') },
   { name: 'Project 3 Mobile Telemetry Dock Overrides', test: () => html.includes('bottom: 62px !important;') && html.includes('top: auto !important;') },
-  { name: 'Mobile Zero Horizontal Overflow Protection', test: () => html.includes('overflow-x:hidden') }
+  { name: 'Mobile Zero Horizontal Overflow Protection', test: () => html.includes('overflow-x:hidden') },
+  { name: 'Luxury Language Switcher Present', test: () => html.includes('class="lang-switch"') && html.includes('data-lang="uz"') && html.includes('data-lang="ru"') && html.includes('data-lang="en"') },
+  { name: 'Services & Capabilities Section Present', test: () => html.includes('id="services"') && html.includes('Har Qanday Veb-Saytlar') && html.includes('Telegram Botlar & Mini Apps') },
+  { name: 'Multilingual i18n Engine & Dictionary Complete', test: () => html.includes('const I18N = {') && html.includes('uz:') && html.includes('ru:') && html.includes('en:') && html.includes('function setLanguage(') }
 ];
 
 checks.forEach(c => {
