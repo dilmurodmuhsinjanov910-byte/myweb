@@ -991,11 +991,19 @@
       transition: transform 0.06s ease-out;
       filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.85));
     }
-    .snk-render-box svg {
-      width: 100%;
-      height: 100%;
+    .snk-render-box svg,
+    .snk-render-box img,
+    .snk-photo-render {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
       object-fit: contain;
-      overflow: visible;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+      transition: filter 0.25s ease;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75));
     }
     .snk-ground-shadow {
       position: absolute;
@@ -1545,10 +1553,17 @@
       padding: 4px;
       flex-shrink: 0;
     }
-    .snk-cart-thumb svg {
-      width: 100%;
-      height: 100%;
+    .snk-cart-thumb svg,
+    .snk-cart-thumb img,
+    .snk-cart-thumb-img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
       object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
     }
     .snk-cart-item-info {
       flex: 1;
@@ -1794,10 +1809,13 @@
       filter: drop-shadow(0 0 16px rgba(223, 183, 108, 0.95));
       transition: none;
     }
-    .snk-fly-item svg {
+    .snk-fly-item svg,
+    .snk-fly-item img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     /* Responsive Queries */
@@ -5681,12 +5699,12 @@
                 "badge": "AUTHENTIC ARCHIVE // MILANO",
                 "sku": "PMIA058F23LEA001",
                 "origin": "Made in Italy",
-                "desc": "Low-top panelled suede and canvas sneakers in white and red. Semi-transparent rubberized trim at round toe. Logo pattern in white at black lace-up closure. Graphic leather appliqué in green at side. Rubberized trim in red and black at sides and heel.",
+                "desc": "Low-top panelled suede and canvas sneakers in white and red. Semi-transparent rubberized trim at round toe. Logo pattern in white at black lace-up closure. Graphic leather appliqu\u00e9 in green at side. Rubberized trim in red and black at sides and heel.",
                 "details": [
                         "Made in Civitanova Marche, Italy",
                         "SKU: PMIA058F23LEA001",
                         "Full-grain calfskin upper with vegetable-tanned suede mudguard",
-                        "Graphic leather flame appliqué along lateral & medial quarter panels",
+                        "Graphic leather flame appliqu\u00e9 along lateral & medial quarter panels",
                         "Signature embossed emerald green rubber Palm Angels logo emblem at heel",
                         "Vulcanized off-white rubber outsole with herringbone traction pattern"
                 ],
@@ -5697,18 +5715,18 @@
                         "rating": 4.9,
                         "items": [
                                 {
-                                        "author": "Kaelen V. — Milan",
-                                        "stars": "★★★★★",
+                                        "author": "Kaelen V. \u2014 Milan",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "The heel silhouette is unmatched. The green rubber badge and flame details catch light like a runway piece."
                                 },
                                 {
-                                        "author": "Marcus T. — New York",
-                                        "stars": "★★★★★",
+                                        "author": "Marcus T. \u2014 New York",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Exceptional leather softness right out of the box. Size 43 fits true to size."
                                 },
                                 {
-                                        "author": "Sora K. — Tokyo",
-                                        "stars": "★★★★★",
+                                        "author": "Sora K. \u2014 Tokyo",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Unmistakable presence. The stitch quality on the flame applique is museum-tier."
                                 }
                         ]
@@ -5728,7 +5746,8 @@
                                 "soleBottom": "#1f2024",
                                 "laces": "#222222",
                                 "dot1": "#dc2626",
-                                "dot2": "#16a34a"
+                                "dot2": "#16a34a",
+                                "filter": "none"
                         },
                         {
                                 "name": "Obsidian Black / 24K Gold Flame",
@@ -5744,7 +5763,8 @@
                                 "soleBottom": "#121214",
                                 "laces": "#dfb76c",
                                 "dot1": "#18181b",
-                                "dot2": "#dfb76c"
+                                "dot2": "#dfb76c",
+                                "filter": "brightness(0.72) contrast(1.25) sepia(0.35) hue-rotate(5deg)"
                         },
                         {
                                 "name": "Alabaster White / Mint Flame",
@@ -5760,7 +5780,8 @@
                                 "soleBottom": "#27272a",
                                 "laces": "#ffffff",
                                 "dot1": "#fcfbfa",
-                                "dot2": "#34d399"
+                                "dot2": "#34d399",
+                                "filter": "brightness(1.08) contrast(1.05) saturate(0.9) hue-rotate(50deg)"
                         },
                         {
                                 "name": "Cyber Platinum / Ultraviolet Flame",
@@ -5776,7 +5797,8 @@
                                 "soleBottom": "#1e1b4b",
                                 "laces": "#374151",
                                 "dot1": "#9ca3af",
-                                "dot2": "#a855f7"
+                                "dot2": "#a855f7",
+                                "filter": "hue-rotate(210deg) saturate(1.2) contrast(1.1)"
                         }
                 ]
         },
@@ -5806,13 +5828,13 @@
                         "rating": 4.8,
                         "items": [
                                 {
-                                        "author": "Julien M. — Paris",
-                                        "stars": "★★★★★",
+                                        "author": "Julien M. \u2014 Paris",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "The proportions and distressed sculpting are pure Demna genius. Turns every street into a runway."
                                 },
                                 {
-                                        "author": "David L. — London",
-                                        "stars": "★★★★★",
+                                        "author": "David L. \u2014 London",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Incredible cushioning and aggressive architecture. Wear with oversized tailoring."
                                 }
                         ]
@@ -5832,7 +5854,8 @@
                                 "soleBottom": "#0f172a",
                                 "laces": "#0f172a",
                                 "dot1": "#e2e8f0",
-                                "dot2": "#334155"
+                                "dot2": "#334155",
+                                "filter": "none"
                         },
                         {
                                 "name": "Monolith All-Black Distressed",
@@ -5848,7 +5871,8 @@
                                 "soleBottom": "#000000",
                                 "laces": "#27272a",
                                 "dot1": "#18181b",
-                                "dot2": "#09090b"
+                                "dot2": "#09090b",
+                                "filter": "brightness(0.62) contrast(1.35) grayscale(0.7)"
                         },
                         {
                                 "name": "Acid Neon / Platinum White",
@@ -5864,7 +5888,8 @@
                                 "soleBottom": "#18181b",
                                 "laces": "#84cc16",
                                 "dot1": "#f8fafc",
-                                "dot2": "#84cc16"
+                                "dot2": "#84cc16",
+                                "filter": "hue-rotate(75deg) saturate(1.35) brightness(1.05)"
                         },
                         {
                                 "name": "Champagne Gold / Bone White",
@@ -5880,7 +5905,8 @@
                                 "soleBottom": "#141416",
                                 "laces": "#dfb76c",
                                 "dot1": "#f5f5f0",
-                                "dot2": "#dfb76c"
+                                "dot2": "#dfb76c",
+                                "filter": "sepia(0.35) brightness(1.05) saturate(1.1) hue-rotate(-15deg)"
                         }
                 ]
         },
@@ -5911,13 +5937,13 @@
                         "rating": 5.0,
                         "items": [
                                 {
-                                        "author": "Hiroshi N. — Kyoto",
-                                        "stars": "★★★★★",
+                                        "author": "Hiroshi N. \u2014 Kyoto",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "The quintessential minimalist sneaker. The gum sole and suede T-toe are perfection."
                                 },
                                 {
-                                        "author": "Camille D. — Lyon",
-                                        "stars": "★★★★★",
+                                        "author": "Camille D. \u2014 Lyon",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Wore my first pair for five years, bought my second immediately. Leather is like silk."
                                 }
                         ]
@@ -5937,7 +5963,8 @@
                                 "soleBottom": "#996533",
                                 "laces": "#ffffff",
                                 "dot1": "#ffffff",
-                                "dot2": "#c28b56"
+                                "dot2": "#c28b56",
+                                "filter": "none"
                         },
                         {
                                 "name": "Obsidian Black / Amber Gum",
@@ -5953,7 +5980,8 @@
                                 "soleBottom": "#8c5b29",
                                 "laces": "#141416",
                                 "dot1": "#141416",
-                                "dot2": "#b87e45"
+                                "dot2": "#b87e45",
+                                "filter": "brightness(0.55) contrast(1.35) grayscale(0.5)"
                         },
                         {
                                 "name": "Artisanal Paint Drop Splash",
@@ -5969,7 +5997,8 @@
                                 "soleBottom": "#996533",
                                 "laces": "#f3f4f6",
                                 "dot1": "#fafafa",
-                                "dot2": "#3b82f6"
+                                "dot2": "#3b82f6",
+                                "filter": "saturate(1.4) contrast(1.15)"
                         },
                         {
                                 "name": "Champagne Suede / Raw Linen",
@@ -5985,7 +6014,8 @@
                                 "soleBottom": "#96753d",
                                 "laces": "#dfb76c",
                                 "dot1": "#f7f4ed",
-                                "dot2": "#dfb76c"
+                                "dot2": "#dfb76c",
+                                "filter": "sepia(0.38) saturate(1.15) brightness(1.02)"
                         }
                 ]
         },
@@ -6016,13 +6046,13 @@
                         "rating": 4.9,
                         "items": [
                                 {
-                                        "author": "Leon B. — Berlin",
-                                        "stars": "★★★★★",
+                                        "author": "Leon B. \u2014 Berlin",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "The shark tooth sole and zipper feel indestructible. True wearable brutalist art."
                                 },
                                 {
-                                        "author": "Noah F. — Stockholm",
-                                        "stars": "★★★★★",
+                                        "author": "Noah F. \u2014 Stockholm",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Unmatched silhouette. Nothing else looks or feels like this on foot."
                                 }
                         ]
@@ -6042,7 +6072,8 @@
                                 "soleBottom": "#121214",
                                 "laces": "#f1ede4",
                                 "dot1": "#121214",
-                                "dot2": "#ece7dd"
+                                "dot2": "#ece7dd",
+                                "filter": "none"
                         },
                         {
                                 "name": "Triple Dark Shadow Noir",
@@ -6058,7 +6089,8 @@
                                 "soleBottom": "#050506",
                                 "laces": "#151518",
                                 "dot1": "#0c0c0e",
-                                "dot2": "#151518"
+                                "dot2": "#151518",
+                                "filter": "brightness(0.52) contrast(1.4) grayscale(1)"
                         },
                         {
                                 "name": "Dust Grey / Chalk White",
@@ -6074,7 +6106,8 @@
                                 "soleBottom": "#28282c",
                                 "laces": "#eae6dd",
                                 "dot1": "#4b4b52",
-                                "dot2": "#eae6dd"
+                                "dot2": "#eae6dd",
+                                "filter": "brightness(0.88) contrast(0.92) grayscale(0.55)"
                         },
                         {
                                 "name": "Golden Umber / Milk White",
@@ -6090,7 +6123,8 @@
                                 "soleBottom": "#2e1e12",
                                 "laces": "#f2ede4",
                                 "dot1": "#5c4028",
-                                "dot2": "#dfb76c"
+                                "dot2": "#dfb76c",
+                                "filter": "sepia(0.48) saturate(1.25) brightness(0.95)"
                         }
                 ]
         },
@@ -6120,13 +6154,13 @@
                         "rating": 4.8,
                         "items": [
                                 {
-                                        "author": "Matteo G. — Milan",
-                                        "stars": "★★★★★",
+                                        "author": "Matteo G. \u2014 Milan",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "The stitched arrow and zip tie are legendary. The green and white pop is timeless."
                                 },
                                 {
-                                        "author": "Ethan C. — Chicago",
-                                        "stars": "★★★★★",
+                                        "author": "Ethan C. \u2014 Chicago",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Incredible tribute to Virgil. Comfort is 10/10."
                                 }
                         ]
@@ -6146,7 +6180,8 @@
                                 "soleBottom": "#10b981",
                                 "laces": "#ffffff",
                                 "dot1": "#fbfbfa",
-                                "dot2": "#10b981"
+                                "dot2": "#10b981",
+                                "filter": "none"
                         },
                         {
                                 "name": "White / Obsidian Black Arrow",
@@ -6162,7 +6197,8 @@
                                 "soleBottom": "#18181b",
                                 "laces": "#18181b",
                                 "dot1": "#f8f8f7",
-                                "dot2": "#18181b"
+                                "dot2": "#18181b",
+                                "filter": "grayscale(0.85) contrast(1.2)"
                         },
                         {
                                 "name": "University Blue / Cream",
@@ -6178,7 +6214,8 @@
                                 "soleBottom": "#0284c7",
                                 "laces": "#ffffff",
                                 "dot1": "#fbfbfa",
-                                "dot2": "#38bdf8"
+                                "dot2": "#38bdf8",
+                                "filter": "hue-rotate(150deg) saturate(1.2)"
                         },
                         {
                                 "name": "White / Champagne Gold Arrow",
@@ -6194,7 +6231,8 @@
                                 "soleBottom": "#9a7432",
                                 "laces": "#dfb76c",
                                 "dot1": "#fcfcfa",
-                                "dot2": "#dfb76c"
+                                "dot2": "#dfb76c",
+                                "filter": "sepia(0.45) saturate(1.3) hue-rotate(-20deg)"
                         }
                 ]
         },
@@ -6224,13 +6262,13 @@
                         "rating": 4.9,
                         "items": [
                                 {
-                                        "author": "Sofia R. — Florence",
-                                        "stars": "★★★★★",
+                                        "author": "Sofia R. \u2014 Florence",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Weighs practically nothing. The metallic cage catches the evening light spectacularly."
                                 },
                                 {
-                                        "author": "Oliver K. — Zurich",
-                                        "stars": "★★★★★",
+                                        "author": "Oliver K. \u2014 Zurich",
+                                        "stars": "\u2605\u2605\u2605\u2605\u2605",
                                         "quote": "Futuristic elegance. Pairs effortlessly with tailored trousers."
                                 }
                         ]
@@ -6250,7 +6288,8 @@
                                 "soleBottom": "#059669",
                                 "laces": "#059669",
                                 "dot1": "#e2e8f0",
-                                "dot2": "#059669"
+                                "dot2": "#059669",
+                                "filter": "none"
                         },
                         {
                                 "name": "Phantom Black / Gunmetal",
@@ -6266,7 +6305,8 @@
                                 "soleBottom": "#09090b",
                                 "laces": "#71717a",
                                 "dot1": "#18181b",
-                                "dot2": "#71717a"
+                                "dot2": "#71717a",
+                                "filter": "brightness(0.6) contrast(1.3) grayscale(0.7)"
                         },
                         {
                                 "name": "Sea Salt / Champagne",
@@ -6282,7 +6322,8 @@
                                 "soleBottom": "#dfb76c",
                                 "laces": "#dfb76c",
                                 "dot1": "#f8fafc",
-                                "dot2": "#dfb76c"
+                                "dot2": "#dfb76c",
+                                "filter": "sepia(0.35) brightness(1.1) saturate(1.1)"
                         },
                         {
                                 "name": "Mirage Gold / Graphite",
@@ -6298,7 +6339,8 @@
                                 "soleBottom": "#0f172a",
                                 "laces": "#dfb76c",
                                 "dot1": "#334155",
-                                "dot2": "#dfb76c"
+                                "dot2": "#dfb76c",
+                                "filter": "sepia(0.4) contrast(1.15) brightness(0.85)"
                         }
                 ]
         }
@@ -6519,394 +6561,91 @@
       }
 
       // ----------------------------------------------------
-      // Photorealistic Vector Render Engine (360° Multi-Angle)
+      // Luxury Photorealistic Atelier Render Engine (360° Multi-Angle)
+      // Genuine Ultra-High-Resolution Studio Cutout Perspectives
       // ----------------------------------------------------
-      function renderSneakerSvg(sneaker, cw, angleDeg, isAerial, pfx) {
-        pfx = pfx || ("snk_" + sneaker.id + "_" + Math.floor(Math.random() * 1000000));
+      const PRELOAD_SNEAKER_ASSETS = [
+        "balenciaga_front3q.png", "balenciaga_heel.png", "balenciaga_profile.png",
+        "bottega_front3q.png", "bottega_heel.png", "bottega_profile.png",
+        "margiela_front3q.png", "margiela_heel.png", "margiela_profile.png",
+        "off_white_front3q.png", "off_white_heel.png", "off_white_profile.png",
+        "palm_angels_front3q.png", "palm_angels_heel.png", "palm_angels_profile.png", "palm_angels_toe.png", "palm_angels_top.png",
+        "rick_owens_front3q.png", "rick_owens_heel.png", "rick_owens_profile.png"
+      ];
+      try {
+        PRELOAD_SNEAKER_ASSETS.forEach(imgFile => {
+          const img = new Image();
+          img.src = "assets/sneakers/" + imgFile;
+        });
+      } catch(e) {}
+
+      function getSneakerPhotoData(sneaker, cw, angleDeg, isAerial) {
+        const norm = (Math.round(angleDeg) % 360 + 360) % 360;
+        const pfx = sneaker.id.replace(/-/g, "_");
+        let filename = "";
+        let flipX = false;
+        let angleName = "PROFILE";
+
         if (isAerial) {
-          return `
-            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_aerialSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-                <linearGradient id="${pfx}_aerialLeather" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="${cw.upper}" />
-                  <stop offset="70%" stop-color="${cw.suede}" />
-                  <stop offset="100%" stop-color="${cw.upper}" />
-                </linearGradient>
-              </defs>
-              <path d="M 120,140 C 120,80 200,60 330,65 C 430,70 480,95 480,140 C 480,185 430,210 330,215 C 200,220 120,200 120,140 Z" fill="url(#${pfx}_aerialSole)" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
-              <path d="M 140,140 C 140,95 210,75 330,80 C 410,85 460,105 460,140 C 460,175 410,195 330,200 C 210,205 140,185 140,140 Z" fill="url(#${pfx}_aerialLeather)" />
-              <path d="M 400,100 C 440,110 460,125 460,140 C 460,155 440,170 400,180 C 390,150 390,130 400,100 Z" fill="${cw.suede}" opacity="0.9" />
-              <g fill="rgba(0,0,0,0.25)">
-                <circle cx="430" cy="140" r="2.5" /><circle cx="420" cy="130" r="2.5" /><circle cx="420" cy="150" r="2.5" />
-                <circle cx="410" cy="120" r="2.5" /><circle cx="410" cy="140" r="2.5" /><circle cx="410" cy="160" r="2.5" />
-              </g>
-              <path d="M 230,115 L 380,120 C 385,130 385,150 380,160 L 230,165 Z" fill="#18181b" />
-              <g stroke="${cw.laces}" stroke-width="4.5" stroke-linecap="round">
-                <line x1="260" y1="120" x2="290" y2="160" /><line x1="260" y1="160" x2="290" y2="120" />
-                <line x1="290" y1="120" x2="320" y2="160" /><line x1="290" y1="160" x2="320" y2="120" />
-                <line x1="320" y1="120" x2="350" y2="160" /><line x1="320" y1="160" x2="350" y2="120" />
-                <line x1="350" y1="120" x2="375" y2="160" /><line x1="350" y1="160" x2="375" y2="120" />
-              </g>
-              <ellipse cx="205" cy="140" rx="42" ry="28" fill="#0c0d12" stroke="${cw.heel}" stroke-width="3" />
-              <text x="205" y="143" font-family="'DM Sans', sans-serif" font-size="8" font-weight="700" fill="#dfb76c" text-anchor="middle" letter-spacing="1.5">${sneaker.brand.toUpperCase()}</text>
-              <text x="205" y="153" font-family="'DM Sans', sans-serif" font-size="6" fill="#aaa" text-anchor="middle" letter-spacing="1">MILANO // 43</text>
-            </svg>
-          `;
+          filename = (sneaker.id === "palm-angels") ? `${pfx}_top.png` : `${pfx}_front3q.png`;
+          angleName = "AERIAL LACE";
+        } else if (norm >= 235 && norm <= 295) {
+          // 270° Direct Heel / Back View (Exact match to reference videoframe_11402.png for Palm Angels)
+          filename = `${pfx}_heel.png`;
+          angleName = "HEEL ARCHIVE (REF)";
+        } else if (norm >= 68 && norm <= 112) {
+          // 90° Direct Toe
+          filename = (sneaker.id === "palm-angels") ? `${pfx}_toe.png` : `${pfx}_front3q.png`;
+          angleName = "DIRECT TOE";
+        } else if (norm >= 23 && norm <= 67) {
+          // 45° 3/4 Front
+          filename = `${pfx}_front3q.png`;
+          angleName = "3/4 FRONT";
+        } else if (norm >= 113 && norm <= 157) {
+          // 135° 3/4 Medial (Flipped horizontally)
+          filename = `${pfx}_front3q.png`;
+          flipX = true;
+          angleName = "3/4 MEDIAL";
+        } else if (norm >= 158 && norm <= 202) {
+          // 180° Medial Profile (Flipped horizontally)
+          filename = `${pfx}_profile.png`;
+          flipX = true;
+          angleName = "MEDIAL PROFILE";
+        } else if (norm >= 203 && norm <= 234) {
+          // 225° 3/4 Rear Medial (Flipped horizontally)
+          filename = `${pfx}_heel.png`;
+          flipX = true;
+          angleName = "3/4 REAR MEDIAL";
+        } else if (norm >= 296 && norm <= 337) {
+          // 315° 3/4 Rear
+          filename = `${pfx}_heel.png`;
+          angleName = "3/4 REAR";
+        } else {
+          // 0° / 360° Lateral Profile
+          filename = `${pfx}_profile.png`;
+          angleName = "PROFILE";
         }
 
-        const norm = (angleDeg % 360 + 360) % 360;
+        const src = `assets/sneakers/${filename}`;
+        const filter = (cw && cw.filter) ? cw.filter : "none";
+        const transform = flipX ? "scaleX(-1)" : "none";
 
-        // HEEL / BACK VIEW (Matching reference image videoframe_11402.png)
-        if (norm >= 235 && norm <= 295) {
-          const isPalmAngels = sneaker.id === "palm-angels";
-          return `
-            <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_heelSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="85%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-                <linearGradient id="${pfx}_heelCap" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.heelLight}" />
-                  <stop offset="100%" stop-color="${cw.heel}" />
-                </linearGradient>
-                <filter id="${pfx}_badgeShadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.6)" />
-                </filter>
-              </defs>
+        return { src, filename, flipX, angleName, filter, transform };
+      }
 
-              <!-- Left Sneaker -->
-              <g transform="translate(130, 0)">
-                <path d="M -68,145 Q -75,130 -62,118 Q -50,135 -48,160 Z" fill="${cw.flame}" opacity="0.95" />
-                <path d="M -60,165 Q -68,150 -55,140 Q -45,155 -42,175 Z" fill="${cw.flameLight}" opacity="0.8" />
-                <path d="M -60,200 C -62,150 -50,95 0,90 C 50,95 62,150 60,200 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
-                <path d="M -38,96 C -38,78 38,78 38,96 C 38,106 -38,106 -38,96 Z" fill="#141418" />
-                <path d="M -44,95 C -44,70 44,70 44,95 C 40,84 -40,84 -44,95 Z" fill="#ffffff" />
-                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#${pfx}_heelCap)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
-                <path d="M -52,198 C -52,168 -40,132 0,130 C 40,132 52,168 52,198" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3 3" />
-                <path d="M -60,202 L 60,202 L 62,212 L -62,212 Z" fill="${cw.heel}" />
-                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#${pfx}_heelSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
-                <line x1="-58" y1="220" x2="58" y2="220" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
-                <g filter="url(#${pfx}_badgeShadow)">
-                  <rect x="-42" y="160" width="84" height="26" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
-                  <rect x="-40" y="162" width="80" height="22" rx="2" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1" />
-                  <text x="0" y="177" font-family="Georgia, serif" font-size="11.5" font-weight="900" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="0.5">
-                    ${isPalmAngels ? "Palm Angels" : sneaker.brand.split(" ")[0]}
-                  </text>
-                </g>
-              </g>
-
-              <!-- Right Sneaker -->
-              <g transform="translate(350, 0)">
-                <path d="M 68,145 Q 75,130 62,118 Q 50,135 48,160 Z" fill="${cw.flame}" opacity="0.95" />
-                <path d="M 60,165 Q 68,150 55,140 Q 45,155 42,175 Z" fill="${cw.flameLight}" opacity="0.8" />
-                <path d="M -60,200 C -62,150 -50,95 0,90 C 50,95 62,150 60,200 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
-                <path d="M -38,96 C -38,78 38,78 38,96 C 38,106 -38,106 -38,96 Z" fill="#141418" />
-                <path d="M -44,95 C -44,70 44,70 44,95 C 40,84 -40,84 -44,95 Z" fill="#ffffff" />
-                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#${pfx}_heelCap)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
-                <path d="M -52,198 C -52,168 -40,132 0,130 C 40,132 52,168 52,198" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3 3" />
-                <path d="M -60,202 L 60,202 L 62,212 L -62,212 Z" fill="${cw.heel}" />
-                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#${pfx}_heelSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
-                <line x1="-58" y1="220" x2="58" y2="220" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
-                <g filter="url(#${pfx}_badgeShadow)">
-                  <rect x="-42" y="160" width="84" height="26" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
-                  <rect x="-40" y="162" width="80" height="22" rx="2" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1" />
-                  <text x="0" y="177" font-family="Georgia, serif" font-size="11.5" font-weight="900" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="0.5">
-                    ${isPalmAngels ? "Palm Angels" : sneaker.brand.split(" ")[0]}
-                  </text>
-                </g>
-              </g>
-            </svg>
-          `;
+      function renderSneakerPhoto(sneaker, cw, angleDeg, isAerial, isThumb) {
+        if (isThumb) {
+          const pfx = sneaker.id.replace(/-/g, "_");
+          const filter = (cw && cw.filter) ? cw.filter : "none";
+          return `<img src="assets/sneakers/${pfx}_profile.png" alt="${sneaker.brand} ${sneaker.model}" class="snk-cart-thumb-img" style="filter: ${filter};" draggable="false" />`;
         }
+        const data = getSneakerPhotoData(sneaker, cw, angleDeg, isAerial);
+        return `<img src="${data.src}" data-src="${data.src}" alt="${sneaker.brand} ${sneaker.model}" class="snk-photo-render" style="transform: ${data.transform}; filter: ${data.filter};" draggable="false" />`;
+      }
 
-        // FRONT / TOE VIEW (68° to 112°)
-        if (norm >= 68 && norm <= 112) {
-          return `
-            <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_frontSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-              </defs>
-              <g transform="translate(240, 0)">
-                <path d="M -80,210 C -82,228 -50,232 0,233 C 50,232 82,228 80,210 Z" fill="url(#${pfx}_frontSole)" />
-                <path d="M -76,198 L 76,198 L 80,210 L -80,210 Z" fill="${cw.sole}" stroke="rgba(0,0,0,0.15)" stroke-width="1" />
-                <path d="M -72,198 C -70,160 -45,140 0,138 C 45,140 70,160 72,198 Z" fill="${cw.suede}" />
-                <path d="M -56,196 C -55,168 -35,152 0,150 C 35,152 55,168 56,196 Z" fill="${cw.upper}" />
-                <circle cx="0" cy="166" r="2.5" fill="rgba(0,0,0,0.3)" />
-                <circle cx="-14" cy="172" r="2.5" fill="rgba(0,0,0,0.3)" /><circle cx="14" cy="172" r="2.5" fill="rgba(0,0,0,0.3)" />
-                <circle cx="-26" cy="182" r="2.5" fill="rgba(0,0,0,0.3)" /><circle cx="0" cy="180" r="2.5" fill="rgba(0,0,0,0.3)" /><circle cx="26" cy="182" r="2.5" fill="rgba(0,0,0,0.3)" />
-                <path d="M -32,150 L -36,88 C -36,78 36,78 36,88 L 32,150 Z" fill="#18181b" />
-                <rect x="-24" y="85" width="48" height="20" rx="2" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
-                <text x="0" y="98" font-family="'DM Sans', sans-serif" font-size="7" font-weight="700" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="1">
-                  ${sneaker.brand.split(" ")[0]}
-                </text>
-                <g stroke="${cw.laces}" stroke-width="4.5" stroke-linecap="round">
-                  <line x1="-28" y1="145" x2="28" y2="135" /><line x1="28" y1="145" x2="-28" y2="135" />
-                  <line x1="-29" y1="130" x2="29" y2="120" /><line x1="29" y1="130" x2="-29" y2="120" />
-                  <line x1="-30" y1="115" x2="30" y2="105" /><line x1="30" y1="115" x2="-30" y2="105" />
-                </g>
-                <path d="M -72,198 C -74,160 -50,110 -35,95 L -26,145 Z" fill="${cw.upper}" stroke="rgba(0,0,0,0.15)" stroke-width="1" />
-                <path d="M 72,198 C 74,160 50,110 35,95 L 26,145 Z" fill="${cw.upper}" stroke="rgba(0,0,0,0.15)" stroke-width="1" />
-              </g>
-            </svg>
-          `;
-        }
-
-        // MEDIAL 3/4 FRONT (113° to 157°) - Mirrored Medial Perspective
-        if (norm >= 113 && norm <= 157) {
-          return `
-            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_threeQMedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="${cw.suede}" />
-                  <stop offset="40%" stop-color="${cw.upper}" />
-                  <stop offset="100%" stop-color="${cw.upper}" />
-                </linearGradient>
-                <linearGradient id="${pfx}_threeQMedSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-              </defs>
-              <g transform="translate(460, 10) scale(-1, 1)">
-                <path d="M 50,195 Q 180,185 360,192 Q 400,196 410,210 Q 380,222 250,225 Q 70,225 45,212 Z" fill="url(#${pfx}_threeQMedSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-                <path d="M 55,185 Q 180,175 360,182 L 360,195 Q 180,185 50,195 Z" fill="${cw.sole}" />
-                <path d="M 55,185 C 50,140 70,95 120,90 C 150,90 170,120 240,135 C 310,150 365,160 360,182 Q 180,175 55,185 Z" fill="url(#${pfx}_threeQMedGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
-                <path d="M 55,185 C 50,140 70,95 105,92 L 115,182 Z" fill="${cw.heel}" />
-                <path d="M 125,180 Q 180,140 280,150 Q 230,130 195,135 Q 260,115 310,138 Q 230,120 160,140 Z" fill="${cw.flame}" opacity="0.85" />
-                <path d="M 280,150 C 330,155 370,165 360,182 Q 320,180 280,175 Z" fill="${cw.suede}" />
-                <path d="M 105,92 C 110,80 150,80 155,94 L 195,125 L 140,115 Z" fill="#141418" />
-                <path d="M 140,90 L 175,70 L 210,115 L 175,128 Z" fill="#1f2026" />
-                <g stroke="${cw.laces}" stroke-width="4" stroke-linecap="round">
-                  <line x1="160" y1="110" x2="195" y2="128" /><line x1="180" y1="100" x2="215" y2="120" />
-                  <line x1="200" y1="92" x2="235" y2="114" />
-                </g>
-              </g>
-            </svg>
-          `;
-        }
-
-        // FRONT 3/4 (23° to 67°)
-        if (norm >= 23 && norm <= 67) {
-          return `
-            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_threeQGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="${cw.upper}" />
-                  <stop offset="60%" stop-color="${cw.upper}" />
-                  <stop offset="100%" stop-color="${cw.suede}" />
-                </linearGradient>
-                <linearGradient id="${pfx}_threeQSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-              </defs>
-              <g transform="translate(60, 10)">
-                <path d="M 50,195 Q 180,185 360,192 Q 400,196 410,210 Q 380,222 250,225 Q 70,225 45,212 Z" fill="url(#${pfx}_threeQSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-                <path d="M 55,185 Q 180,175 360,182 L 360,195 Q 180,185 50,195 Z" fill="${cw.sole}" />
-                <path d="M 55,185 C 50,140 70,95 120,90 C 150,90 170,120 240,135 C 310,150 365,160 360,182 Q 180,175 55,185 Z" fill="url(#${pfx}_threeQGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
-                <path d="M 55,185 C 50,140 70,95 105,92 L 115,182 Z" fill="${cw.heel}" />
-                <rect x="62" y="125" width="38" height="18" rx="2" fill="${cw.badgeBg}" />
-                <path d="M 125,180 Q 180,140 280,150 Q 230,130 195,135 Q 260,115 310,138 Q 230,120 160,140 Z" fill="${cw.flame}" />
-                <path d="M 280,150 C 330,155 370,165 360,182 Q 320,180 280,175 Z" fill="${cw.suede}" />
-                <path d="M 105,92 C 110,80 150,80 155,94 L 195,125 L 140,115 Z" fill="#141418" />
-                <path d="M 140,90 L 175,70 L 210,115 L 175,128 Z" fill="#1f2026" />
-                <g stroke="${cw.laces}" stroke-width="4" stroke-linecap="round">
-                  <line x1="160" y1="110" x2="195" y2="128" /><line x1="180" y1="100" x2="215" y2="120" />
-                  <line x1="200" y1="92" x2="235" y2="114" />
-                </g>
-              </g>
-            </svg>
-          `;
-        }
-
-        // MEDIAL (158° to 202°)
-        if (norm >= 158 && norm <= 202) {
-          const isRick = sneaker.id === "rick-owens";
-          return `
-            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_medialSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="85%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-              </defs>
-              <g transform="translate(480, 0) scale(-1, 1)">
-                <path d="M 70,192 C 150,190 220,182 300,188 C 380,194 440,195 445,190 C 445,212 430,222 390,224 C 280,226 150,225 65,218 Z" fill="url(#${pfx}_medialSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
-                <path d="M 72,192 C 65,140 85,85 145,82 C 185,82 205,120 290,135 C 370,150 435,165 440,188 C 390,184 270,182 72,192 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
-                <path d="M 360,158 C 410,165 442,175 440,188 C 400,186 360,184 350,175 Z" fill="${cw.suede}" />
-                <path d="M 72,192 C 65,140 85,85 125,84 L 132,190 Z" fill="${cw.heel}" />
-                ${isRick ? `
-                  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
-                    <line x1="140" y1="90" x2="160" y2="188" />
-                    <line x1="136" y1="100" x2="144" y2="100" /><line x1="140" y1="115" x2="148" y2="115" />
-                    <circle cx="138" cy="95" r="4" fill="#64748b" />
-                  </g>
-                ` : `
-                  <path d="M 160,188 Q 220,150 310,155 Q 260,140 220,150 Z" fill="${cw.flame}" opacity="0.85" />
-                `}
-                <path d="M 125,84 C 130,72 170,72 180,85 L 210,118 L 155,108 Z" fill="#121318" />
-              </g>
-            </svg>
-          `;
-        }
-
-        // MEDIAL 3/4 REAR (203° to 234°) - Mirrored Medial Rear Perspective
-        if (norm >= 203 && norm <= 234) {
-          return `
-            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_rear3QMedSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-              </defs>
-              <g transform="translate(420, 10) scale(-1, 1)">
-                <path d="M 70,188 C 110,182 220,175 350,186 C 360,205 340,222 240,225 C 140,227 60,224 55,205 Z" fill="url(#${pfx}_rear3QMedSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
-                <path d="M 65,188 C 55,130 90,85 140,84 C 200,84 250,115 320,150 C 355,168 355,185 350,186 Z" fill="${cw.upper}" />
-                <path d="M 65,188 C 55,130 90,85 140,84 L 165,185 Z" fill="${cw.heel}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-                <path d="M 160,182 Q 220,140 310,155 Q 260,135 220,145 Z" fill="${cw.flame}" opacity="0.8" />
-                <ellipse cx="150" cy="85" rx="30" ry="16" fill="#141418" stroke="${cw.heel}" stroke-width="2" />
-              </g>
-            </svg>
-          `;
-        }
-
-        // REAR 3/4 (306° to 337°)
-        if (norm >= 296 && norm <= 337) {
-          return `
-            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="${pfx}_rear3QSole" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="${cw.sole}" />
-                  <stop offset="100%" stop-color="${cw.soleBottom}" />
-                </linearGradient>
-              </defs>
-              <g transform="translate(100, 10)">
-                <path d="M 70,188 C 110,182 220,175 350,186 C 360,205 340,222 240,225 C 140,227 60,224 55,205 Z" fill="url(#${pfx}_rear3QSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
-                <path d="M 65,188 C 55,130 90,85 140,84 C 200,84 250,115 320,150 C 355,168 355,185 350,186 Z" fill="${cw.upper}" />
-                <path d="M 65,188 C 55,130 90,85 140,84 L 165,185 Z" fill="${cw.heel}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-                <rect x="75" y="125" width="60" height="22" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
-                <text x="105" y="139" font-family="Georgia, serif" font-size="9" font-weight="900" fill="${cw.badgeText}" text-anchor="middle">
-                  ${sneaker.id === "palm-angels" ? "Palm Angels" : sneaker.brand.split(" ")[0]}
-                </text>
-                <path d="M 160,182 Q 220,140 310,155 Q 260,135 220,145 Z" fill="${cw.flame}" />
-                <ellipse cx="150" cy="85" rx="30" ry="16" fill="#141418" stroke="${cw.heel}" stroke-width="2" />
-              </g>
-            </svg>
-          `;
-        }
-
-        // DEFAULT: LATERAL PROFILE SIDE VIEW (Around 0° / 360°)
-        const isPalm = sneaker.id === "palm-angels";
-        const isBalenciaga = sneaker.id === "balenciaga";
-        const isMargiela = sneaker.id === "margiela";
-        const isRick = sneaker.id === "rick-owens";
-        const isOffWhite = sneaker.id === "off-white";
-        const isBottega = sneaker.id === "bottega";
-
-        return `
-          <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="${pfx}_latSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="${cw.sole}" />
-                <stop offset="85%" stop-color="${cw.sole}" />
-                <stop offset="100%" stop-color="${cw.soleBottom}" />
-              </linearGradient>
-              <linearGradient id="${pfx}_flameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="${cw.flameLight}" />
-                <stop offset="100%" stop-color="${cw.flame}" />
-              </linearGradient>
-              <linearGradient id="${pfx}_latUpperGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="${cw.upper}" />
-                <stop offset="75%" stop-color="${cw.upper}" />
-                <stop offset="100%" stop-color="${cw.suede}" />
-              </linearGradient>
-            </defs>
-
-            <ellipse cx="260" cy="226" rx="200" ry="10" fill="rgba(0,0,0,0.55)" filter="blur(4px)" />
-
-            <!-- Outsole Construction -->
-            ${isBalenciaga ? `
-              <path d="M 52,204 Q 40,195 48,185 L 68,185 L 90,195 L 140,194 L 180,188 L 260,188 L 330,194 L 410,196 C 452,198 460,208 450,222 C 435,230 380,228 290,226 C 180,228 100,230 65,225 C 48,220 48,212 52,204 Z" fill="url(#${pfx}_latSoleGrad)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" />
-              <path d="M 46,188 L 82,188 L 74,206 L 40,200 Z" fill="#1e293b" />
-            ` : isRick ? `
-              <path d="M 64,190 L 440,190 C 455,190 460,202 452,216 L 440,225 C 380,226 220,226 65,225 C 55,220 54,200 64,190 Z" fill="url(#${pfx}_latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-              <g fill="#18181c">
-                <polygon points="120,225 130,225 125,232" /><polygon points="150,225 160,225 155,232" />
-                <polygon points="180,225 190,225 185,232" /><polygon points="210,225 220,225 215,232" />
-                <polygon points="240,225 250,225 245,232" /><polygon points="270,225 280,225 275,232" />
-                <polygon points="300,225 310,225 305,232" /><polygon points="330,225 340,225 335,232" />
-              </g>
-            ` : `
-              <path d="M 68,190 C 60,192 60,210 68,222 C 120,225 280,226 420,224 C 445,222 452,212 448,195 C 445,188 410,188 380,188 C 280,188 180,188 68,190 Z" fill="url(#${pfx}_latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-              <line x1="68" y1="198" x2="445" y2="198" stroke="rgba(0,0,0,0.12)" stroke-width="1.5" />
-              <path d="M 425,190 C 445,190 452,198 448,212 L 436,212 C 438,202 435,195 425,190 Z" fill="${cw.soleBottom}" opacity="0.6" />
-            `}
-
-            <!-- Main Upper Calfskin Hull -->
-            <path d="M 72,190 C 65,145 82,92 138,88 C 175,86 195,115 270,132 C 345,148 425,160 445,188 C 390,186 280,186 72,190 Z" fill="url(#${pfx}_latUpperGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
-
-            <!-- MODEL-SPECIFIC ICONIC ARTWORK -->
-            ${isPalm ? `
-              <path d="M 72,190 C 65,145 82,92 120,90 L 126,190 Z" fill="${cw.heel}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-              <rect x="66" y="145" width="10" height="24" rx="2" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />
-              <path d="M 370,165 C 415,170 445,178 445,188 C 410,188 370,186 360,178 Z" fill="${cw.suede}" stroke="rgba(0,0,0,0.1)" stroke-width="1" />
-              <path d="M 126,172 
-                       C 160,162 180,135 220,138 C 190,128 175,140 155,148
-                       C 185,130 225,115 285,130 C 240,118 200,128 175,138
-                       C 220,115 270,105 340,135 C 290,120 230,130 190,150
-                       C 235,142 290,145 355,165 C 310,158 240,162 180,175 Z" 
-                    fill="url(#${pfx}_flameGrad)" stroke="rgba(0,0,0,0.18)" stroke-width="1" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.3))" />
-              <path d="M 132,168 C 170,158 215,125 280,128" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="0.8" stroke-dasharray="2 2" />
-            ` : isBalenciaga ? `
-              <path d="M 120,188 L 190,135 L 230,145 L 180,188 Z" fill="${cw.flame}" opacity="0.8" />
-              <path d="M 220,142 L 310,135 L 340,165 L 260,188 Z" fill="#334155" opacity="0.7" />
-              <path d="M 320,145 L 380,155 L 420,180 L 360,188 Z" fill="${cw.suede}" />
-              <text x="430" y="185" font-family="'DM Sans', sans-serif" font-size="8" font-weight="900" fill="#ffffff" letter-spacing="1">43</text>
-            ` : isMargiela ? `
-              <path d="M 345,152 C 390,160 435,170 445,188 C 400,186 350,184 335,170 Z" fill="${cw.suede}" stroke="rgba(0,0,0,0.1)" stroke-width="1" />
-              <path d="M 210,118 L 305,138 L 295,155 L 205,135 Z" fill="${cw.suede}" opacity="0.9" />
-              <line x1="90" y1="120" x2="108" y2="120" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
-            ` : isRick ? `
-              <path d="M 110,188 C 110,130 150,110 240,125 C 190,130 160,150 155,188 Z" fill="${cw.flame}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-            ` : isOffWhite ? `
-              <path d="M 180,158 L 280,150 L 260,138 L 295,148 L 260,158 L 280,148 L 180,158 Z" fill="${cw.flame}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
-              <rect x="220" y="105" width="8" height="18" rx="2" fill="#059669" transform="rotate(25 220 105)" />
-            ` : `
-              <g stroke="${cw.flame}" stroke-width="2" opacity="0.85">
-                <line x1="160" y1="170" x2="240" y2="130" /><line x1="190" y1="180" x2="270" y2="140" />
-                <line x1="220" y1="185" x2="300" y2="145" /><line x1="250" y1="185" x2="330" y2="150" />
-                <line x1="240" y1="130" x2="160" y2="185" /><line x1="270" y1="140" x2="190" y2="188" />
-                <line x1="300" y1="145" x2="220" y2="188" />
-              </g>
-            `}
-
-            <path d="M 118,90 C 122,76 172,76 182,90 L 215,120 L 155,110 Z" fill="#121316" />
-            ${isRick ? `
-              <path d="M 160,88 L 195,45 C 205,45 225,55 225,70 L 255,125 Z" fill="#16161a" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-            ` : `
-              <path d="M 172,90 L 210,75 C 218,75 225,82 225,90 L 255,125 Z" fill="#1a1b20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-            `}
-
-            <g fill="none" stroke="${cw.laces}" stroke-width="3.5" stroke-linecap="round">
-              <line x1="195" y1="112" x2="230" y2="126" /><line x1="215" y1="102" x2="250" y2="118" />
-              <line x1="235" y1="94" x2="270" y2="110" /><line x1="255" y1="88" x2="290" y2="104" />
-            </g>
-            <g fill="#71717a" stroke="#ffffff" stroke-width="0.5">
-              <circle cx="195" cy="112" r="2.2" /><circle cx="215" cy="102" r="2.2" />
-              <circle cx="235" cy="94" r="2.2" /><circle cx="255" cy="88" r="2.2" />
-            </g>
-          </svg>
-        `;
+      function renderSneakerSvg(sneaker, cw, angleDeg, isAerial, pfx) {
+        const isThumb = typeof pfx === "string" && pfx.startsWith("cart_");
+        return renderSneakerPhoto(sneaker, cw, angleDeg, isAerial, isThumb);
       }
 
       // ----------------------------------------------------
@@ -6915,30 +6654,24 @@
       function updateSneakerView() {
         const sneaker = SNEAKERS[activeSneakerIdx];
         const colorway = sneaker.colorways[activeColorwayIdx];
+        const photo = getSneakerPhotoData(sneaker, colorway, currentAngle, isAerialView);
 
         if (renderBox) {
-          renderBox.innerHTML = renderSneakerSvg(sneaker, colorway, currentAngle, isAerialView);
+          let img = renderBox.querySelector("img.snk-photo-render");
+          if (!img) {
+            renderBox.innerHTML = `<img src="${photo.src}" data-src="${photo.src}" alt="${sneaker.brand} ${sneaker.model}" class="snk-photo-render" style="transform: ${photo.transform}; filter: ${photo.filter};" draggable="false" />`;
+          } else {
+            if (img.getAttribute("data-src") !== photo.src) {
+              img.src = photo.src;
+              img.setAttribute("data-src", photo.src);
+            }
+            img.style.transform = photo.transform;
+            img.style.filter = photo.filter;
+          }
         }
 
         const normAngle = (Math.round(currentAngle) % 360 + 360) % 360;
-        let angleName = "PROFILE";
-        if (isAerialView) {
-          angleName = "AERIAL LACE";
-        } else if (normAngle >= 235 && normAngle <= 295) {
-          angleName = "HEEL ARCHIVE (REF)";
-        } else if (normAngle >= 68 && normAngle <= 112) {
-          angleName = "DIRECT TOE";
-        } else if (normAngle >= 23 && normAngle <= 67) {
-          angleName = "3/4 FRONT";
-        } else if (normAngle >= 113 && normAngle <= 157) {
-          angleName = "3/4 MEDIAL";
-        } else if (normAngle >= 158 && normAngle <= 202) {
-          angleName = "MEDIAL PROFILE";
-        } else if (normAngle >= 203 && normAngle <= 234) {
-          angleName = "3/4 REAR MEDIAL";
-        } else if (normAngle >= 296 && normAngle <= 337) {
-          angleName = "3/4 REAR";
-        }
+        const angleName = photo.angleName;
 
         if (degreeVal) {
           degreeVal.textContent = isAerialView ? "TOP // AERIAL LACE" : normAngle + "\u00b0 // " + angleName;
@@ -7328,9 +7061,13 @@
         const cardRect = tiltCard.getBoundingClientRect();
         const cartRect = cartTrigger.getBoundingClientRect();
 
+        const sneaker = SNEAKERS[activeSneakerIdx];
+        const colorway = sneaker.colorways[activeColorwayIdx];
+        const pfx = sneaker.id.replace(/-/g, "_");
+
         const flyer = document.createElement("div");
         flyer.className = "snk-fly-item";
-        flyer.innerHTML = `<svg viewBox="0 0 24 24" fill="${SNEAKERS[activeSneakerIdx].colorways[activeColorwayIdx].flame}"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>`;
+        flyer.innerHTML = `<img src="assets/sneakers/${pfx}_profile.png" alt="" style="width:100%;height:100%;object-fit:contain;filter:${colorway.filter || 'none'};" draggable="false" />`;
         document.body.appendChild(flyer);
 
         const startX = cardRect.left + cardRect.width / 2 - 20;
