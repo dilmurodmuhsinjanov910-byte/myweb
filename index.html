@@ -8379,16 +8379,16 @@
       const anglePills = document.querySelectorAll(".snk-angle-pill");
       const modelTabs = document.querySelectorAll(".snk-model-tab");
       const brandTagEl = document.getElementById("snk-brand-tag");
-      const titleEl = document.getElementById("snk-title");
+      const titleEl = document.getElementById("snk-product-title");
       const priceValEl = document.getElementById("snk-price-val");
-      const swatchesWrap = document.getElementById("snk-swatches");
-      const cwLabel = document.getElementById("snk-colorway-label");
+      const swatchesWrap = document.getElementById("snk-swatches-list");
+      const cwLabel = document.getElementById("snk-color-name");
       const sizeBtns = document.querySelectorAll(".snk-size-btn");
-      const fitNote = document.getElementById("snk-fit-note");
-      const addToCartBtn = document.getElementById("snk-add-to-cart-btn");
+      const fitNote = document.getElementById("snk-stock-text");
+      const addToCartBtn = document.getElementById("snk-add-cart-btn");
       const wishBtn = document.getElementById("snk-wishlist-btn");
       const wishBadge = document.getElementById("snk-wishlist-badge");
-      const descEl = document.getElementById("snk-desc");
+      const descEl = document.getElementById("snk-editorial-desc");
       const accDetails = document.getElementById("snk-acc-details");
       const accMaterial = document.getElementById("snk-acc-material");
       const accShipping = document.getElementById("snk-acc-shipping");
@@ -8975,7 +8975,7 @@
             price: 3999,
             weight: "14.7 kg",
             freq: "33 Hz – 23 kHz",
-            driver: "1x 8" Woofer, 2x 3" Mid, 2x 1.5" Full, 2x 0.75" Tweet",
+            driver: "1x 8-inch Woofer, 2x 3-inch Mid, 2x 1.5-inch Full, 2x 0.75-inch Tweet",
             latency: "1,500 Watts Total 7-Class-D Digital Power",
             conn: "AirPlay 2, Chromecast, Beolink Multiroom, Wi-Fi 6",
             battery: "Mains Powered Luxury Architectural Audio",
@@ -8994,7 +8994,7 @@
             price: 799,
             weight: "6.5 kg",
             freq: "35 Hz – 24 kHz",
-            driver: "2x Decoupled Double Dome Tweeters + 6" Subwoofer",
+            driver: "2x Decoupled Double Dome Tweeters + 6-inch Subwoofer",
             latency: "24-bit/96kHz High-Resolution Audio Processing",
             conn: "AirPlay 2, Spotify Connect, aptX Adaptive, Wi-Fi",
             battery: "240 Watts Total Digital Amplification",
@@ -9013,7 +9013,7 @@
             price: 1100,
             weight: "11 kg",
             freq: "35 Hz – 20 kHz",
-            driver: "2x 3" Full-Range + 1x 6.5" Custom Subwoofer",
+            driver: "2x 3-inch Full-Range + 1x 6.5-inch Custom Subwoofer",
             latency: "True Wireless Stereo (TWS) Dual Sync",
             conn: "Bluetooth 5.0, 3.5mm In/Out, Modular Wi-Fi Bay",
             battery: "140W Class-D Built-in Active Amplification",
@@ -9141,22 +9141,22 @@
       const hudAngle = document.getElementById("hw-hud-angle");
       const rakursBtns = document.querySelectorAll(".hw-rakurs-btn");
       const xraySlider = document.getElementById("hw-xray-slider");
-      const xraySliderVal = document.getElementById("hw-xray-val");
+      const xraySliderVal = document.getElementById("hw-xray-slider-val");
       const xrayAssembly = document.getElementById("hw-xray-assembly");
       const hwViewport = document.getElementById("hw-viewport");
       const hwRotator = document.getElementById("hw-rotator");
 
       // Telemetry Fields
-      const telSeries = document.getElementById("hw-tel-series");
-      const telName = document.getElementById("hw-tel-name");
-      const telBrand = document.getElementById("hw-tel-brand");
-      const telPrice = document.getElementById("hw-tel-price");
-      const telWeight = document.getElementById("hw-tel-weight");
-      const telFreq = document.getElementById("hw-tel-freq");
-      const telDriver = document.getElementById("hw-tel-driver");
-      const telLatency = document.getElementById("hw-tel-latency");
-      const telConn = document.getElementById("hw-tel-conn");
-      const telBattery = document.getElementById("hw-tel-battery");
+      const telSeries = document.getElementById("hw-tele-serial");
+      const telName = document.getElementById("hw-tele-model");
+      const telBrand = document.getElementById("hw-tele-brand");
+      const telPrice = document.getElementById("hw-tele-price");
+      const telWeight = document.getElementById("hw-spec-weight");
+      const telFreq = document.getElementById("hw-spec-freq");
+      const telDriver = document.getElementById("hw-spec-driver");
+      const telLatency = document.getElementById("hw-spec-latency");
+      const telConn = document.getElementById("hw-spec-conn");
+      const telBattery = document.getElementById("hw-spec-battery");
       const specChassis = document.getElementById("callout-chassis-spec");
       const specDriver = document.getElementById("callout-driver-spec");
       const specPcb = document.getElementById("callout-pcb-spec");
@@ -9165,13 +9165,13 @@
 
       // Audio & Reservation
       const profileBtns = document.querySelectorAll(".hw-profile-btn");
-      const audioPlayBtn = document.getElementById("hw-audio-play");
-      const visCanvas = document.getElementById("hw-vis-canvas");
+      const audioPlayBtn = document.getElementById("hw-audio-play-btn");
+      const visCanvas = document.getElementById("hw-visualizer-canvas");
       const reserveBtn = document.getElementById("hw-reserve-btn");
       const modalBackdrop = document.getElementById("hw-modal-backdrop");
       const modalClose = document.getElementById("hw-modal-close");
       const modalSubmit = document.getElementById("hw-modal-submit");
-      const modalProdTitle = document.getElementById("hw-modal-product-title");
+      const modalProdTitle = document.getElementById("hw-modal-product-name");
       const modalPriceVal = document.getElementById("hw-modal-price-val");
       const modalSerialCode = document.getElementById("hw-modal-serial-code");
 
