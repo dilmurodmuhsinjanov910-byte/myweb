@@ -469,16 +469,16 @@
     .portal-index-fill{height:100%;background:var(--gold-grad);width:16.66%;transition:width .6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 8px rgba(223,183,108,.8)}
     .portal-index-total{font-size:9px;color:#555}
 
-    /* Layer 3: Center Archway with 3D Depth (Z: +40px) */
+    /* Layer 3: Center Monumental Japanese Torii Gate with 3D Depth (Z: +40px) */
     .portal-gate-wrap{
-      position:relative;z-index:12;width:min(285px,38%);aspect-ratio:350/410;
+      position:relative;z-index:12;width:min(340px,44%);aspect-ratio:1/1;
       cursor:pointer;transform-origin:center center;
       transform-style:preserve-3d;
       will-change:transform,filter;
       transition:filter .4s;
     }
     .portal-gate-wrap:hover{
-      filter:drop-shadow(0 0 38px rgba(223,183,108,.5)) drop-shadow(0 0 70px rgba(223,183,108,.28));
+      filter:drop-shadow(0 0 34px rgba(223,183,108,.45)) drop-shadow(0 0 65px rgba(223,183,108,.22));
     }
     .portal-gate-wrap:active{transform:scale(.97)}
     .portal-gate-img{
@@ -489,58 +489,29 @@
       transform-style:preserve-3d;
     }
 
-    /* Singularity Aperture Container (Accurately sized to inner arch cutout) */
+    /* Singularity Aperture Container (Transparent to frame magnificent landscape directly) */
     .portal-singularity-container{
-      position:absolute;left:14%;top:14.5%;width:72%;height:71.5%;
-      border-radius:50% 50% 12% 12% / 46% 46% 12% 12%;
-      overflow:hidden;
+      position:absolute;inset:0;width:100%;height:100%;
+      overflow:visible;
       z-index:3;pointer-events:none;
       transform:translateZ(6px);
-      background:#010204;
-      box-shadow:inset 0 0 35px rgba(0,0,0,0.95), 0 0 30px rgba(223,183,108,0.3);
+      background:transparent;
+      box-shadow:none;
     }
     .portal-singularity-canvas{
-      position:absolute;inset:0;width:100%;height:100%;
-      display:block;
+      position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
     }
     .portal-threads-canvas{
-      position:absolute;inset:0;width:100%;height:100%;
-      display:block;
-      pointer-events:none;
-      z-index:4;
+      position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;
     }
     .portal-runes-svg{
-      position:absolute;inset:-6%;width:112%;height:112%;
-      pointer-events:none;
-      transform-origin:center center;
-      opacity:0.82;
-      mix-blend-mode:screen;
-      filter:drop-shadow(0 0 6px rgba(223,183,108,0.6));
-      transition:opacity .4s, filter .4s;
-    }
-    .portal-gate-wrap:hover .portal-runes-svg{
-      opacity:1;
-      filter:drop-shadow(0 0 14px rgba(255,225,140,0.95));
+      display:none;
     }
     .portal-runes-text{
-      font-family:monospace;
-      font-size:7px;
-      letter-spacing:4px;
-      fill:#ffd78a;
-      text-transform:uppercase;
+      display:none;
     }
     .portal-singularity-flare{
-      position:absolute;left:0;top:46%;width:100%;height:2px;
-      background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.95) 50%,transparent 100%);
-      box-shadow:0 0 16px 4px rgba(223,183,108,0.85);
-      mix-blend-mode:screen;
-      pointer-events:none;
-      opacity:0.75;
-      animation:flareBreathe 3s ease-in-out infinite alternate;
-    }
-    @keyframes flareBreathe{
-      0%{transform:scaleX(0.7);opacity:0.45}
-      100%{transform:scaleX(1.15);opacity:0.9}
+      display:none;
     }
 
     /* Layer 4: Foreground Obsidian Dunes Canvas (Z: +75px) */
@@ -842,7 +813,7 @@
       }
       .portal-overlay-left{left:14px;top:14px;max-width:180px}
       .portal-overlay-right{display:none}
-      .portal-gate-wrap{width:min(230px,55%)}
+      .portal-gate-wrap{width:min(260px,58%)}
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -1006,7 +977,7 @@
                   <span class="portal-status"><span class="portal-status-dot"></span>ONLINE</span>
                 </div>
                 <div class="portal-nav-tabs" id="portal-nav-tabs">
-                  <span class="portal-tab active" data-idx="0">Utah</span>
+                  <span class="portal-tab active" data-idx="0">Mount Fuji</span>
                   <span class="portal-tab" data-idx="1">Cappadocia</span>
                   <span class="portal-tab" data-idx="2">Kyoto</span>
                   <span class="portal-tab" data-idx="3">Uyuni</span>
@@ -1035,7 +1006,7 @@
                 <!-- Content Overlay: Left (Holographic HUD) -->
                 <div class="portal-overlay-left" id="portal-overlay-left">
                   <span class="portal-kicker">TELEPORT YOURS // <span id="portal-index-kicker">01 OF 06</span></span>
-                  <h3 class="portal-place-name" id="portal-place-name">Discover<br><span class="gold" id="portal-place-title">Monument Valley</span></h3>
+                  <h3 class="portal-place-name" id="portal-place-name">Discover<br><span class="gold" id="portal-place-title">Mount Fuji</span></h3>
                   <div class="portal-index-row">
                     <span class="portal-index-current" id="portal-index-num">01</span>
                     <div class="portal-index-bar"><div class="portal-index-fill" id="portal-index-fill"></div></div>
@@ -1082,7 +1053,7 @@
                   </div>
 
                   <!-- Authentic S-Tier Photo-Real Cutout Stone Archway -->
-                  <img src="gate_arch_transparent.png" alt="Ancient Stone Gate Arch" class="portal-gate-img" id="portal-gate-img" />
+                  <img src="torii_gate_transparent.png" alt="Iconic Japanese Torii Gate" class="portal-gate-img" id="portal-gate-img" />
                 </div>
 
                 <!-- Layer 4: Foreground Obsidian Dunes Canvas (Z: +75px) -->
@@ -1107,19 +1078,19 @@
                   <div class="portal-telemetry-box">
                     <div class="telemetry-row">
                       <span class="telemetry-label">COORDINATES</span>
-                      <span class="telemetry-val" id="telemetry-coords">36.998° N, 110.098° W</span>
+                      <span class="telemetry-val" id="telemetry-coords">35.361° N, 138.727° E</span>
                     </div>
                     <div class="telemetry-row">
                       <span class="telemetry-label">ALTITUDE</span>
-                      <span class="telemetry-val" id="telemetry-alt">1,638 M</span>
+                      <span class="telemetry-val" id="telemetry-alt">3,776 M</span>
                     </div>
                     <div class="telemetry-row">
                       <span class="telemetry-label">ATMOSPHERE</span>
-                      <span class="telemetry-val" id="telemetry-atmo">Arid Sunset · 24°C</span>
+                      <span class="telemetry-val" id="telemetry-atmo">Sakura Dawn · 12°C</span>
                     </div>
                     <div class="telemetry-row">
                       <span class="telemetry-label">TEMPORAL WINDOW</span>
-                      <span class="telemetry-val gold" id="telemetry-window">OPTIMAL SYNC</span>
+                      <span class="telemetry-val gold" id="telemetry-window">DIVINE HARMONY</span>
                     </div>
                   </div>
 
@@ -1141,7 +1112,7 @@
                   </button>
                 </div>
                 <div class="portal-pills" id="portal-pills">
-                  <button class="portal-pill active" data-idx="0">01. Utah</button>
+                  <button class="portal-pill active" data-idx="0">01. Mount Fuji</button>
                   <button class="portal-pill" data-idx="1">02. Cappadocia</button>
                   <button class="portal-pill" data-idx="2">03. Kyoto</button>
                   <button class="portal-pill" data-idx="3">04. Uyuni</button>
@@ -2400,7 +2371,10 @@
       // Delicate Crystal Bell / Metallic Wind Chime Synthesizer
       // ("mayin qo'ng'iroq ovozi" - Shimmering overtones & pentatonic decay)
       // ----------------------------------------------------
-      const CHIME_PENTATONIC = [1046.50, 1174.66, 1318.51, 1567.98, 1760.00, 2093.00, 2349.32];
+      const CHIME_PENTATONIC = [
+        587.33, 659.25, 783.99, 880.00, 1046.50,
+        1174.66, 1318.51, 1567.98, 1760.00, 2093.00, 2349.32
+      ];
 
       function playThreadChime(stringIndex, strength = 0.5, delaySec = 0) {
         if (!soundEnabled) return;
@@ -2473,25 +2447,25 @@
         {
           kicker: "01 OF 06",
           num: "01",
-          name: "Monument Valley",
-          coords: "36.998° N, 110.098° W",
-          altitude: "1,638 M",
-          atmosphere: "Arid Sunset · 24°C",
-          temporal: "OPTIMAL SYNC",
-          bgGradient: ["#0b0407", "#2e0f19", "#7a2228", "#e46436", "#faba63"],
-          horizonY: 0.64,
-          glowColor: "rgba(240, 140, 70, 0.55)",
-          singularityColors: ["#fff2d0", "#ff9922", "rgba(255, 120, 30, 0.9)"],
+          name: "Mount Fuji",
+          coords: "35.361° N, 138.727° E",
+          altitude: "3,776 M",
+          atmosphere: "Sakura Dawn · 12°C",
+          temporal: "DIVINE HARMONY",
+          bgGradient: ["#140718", "#2f112e", "#6b2346", "#ca485c", "#f9b282"],
+          horizonY: 0.60,
+          glowColor: "rgba(255, 140, 160, 0.55)",
+          singularityColors: ["#fff0f5", "#ff7da7", "rgba(255, 105, 150, 0.8)"],
           cosmicColors: {
-            nebulaPrimary: "rgba(255, 120, 30, 0.62)",
-            nebulaSecondary: "rgba(180, 40, 90, 0.52)",
-            cosmicCyan: "rgba(255, 205, 90, 0.85)",
-            rayColor: "rgba(255, 175, 50, 0.75)"
+            nebulaPrimary: "rgba(255, 120, 160, 0.35)",
+            nebulaSecondary: "rgba(210, 80, 140, 0.3)",
+            cosmicCyan: "rgba(255, 215, 230, 0.6)",
+            rayColor: "rgba(255, 160, 180, 0.4)"
           },
-          particleType: "dust",
-          particleCount: 65,
-          particleColor: "rgba(255, 195, 130, 0.85)",
-          imageSrc: "world_monument_valley.jpg",
+          particleType: "sakura",
+          particleCount: 75,
+          particleColor: "rgba(255, 192, 203, 0.85)",
+          imageSrc: "world_mount_fuji.jpg",
           useImage: true
         },
         {
@@ -2816,7 +2790,7 @@
       // Golden Telemetry Threads (Fluid Hair/Silk Cloth Dynamics)
       // Floating in gate archway with upcoming destination data
       // ----------------------------------------------------
-      const NUM_THREADS = 7;
+      const NUM_THREADS = 11;
       const NODES_PER_THREAD = 24;
       let hangingThreads = [];
       const threadMouse = {
@@ -2833,13 +2807,12 @@
       function initHangingThreads(w, h) {
         hangingThreads = [];
         for (let i = 0; i < NUM_THREADS; i++) {
-          const normX = 0.18 + (i / (NUM_THREADS - 1)) * 0.64; // Spaced across arch opening
+          // Distributed evenly across Torii gate aperture (between inner vermilion pillars)
+          const normX = 0.365 + (i / (NUM_THREADS - 1)) * 0.270;
           const anchorX = w * normX;
-          // Arch ceiling curve (catenary/ellipse arch approximation)
-          const archCenterDist = Math.abs((normX - 0.5) / 0.36);
-          const archHeight = Math.sqrt(Math.max(0, 1 - archCenterDist * archCenterDist * 0.72));
-          const topY = (1 - archHeight) * (h * 0.18) + h * 0.04;
-          const totalLength = h * 0.78;
+          // Anchored directly underneath horizontal vermilion lintel
+          const topY = h * 0.405;
+          const totalLength = h * 0.460; // Suspended gracefully above stone plinths
           const segmentLength = totalLength / (NODES_PER_THREAD - 1);
 
           const nodes = [];
@@ -2874,9 +2847,13 @@
           `✦ COORD: ${next.coords.replace(" ", "")}`,
           `▲ ALTITUDE: ${next.altitude} · SL`,
           `◈ ATMO: ${next.atmosphere.split("·")[0].trim().toUpperCase()}`,
-          `❖ WARP SYNC: ${next.temporal.split(" ")[0]}`,
-          `ᛟ ᚱ ᛒ ᛁ ᛏ ᚐ ᛚ // ᛋ ᛁ ᚾ ᚷ ᚢ ᛚ ᚐ`,
-          `✦ STARGATE READY 99.9%`
+          `❖ TEMPORAL: ${next.temporal.split(" ")[0]}`,
+          `⛩ TORII ARCHWAY // OPEN`,
+          `✦ HARMONIC SYNC 99.9%`,
+          `✧ SAKURA VECTOR // STABLE`,
+          `◈ LATENT DRIFT // ZERO`,
+          `ᛟ ᚱ ᛒ ᛁ ᛏ ᚐ ᛚ // ᛋ ᛁ ᚾ ᚷ ᚢ ᛚ`,
+          `᚛ ᚛ 神 道 // T E L E P O R T ᚛ ᚛`
         ];
         return stringData[threadIndex % stringData.length];
       }
@@ -3009,8 +2986,8 @@
         const dpr = window.devicePixelRatio || 1;
         threadsCtx.clearRect(0, 0, w, h);
 
-        const fontSize = Math.max(7.5, Math.min(11, Math.round(8.5 * dpr)));
-        threadsCtx.font = `600 ${fontSize}px 'Cinzel', 'Cinzel Decorative', 'DM Sans', monospace`;
+        const fontSize = Math.max(5.8, Math.min(8.0, Math.round(6.4 * dpr)));
+        threadsCtx.font = `500 ${fontSize}px 'Cinzel', 'Cinzel Decorative', 'DM Sans', monospace`;
         threadsCtx.textAlign = "center";
         threadsCtx.textBaseline = "middle";
 
@@ -3019,7 +2996,7 @@
           const isGlowing = th.displacedIntensity > 0.12;
           const glowAlpha = Math.min(1.0, 0.35 + th.displacedIntensity * 0.65);
 
-          // 1. Draw subtle golden silk filament line
+          // 1. Draw subtle golden silk filament line (mayin va nozik)
           threadsCtx.beginPath();
           th.nodes.forEach((node, j) => {
             if (j === 0) threadsCtx.moveTo(node.x, node.y);
@@ -3032,10 +3009,10 @@
           });
           threadsCtx.strokeStyle = isGlowing
             ? `rgba(255, 245, 215, ${glowAlpha})`
-            : "rgba(223, 183, 108, 0.32)";
-          threadsCtx.lineWidth = (isGlowing ? 1.5 : 0.9) * dpr * 0.75;
+            : "rgba(223, 183, 108, 0.28)";
+          threadsCtx.lineWidth = (isGlowing ? 1.05 : 0.55) * dpr;
           threadsCtx.shadowColor = isGlowing ? "rgba(255, 230, 150, 0.85)" : "transparent";
-          threadsCtx.shadowBlur = isGlowing ? 8 * dpr : 0;
+          threadsCtx.shadowBlur = isGlowing ? 6 * dpr : 0;
           threadsCtx.stroke();
           threadsCtx.shadowBlur = 0;
 
@@ -3044,21 +3021,20 @@
           const btmNode = th.nodes[th.nodes.length - 1];
           threadsCtx.fillStyle = isGlowing ? "#fffbe6" : "#dfb76c";
           threadsCtx.beginPath();
-          threadsCtx.arc(topNode.x, topNode.y, 2.2 * dpr * 0.7, 0, Math.PI * 2);
-          threadsCtx.arc(btmNode.x, btmNode.y, 1.8 * dpr * 0.7, 0, Math.PI * 2);
+          threadsCtx.arc(topNode.x, topNode.y, 1.5 * dpr, 0, Math.PI * 2);
+          threadsCtx.arc(btmNode.x, btmNode.y, 1.3 * dpr, 0, Math.PI * 2);
           threadsCtx.fill();
 
           // 2. Draw tiny luxury golden letters & glyphs along the hanging thread
           th.nodes.forEach((node, j) => {
-            if (node.pinned) return; // Skip top anchor bead
+            if (node.pinned) return;
             const charIdx = j - 1;
             const char = charIdx < text.length ? text[charIdx] : "·";
 
             if (!char || char === " " || char === "·") {
-              // Draw delicate golden micro bead / nodule
-              threadsCtx.fillStyle = isGlowing ? "#fff3d1" : "rgba(223, 183, 108, 0.75)";
+              threadsCtx.fillStyle = isGlowing ? "#fff3d1" : "rgba(223, 183, 108, 0.65)";
               threadsCtx.beginPath();
-              threadsCtx.arc(node.x, node.y, (isGlowing ? 1.4 : 1.0) * dpr * 0.7, 0, Math.PI * 2);
+              threadsCtx.arc(node.x, node.y, (isGlowing ? 0.95 : 0.6) * dpr, 0, Math.PI * 2);
               threadsCtx.fill();
               return;
             }
@@ -3070,12 +3046,12 @@
             if (j > 0 && j < th.nodes.length - 1) {
               const dx = th.nodes[j + 1].x - th.nodes[j - 1].x;
               const dy = th.nodes[j + 1].y - th.nodes[j - 1].y;
-              const angle = Math.atan2(dx, dy) * 0.65;
+              const angle = Math.atan2(dx, dy);
               threadsCtx.rotate(-angle);
             }
 
-            threadsCtx.shadowColor = isGlowing ? "rgba(255, 235, 170, 0.95)" : "rgba(223, 183, 108, 0.45)";
-            threadsCtx.shadowBlur = (isGlowing ? 7 : 3) * dpr * 0.6;
+            threadsCtx.shadowColor = isGlowing ? "rgba(255, 235, 170, 0.9)" : "rgba(223, 183, 108, 0.35)";
+            threadsCtx.shadowBlur = (isGlowing ? 5 : 2) * dpr * 0.5;
             threadsCtx.fillStyle = isGlowing ? "#fffce8" : "#dfb76c";
             threadsCtx.fillText(char, 0, 0);
 
@@ -3098,11 +3074,17 @@
           particles.push({
             x: Math.random() * w,
             y: Math.random() * h,
-            vx: (Math.random() - 0.5) * (d.particleType === "snow" ? 0.9 : 0.6),
-            vy: (d.particleType === "snow" ? (0.8 + Math.random() * 1.3) :
+            vx: (d.particleType === "sakura" ? (0.45 + Math.random() * 0.55) :
+                 d.particleType === "snow" ? ((Math.random() - 0.5) * 0.9) :
+                 (Math.random() - 0.5) * 0.6),
+            vy: (d.particleType === "sakura" ? (0.65 + Math.random() * 0.65) :
+                 d.particleType === "snow" ? (0.8 + Math.random() * 1.3) :
                  d.particleType === "fireflies" ? ((Math.random() - 0.5) * 0.5) :
                  d.particleType === "balloons" ? (-0.25 - Math.random() * 0.35) :
                  (-0.2 - Math.random() * 0.3)),
+            radius: d.particleType === "sakura" ? (Math.random() * 2.8 + 1.8) : (Math.random() * 2.2 + 0.8),
+            rot: Math.random() * Math.PI * 2,
+            vRot: (Math.random() - 0.5) * 0.035,
             radius: Math.random() * 2.2 + 0.8,
             alpha: Math.random() * 0.7 + 0.25,
             pulseSpeed: Math.random() * 0.04 + 0.015,
@@ -3252,8 +3234,8 @@
       }
 
       // ----------------------------------------------------
-      // Persistent Neon Cosmic Nebula & Celestial Deep Space Portal Visual
-      // ("darvoza ichidagi partalni orniga neon kosmik tasvir doimiy qoshimcha")
+      // ----------------------------------------------------
+      // Transparent Torii Gate Aperture (Crystal Clear Landscape Framing & Shimmer)
       // ----------------------------------------------------
       let cosmicTick = 0;
       function renderNeonCosmicPortal() {
@@ -3263,203 +3245,59 @@
 
         const w = singularityCanvas.width;
         const h = singularityCanvas.height;
-        const cx = w * 0.5;
-        const cy = h * 0.5;
-        const maxRadius = Math.min(w, h) * 0.49;
-        const coreRadius = maxRadius * 0.22;
-        const d = destinations[currentIndex];
-        const cosmic = d.cosmicColors || {
-          nebulaPrimary: "rgba(160, 40, 255, 0.6)",
-          nebulaSecondary: "rgba(0, 220, 255, 0.55)",
-          cosmicCyan: "rgba(0, 240, 255, 0.85)",
-          rayColor: "rgba(255, 215, 100, 0.75)"
-        };
 
-        // 1. Deep Space Ultraviolet/Astral Void Base
-        const spaceGrad = singularityCtx.createRadialGradient(cx, cy, 0, cx, cy, maxRadius * 1.05);
-        spaceGrad.addColorStop(0, "#080214");
-        spaceGrad.addColorStop(0.35, "#0d0322");
-        spaceGrad.addColorStop(0.75, "#05010c");
-        spaceGrad.addColorStop(1, "#010004");
-        singularityCtx.fillStyle = spaceGrad;
-        singularityCtx.fillRect(0, 0, w, h);
+        // 1. Clear completely so the breathtaking photographic landscape is 100% visible!
+        singularityCtx.clearRect(0, 0, w, h);
 
         singularityCtx.save();
-        singularityCtx.translate(cx, cy);
 
-        // 2. Swirling Volumetric Neon Nebula Clouds (Multi-octave rotating plasma eddies)
-        singularityCtx.globalCompositeOperation = "screen";
-        const numPuffs = 5;
-        for (let p = 0; p < numPuffs; p++) {
-          const puffAngle = cosmicTick * 0.009 * vortexSpeedMultiplier + (p * (Math.PI * 2 / numPuffs));
-          const puffDist = coreRadius * 0.8 + Math.sin(cosmicTick * 0.02 + p) * (maxRadius * 0.28);
-          const px = Math.cos(puffAngle) * puffDist;
-          const py = Math.sin(puffAngle) * puffDist;
-          const puffRadius = maxRadius * (0.42 + Math.sin(cosmicTick * 0.03 + p * 1.5) * 0.1);
+        // 2. Delicate ambient golden stardust motes floating through the open Torii gate
+        singularityParticles.forEach((p, idx) => {
+          p.theta += (p.speed * 0.12) * vortexSpeedMultiplier;
+          const px = w * 0.5 + Math.cos(p.theta + idx) * (w * 0.125);
+          const py = h * 0.64 + Math.sin(p.theta * 0.85 + idx * 1.4) * (h * 0.19);
 
-          const puffGrad = singularityCtx.createRadialGradient(px, py, 2, px, py, puffRadius);
-          const col1 = p % 2 === 0 ? cosmic.nebulaPrimary : cosmic.nebulaSecondary;
-          puffGrad.addColorStop(0, col1);
-          puffGrad.addColorStop(0.45, p % 2 === 0 ? "rgba(255, 60, 180, 0.3)" : "rgba(30, 200, 255, 0.25)");
-          puffGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-
-          singularityCtx.fillStyle = puffGrad;
-          singularityCtx.beginPath();
-          singularityCtx.arc(px, py, puffRadius, 0, Math.PI * 2);
-          singularityCtx.fill();
-        }
-
-        // 3. Luminous Outward-Radiating Cosmic Rays & Pulsar Light Beams
-        const rayCount = 12;
-        for (let r = 0; r < rayCount; r++) {
-          const rayAngle = cosmicTick * 0.012 * vortexSpeedMultiplier + (r * (Math.PI * 2 / rayCount));
-          const rayPulse = 0.5 + 0.5 * Math.sin(cosmicTick * 0.08 + r * 1.4);
-          const rayLen = maxRadius * (0.65 + rayPulse * 0.35);
-
-          singularityCtx.save();
-          singularityCtx.rotate(rayAngle);
-          const rayGrad = singularityCtx.createLinearGradient(0, 0, rayLen, 0);
-          rayGrad.addColorStop(0, cosmic.rayColor);
-          rayGrad.addColorStop(0.3, "rgba(255, 230, 140, 0.45)");
-          rayGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-          singularityCtx.fillStyle = rayGrad;
-          singularityCtx.beginPath();
-          singularityCtx.moveTo(coreRadius * 0.6, -1.8 * vortexSpeedMultiplier);
-          singularityCtx.lineTo(rayLen, -0.6);
-          singularityCtx.lineTo(rayLen, 0.6);
-          singularityCtx.lineTo(coreRadius * 0.6, 1.8 * vortexSpeedMultiplier);
-          singularityCtx.closePath();
-          singularityCtx.fill();
-          singularityCtx.restore();
-        }
-
-        // 4. Logarithmic Spiral Quantum Energy Filaments
-        const spiralCount = 4;
-        for (let sp = 0; sp < spiralCount; sp++) {
-          const baseSpAngle = -cosmicTick * 0.022 * vortexSpeedMultiplier + (sp * (Math.PI * 2 / spiralCount));
-          singularityCtx.beginPath();
-          const steps = 45;
-          for (let s = 0; s <= steps; s++) {
-            const t = s / steps;
-            const rad = coreRadius * 0.8 + Math.pow(t, 1.4) * (maxRadius - coreRadius * 0.8);
-            const harmonic = Math.sin(t * 8 - cosmicTick * 0.06 + sp * 1.7) * (3.5 * (1 - t * 0.3));
-            const ang = baseSpAngle + t * 4.8 + harmonic * 0.07;
-            const rx = Math.cos(ang) * (rad + harmonic);
-            const ry = Math.sin(ang) * (rad + harmonic);
-            if (s === 0) singularityCtx.moveTo(rx, ry);
-            else singularityCtx.lineTo(rx, ry);
-          }
-          singularityCtx.strokeStyle = sp % 2 === 0 ? cosmic.cosmicCyan : cosmic.nebulaPrimary;
-          singularityCtx.lineWidth = (2.6 - (sp % 2) * 1.0) * vortexSpeedMultiplier;
-          singularityCtx.shadowColor = sp % 2 === 0 ? "#00f0ff" : "#dfb76c";
-          singularityCtx.shadowBlur = 12 * vortexSpeedMultiplier;
-          singularityCtx.stroke();
-          singularityCtx.shadowBlur = 0;
-        }
-
-        // 5. Twinkling Celestial Starfield & Diamond Spikes
-        cosmicStars.forEach(st => {
-          st.theta += st.orbitSpeed * vortexSpeedMultiplier;
-          const sx = Math.cos(st.theta) * st.r;
-          const sy = Math.sin(st.theta) * st.r;
-          const twinkle = 0.35 + 0.65 * Math.sin(cosmicTick * st.twinkleSpeed + st.phase);
-          const currentSize = st.size * (0.8 + twinkle * 0.4);
-
-          singularityCtx.fillStyle = st.color;
-          singularityCtx.globalAlpha = Math.max(0.1, Math.min(1.0, twinkle));
-          singularityCtx.beginPath();
-          singularityCtx.arc(sx, sy, currentSize, 0, Math.PI * 2);
-          singularityCtx.fill();
-
-          // 4-point anamorphic diamond diffraction spike for brightest celestial stars
-          if (st.hasDiamondSpike && twinkle > 0.6) {
-            const spikeLen = currentSize * 5.5 * twinkle;
-            singularityCtx.strokeStyle = st.color;
-            singularityCtx.lineWidth = 0.65;
+          if (px > w * 0.35 && px < w * 0.65 && py > h * 0.41 && py < h * 0.88) {
+            const moteAlpha = (0.22 + 0.28 * Math.sin(cosmicTick * 0.035 + idx)) * (isGateHovered ? 1.5 : 1.0);
+            singularityCtx.fillStyle = isGateHovered ? "rgba(255, 235, 180, " + moteAlpha + ")" : "rgba(223, 183, 108, " + (moteAlpha * 0.7) + ")";
             singularityCtx.beginPath();
-            singularityCtx.moveTo(sx - spikeLen, sy);
-            singularityCtx.lineTo(sx + spikeLen, sy);
-            singularityCtx.moveTo(sx, sy - spikeLen);
-            singularityCtx.lineTo(sx, sy + spikeLen);
-            singularityCtx.stroke();
+            singularityCtx.arc(px, py, p.size * 0.65, 0, Math.PI * 2);
+            singularityCtx.fill();
           }
         });
-        singularityCtx.globalAlpha = 1.0;
 
-        // 6. Relativistic Infalling Cosmic Particles with Motion Streaks
-        singularityParticles.forEach(p => {
-          const angVel = (p.speed * (maxRadius / (p.r + 14))) * vortexSpeedMultiplier;
-          p.theta += angVel;
-          p.r -= p.inwardSpeed * vortexSpeedMultiplier;
-
-          if (p.r < coreRadius * 0.4) {
-            p.r = maxRadius * (0.82 + Math.random() * 0.18);
-            p.theta = Math.random() * Math.PI * 2;
-          }
-
-          const px = Math.cos(p.theta) * p.r;
-          const py = Math.sin(p.theta) * p.r;
-          const tailLen = Math.min(p.r * 0.14, 12) * vortexSpeedMultiplier;
-          const tx = Math.cos(p.theta - angVel * 1.8) * (p.r + tailLen * 0.5);
-          const ty = Math.sin(p.theta - angVel * 1.8) * (p.r + tailLen * 0.5);
-
-          singularityCtx.strokeStyle = cosmic.cosmicCyan;
-          singularityCtx.lineWidth = p.size;
-          singularityCtx.globalAlpha = p.alpha;
+        // 3. Ethereal subtle golden aura when gate is hovered or teleporting (non-blocking)
+        if (isTeleporting) {
+          const cx = w * 0.5;
+          const cy = h * 0.65;
+          const rad = Math.min(w, h) * 0.35;
+          const flashGrad = singularityCtx.createRadialGradient(cx, cy, 5, cx, cy, rad);
+          flashGrad.addColorStop(0, "rgba(255, 255, 240, 0.75)");
+          flashGrad.addColorStop(0.4, "rgba(255, 220, 150, 0.35)");
+          flashGrad.addColorStop(0.8, "rgba(255, 180, 100, 0.12)");
+          flashGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
+          singularityCtx.fillStyle = flashGrad;
           singularityCtx.beginPath();
-          singularityCtx.moveTo(tx, ty);
-          singularityCtx.lineTo(px, py);
-          singularityCtx.stroke();
-
-          singularityCtx.fillStyle = "#ffffff";
-          singularityCtx.beginPath();
-          singularityCtx.arc(px, py, p.size * 0.9, 0, Math.PI * 2);
+          singularityCtx.arc(cx, cy, rad, 0, Math.PI * 2);
           singularityCtx.fill();
-        });
-        singularityCtx.globalAlpha = 1.0;
-
-        // 7. Radiant Galactic Singularity Core (Vibrant Neon Portal Heart)
-        singularityCtx.globalCompositeOperation = "source-over";
-        const pulseCore = coreRadius * (0.95 + 0.06 * Math.sin(cosmicTick * 0.08));
-
-        // Core Radiant Glow
-        const coreGrad = singularityCtx.createRadialGradient(0, 0, 0, 0, 0, pulseCore * 1.8);
-        coreGrad.addColorStop(0, "#ffffff");
-        coreGrad.addColorStop(0.25, "#e0f7ff");
-        coreGrad.addColorStop(0.55, cosmic.cosmicCyan);
-        coreGrad.addColorStop(0.85, cosmic.nebulaPrimary);
-        coreGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-        singularityCtx.fillStyle = coreGrad;
-        singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, pulseCore * 1.8, 0, Math.PI * 2);
-        singularityCtx.fill();
-
-        // Pulsing Neon Photon Horizon Ring
-        singularityCtx.strokeStyle = "#fff7d6";
-        singularityCtx.lineWidth = 2.4 * vortexSpeedMultiplier;
-        singularityCtx.shadowColor = cosmic.cosmicCyan;
-        singularityCtx.shadowBlur = 18 * vortexSpeedMultiplier;
-        singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, pulseCore, 0, Math.PI * 2);
-        singularityCtx.stroke();
-        singularityCtx.shadowBlur = 0;
-
-        // Luminous Core Eye (Cosmic Micro-Singularity)
-        const innerCoreGrad = singularityCtx.createRadialGradient(0, 0, 0, 0, 0, pulseCore * 0.6);
-        innerCoreGrad.addColorStop(0, "#ffffff");
-        innerCoreGrad.addColorStop(0.45, "#80eeff");
-        innerCoreGrad.addColorStop(0.9, "#1a0033");
-        innerCoreGrad.addColorStop(1, "rgba(5, 1, 15, 0.9)");
-        singularityCtx.fillStyle = innerCoreGrad;
-        singularityCtx.beginPath();
-        singularityCtx.arc(0, 0, pulseCore * 0.6, 0, Math.PI * 2);
-        singularityCtx.fill();
+        } else if (isGateHovered) {
+          const cx = w * 0.5;
+          const cy = h * 0.65;
+          const rad = Math.min(w, h) * 0.30;
+          const hoverGrad = singularityCtx.createRadialGradient(cx, cy, 10, cx, cy, rad);
+          hoverGrad.addColorStop(0, "rgba(255, 235, 170, 0.16)");
+          hoverGrad.addColorStop(0.6, "rgba(223, 183, 108, 0.08)");
+          hoverGrad.addColorStop(1, "rgba(223, 183, 108, 0)");
+          singularityCtx.fillStyle = hoverGrad;
+          singularityCtx.beginPath();
+          singularityCtx.arc(cx, cy, rad, 0, Math.PI * 2);
+          singularityCtx.fill();
+        }
 
         singularityCtx.restore();
-        singularityCtx.globalAlpha = 1.0;
       }
 
-      // ----------------------------------------------------
+// ----------------------------------------------------
       // Layer 1: Distant Sky & Atmospheric Canvas Renderer
       // ----------------------------------------------------
       function renderSky(w, h, d, farOffX, farOffY) {
@@ -3477,7 +3315,18 @@
 
         const horizonY = h * d.horizonY;
 
-        if (d.particleType === "dust") {
+                if (d.particleType === "sakura") {
+          // Mount Fuji Dawn Sunrise Sun & Sakura Glow
+          const sunX = w * 0.38 + farOffX;
+          const sunY = horizonY - h * 0.12 + farOffY;
+          const sunGrad = skyCtx.createRadialGradient(sunX, sunY, 5, sunX, sunY, w * 0.42);
+          sunGrad.addColorStop(0, "#fff5ea");
+          sunGrad.addColorStop(0.18, "rgba(255, 180, 150, 0.85)");
+          sunGrad.addColorStop(0.55, "rgba(235, 95, 125, 0.25)");
+          sunGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+          skyCtx.fillStyle = sunGrad;
+          skyCtx.fillRect(0, 0, w, h);
+        } else if (d.particleType === "dust") {
           // Utah Sunset Sun Disk & Solar Corona
           const sunX = w * 0.5 + farOffX;
           const sunY = horizonY - h * 0.10 + farOffY;
@@ -3967,17 +3816,29 @@
         particles.forEach(p => {
           p.x += p.vx;
           p.y += p.vy;
-          if (p.x < 0) p.x = w;
-          if (p.x > w) p.x = 0;
-          if (p.y < 0) p.y = h;
-          if (p.y > h) p.y = 0;
+          if (p.rot !== undefined) p.rot += p.vRot;
+          if (p.x < -10) p.x = w + 10;
+          if (p.x > w + 10) p.x = -10;
+          if (p.y < -10) p.y = h + 10;
+          if (p.y > h + 10) p.y = -10;
 
-          const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(cosmicTick * p.pulseSpeed + p.pulsePhase));
+          const currentAlpha = p.alpha * (0.7 + 0.3 * Math.sin(cosmicTick * p.pulseSpeed + p.pulsePhase));
           worldCtx.fillStyle = d.particleColor;
           worldCtx.globalAlpha = Math.max(0, Math.min(1, currentAlpha));
-          worldCtx.beginPath();
-          worldCtx.arc(p.x + midOffX * p.depth, p.y + midOffY * p.depth, p.radius, 0, Math.PI * 2);
-          worldCtx.fill();
+
+          worldCtx.save();
+          worldCtx.translate(p.x + midOffX * p.depth, p.y + midOffY * p.depth);
+          if (d.particleType === "sakura") {
+            worldCtx.rotate(p.rot || 0);
+            worldCtx.beginPath();
+            worldCtx.ellipse(0, 0, p.radius * 1.4, p.radius * 0.8, 0, 0, Math.PI * 2);
+            worldCtx.fill();
+          } else {
+            worldCtx.beginPath();
+            worldCtx.arc(0, 0, p.radius, 0, Math.PI * 2);
+            worldCtx.fill();
+          }
+          worldCtx.restore();
         });
         worldCtx.globalAlpha = 1.0;
       }
@@ -3991,29 +3852,31 @@
 
         const horizonY = h * d.horizonY;
 
-        // Dark Obsidian Dunes that physically overlap and ground the stone gate arch
-        fgCtx.fillStyle = "#040507";
+        const duneY = h * 0.90;
+
+        // Grounding atmospheric dunes at very bottom of viewport
+        fgCtx.fillStyle = "rgba(4, 5, 7, 0.85)";
         fgCtx.beginPath();
         fgCtx.moveTo(0, h);
-        fgCtx.lineTo(0, horizonY + 44 + fgOffY);
+        fgCtx.lineTo(0, duneY + 12 + fgOffY);
         fgCtx.bezierCurveTo(
-          w * 0.28 + fgOffX, horizonY + 22 + fgOffY,
-          w * 0.72 + fgOffX, horizonY + 54 + fgOffY,
-          w, horizonY + 34 + fgOffY
+          w * 0.28 + fgOffX, duneY - 4 + fgOffY,
+          w * 0.72 + fgOffX, duneY + 16 + fgOffY,
+          w, duneY + 6 + fgOffY
         );
         fgCtx.lineTo(w, h);
         fgCtx.closePath();
         fgCtx.fill();
 
         // Subtle bronze/gold dune rim illumination
-        fgCtx.strokeStyle = "rgba(223, 183, 108, 0.25)";
-        fgCtx.lineWidth = 1.2;
+        fgCtx.strokeStyle = "rgba(223, 183, 108, 0.22)";
+        fgCtx.lineWidth = 1.0;
         fgCtx.beginPath();
-        fgCtx.moveTo(0, horizonY + 44 + fgOffY);
+        fgCtx.moveTo(0, duneY + 12 + fgOffY);
         fgCtx.bezierCurveTo(
-          w * 0.28 + fgOffX, horizonY + 22 + fgOffY,
-          w * 0.72 + fgOffX, horizonY + 54 + fgOffY,
-          w, horizonY + 34 + fgOffY
+          w * 0.28 + fgOffX, duneY - 4 + fgOffY,
+          w * 0.72 + fgOffX, duneY + 16 + fgOffY,
+          w, duneY + 6 + fgOffY
         );
         fgCtx.stroke();
 
