@@ -2310,6 +2310,8 @@
       transition: transform 0.3s ease;
     }
     .snk-video-render {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       max-width: 100%;
@@ -2323,7 +2325,8 @@
       user-select: none;
       -webkit-user-drag: none;
       pointer-events: none;
-      transition: transform 0.06s ease-out;
+      z-index: 6;
+      transition: transform 0.06s ease-out, opacity 0.2s ease;
     }
     .hw-hud-scroll-badge {
       display: inline-flex;
@@ -3751,7 +3754,13 @@
                   <!-- 3D Tilt Card & Stage Canvas Container -->
                   <div class="snk-tilt-card" id="snk-tilt-card" title="Click and drag horizontally to rotate 360 degrees">
                     <div class="snk-light-spot" id="snk-light-spot"></div>
-                    <div class="snk-render-box" id="snk-render-box"></div>
+                    <div class="snk-render-box" id="snk-render-box">
+                      <video id="snk-video" class="snk-video-render" playsinline muted loop preload="auto" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E">
+                        <source src="assets/videos_webm/360_degree_product_showcase_video_20260912183606.webm" type="video/webm">
+                        <source src="assets/videos/360_degree_product_showcase_video_20260912183606.mp4" type="video/mp4">
+                      </video>
+                      <img src="assets/sneakers/palm_angels_profile.png" data-src="assets/sneakers/palm_angels_profile.png" alt="PALM ANGELS Flame Low" class="snk-photo-render" draggable="false" />
+                    </div>
                     <div class="snk-ground-shadow" id="snk-ground-shadow"></div>
                     <div class="snk-ground-reflection" id="snk-ground-reflection"></div>
                   </div>
@@ -7732,6 +7741,8 @@
                 "badge": "AUTHENTIC ARCHIVE // MILANO",
                 "sku": "PMIA058F23LEA001",
                 "origin": "Made in Italy",
+                "video": "assets/videos_webm/360_degree_product_showcase_video_20260912183606.webm",
+                "videoMp4": "assets/videos/360_degree_product_showcase_video_20260912183606.mp4",
                 "desc": "Low-top panelled suede and canvas sneakers in white and red. Semi-transparent rubberized trim at round toe. Logo pattern in white at black lace-up closure. Graphic leather appliqu\u00e9 in green at side. Rubberized trim in red and black at sides and heel.",
                 "details": [
                         "Made in Civitanova Marche, Italy",
@@ -7845,6 +7856,8 @@
                 "badge": "RUNWAY EDITION // PARIS",
                 "sku": "677403W3RB11000",
                 "origin": "Made in Italy",
+                "video": "assets/videos_webm/Product_360_degree_rotation_video_20260912183607.webm",
+                "videoMp4": "assets/videos/Product_360_degree_rotation_video_20260912183607.mp4",
                 "desc": "Multi-layered technical sneaker featuring artisanal pre-worn distressing, raw edge mesh insets, exterior sizing stamp at toe box, and architectural sculpted EVA foam outsole.",
                 "details": [
                         "Made in Italy",
@@ -7953,6 +7966,8 @@
                 "badge": "LINE 22 // ARCHIVE 1970",
                 "sku": "S57WS0236P1895",
                 "origin": "Made in Italy",
+                "video": "assets/videos_webm/Product_360-degree_rotation_video_20260912183605_2.webm",
+                "videoMp4": "assets/videos/Product_360-degree_rotation_video_20260912183605_2.mp4",
                 "desc": "Timeless 1970s Austrian court silhouette reimagined in buttery nappa lambskin with suede overlays. Numbered tongue patch with circled 22, signature single white stitch at heel tab, and honey gum rubber tread.",
                 "details": [
                         "Made in Veneto, Italy",
@@ -8062,6 +8077,8 @@
                 "badge": "DARK SHADOW // CONCORDIA",
                 "sku": "RU01C4880LPO",
                 "origin": "Made in Italy",
+                "video": "assets/videos_webm/Product_360_degree_video_showcase_20260912183605.webm",
+                "videoMp4": "assets/videos/Product_360_degree_video_showcase_20260912183605.mp4",
                 "desc": "Exaggerated architectural silhouette featuring extended tongue, geometric side swooping paneling, shark-tooth grooved shark rubber cupsole, and heavy-duty industrial zipper detailing.",
                 "details": [
                         "Handcrafted in Concordia, Italy",
@@ -8171,6 +8188,8 @@
                 "badge": "SPECIAL EDITION // MILANO",
                 "sku": "OMIA189F21LEA001",
                 "origin": "Made in Italy",
+                "video": "assets/videos_webm/360_degree_product_showcase_video_20260912183605.webm",
+                "videoMp4": "assets/videos/360_degree_product_showcase_video_20260912183605.mp4",
                 "desc": "Late 1980s and early 1990s tennis aesthetic featuring Virgil Abloh's signature stitched leather arrow logo, detachable marled zip-tie tag, embossed heel quote, and dual-tone gel insert outsole.",
                 "details": [
                         "Made in Italy",
@@ -8279,6 +8298,8 @@
                 "badge": "RUNWAY 2026 // VICENZA",
                 "sku": "764491V32Q01000",
                 "origin": "Made in Italy",
+                "video": "assets/videos_webm/Product_360_degree_showcase_video_20260912183606.webm",
+                "videoMp4": "assets/videos/Product_360_degree_showcase_video_20260912183606.mp4",
                 "desc": "Futuristic 1990s runner crafted from technical open-cell mesh with ergonomic metallic film overlays mimicking the iconic Intrecciato weave dynamics. Ultra-lightweight kinetic sole.",
                 "details": [
                         "Made in Italy",
@@ -8405,6 +8426,7 @@
       const modelTabs = Array.from(document.querySelectorAll(".snk-model-tab"));
       const anglePills = Array.from(document.querySelectorAll(".snk-angle-pill"));
       const renderBox = document.getElementById("snk-render-box");
+      const snkVideo = document.getElementById("snk-video");
       const groundShadow = document.getElementById("snk-ground-shadow");
       const lightSpot = document.getElementById("snk-light-spot");
       const tiltCard = document.getElementById("snk-tilt-card");
@@ -8414,6 +8436,54 @@
       const zoomBtn = document.getElementById("snk-zoom-btn");
       const zoomText = document.getElementById("snk-zoom-text");
       const certBadge = document.getElementById("snk-cert-badge");
+
+      // Transparent poster constant (prevents initial and transition frame flash)
+      const TRANSPARENT_POSTER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3C/svg%3E";
+
+      // Instantiate 3-Tier Video Scrub Engine & Dual-Control Physics State Machine
+      const snkVideoEngine = new VideoScrubEngine(snkVideo, {
+        fps: 60,
+        lerpFactor: 0.12,
+        quantizeDelta: 0.038
+      });
+
+      const snkPhysics = new DualControlPhysics({
+        cooldownDuration: 1800,
+        blendDuration: 300,
+        videoEngine: snkVideoEngine
+      });
+
+      window.snkVideoEngine = snkVideoEngine;
+      window.snkPhysics = snkPhysics;
+
+      function syncTurntableVideoTime(angleDeg) {
+        if (!snkVideoEngine || !snkVideo) return;
+        const duration = (snkVideo.duration && !isNaN(snkVideo.duration) && snkVideo.duration > 0) ? snkVideo.duration : 10.0;
+        const norm = (((angleDeg % 360) + 360) % 360) / 360;
+        const t = norm * duration;
+        snkVideoEngine.seekImmediate(t);
+      }
+
+      if (snkVideo) {
+        const updateFallbackOpacity = () => {
+          const img = renderBox ? renderBox.querySelector("img.snk-photo-render") : null;
+          if (isAerialView) {
+            snkVideo.style.opacity = "0";
+            if (img) img.style.opacity = "1";
+          } else {
+            snkVideo.style.opacity = "1";
+            if (img) img.style.opacity = (snkVideo.readyState >= 2) ? "0" : "1";
+          }
+        };
+        snkVideo.addEventListener("loadeddata", updateFallbackOpacity);
+        snkVideo.addEventListener("canplay", updateFallbackOpacity);
+        snkVideo.addEventListener("seeked", updateFallbackOpacity);
+        snkVideo.addEventListener("error", () => {
+          const img = renderBox ? renderBox.querySelector("img.snk-photo-render") : null;
+          snkVideo.style.opacity = "0";
+          if (img) img.style.opacity = "1";
+        });
+      }
 
       const brandTagEl = document.getElementById("snk-brand-tag");
       const productTitleEl = document.getElementById("snk-product-title");
@@ -8685,15 +8755,29 @@
       // ----------------------------------------------------
       // UI Update & Synchronization Function
       // ----------------------------------------------------
+      let lastLoadedSneakerId = null;
       function updateSneakerView() {
         const sneaker = SNEAKERS[activeSneakerIdx];
         const colorway = sneaker.colorways[activeColorwayIdx];
         const photo = getSneakerPhotoData(sneaker, colorway, currentAngle, isAerialView);
 
+        if (snkVideoEngine && sneaker && sneaker.video && lastLoadedSneakerId !== sneaker.id) {
+          lastLoadedSneakerId = sneaker.id;
+          snkVideoEngine.loadSource(sneaker.video, sneaker.videoMp4, snkVideoEngine.TRANSPARENT_POSTER);
+        }
+
         if (renderBox) {
           let img = renderBox.querySelector("img.snk-photo-render");
           if (!img) {
-            renderBox.innerHTML = `<img src="${photo.src}" data-src="${photo.src}" alt="${sneaker.brand} ${sneaker.model}" class="snk-photo-render" style="transform: ${photo.transform}; filter: ${photo.filter};" draggable="false" />`;
+            img = document.createElement("img");
+            img.className = "snk-photo-render";
+            img.alt = `${sneaker.brand} ${sneaker.model}`;
+            img.draggable = false;
+            img.src = photo.src;
+            img.setAttribute("data-src", photo.src);
+            img.style.transform = photo.transform;
+            img.style.filter = photo.filter;
+            renderBox.appendChild(img);
           } else {
             if (img.getAttribute("data-src") !== photo.src) {
               img.src = photo.src;
@@ -8701,6 +8785,14 @@
             }
             img.style.transform = photo.transform;
             img.style.filter = photo.filter;
+          }
+
+          if (snkVideo) {
+            snkVideo.style.opacity = isAerialView ? "0" : "1";
+            snkVideo.style.filter = (colorway && colorway.filter) ? colorway.filter : "none";
+          }
+          if (img) {
+            img.style.opacity = isAerialView ? "1" : (snkVideo && snkVideo.readyState >= 2 ? "0" : "1");
           }
         }
 
@@ -8814,6 +8906,7 @@
       function onPointerDown(e) {
         isDragging = true;
         isAerialView = false;
+        snkPhysics.markUserInteracting('turntable');
         stopInertia();
         stopAutoSpin();
         if (tiltCard) tiltCard.classList.add("grabbing");
@@ -8853,6 +8946,9 @@
         const totalDelta = clientX - dragStartX;
         currentAngle = dragStartAngle + totalDelta * 0.72;
 
+        snkPhysics.markUserInteracting('turntable');
+        syncTurntableVideoTime(currentAngle);
+
         const currentMilestone = Math.floor(currentAngle / 45);
         if (currentMilestone !== lastClickThreshold) {
           lastClickThreshold = currentMilestone;
@@ -8866,15 +8962,18 @@
         if (!isDragging) return;
         isDragging = false;
         if (tiltCard) tiltCard.classList.remove("grabbing");
+        snkPhysics.releaseInteraction();
 
         let velocity = dragVelocity * 18;
         function stepInertia() {
           if (Math.abs(velocity) < 0.15) {
             stopInertia();
+            snkPhysics.releaseInteraction();
             return;
           }
           currentAngle += velocity;
           velocity *= 0.88;
+          syncTurntableVideoTime(currentAngle);
           updateSneakerView();
           inertiaAnimationId = requestAnimationFrame(stepInertia);
         }
@@ -8912,15 +9011,16 @@
 
       // Scroll-Linked 360° Perspective for Sneakers Atelier
       function handleSneakerScrollLink() {
-        if (isDragging || isAutoSpinning || isHoveringCard) return;
+        const canScroll = snkPhysics.notifyScroll();
+        if (!canScroll || isDragging || isAutoSpinning || isHoveringCard) return;
         const snkContainer = document.getElementById("sneaker-app");
         if (!snkContainer) return;
         const rect = snkContainer.getBoundingClientRect();
         const winH = window.innerHeight;
         if (rect.bottom > 0 && rect.top < winH) {
           const progress = Math.min(Math.max((winH - rect.top) / (winH + rect.height), 0), 1);
-          const targetAngle = (progress - 0.5) * 360 * 1.8;
-          currentAngle += (targetAngle - currentAngle) * 0.08;
+          currentAngle = progress * 360;
+          snkVideoEngine.setTargetProgress(progress);
           updateSneakerView();
         }
       }
@@ -8932,6 +9032,7 @@
       function startAutoSpin() {
         isAutoSpinning = true;
         isAerialView = false;
+        snkPhysics.markUserInteracting('turntable');
         if (autospinBtn) autospinBtn.classList.add("active");
         if (autospinText) autospinText.textContent = "PAUSE";
         stopInertia();
@@ -8939,6 +9040,7 @@
         function spinLoop() {
           if (!isAutoSpinning) return;
           currentAngle += 0.45;
+          syncTurntableVideoTime(currentAngle);
           updateSneakerView();
           autoSpinTimer = requestAnimationFrame(spinLoop);
         }
@@ -8953,6 +9055,7 @@
         }
         if (autospinBtn) autospinBtn.classList.remove("active");
         if (autospinText) autospinText.textContent = "SPIN 360°";
+        snkPhysics.releaseInteraction();
       }
 
       if (autospinBtn) {
@@ -8966,6 +9069,7 @@
       anglePills.forEach(pill => {
         pill.addEventListener("click", () => {
           playUiTick(900, 0.03, 0.07);
+          snkPhysics.markUserInteracting('turntable');
           stopAutoSpin();
           stopInertia();
           const pAngle = pill.getAttribute("data-angle");
@@ -8974,8 +9078,10 @@
           } else {
             isAerialView = false;
             currentAngle = parseInt(pAngle, 10);
+            syncTurntableVideoTime(currentAngle);
           }
           updateSneakerView();
+          snkPhysics.releaseInteraction();
         });
       });
 
@@ -8989,13 +9095,24 @@
         });
       }
 
+      function switchSneaker(idx) {
+        const clampedIdx = Math.max(0, Math.min(SNEAKERS.length - 1, idx));
+        activeSneakerIdx = clampedIdx;
+        activeColorwayIdx = 0;
+        isAerialView = false;
+        const sneaker = SNEAKERS[activeSneakerIdx];
+        if (snkVideoEngine && sneaker && sneaker.video) {
+          snkVideoEngine.loadSource(sneaker.video, sneaker.videoMp4, snkVideoEngine.TRANSPARENT_POSTER);
+        }
+        updateSneakerView();
+      }
+      window.switchSneaker = switchSneaker;
+
       modelTabs.forEach(tab => {
         tab.addEventListener("click", () => {
           playUiTick(850, 0.04, 0.08);
-          activeSneakerIdx = parseInt(tab.getAttribute("data-idx"), 10) || 0;
-          activeColorwayIdx = 0;
-          isAerialView = false;
-          updateSneakerView();
+          const idx = parseInt(tab.getAttribute("data-idx"), 10) || 0;
+          switchSneaker(idx);
         });
       });
 
