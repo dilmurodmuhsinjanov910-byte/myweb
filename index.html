@@ -6565,12 +6565,12 @@
       // Genuine Ultra-High-Resolution Studio Cutout Perspectives
       // ----------------------------------------------------
       const PRELOAD_SNEAKER_ASSETS = [
-        "balenciaga_front3q.png", "balenciaga_heel.png", "balenciaga_profile.png",
-        "bottega_front3q.png", "bottega_heel.png", "bottega_profile.png",
-        "margiela_front3q.png", "margiela_heel.png", "margiela_profile.png",
-        "off_white_front3q.png", "off_white_heel.png", "off_white_profile.png",
+        "balenciaga_front3q.png", "balenciaga_heel.png", "balenciaga_profile.png", "balenciaga_toe.png", "balenciaga_top.png",
+        "bottega_front3q.png", "bottega_heel.png", "bottega_profile.png", "bottega_toe.png", "bottega_top.png",
+        "margiela_front3q.png", "margiela_heel.png", "margiela_profile.png", "margiela_toe.png", "margiela_top.png",
+        "off_white_front3q.png", "off_white_heel.png", "off_white_profile.png", "off_white_toe.png", "off_white_top.png",
         "palm_angels_front3q.png", "palm_angels_heel.png", "palm_angels_profile.png", "palm_angels_toe.png", "palm_angels_top.png",
-        "rick_owens_front3q.png", "rick_owens_heel.png", "rick_owens_profile.png"
+        "rick_owens_front3q.png", "rick_owens_heel.png", "rick_owens_profile.png", "rick_owens_toe.png", "rick_owens_top.png"
       ];
       try {
         PRELOAD_SNEAKER_ASSETS.forEach(imgFile => {
@@ -6587,7 +6587,8 @@
         let angleName = "PROFILE";
 
         if (isAerial) {
-          filename = (sneaker.id === "palm-angels") ? `${pfx}_top.png` : `${pfx}_front3q.png`;
+          // Direct Aerial Insole Perspective
+          filename = `${pfx}_top.png`;
           angleName = "AERIAL LACE";
         } else if (norm >= 235 && norm <= 295) {
           // 270° Direct Heel / Back View (Exact match to reference videoframe_11402.png for Palm Angels)
@@ -6595,7 +6596,7 @@
           angleName = "HEEL ARCHIVE (REF)";
         } else if (norm >= 68 && norm <= 112) {
           // 90° Direct Toe
-          filename = (sneaker.id === "palm-angels") ? `${pfx}_toe.png` : `${pfx}_front3q.png`;
+          filename = `${pfx}_toe.png`;
           angleName = "DIRECT TOE";
         } else if (norm >= 23 && norm <= 67) {
           // 45° 3/4 Front
@@ -6696,8 +6697,18 @@
           renderBox.style.transform = "scale(" + zoomScale + ") rotateY(" + rotY + "deg)";
         }
         if (groundShadow) {
-          const shadowScale = isAerialView ? 1.1 : (0.85 + Math.abs(Math.sin(normAngle * Math.PI / 180)) * 0.25);
-          groundShadow.style.transform = "scale(" + shadowScale + ", " + (0.9 + Math.abs(Math.cos(normAngle * Math.PI / 180)) * 0.2) + ")";
+          if (isAerialView) {
+            groundShadow.style.transform = "scale(1.05, 1.05)";
+            groundShadow.style.opacity = "0.75";
+          } else {
+            const rad = normAngle * Math.PI / 180;
+            const absCos = Math.abs(Math.cos(rad));
+            const absSin = Math.abs(Math.sin(rad));
+            const scaleX = 0.70 + absCos * 0.38;
+            const scaleY = 0.72 + absSin * 0.42;
+            groundShadow.style.transform = "scale(" + scaleX.toFixed(3) + ", " + scaleY.toFixed(3) + ")";
+            groundShadow.style.opacity = (0.78 + absCos * 0.18).toFixed(2);
+          }
         }
 
         if (brandTagEl) brandTagEl.textContent = sneaker.brandTag;
