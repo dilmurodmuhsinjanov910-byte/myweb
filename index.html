@@ -625,6 +625,1208 @@
       box-shadow:0 0 12px rgba(223,183,108,.4);font-weight:600;
     }
     .portal-hint{font-size:7.5px;letter-spacing:.16em;color:#555}
+
+/* ============================================================
+       PROJECT 02: SSENSE ATELIER LUXURY FOOTWEAR COMMERCE & 3D WEB
+       ============================================================ */
+    .sneaker-app-container {
+      position: absolute;
+      right: calc(var(--pad) + 14px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(62vw, 1000px);
+      height: min(78vh, 620px);
+      z-index: 10;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(223, 183, 108, 0.32);
+      box-shadow: 0 35px 90px -20px rgba(0, 0, 0, 0.96), 0 0 55px rgba(223, 183, 108, 0.10);
+      background: #08080a;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Top Editorial Header */
+    .snk-header {
+      height: 44px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 11, 14, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 25;
+    }
+    .snk-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .snk-back-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #888;
+      transition: all 0.25s;
+    }
+    .snk-back-btn:hover {
+      color: #fff;
+      border-color: rgba(223, 183, 108, 0.6);
+      background: rgba(223, 183, 108, 0.08);
+    }
+    .snk-brand-block {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .snk-logo {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: #f1f1ee;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .snk-logo-sub {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .snk-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .snk-nav-link {
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      color: #6e6e73;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.25s;
+      padding: 3px 0;
+      border-bottom: 1.5px solid transparent;
+      font-weight: 500;
+    }
+    .snk-nav-link:hover {
+      color: #bbb;
+    }
+    .snk-nav-link.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+      font-weight: 600;
+    }
+    .snk-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .snk-icon-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 20px;
+      color: #888;
+      font-size: 7.5px;
+      letter-spacing: 0.14em;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+    }
+    .snk-icon-btn:hover {
+      color: #fff;
+      border-color: rgba(223, 183, 108, 0.5);
+    }
+    .snk-icon-btn.active {
+      color: var(--gold);
+      border-color: rgba(223, 183, 108, 0.6);
+      background: rgba(223, 183, 108, 0.08);
+    }
+    .snk-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 14px;
+      height: 14px;
+      border-radius: 7px;
+      background: var(--gold);
+      color: #070707;
+      font-size: 8px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .snk-cart-trigger {
+      background: rgba(223, 183, 108, 0.10);
+      border: 1px solid rgba(223, 183, 108, 0.35);
+      border-radius: 20px;
+      color: var(--gold-light);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .snk-cart-trigger:hover {
+      background: var(--gold);
+      color: #080808;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(223, 183, 108, 0.4);
+    }
+    .snk-cart-count {
+      background: #080808;
+      color: var(--gold);
+      border-radius: 10px;
+      padding: 1px 6px;
+      font-weight: 700;
+      font-size: 8px;
+      border: 1px solid rgba(223, 183, 108, 0.5);
+    }
+
+    /* 6 Luxury Models Selector Bar */
+    .snk-models-bar {
+      height: 40px;
+      background: #0a0b0e;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      z-index: 20;
+    }
+    .snk-models-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .snk-model-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 4px 9px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .snk-model-tab:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .snk-model-tab.active {
+      background: rgba(223, 183, 108, 0.09);
+      border-color: rgba(223, 183, 108, 0.4);
+      box-shadow: 0 0 12px rgba(223, 183, 108, 0.12);
+    }
+    .snk-tab-brand {
+      font-size: 7px;
+      letter-spacing: 0.14em;
+      color: #777;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .snk-tab-name {
+      font-size: 8.5px;
+      letter-spacing: 0.04em;
+      color: #ddd;
+      font-weight: 500;
+    }
+    .snk-tab-price {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    /* Main Two-Column Interactive Stage */
+    .snk-main-stage {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      overflow: hidden;
+      min-height: 0;
+      position: relative;
+    }
+
+    /* Left Viewer Area (Interactive 360 Turntable) */
+    .snk-viewer-area {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 45%, #13141b 0%, #08090c 75%);
+      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px 14px;
+      user-select: none;
+    }
+    .snk-viewer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+    .snk-viewer-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 7px;
+      letter-spacing: 0.18em;
+      color: #999;
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+    }
+    .snk-pulse-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: snkPulse 2s infinite;
+    }
+    @keyframes snkPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .snk-turntable-hud {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .snk-degree-dial {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 7.5px;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(223, 183, 108, 0.25);
+      font-variant-numeric: tabular-nums;
+    }
+    .snk-autospin-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      color: #aaa;
+      font-size: 7px;
+      letter-spacing: 0.12em;
+      padding: 3px 7px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .snk-autospin-btn:hover {
+      color: #fff;
+      border-color: var(--gold);
+    }
+    .snk-autospin-btn.active {
+      background: rgba(223, 183, 108, 0.15);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* 3D Tilt & Turntable Card */
+    .snk-tilt-card {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1100px;
+      transform-style: preserve-3d;
+      cursor: grab;
+      touch-action: none;
+    }
+    .snk-tilt-card.grabbing {
+      cursor: grabbing;
+    }
+    .snk-light-spot {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(223, 183, 108, 0.12) 0%, rgba(223, 183, 108, 0.02) 45%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: left 0.1s ease-out, top 0.1s ease-out;
+      z-index: 1;
+    }
+    .snk-render-box {
+      width: 92%;
+      max-width: 480px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 5;
+      transform-origin: center center;
+      transition: transform 0.06s ease-out;
+      filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.85));
+    }
+    .snk-render-box svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      overflow: visible;
+    }
+    .snk-ground-shadow {
+      position: absolute;
+      bottom: 24px;
+      width: 330px;
+      height: 30px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.50) 45%, transparent 75%);
+      filter: blur(6px);
+      transform-origin: center center;
+      transition: transform 0.12s ease-out;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .snk-ground-reflection {
+      position: absolute;
+      bottom: 4px;
+      width: 350px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(223, 183, 108, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Angle Quick-Select Buttons */
+    .snk-angle-pills {
+      display: flex;
+      gap: 4px;
+      z-index: 10;
+      margin-bottom: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .snk-angle-pill {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #888;
+      font-size: 7px;
+      letter-spacing: 0.12em;
+      padding: 3px 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .snk-angle-pill:hover {
+      color: #eee;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .snk-angle-pill.active {
+      background: var(--gold-grad);
+      color: #080808;
+      border-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(223, 183, 108, 0.35);
+    }
+    .snk-angle-pill.ref-highlight {
+      border-color: rgba(223, 183, 108, 0.4);
+      color: var(--gold-light);
+    }
+
+    /* Viewer Footer: Drag Hint & Zoom Mode */
+    .snk-viewer-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      font-size: 7px;
+      letter-spacing: 0.14em;
+      color: #666;
+    }
+    .snk-drag-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .snk-zoom-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #888;
+      font-size: 7px;
+      letter-spacing: 0.12em;
+      padding: 2px 7px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .snk-zoom-btn:hover {
+      color: var(--white);
+      border-color: var(--gold);
+    }
+    .snk-zoom-btn.active {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(223, 183, 108, 0.08);
+    }
+
+    /* Right Control Panel Area */
+    .snk-panel-area {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 16px 18px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(223, 183, 108, 0.25) transparent;
+      background: #090a0d;
+    }
+    .snk-panel-area::-webkit-scrollbar {
+      width: 4px;
+    }
+    .snk-panel-area::-webkit-scrollbar-thumb {
+      background: rgba(223, 183, 108, 0.25);
+      border-radius: 2px;
+    }
+    .snk-meta-header {
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 12px;
+    }
+    .snk-brand-tag {
+      font-size: 8px;
+      letter-spacing: 0.24em;
+      color: var(--gold);
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .snk-product-title {
+      font-family: var(--serif);
+      font-size: clamp(19px, 2vw, 24px);
+      line-height: 1.15;
+      color: #f1f1ee;
+      margin: 0 0 6px;
+      font-weight: 400;
+    }
+    .snk-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .snk-price-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f1f1ee;
+      letter-spacing: -0.02em;
+    }
+    .snk-duty-note {
+      font-size: 7px;
+      letter-spacing: 0.14em;
+      color: #777;
+      text-transform: uppercase;
+    }
+
+    /* Swatches & Sizes */
+    .snk-section-block {
+      margin-bottom: 14px;
+    }
+    .snk-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 7px;
+    }
+    .snk-block-label {
+      font-size: 7.5px;
+      letter-spacing: 0.18em;
+      color: #888;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .snk-color-name {
+      font-size: 8px;
+      color: var(--silver);
+      font-weight: 500;
+    }
+    .snk-swatches-list {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .snk-swatch-disc {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+      padding: 0;
+      outline: none;
+      display: flex;
+    }
+    .snk-swatch-disc:hover {
+      transform: scale(1.15);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+    .snk-swatch-disc.active {
+      transform: scale(1.22);
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(223, 183, 108, 0.55);
+    }
+    .snk-swatch-half {
+      flex: 1;
+      height: 100%;
+    }
+    .snk-size-guide-btn {
+      font-size: 7px;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .snk-size-guide-btn:hover {
+      opacity: 0.8;
+    }
+    .snk-sizes-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .snk-size-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      color: #bbb;
+      font-size: 8.5px;
+      padding: 5px 0;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.22s;
+      font-weight: 500;
+    }
+    .snk-size-pill:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+    .snk-size-pill.active {
+      background: var(--gold-grad);
+      color: #080808;
+      border-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(223, 183, 108, 0.35);
+    }
+    .snk-stock-status {
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 7px;
+      letter-spacing: 0.12em;
+      color: #888;
+    }
+    .snk-stock-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    /* Kinetic CTA & Wishlist */
+    .snk-cta-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin: 14px 0 12px;
+    }
+    .snk-add-cart-btn {
+      flex: 1;
+      height: 42px;
+      border-radius: 22px;
+      background: var(--gold-grad);
+      color: #080808;
+      border: none;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.28s;
+      box-shadow: 0 8px 25px rgba(223, 183, 108, 0.25);
+    }
+    .snk-add-cart-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(223, 183, 108, 0.4);
+    }
+    .snk-add-cart-btn.added {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+    }
+    .snk-btn-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.75s ease;
+      pointer-events: none;
+    }
+    .snk-add-cart-btn:hover .snk-btn-shine {
+      left: 140%;
+    }
+    .snk-wishlist-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .snk-wishlist-btn:hover {
+      border-color: rgba(223, 183, 108, 0.6);
+      color: var(--gold);
+      background: rgba(223, 183, 108, 0.06);
+    }
+    .snk-wishlist-btn.active {
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.5);
+      background: rgba(239, 68, 68, 0.08);
+    }
+    .snk-wishlist-btn.active svg {
+      fill: #ef4444;
+    }
+
+    /* Editorial Description */
+    .snk-editorial-desc {
+      font-size: 8.5px;
+      line-height: 1.6;
+      color: #8f9298;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Expandable Accordions */
+    .snk-accordions {
+      display: flex;
+      flex-direction: column;
+    }
+    .snk-acc-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .snk-acc-trigger {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      background: transparent;
+      border: none;
+      color: #ddd;
+      font-size: 8.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s;
+      font-weight: 600;
+      text-align: left;
+    }
+    .snk-acc-trigger:hover {
+      color: var(--gold);
+    }
+    .snk-acc-chevron {
+      transition: transform 0.3s ease;
+      color: #777;
+    }
+    .snk-acc-item.active .snk-acc-chevron {
+      transform: rotate(180deg);
+      color: var(--gold);
+    }
+    .snk-acc-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .snk-acc-item.active .snk-acc-panel {
+      max-height: 280px;
+    }
+    .snk-acc-content {
+      padding-bottom: 12px;
+      font-size: 8px;
+      line-height: 1.6;
+      color: #8e9096;
+    }
+    .snk-acc-content ul {
+      margin: 0;
+      padding-left: 14px;
+    }
+    .snk-acc-content li {
+      margin-bottom: 3px;
+    }
+    .snk-review-entry {
+      margin-bottom: 8px;
+      padding: 6px 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 4px;
+      border-left: 2px solid var(--gold);
+    }
+    .snk-review-stars {
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+    .snk-review-quote {
+      font-style: italic;
+      color: #bbb;
+      margin: 3px 0;
+    }
+    .snk-review-author {
+      font-size: 7px;
+      color: #666;
+    }
+
+    /* Sliding Shopping Cart Drawer */
+    .snk-cart-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 45;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.32s ease;
+    }
+    .snk-cart-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .snk-cart-drawer {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: min(390px, 94%);
+      background: #0b0c10;
+      border-left: 1px solid rgba(223, 183, 108, 0.35);
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.9);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(105%);
+      transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .snk-cart-drawer.open {
+      transform: translateX(0);
+    }
+    .snk-cart-drawer-header {
+      height: 46px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(14, 15, 20, 0.95);
+    }
+    .snk-cart-headline {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .snk-cart-headline h3 {
+      margin: 0;
+      font-size: 11px;
+      letter-spacing: 0.20em;
+      color: #fff;
+      font-weight: 700;
+    }
+    .snk-cart-total-items {
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+    }
+    .snk-cart-close-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #888;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .snk-cart-close-btn:hover {
+      color: #fff;
+      border-color: var(--gold);
+    }
+    .snk-cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(223, 183, 108, 0.25) transparent;
+    }
+    .snk-cart-empty-state {
+      margin: auto;
+      text-align: center;
+      color: #666;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      padding: 40px 20px;
+    }
+    .snk-cart-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+    }
+    .snk-cart-thumb {
+      width: 58px;
+      height: 58px;
+      background: radial-gradient(circle, #181922 0%, #0c0d12 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    .snk-cart-thumb svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .snk-cart-item-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+    .snk-cart-item-brand {
+      font-size: 7px;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .snk-cart-item-title {
+      font-size: 8.5px;
+      color: #f1f1ee;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .snk-cart-item-meta {
+      font-size: 7.5px;
+      color: #888;
+    }
+    .snk-cart-item-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .snk-cart-item-price {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .snk-cart-qty-btns {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+    .snk-cart-qty-btn {
+      background: transparent;
+      border: none;
+      color: #bbb;
+      cursor: pointer;
+      font-size: 10px;
+      padding: 0 2px;
+      line-height: 1;
+    }
+    .snk-cart-qty-btn:hover {
+      color: #fff;
+    }
+    .snk-cart-qty-val {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .snk-cart-item-remove {
+      background: transparent;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 11px;
+      padding: 2px;
+      transition: color 0.2s;
+    }
+    .snk-cart-item-remove:hover {
+      color: #ef4444;
+    }
+    .snk-cart-drawer-footer {
+      padding: 14px 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(14, 15, 20, 0.95);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .snk-cart-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8px;
+      color: #888;
+      letter-spacing: 0.08em;
+    }
+    .snk-cart-summary-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.07);
+      margin: 4px 0;
+    }
+    .snk-cart-total-row {
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .snk-checkout-btn {
+      height: 40px;
+      border-radius: 20px;
+      background: var(--gold-grad);
+      color: #080808;
+      border: none;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.20em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+      transition: all 0.25s;
+    }
+    .snk-checkout-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(223, 183, 108, 0.35);
+    }
+    .snk-checkout-security {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 6.5px;
+      letter-spacing: 0.12em;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Checkout Modal */
+    .snk-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.32s ease;
+    }
+    .snk-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .snk-modal-card {
+      width: min(360px, 90%);
+      background: #101117;
+      border: 1px solid rgba(223, 183, 108, 0.4);
+      border-radius: 14px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(223, 183, 108, 0.15);
+      transform: scale(0.95);
+      transition: transform 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .snk-modal-backdrop.open .snk-modal-card {
+      transform: scale(1);
+    }
+    .snk-modal-check {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1.5px solid #10b981;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .snk-modal-sub {
+      font-size: 7px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .snk-modal-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+    .snk-modal-desc {
+      font-size: 8px;
+      line-height: 1.6;
+      color: #999;
+      margin: 0 0 14px;
+    }
+    .snk-modal-tracking {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(223, 183, 108, 0.3);
+      border-radius: 6px;
+      padding: 8px;
+      margin-bottom: 14px;
+    }
+    .snk-track-label {
+      font-size: 6.5px;
+      letter-spacing: 0.16em;
+      color: #777;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .snk-track-id {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .snk-modal-close-btn {
+      width: 100%;
+      height: 38px;
+      border-radius: 19px;
+      background: var(--gold-grad);
+      color: #080808;
+      border: none;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .snk-modal-close-btn:hover {
+      box-shadow: 0 6px 20px rgba(223, 183, 108, 0.35);
+    }
+
+    /* Kinetic Flying Shoe Animation Particle */
+    .snk-fly-item {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      pointer-events: none;
+      z-index: 70;
+      filter: drop-shadow(0 0 14px rgba(223, 183, 108, 0.8));
+      transition: none;
+    }
+    .snk-fly-item svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 960px) {
+      .sneaker-app-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: calc(100% - 30px);
+        margin: 20px auto 0;
+        height: min(88vh, 640px);
+      }
+      .snk-main-stage {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+      }
+      .snk-viewer-area {
+        height: 290px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .snk-render-box {
+        height: 180px;
+      }
+      .snk-nav {
+        display: none;
+      }
+    }
     .project-title{
       margin:0;font-family:var(--serif);font-size:clamp(58px,8.8vw,145px);line-height:.82;font-weight:400;
       letter-spacing:-.05em;color:var(--white);
@@ -1141,21 +2343,325 @@
         </div>
       </article>
 
-      <article class="project">
+      <article class="project" id="project-02">
         <div class="project-stage">
           <div class="project-visual">
             <div class="project-light"></div>
-            <div class="project-orb-art"></div>
+            <!-- S-Tier Interactive Luxury Footwear E-Commerce Flagship -->
+            <div class="project-app-container sneaker-app-container" id="sneaker-app">
+              
+              <!-- App Top Bar: SSENSE Haute Horlogerie & Fashion Editorial Header -->
+              <div class="snk-header">
+                <div class="snk-header-left">
+                  <span class="snk-back-btn" id="snk-back-btn" title="Return to Overview">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  </span>
+                  <div class="snk-brand-block">
+                    <span class="snk-logo">SSENSE</span>
+                    <span class="snk-logo-sub">NOIR / ATELIER</span>
+                  </div>
+                </div>
+
+                <nav class="snk-nav">
+                  <span class="snk-nav-link active" data-cat="men">MEN</span>
+                  <span class="snk-nav-link" data-cat="women">WOMEN</span>
+                  <span class="snk-nav-link" data-cat="editions">EDITIONS</span>
+                  <span class="snk-nav-link" data-cat="runway">RUNWAY</span>
+                </nav>
+
+                <div class="snk-header-actions">
+                  <button class="snk-icon-btn snk-sound-toggle active" id="snk-sound-toggle" title="Haptic Audio Feedback">
+                    <svg class="snk-icon-audio" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    <span id="snk-audio-label">AUDIO ON</span>
+                  </button>
+
+                  <button class="snk-icon-btn snk-wishlist-header-btn" id="snk-wishlist-header-btn" title="Wishlist">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="snk-badge" id="snk-wishlist-badge">0</span>
+                  </button>
+
+                  <button class="snk-cart-trigger" id="snk-cart-trigger" title="View Shopping Bag">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>BAG</span>
+                    <span class="snk-cart-count" id="snk-cart-count">0</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Sneaker Model Selector Strip (6 Models) -->
+              <div class="snk-models-bar" id="snk-models-bar">
+                <button class="snk-model-tab active" data-idx="0">
+                  <span class="snk-tab-brand">PALM ANGELS</span>
+                  <span class="snk-tab-name">Flame Low</span>
+                  <span class="snk-tab-price">$395</span>
+                </button>
+                <button class="snk-model-tab" data-idx="1">
+                  <span class="snk-tab-brand">BALENCIAGA</span>
+                  <span class="snk-tab-name">Runner X</span>
+                  <span class="snk-tab-price">$1,150</span>
+                </button>
+                <button class="snk-model-tab" data-idx="2">
+                  <span class="snk-tab-brand">MAISON MARGIELA</span>
+                  <span class="snk-tab-name">Replica GAT</span>
+                  <span class="snk-tab-price">$570</span>
+                </button>
+                <button class="snk-model-tab" data-idx="3">
+                  <span class="snk-tab-brand">RICK OWENS</span>
+                  <span class="snk-tab-name">Geobasket Low</span>
+                  <span class="snk-tab-price">$990</span>
+                </button>
+                <button class="snk-model-tab" data-idx="4">
+                  <span class="snk-tab-brand">OFF-WHITE</span>
+                  <span class="snk-tab-name">Out Of Office</span>
+                  <span class="snk-tab-price">$635</span>
+                </button>
+                <button class="snk-model-tab" data-idx="5">
+                  <span class="snk-tab-brand">BOTTEGA VENETA</span>
+                  <span class="snk-tab-name">Orbit Runner</span>
+                  <span class="snk-tab-price">$890</span>
+                </button>
+              </div>
+
+              <!-- Main Interactive Workspace: Two Columns -->
+              <div class="snk-main-stage">
+                
+                <!-- Left Column: Multi-Angle Sneaker Viewer with 3D Drag & 360 Turntable -->
+                <div class="snk-viewer-area" id="snk-viewer-area">
+                  <div class="snk-viewer-top">
+                    <div class="snk-viewer-badge">
+                      <span class="snk-pulse-dot"></span>
+                      <span id="snk-cert-badge">AUTHENTIC ARCHIVE // MILANO</span>
+                    </div>
+                    <div class="snk-turntable-hud">
+                      <div class="snk-degree-dial" id="snk-degree-dial">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 6 16 14 8 14 12 6"/></svg>
+                        <span id="snk-degree-val">0? // PROFILE</span>
+                      </div>
+                      <button class="snk-autospin-btn" id="snk-autospin-btn" title="Toggle 360 Auto-Rotation">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        <span id="snk-autospin-text">SPIN 360?</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- 3D Tilt Card & Stage Canvas Container -->
+                  <div class="snk-tilt-card" id="snk-tilt-card" title="Click and drag horizontally to rotate 360 degrees">
+                    <div class="snk-light-spot" id="snk-light-spot"></div>
+                    <div class="snk-render-box" id="snk-render-box"></div>
+                    <div class="snk-ground-shadow" id="snk-ground-shadow"></div>
+                    <div class="snk-ground-reflection" id="snk-ground-reflection"></div>
+                  </div>
+
+                  <!-- Angle Quick Select Pills -->
+                  <div class="snk-angle-pills" id="snk-angle-pills">
+                    <button class="snk-angle-pill active" data-angle="0">0? PROFILE</button>
+                    <button class="snk-angle-pill" data-angle="45">45? 3/4 FRONT</button>
+                    <button class="snk-angle-pill" data-angle="90">90? TOE</button>
+                    <button class="snk-angle-pill" data-angle="180">180? MEDIAL</button>
+                    <button class="snk-angle-pill ref-highlight" data-angle="270" title="Reference Video Matching Angle">★ 270° HEEL</button>
+                    <button class="snk-angle-pill" data-angle="315">315? 3/4 REAR</button>
+                    <button class="snk-angle-pill" data-angle="top">AERIAL LACE</button>
+                  </div>
+
+                  <!-- Bottom Drag Hint & Zoom Mode -->
+                  <div class="snk-viewer-footer">
+                    <div class="snk-drag-hint">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M3 12h18"/></svg>
+                      <span>DRAG HORIZONTALLY TO ROTATE 360?</span>
+                    </div>
+                    <button class="snk-zoom-btn" id="snk-zoom-btn" title="Toggle Detail Zoom">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      <span id="snk-zoom-text">ZOOM 1.4X</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Right Column: Editorial Details, Colorway, Size & Accordions -->
+                <div class="snk-panel-area" id="snk-panel-area">
+                  <div class="snk-meta-header">
+                    <span class="snk-brand-tag" id="snk-brand-tag">PALM ANGELS // MILANO</span>
+                    <h2 class="snk-product-title" id="snk-product-title">Flame Low Suede &amp; Leather Sneakers</h2>
+                    <div class="snk-price-row">
+                      <span class="snk-price-val" id="snk-price-val">395$</span>
+                      <span class="snk-duty-note">Taxes &amp; Duties Included</span>
+                    </div>
+                  </div>
+
+                  <!-- Colorway Swatches Section -->
+                  <div class="snk-section-block">
+                    <div class="snk-block-header">
+                      <span class="snk-block-label">COLORWAY</span>
+                      <span class="snk-color-name" id="snk-color-name">Scarlet Red / Emerald Flame</span>
+                    </div>
+                    <div class="snk-swatches-list" id="snk-swatches-list"></div>
+                  </div>
+
+                  <!-- Size Selector Section -->
+                  <div class="snk-section-block">
+                    <div class="snk-block-header">
+                      <span class="snk-block-label">SELECT SIZE (EU)</span>
+                      <span class="snk-size-guide-btn" id="snk-size-guide-btn">FIT: TRUE TO SIZE</span>
+                    </div>
+                    <div class="snk-sizes-grid" id="snk-sizes-grid">
+                      <button class="snk-size-pill" data-size="39">39</button>
+                      <button class="snk-size-pill" data-size="40">40</button>
+                      <button class="snk-size-pill" data-size="41">41</button>
+                      <button class="snk-size-pill" data-size="42">42</button>
+                      <button class="snk-size-pill active" data-size="43">43</button>
+                      <button class="snk-size-pill" data-size="44">44</button>
+                      <button class="snk-size-pill" data-size="45">45</button>
+                    </div>
+                    <div class="snk-stock-status" id="snk-stock-status">
+                      <span class="snk-stock-dot"></span>
+                      <span id="snk-stock-text">Size EU 43 in stock ? Only 2 pairs left in atelier</span>
+                    </div>
+                  </div>
+
+                  <!-- Kinetic CTA Row -->
+                  <div class="snk-cta-row">
+                    <button class="snk-add-cart-btn" id="snk-add-cart-btn">
+                      <span id="snk-add-cart-text">ADD TO CART</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                      <span class="snk-btn-shine"></span>
+                    </button>
+                    <button class="snk-wishlist-btn" id="snk-wishlist-btn" title="Add to Wishlist">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </button>
+                  </div>
+
+                  <!-- SSENSE Editorial Description -->
+                  <div class="snk-editorial-desc" id="snk-editorial-desc">
+                    Low-top panelled suede and canvas sneakers in white and red. Semi-transparent rubberized trim at round toe. Logo pattern in white at black lace-up closure. Graphic leather appliqué in green at side. Rubberized trim in red and black at sides and heel.
+                  </div>
+
+                  <!-- Luxury Expandable Accordions -->
+                  <div class="snk-accordions" id="snk-accordions">
+                    <!-- Details -->
+                    <div class="snk-acc-item active" data-acc="details">
+                      <button class="snk-acc-trigger">
+                        <span>Details</span>
+                        <svg class="snk-acc-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="snk-acc-panel">
+                        <div class="snk-acc-content" id="snk-acc-details"></div>
+                      </div>
+                    </div>
+
+                    <!-- Material & Craftsmanship -->
+                    <div class="snk-acc-item" data-acc="material">
+                      <button class="snk-acc-trigger">
+                        <span>Material &amp; Craftsmanship</span>
+                        <svg class="snk-acc-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="snk-acc-panel">
+                        <div class="snk-acc-content" id="snk-acc-material"></div>
+                      </div>
+                    </div>
+
+                    <!-- Free Delivery & Returns -->
+                    <div class="snk-acc-item" data-acc="shipping">
+                      <button class="snk-acc-trigger">
+                        <span>Free Delivery and Returns</span>
+                        <svg class="snk-acc-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="snk-acc-panel">
+                        <div class="snk-acc-content" id="snk-acc-shipping"></div>
+                      </div>
+                    </div>
+
+                    <!-- Reviews -->
+                    <div class="snk-acc-item" data-acc="reviews">
+                      <button class="snk-acc-trigger">
+                        <span id="snk-acc-reviews-title">Reviews (29) ★ 4.9</span>
+                        <svg class="snk-acc-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="snk-acc-panel">
+                        <div class="snk-acc-content" id="snk-acc-reviews"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Sliding Shopping Cart Drawer Overlay & Panel -->
+              <div class="snk-cart-backdrop" id="snk-cart-backdrop"></div>
+              <div class="snk-cart-drawer" id="snk-cart-drawer">
+                <div class="snk-cart-drawer-header">
+                  <div class="snk-cart-headline">
+                    <h3>SHOPPING BAG</h3>
+                    <span class="snk-cart-total-items" id="snk-cart-total-items">(0 ITEMS)</span>
+                  </div>
+                  <button class="snk-cart-close-btn" id="snk-cart-close-btn" title="Close Bag">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
+                </div>
+
+                <div class="snk-cart-items-list" id="snk-cart-items-list"></div>
+
+                <div class="snk-cart-drawer-footer">
+                  <div class="snk-cart-summary-row">
+                    <span>Subtotal</span>
+                    <span class="snk-cart-subtotal" id="snk-cart-subtotal">$0</span>
+                  </div>
+                  <div class="snk-cart-summary-row">
+                    <span>Express Worldwide Shipping</span>
+                    <span class="gold">COMPLIMENTARY</span>
+                  </div>
+                  <div class="snk-cart-summary-row">
+                    <span>Import Duties &amp; Taxes</span>
+                    <span>INCLUDED</span>
+                  </div>
+                  <div class="snk-cart-summary-divider"></div>
+                  <div class="snk-cart-summary-row snk-cart-total-row">
+                    <span>Total Due</span>
+                    <span class="snk-cart-final-total gold" id="snk-cart-final-total">$0</span>
+                  </div>
+
+                  <button class="snk-checkout-btn" id="snk-checkout-btn">
+                    <span>PROCEED TO CHECKOUT</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                  <span class="snk-checkout-security">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    256-BIT ENCRYPTED LUXURY CHECKOUT // DISPATCH VIA MILANO
+                  </span>
+                </div>
+              </div>
+
+              <!-- Interactive Luxury Checkout Simulation Modal -->
+              <div class="snk-modal-backdrop" id="snk-modal-backdrop">
+                <div class="snk-modal-card">
+                  <div class="snk-modal-check">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  <span class="snk-modal-sub">SSENSE ATELIER // ORDER CONFIRMED</span>
+                  <h3 class="snk-modal-title">Thank You For Your Order</h3>
+                  <p class="snk-modal-desc">
+                    Your luxury acquisition has been reserved in our Milanese distribution vaults. A white-glove courier dispatch will depart within 24 hours.
+                  </p>
+                  <div class="snk-modal-tracking">
+                    <span class="snk-track-label">TRACKING REFERENCE:</span>
+                    <span class="snk-track-id" id="snk-track-id">DHL-EXPRESS-SSN-884920</span>
+                  </div>
+                  <button class="snk-modal-close-btn" id="snk-modal-close-btn">
+                    RETURN TO ATELIER
+                  </button>
+                </div>
+              </div>
+
+            </div>
           </div>
+
           <div class="project-content">
             <div class="project-number">PROJECT / 02</div>
-            <h3 class="project-title">Project<br>Two</h3>
+            <h3 class="project-title">SSENSE<br><span class="gold">Atelier</span></h3>
             <div class="project-meta">
-              <div class="meta-item"><small>Role</small><span>[Your role]</span></div>
-              <div class="meta-item"><small>Category</small><span>[Category]</span></div>
-              <div class="meta-item"><small>Year</small><span>[2026]</span></div>
+              <div class="meta-item"><small>Role</small><span>Lead Experience Architect</span></div>
+              <div class="meta-item"><small>Category</small><span>Luxury Commerce &amp; 3D Web</span></div>
+              <div class="meta-item"><small>Year</small><span>2026</span></div>
             </div>
-            <div class="impact">[Why this project matters.]</div>
+            <div class="impact">Tactile digital footwear flagship blending high-fashion editorial minimalism with dynamic multi-angle 3D physics.</div>
           </div>
           <div class="project-progress"><span>02 / 03</span><i></i></div>
         </div>
@@ -4154,6 +5660,1703 @@
       if (viewport) {
         viewport.setAttribute("tabindex", "0");
       }
+    })();
+
+/* ============================================================
+       PROJECT 02: SSENSE ATELIER LUXURY FOOTWEAR ENGINE (S-TIER)
+       ============================================================ */
+    (function initSneakerApp() {
+      const sneakerApp = document.getElementById("sneaker-app");
+      if (!sneakerApp) return;
+
+      const SNEAKERS = [
+        {
+                "id": "palm-angels",
+                "brand": "PALM ANGELS",
+                "brandTag": "PALM ANGELS // MILANO",
+                "model": "Flame Low Suede & Leather",
+                "price": 395,
+                "currency": "$",
+                "badge": "AUTHENTIC ARCHIVE // MILANO",
+                "sku": "PMIA058F23LEA001",
+                "origin": "Made in Italy",
+                "desc": "Low-top panelled suede and canvas sneakers in white and red. Semi-transparent rubberized trim at round toe. Logo pattern in white at black lace-up closure. Graphic leather appliqué in green at side. Rubberized trim in red and black at sides and heel.",
+                "details": [
+                        "Made in Civitanova Marche, Italy",
+                        "SKU: PMIA058F23LEA001",
+                        "Full-grain calfskin upper with vegetable-tanned suede mudguard",
+                        "Graphic leather flame appliqué along lateral & medial quarter panels",
+                        "Signature embossed emerald green rubber Palm Angels logo emblem at heel",
+                        "Vulcanized off-white rubber outsole with herringbone traction pattern"
+                ],
+                "craftsmanship": "Individually handcrafted in Civitanova Marche, Italy. Upper assembled using Italian top-grain calfskin and vegetable-tanned suede. Features double-welt lockstitch construction and vulcanized rubber curing for lifelong resilience.",
+                "shipping": "Complimentary worldwide express courier via DHL Express (2-3 business days). 30-day returns with complimentary courier pickup from your residence or office. Delivered in signature collector magnetic box with organic cotton dust bags.",
+                "reviews": {
+                        "count": 29,
+                        "rating": 4.9,
+                        "items": [
+                                {
+                                        "author": "Kaelen V. — Milan",
+                                        "stars": "★★★★★",
+                                        "quote": "The heel silhouette is unmatched. The green rubber badge and flame details catch light like a runway piece."
+                                },
+                                {
+                                        "author": "Marcus T. — New York",
+                                        "stars": "★★★★★",
+                                        "quote": "Exceptional leather softness right out of the box. Size 43 fits true to size."
+                                },
+                                {
+                                        "author": "Sora K. — Tokyo",
+                                        "stars": "★★★★★",
+                                        "quote": "Unmistakable presence. The stitch quality on the flame applique is museum-tier."
+                                }
+                        ]
+                },
+                "colorways": [
+                        {
+                                "name": "Scarlet Red / Emerald Flame",
+                                "upper": "#f5f5f3",
+                                "suede": "#dcdbd3",
+                                "flame": "#16a34a",
+                                "flameLight": "#22c55e",
+                                "heel": "#dc2626",
+                                "heelLight": "#ef4444",
+                                "badgeBg": "#15803d",
+                                "badgeText": "#090909",
+                                "sole": "#f0ede5",
+                                "soleBottom": "#1f2024",
+                                "laces": "#222222",
+                                "dot1": "#dc2626",
+                                "dot2": "#16a34a"
+                        },
+                        {
+                                "name": "Obsidian Black / 24K Gold Flame",
+                                "upper": "#18181b",
+                                "suede": "#27272a",
+                                "flame": "#dfb76c",
+                                "flameLight": "#fff3d1",
+                                "heel": "#09090b",
+                                "heelLight": "#1c1c20",
+                                "badgeBg": "#dfb76c",
+                                "badgeText": "#080808",
+                                "sole": "#242428",
+                                "soleBottom": "#121214",
+                                "laces": "#dfb76c",
+                                "dot1": "#18181b",
+                                "dot2": "#dfb76c"
+                        },
+                        {
+                                "name": "Alabaster White / Mint Flame",
+                                "upper": "#fcfbfa",
+                                "suede": "#eeebe3",
+                                "flame": "#34d399",
+                                "flameLight": "#6ee7b7",
+                                "heel": "#a7f3d0",
+                                "heelLight": "#c6f6d5",
+                                "badgeBg": "#34d399",
+                                "badgeText": "#064e3b",
+                                "sole": "#f4f1eb",
+                                "soleBottom": "#27272a",
+                                "laces": "#ffffff",
+                                "dot1": "#fcfbfa",
+                                "dot2": "#34d399"
+                        },
+                        {
+                                "name": "Cyber Platinum / Ultraviolet Flame",
+                                "upper": "#d1d5db",
+                                "suede": "#9ca3af",
+                                "flame": "#a855f7",
+                                "flameLight": "#c084fc",
+                                "heel": "#581c87",
+                                "heelLight": "#7e22ce",
+                                "badgeBg": "#7e22ce",
+                                "badgeText": "#faf5ff",
+                                "sole": "#e5e7eb",
+                                "soleBottom": "#1e1b4b",
+                                "laces": "#374151",
+                                "dot1": "#9ca3af",
+                                "dot2": "#a855f7"
+                        }
+                ]
+        },
+        {
+                "id": "balenciaga",
+                "brand": "BALENCIAGA",
+                "brandTag": "BALENCIAGA // PARIS",
+                "model": "Runner X Distressed Trainer",
+                "price": 1150,
+                "currency": "$",
+                "badge": "RUNWAY EDITION // PARIS",
+                "sku": "677403W3RB11000",
+                "origin": "Made in Italy",
+                "desc": "Multi-layered technical sneaker featuring artisanal pre-worn distressing, raw edge mesh insets, exterior sizing stamp at toe box, and architectural sculpted EVA foam outsole.",
+                "details": [
+                        "Made in Italy",
+                        "SKU: 677403W3RB11000",
+                        "Technical open-cell mesh, nylon ribbons, and faux leather",
+                        "Hand-applied distressing throughout with raw laser-cut edges",
+                        "Exterior size '43' stamp on toe box lip",
+                        "Dynamic multi-tiered sculpted runner outsole with rear crash spoiler"
+                ],
+                "craftsmanship": "Constructed from 48 individual components per shoe. Features hand-applied distressing, raw-edge laser cuts, and high-rebound blown EVA foam for unmatched kinetic cushioning.",
+                "shipping": "Complimentary overnight delivery available in Paris & Milan. Signature Balenciaga dust bag and recycled archival shoebox included.",
+                "reviews": {
+                        "count": 42,
+                        "rating": 4.8,
+                        "items": [
+                                {
+                                        "author": "Julien M. — Paris",
+                                        "stars": "★★★★★",
+                                        "quote": "The proportions and distressed sculpting are pure Demna genius. Turns every street into a runway."
+                                },
+                                {
+                                        "author": "David L. — London",
+                                        "stars": "★★★★★",
+                                        "quote": "Incredible cushioning and aggressive architecture. Wear with oversized tailoring."
+                                }
+                        ]
+                },
+                "colorways": [
+                        {
+                                "name": "Cyber Silver / Charcoal Mesh",
+                                "upper": "#e2e8f0",
+                                "suede": "#64748b",
+                                "flame": "#0284c7",
+                                "flameLight": "#38bdf8",
+                                "heel": "#334155",
+                                "heelLight": "#475569",
+                                "badgeBg": "#0284c7",
+                                "badgeText": "#ffffff",
+                                "sole": "#1e293b",
+                                "soleBottom": "#0f172a",
+                                "laces": "#0f172a",
+                                "dot1": "#e2e8f0",
+                                "dot2": "#334155"
+                        },
+                        {
+                                "name": "Monolith All-Black Distressed",
+                                "upper": "#18181b",
+                                "suede": "#27272a",
+                                "flame": "#52525b",
+                                "flameLight": "#71717a",
+                                "heel": "#09090b",
+                                "heelLight": "#18181b",
+                                "badgeBg": "#27272a",
+                                "badgeText": "#a1a1aa",
+                                "sole": "#09090b",
+                                "soleBottom": "#000000",
+                                "laces": "#27272a",
+                                "dot1": "#18181b",
+                                "dot2": "#09090b"
+                        },
+                        {
+                                "name": "Acid Neon / Platinum White",
+                                "upper": "#f8fafc",
+                                "suede": "#cbd5e1",
+                                "flame": "#84cc16",
+                                "flameLight": "#a3e635",
+                                "heel": "#3f3f46",
+                                "heelLight": "#52525b",
+                                "badgeBg": "#84cc16",
+                                "badgeText": "#000000",
+                                "sole": "#3f3f46",
+                                "soleBottom": "#18181b",
+                                "laces": "#84cc16",
+                                "dot1": "#f8fafc",
+                                "dot2": "#84cc16"
+                        },
+                        {
+                                "name": "Champagne Gold / Bone White",
+                                "upper": "#f5f5f0",
+                                "suede": "#e5e5dc",
+                                "flame": "#dfb76c",
+                                "flameLight": "#fff3d1",
+                                "heel": "#2a2a2e",
+                                "heelLight": "#3f3f44",
+                                "badgeBg": "#dfb76c",
+                                "badgeText": "#0a0a0a",
+                                "sole": "#2a2a2e",
+                                "soleBottom": "#141416",
+                                "laces": "#dfb76c",
+                                "dot1": "#f5f5f0",
+                                "dot2": "#dfb76c"
+                        }
+                ]
+        },
+        {
+                "id": "margiela",
+                "brand": "MAISON MARGIELA",
+                "brandTag": "MAISON MARGIELA // PARIS",
+                "model": "Replica German Army Trainer",
+                "price": 570,
+                "currency": "$",
+                "badge": "LINE 22 // ARCHIVE 1970",
+                "sku": "S57WS0236P1895",
+                "origin": "Made in Italy",
+                "desc": "Timeless 1970s Austrian court silhouette reimagined in buttery nappa lambskin with suede overlays. Numbered tongue patch with circled 22, signature single white stitch at heel tab, and honey gum rubber tread.",
+                "details": [
+                        "Made in Veneto, Italy",
+                        "SKU: S57WS0236P1895",
+                        "Buttery Italian nappa lambskin upper",
+                        "Signature calfskin suede T-toe mudguard & eyestay overlays",
+                        "Tongue with debossed 0-23 numerical calendar logo (22 circled)",
+                        "Iconic single horizontal white basting stitch at rear heel tab",
+                        "Heritage honey gum rubber cupsole with pivot suction circle tread"
+                ],
+                "craftsmanship": "Crafted in Veneto, Italy using heritage turn-of-the-century lasting techniques. The nappa lambskin develops a personalized patina over years of wear.",
+                "shipping": "Complimentary express global courier. Includes Margiela white shoe dust bags and embossed calendar gift box.",
+                "reviews": {
+                        "count": 38,
+                        "rating": 5.0,
+                        "items": [
+                                {
+                                        "author": "Hiroshi N. — Kyoto",
+                                        "stars": "★★★★★",
+                                        "quote": "The quintessential minimalist sneaker. The gum sole and suede T-toe are perfection."
+                                },
+                                {
+                                        "author": "Camille D. — Lyon",
+                                        "stars": "★★★★★",
+                                        "quote": "Wore my first pair for five years, bought my second immediately. Leather is like silk."
+                                }
+                        ]
+                },
+                "colorways": [
+                        {
+                                "name": "OG White / Platinum Suede",
+                                "upper": "#ffffff",
+                                "suede": "#e2e4e8",
+                                "flame": "#d1d5db",
+                                "flameLight": "#f3f4f6",
+                                "heel": "#ffffff",
+                                "heelLight": "#f8fafc",
+                                "badgeBg": "#ffffff",
+                                "badgeText": "#000000",
+                                "sole": "#c28b56",
+                                "soleBottom": "#996533",
+                                "laces": "#ffffff",
+                                "dot1": "#ffffff",
+                                "dot2": "#c28b56"
+                        },
+                        {
+                                "name": "Obsidian Black / Amber Gum",
+                                "upper": "#141416",
+                                "suede": "#242429",
+                                "flame": "#3a3a42",
+                                "flameLight": "#52525e",
+                                "heel": "#141416",
+                                "heelLight": "#202024",
+                                "badgeBg": "#141416",
+                                "badgeText": "#ffffff",
+                                "sole": "#b87e45",
+                                "soleBottom": "#8c5b29",
+                                "laces": "#141416",
+                                "dot1": "#141416",
+                                "dot2": "#b87e45"
+                        },
+                        {
+                                "name": "Artisanal Paint Drop Splash",
+                                "upper": "#fafafa",
+                                "suede": "#eaecee",
+                                "flame": "#3b82f6",
+                                "flameLight": "#60a5fa",
+                                "heel": "#ef4444",
+                                "heelLight": "#f87171",
+                                "badgeBg": "#10b981",
+                                "badgeText": "#ffffff",
+                                "sole": "#c28b56",
+                                "soleBottom": "#996533",
+                                "laces": "#f3f4f6",
+                                "dot1": "#fafafa",
+                                "dot2": "#3b82f6"
+                        },
+                        {
+                                "name": "Champagne Suede / Raw Linen",
+                                "upper": "#f7f4ed",
+                                "suede": "#dfb76c",
+                                "flame": "#9a7432",
+                                "flameLight": "#dfb76c",
+                                "heel": "#f7f4ed",
+                                "heelLight": "#ffffff",
+                                "badgeBg": "#dfb76c",
+                                "badgeText": "#0a0a0a",
+                                "sole": "#c9a86a",
+                                "soleBottom": "#96753d",
+                                "laces": "#dfb76c",
+                                "dot1": "#f7f4ed",
+                                "dot2": "#dfb76c"
+                        }
+                ]
+        },
+        {
+                "id": "rick-owens",
+                "brand": "RICK OWENS",
+                "brandTag": "RICK OWENS // CONCORDIA",
+                "model": "Geobasket Low Brutalist",
+                "price": 990,
+                "currency": "$",
+                "badge": "DARK SHADOW // CONCORDIA",
+                "sku": "RU01C4880LPO",
+                "origin": "Made in Italy",
+                "desc": "Exaggerated architectural silhouette featuring extended tongue, geometric side swooping paneling, shark-tooth grooved shark rubber cupsole, and heavy-duty industrial zipper detailing.",
+                "details": [
+                        "Handcrafted in Concordia, Italy",
+                        "SKU: RU01C4880LPO",
+                        "Heavyweight full-grain bull leather with mineral oil finish",
+                        "Architectural soaring padded tongue with geometric collar",
+                        "Geometric contrast leather side swooping chevron panel",
+                        "Heavy-duty industrial metallic side zipper with custom pull",
+                        "Iconic shark-tooth serrated rubber cupsole"
+                ],
+                "craftsmanship": "Manufactured in Rick Owens' personal atelier in Concordia, Italy. Tanned with mineral oils for an ultra-dense, sculptural drape and indestructible wear.",
+                "shipping": "Delivered in oversized black tote with matching milk-white spare laces and signed atelier seal.",
+                "reviews": {
+                        "count": 31,
+                        "rating": 4.9,
+                        "items": [
+                                {
+                                        "author": "Leon B. — Berlin",
+                                        "stars": "★★★★★",
+                                        "quote": "The shark tooth sole and zipper feel indestructible. True wearable brutalist art."
+                                },
+                                {
+                                        "author": "Noah F. — Stockholm",
+                                        "stars": "★★★★★",
+                                        "quote": "Unmatched silhouette. Nothing else looks or feels like this on foot."
+                                }
+                        ]
+                },
+                "colorways": [
+                        {
+                                "name": "Black / Milk White Contrast",
+                                "upper": "#121214",
+                                "suede": "#1a1a1e",
+                                "flame": "#f1ede4",
+                                "flameLight": "#ffffff",
+                                "heel": "#121214",
+                                "heelLight": "#222228",
+                                "badgeBg": "#121214",
+                                "badgeText": "#f1ede4",
+                                "sole": "#ece7dd",
+                                "soleBottom": "#121214",
+                                "laces": "#f1ede4",
+                                "dot1": "#121214",
+                                "dot2": "#ece7dd"
+                        },
+                        {
+                                "name": "Triple Dark Shadow Noir",
+                                "upper": "#0c0c0e",
+                                "suede": "#141416",
+                                "flame": "#18181c",
+                                "flameLight": "#26262c",
+                                "heel": "#0c0c0e",
+                                "heelLight": "#18181c",
+                                "badgeBg": "#0c0c0e",
+                                "badgeText": "#888899",
+                                "sole": "#151518",
+                                "soleBottom": "#050506",
+                                "laces": "#151518",
+                                "dot1": "#0c0c0e",
+                                "dot2": "#151518"
+                        },
+                        {
+                                "name": "Dust Grey / Chalk White",
+                                "upper": "#4b4b52",
+                                "suede": "#5b5b64",
+                                "flame": "#eae6dd",
+                                "flameLight": "#f8f5ee",
+                                "heel": "#4b4b52",
+                                "heelLight": "#62626b",
+                                "badgeBg": "#4b4b52",
+                                "badgeText": "#eae6dd",
+                                "sole": "#ded9cf",
+                                "soleBottom": "#28282c",
+                                "laces": "#eae6dd",
+                                "dot1": "#4b4b52",
+                                "dot2": "#eae6dd"
+                        },
+                        {
+                                "name": "Golden Umber / Milk White",
+                                "upper": "#5c4028",
+                                "suede": "#745234",
+                                "flame": "#f2ede4",
+                                "flameLight": "#ffffff",
+                                "heel": "#5c4028",
+                                "heelLight": "#7c593b",
+                                "badgeBg": "#dfb76c",
+                                "badgeText": "#080808",
+                                "sole": "#eae5dc",
+                                "soleBottom": "#2e1e12",
+                                "laces": "#f2ede4",
+                                "dot1": "#5c4028",
+                                "dot2": "#dfb76c"
+                        }
+                ]
+        },
+        {
+                "id": "off-white",
+                "brand": "OFF-WHITE",
+                "brandTag": "OFF-WHITE c/o VIRGIL // MILANO",
+                "model": "Out Of Office (OOO) Low",
+                "price": 635,
+                "currency": "$",
+                "badge": "SPECIAL EDITION // MILANO",
+                "sku": "OMIA189F21LEA001",
+                "origin": "Made in Italy",
+                "desc": "Late 1980s and early 1990s tennis aesthetic featuring Virgil Abloh's signature stitched leather arrow logo, detachable marled zip-tie tag, embossed heel quote, and dual-tone gel insert outsole.",
+                "details": [
+                        "Made in Italy",
+                        "SKU: OMIA189F21LEA001",
+                        "Calfskin leather upper with ribbed knit collar surround",
+                        "Virgil Abloh signature stitched leather Arrow emblem at side",
+                        "Detachable marbled green Zip-Tie tag attached to top eyelet",
+                        "Dual-density rubber cupsole with translucent gel heel cushioning pod"
+                ],
+                "craftsmanship": "Designed in Milan, Italy. Engineered with dual-density EVA and impact gel inserts for all-day streetwear comfort.",
+                "shipping": "Complimentary worldwide courier. Includes Virgil Abloh tribute dust bag and Off-White box.",
+                "reviews": {
+                        "count": 27,
+                        "rating": 4.8,
+                        "items": [
+                                {
+                                        "author": "Matteo G. — Milan",
+                                        "stars": "★★★★★",
+                                        "quote": "The stitched arrow and zip tie are legendary. The green and white pop is timeless."
+                                },
+                                {
+                                        "author": "Ethan C. — Chicago",
+                                        "stars": "★★★★★",
+                                        "quote": "Incredible tribute to Virgil. Comfort is 10/10."
+                                }
+                        ]
+                },
+                "colorways": [
+                        {
+                                "name": "White / Safety Emerald Arrow",
+                                "upper": "#fbfbfa",
+                                "suede": "#e8e8e4",
+                                "flame": "#10b981",
+                                "flameLight": "#34d399",
+                                "heel": "#fbfbfa",
+                                "heelLight": "#ffffff",
+                                "badgeBg": "#10b981",
+                                "badgeText": "#052e16",
+                                "sole": "#f1f0ea",
+                                "soleBottom": "#10b981",
+                                "laces": "#ffffff",
+                                "dot1": "#fbfbfa",
+                                "dot2": "#10b981"
+                        },
+                        {
+                                "name": "White / Obsidian Black Arrow",
+                                "upper": "#f8f8f7",
+                                "suede": "#dededb",
+                                "flame": "#18181b",
+                                "flameLight": "#27272a",
+                                "heel": "#f8f8f7",
+                                "heelLight": "#ffffff",
+                                "badgeBg": "#18181b",
+                                "badgeText": "#f8f8f7",
+                                "sole": "#eeebe3",
+                                "soleBottom": "#18181b",
+                                "laces": "#18181b",
+                                "dot1": "#f8f8f7",
+                                "dot2": "#18181b"
+                        },
+                        {
+                                "name": "University Blue / Cream",
+                                "upper": "#fbfbfa",
+                                "suede": "#e6e6e2",
+                                "flame": "#38bdf8",
+                                "flameLight": "#7dd3fc",
+                                "heel": "#fbfbfa",
+                                "heelLight": "#ffffff",
+                                "badgeBg": "#38bdf8",
+                                "badgeText": "#082f49",
+                                "sole": "#f5eedc",
+                                "soleBottom": "#0284c7",
+                                "laces": "#ffffff",
+                                "dot1": "#fbfbfa",
+                                "dot2": "#38bdf8"
+                        },
+                        {
+                                "name": "White / Champagne Gold Arrow",
+                                "upper": "#fcfcfa",
+                                "suede": "#ede8db",
+                                "flame": "#dfb76c",
+                                "flameLight": "#fff3d1",
+                                "heel": "#fcfcfa",
+                                "heelLight": "#ffffff",
+                                "badgeBg": "#dfb76c",
+                                "badgeText": "#080808",
+                                "sole": "#ede8db",
+                                "soleBottom": "#9a7432",
+                                "laces": "#dfb76c",
+                                "dot1": "#fcfcfa",
+                                "dot2": "#dfb76c"
+                        }
+                ]
+        },
+        {
+                "id": "bottega",
+                "brand": "BOTTEGA VENETA",
+                "brandTag": "BOTTEGA VENETA // VICENZA",
+                "model": "Orbit Lightweight Runner",
+                "price": 890,
+                "currency": "$",
+                "badge": "RUNWAY 2026 // VICENZA",
+                "sku": "764491V32Q01000",
+                "origin": "Made in Italy",
+                "desc": "Futuristic 1990s runner crafted from technical open-cell mesh with ergonomic metallic film overlays mimicking the iconic Intrecciato weave dynamics. Ultra-lightweight kinetic sole.",
+                "details": [
+                        "Made in Italy",
+                        "SKU: 764491V32Q01000",
+                        "Ultra-breathable monofilament technical mesh upper",
+                        "Precision heat-bonded metallic tape cage with Intrecciato weave lines",
+                        "Curved aerodynamic kinetic foam midsole with flared heel crash pad",
+                        "Translucent rubber lug outsole for high-traction grip"
+                ],
+                "craftsmanship": "Precision heat-bonded metallic tape over breathable monofilament mesh. Ultralight blown polyurethane core provides kinetic energy return.",
+                "shipping": "Packaged in signature Bottega Veneta Parakeet Green shoebox with ribbon handles.",
+                "reviews": {
+                        "count": 22,
+                        "rating": 4.9,
+                        "items": [
+                                {
+                                        "author": "Sofia R. — Florence",
+                                        "stars": "★★★★★",
+                                        "quote": "Weighs practically nothing. The metallic cage catches the evening light spectacularly."
+                                },
+                                {
+                                        "author": "Oliver K. — Zurich",
+                                        "stars": "★★★★★",
+                                        "quote": "Futuristic elegance. Pairs effortlessly with tailored trousers."
+                                }
+                        ]
+                },
+                "colorways": [
+                        {
+                                "name": "Chrome Silver / Parakeet Green",
+                                "upper": "#e2e8f0",
+                                "suede": "#cbd5e1",
+                                "flame": "#059669",
+                                "flameLight": "#10b981",
+                                "heel": "#94a3b8",
+                                "heelLight": "#cbd5e1",
+                                "badgeBg": "#059669",
+                                "badgeText": "#ffffff",
+                                "sole": "#cbd5e1",
+                                "soleBottom": "#059669",
+                                "laces": "#059669",
+                                "dot1": "#e2e8f0",
+                                "dot2": "#059669"
+                        },
+                        {
+                                "name": "Phantom Black / Gunmetal",
+                                "upper": "#18181b",
+                                "suede": "#27272a",
+                                "flame": "#71717a",
+                                "flameLight": "#a1a1aa",
+                                "heel": "#27272a",
+                                "heelLight": "#3f3f46",
+                                "badgeBg": "#71717a",
+                                "badgeText": "#ffffff",
+                                "sole": "#27272a",
+                                "soleBottom": "#09090b",
+                                "laces": "#71717a",
+                                "dot1": "#18181b",
+                                "dot2": "#71717a"
+                        },
+                        {
+                                "name": "Sea Salt / Champagne",
+                                "upper": "#f8fafc",
+                                "suede": "#f1f5f9",
+                                "flame": "#dfb76c",
+                                "flameLight": "#fff3d1",
+                                "heel": "#e2e8f0",
+                                "heelLight": "#f8fafc",
+                                "badgeBg": "#dfb76c",
+                                "badgeText": "#080808",
+                                "sole": "#ede8df",
+                                "soleBottom": "#dfb76c",
+                                "laces": "#dfb76c",
+                                "dot1": "#f8fafc",
+                                "dot2": "#dfb76c"
+                        },
+                        {
+                                "name": "Mirage Gold / Graphite",
+                                "upper": "#334155",
+                                "suede": "#475569",
+                                "flame": "#dfb76c",
+                                "flameLight": "#fff3d1",
+                                "heel": "#1e293b",
+                                "heelLight": "#334155",
+                                "badgeBg": "#dfb76c",
+                                "badgeText": "#080808",
+                                "sole": "#1e293b",
+                                "soleBottom": "#0f172a",
+                                "laces": "#dfb76c",
+                                "dot1": "#334155",
+                                "dot2": "#dfb76c"
+                        }
+                ]
+        }
+];
+
+      let activeSneakerIdx = 0;
+      let activeColorwayIdx = 0;
+      let currentAngle = 0; // 0..360 deg
+      let isAerialView = false;
+      let isAutoSpinning = false;
+      let autoSpinTimer = null;
+      let isZoomed = false;
+      let isAudioEnabled = true;
+      let selectedSize = 43;
+      let isWishlisted = false;
+      let wishlistCount = 0;
+      let cart = [];
+
+      // Drag / Physics State
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartAngle = 0;
+      let dragVelocity = 0;
+      let lastDragX = 0;
+      let lastDragTime = 0;
+      let inertiaAnimationId = null;
+
+      // DOM Elements
+      const modelTabs = Array.from(document.querySelectorAll(".snk-model-tab"));
+      const anglePills = Array.from(document.querySelectorAll(".snk-angle-pill"));
+      const renderBox = document.getElementById("snk-render-box");
+      const groundShadow = document.getElementById("snk-ground-shadow");
+      const lightSpot = document.getElementById("snk-light-spot");
+      const tiltCard = document.getElementById("snk-tilt-card");
+      const degreeVal = document.getElementById("snk-degree-val");
+      const autospinBtn = document.getElementById("snk-autospin-btn");
+      const autospinText = document.getElementById("snk-autospin-text");
+      const zoomBtn = document.getElementById("snk-zoom-btn");
+      const zoomText = document.getElementById("snk-zoom-text");
+      const certBadge = document.getElementById("snk-cert-badge");
+
+      const brandTagEl = document.getElementById("snk-brand-tag");
+      const productTitleEl = document.getElementById("snk-product-title");
+      const priceValEl = document.getElementById("snk-price-val");
+      const colorNameEl = document.getElementById("snk-color-name");
+      const swatchesListEl = document.getElementById("snk-swatches-list");
+      const sizePills = Array.from(document.querySelectorAll(".snk-size-pill"));
+      const stockTextEl = document.getElementById("snk-stock-text");
+      const addCartBtn = document.getElementById("snk-add-cart-btn");
+      const addCartText = document.getElementById("snk-add-cart-text");
+      const wishlistBtn = document.getElementById("snk-wishlist-btn");
+      const wishlistBadge = document.getElementById("snk-wishlist-badge");
+      const editorialDescEl = document.getElementById("snk-editorial-desc");
+
+      const accDetailsEl = document.getElementById("snk-acc-details");
+      const accMaterialEl = document.getElementById("snk-acc-material");
+      const accShippingEl = document.getElementById("snk-acc-shipping");
+      const accReviewsEl = document.getElementById("snk-acc-reviews");
+      const accReviewsTitle = document.getElementById("snk-acc-reviews-title");
+
+      const cartTrigger = document.getElementById("snk-cart-trigger");
+      const cartDrawer = document.getElementById("snk-cart-drawer");
+      const cartBackdrop = document.getElementById("snk-cart-backdrop");
+      const cartCloseBtn = document.getElementById("snk-cart-close-btn");
+      const cartCountEl = document.getElementById("snk-cart-count");
+      const cartTotalItemsEl = document.getElementById("snk-cart-total-items");
+      const cartItemsListEl = document.getElementById("snk-cart-items-list");
+      const cartSubtotalEl = document.getElementById("snk-cart-subtotal");
+      const cartFinalTotalEl = document.getElementById("snk-cart-final-total");
+      const checkoutBtn = document.getElementById("snk-checkout-btn");
+
+      const modalBackdrop = document.getElementById("snk-modal-backdrop");
+      const modalCloseBtn = document.getElementById("snk-modal-close-btn");
+      const trackIdEl = document.getElementById("snk-track-id");
+
+      const soundToggleBtn = document.getElementById("snk-sound-toggle");
+      const audioLabel = document.getElementById("snk-audio-label");
+      const backBtn = document.getElementById("snk-back-btn");
+
+      // ----------------------------------------------------
+      // Web Audio API Procedural Luxury Synthesizer
+      // ----------------------------------------------------
+      let audioCtx = null;
+      function getAudioContext() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+        return audioCtx;
+      }
+
+      function playUiTick(freq = 950, duration = 0.035, gainVal = 0.08) {
+        if (!isAudioEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.45, ctx.currentTime + duration);
+          gain.gain.setValueAtTime(gainVal, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + duration);
+        } catch(e) {}
+      }
+
+      function playSwatchPluck(freq = 240) {
+        if (!isAudioEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.5, ctx.currentTime + 0.05);
+          gain.gain.setValueAtTime(0.12, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.06);
+        } catch(e) {}
+      }
+
+      function playCartChime() {
+        if (!isAudioEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const freqs = [523.25, 659.25, 783.99, 1046.50];
+          freqs.forEach((f, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.04);
+            gain.gain.setValueAtTime(0, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.08 / (i + 1), ctx.currentTime + i * 0.04 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.7);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.04);
+            osc.stop(ctx.currentTime + 0.75);
+          });
+        } catch(e) {}
+      }
+
+      function playDrawerSwoosh() {
+        if (!isAudioEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const bufferSize = ctx.sampleRate * 0.16;
+          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.4));
+          }
+          const noise = ctx.createBufferSource();
+          noise.buffer = buffer;
+          const filter = ctx.createBiquadFilter();
+          filter.type = "bandpass";
+          filter.frequency.setValueAtTime(900, ctx.currentTime);
+          filter.frequency.linearRampToValueAtTime(350, ctx.currentTime + 0.16);
+          filter.Q.value = 2.0;
+          const gain = ctx.createGain();
+          gain.gain.setValueAtTime(0.07, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+          noise.start();
+        } catch(e) {}
+      }
+
+      function playCheckoutSuccess() {
+        if (!isAudioEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const notes = [440, 554.37, 659.25, 880];
+          notes.forEach((f, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.07);
+            gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.07);
+            gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + i * 0.07 + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.07);
+            osc.stop(ctx.currentTime + 1.3);
+          });
+        } catch(e) {}
+      }
+
+      if (soundToggleBtn) {
+        soundToggleBtn.addEventListener("click", () => {
+          isAudioEnabled = !isAudioEnabled;
+          soundToggleBtn.classList.toggle("active", isAudioEnabled);
+          if (audioLabel) audioLabel.textContent = isAudioEnabled ? "AUDIO ON" : "AUDIO MUTED";
+          if (isAudioEnabled) playUiTick(1100, 0.04, 0.1);
+        });
+      }
+
+      if (backBtn) {
+        backBtn.addEventListener("click", () => {
+          playUiTick(750, 0.03, 0.06);
+          const workSection = document.getElementById("work");
+          if (workSection) workSection.scrollIntoView({ behavior: "smooth" });
+        });
+      }
+
+      // ----------------------------------------------------
+      // Photorealistic Vector Render Engine (360? Multi-Angle)
+      // ----------------------------------------------------
+      function renderSneakerSvg(sneaker, cw, angleDeg, isAerial) {
+        if (isAerial) {
+          return `
+            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="aerialSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+                <linearGradient id="aerialLeatherGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="${cw.upper}" />
+                  <stop offset="70%" stop-color="${cw.suede}" />
+                  <stop offset="100%" stop-color="${cw.upper}" />
+                </linearGradient>
+              </defs>
+              <path d="M 120,140 C 120,80 200,60 330,65 C 430,70 480,95 480,140 C 480,185 430,210 330,215 C 200,220 120,200 120,140 Z" fill="url(#aerialSoleGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+              <path d="M 140,140 C 140,95 210,75 330,80 C 410,85 460,105 460,140 C 460,175 410,195 330,200 C 210,205 140,185 140,140 Z" fill="url(#aerialLeatherGrad)" />
+              <path d="M 400,100 C 440,110 460,125 460,140 C 460,155 440,170 400,180 C 390,150 390,130 400,100 Z" fill="${cw.suede}" opacity="0.9" />
+              <g fill="rgba(0,0,0,0.25)">
+                <circle cx="430" cy="140" r="2.5" /><circle cx="420" cy="130" r="2.5" /><circle cx="420" cy="150" r="2.5" />
+                <circle cx="410" cy="120" r="2.5" /><circle cx="410" cy="140" r="2.5" /><circle cx="410" cy="160" r="2.5" />
+              </g>
+              <path d="M 230,115 L 380,120 C 385,130 385,150 380,160 L 230,165 Z" fill="#18181b" />
+              <g stroke="${cw.laces}" stroke-width="4.5" stroke-linecap="round">
+                <line x1="260" y1="120" x2="290" y2="160" /><line x1="260" y1="160" x2="290" y2="120" />
+                <line x1="290" y1="120" x2="320" y2="160" /><line x1="290" y1="160" x2="320" y2="120" />
+                <line x1="320" y1="120" x2="350" y2="160" /><line x1="320" y1="160" x2="350" y2="120" />
+                <line x1="350" y1="120" x2="375" y2="160" /><line x1="350" y1="160" x2="375" y2="120" />
+              </g>
+              <ellipse cx="205" cy="140" rx="42" ry="28" fill="#0c0d12" stroke="${cw.heel}" stroke-width="3" />
+              <text x="205" y="143" font-family="'DM Sans', sans-serif" font-size="8" font-weight="700" fill="#dfb76c" text-anchor="middle" letter-spacing="1.5">${sneaker.brand.toUpperCase()}</text>
+              <text x="205" y="153" font-family="'DM Sans', sans-serif" font-size="6" fill="#aaa" text-anchor="middle" letter-spacing="1">MILANO // 43</text>
+            </svg>
+          `;
+        }
+
+        const norm = (angleDeg % 360 + 360) % 360;
+
+        // HEEL / BACK VIEW (Matching reference image videoframe_11402.png)
+        if (norm >= 235 && norm <= 305) {
+          const isPalmAngels = sneaker.id === "palm-angels";
+          return `
+            <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="heelSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="85%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+                <linearGradient id="heelCapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.heelLight}" />
+                  <stop offset="100%" stop-color="${cw.heel}" />
+                </linearGradient>
+                <filter id="badgeShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.6)" />
+                </filter>
+              </defs>
+
+              <!-- Left Sneaker -->
+              <g transform="translate(130, 0)">
+                <path d="M -68,145 Q -75,130 -62,118 Q -50,135 -48,160 Z" fill="${cw.flame}" opacity="0.95" />
+                <path d="M -60,165 Q -68,150 -55,140 Q -45,155 -42,175 Z" fill="${cw.flameLight}" opacity="0.8" />
+                <path d="M -60,200 C -62,150 -50,95 0,90 C 50,95 62,150 60,200 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+                <path d="M -38,96 C -38,78 38,78 38,96 C 38,106 -38,106 -38,96 Z" fill="#141418" />
+                <path d="M -44,95 C -44,70 44,70 44,95 C 40,84 -40,84 -44,95 Z" fill="#ffffff" />
+                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#heelCapGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M -52,198 C -52,168 -40,132 0,130 C 40,132 52,168 52,198" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3 3" />
+                <path d="M -60,202 L 60,202 L 62,212 L -62,212 Z" fill="${cw.heel}" />
+                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#heelSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
+                <line x1="-58" y1="220" x2="58" y2="220" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
+                <g filter="url(#badgeShadow)">
+                  <rect x="-42" y="160" width="84" height="26" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                  <rect x="-40" y="162" width="80" height="22" rx="2" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1" />
+                  <text x="0" y="177" font-family="Georgia, serif" font-size="11.5" font-weight="900" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="0.5">
+                    ${isPalmAngels ? "Palm Angels" : sneaker.brand.split(" ")[0]}
+                  </text>
+                </g>
+              </g>
+
+              <!-- Right Sneaker -->
+              <g transform="translate(350, 0)">
+                <path d="M 68,145 Q 75,130 62,118 Q 50,135 48,160 Z" fill="${cw.flame}" opacity="0.95" />
+                <path d="M 60,165 Q 68,150 55,140 Q 45,155 42,175 Z" fill="${cw.flameLight}" opacity="0.8" />
+                <path d="M -60,200 C -62,150 -50,95 0,90 C 50,95 62,150 60,200 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+                <path d="M -38,96 C -38,78 38,78 38,96 C 38,106 -38,106 -38,96 Z" fill="#141418" />
+                <path d="M -44,95 C -44,70 44,70 44,95 C 40,84 -40,84 -44,95 Z" fill="#ffffff" />
+                <path d="M -58,202 C -58,165 -45,125 0,122 C 45,125 58,165 58,202 Z" fill="url(#heelCapGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M -52,198 C -52,168 -40,132 0,130 C 40,132 52,168 52,198" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3 3" />
+                <path d="M -60,202 L 60,202 L 62,212 L -62,212 Z" fill="${cw.heel}" />
+                <path d="M -64,212 L 64,212 C 65,225 55,228 0,229 C -55,228 -65,225 -64,212 Z" fill="url(#heelSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1" />
+                <line x1="-58" y1="220" x2="58" y2="220" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
+                <g filter="url(#badgeShadow)">
+                  <rect x="-42" y="160" width="84" height="26" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                  <rect x="-40" y="162" width="80" height="22" rx="2" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1" />
+                  <text x="0" y="177" font-family="Georgia, serif" font-size="11.5" font-weight="900" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="0.5">
+                    ${isPalmAngels ? "Palm Angels" : sneaker.brand.split(" ")[0]}
+                  </text>
+                </g>
+              </g>
+            </svg>
+          `;
+        }
+
+        // FRONT / TOE VIEW (68? to 112?)
+        if (norm >= 68 && norm <= 112) {
+          return `
+            <svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="frontSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(240, 0)">
+                <path d="M -80,210 C -82,228 -50,232 0,233 C 50,232 82,228 80,210 Z" fill="url(#frontSoleGrad)" />
+                <path d="M -76,198 L 76,198 L 80,210 L -80,210 Z" fill="${cw.sole}" stroke="rgba(0,0,0,0.15)" stroke-width="1" />
+                <path d="M -72,198 C -70,160 -45,140 0,138 C 45,140 70,160 72,198 Z" fill="${cw.suede}" />
+                <path d="M -56,196 C -55,168 -35,152 0,150 C 35,152 55,168 56,196 Z" fill="${cw.upper}" />
+                <circle cx="0" cy="166" r="2.5" fill="rgba(0,0,0,0.3)" />
+                <circle cx="-14" cy="172" r="2.5" fill="rgba(0,0,0,0.3)" /><circle cx="14" cy="172" r="2.5" fill="rgba(0,0,0,0.3)" />
+                <circle cx="-26" cy="182" r="2.5" fill="rgba(0,0,0,0.3)" /><circle cx="0" cy="180" r="2.5" fill="rgba(0,0,0,0.3)" /><circle cx="26" cy="182" r="2.5" fill="rgba(0,0,0,0.3)" />
+                <path d="M -32,150 L -36,88 C -36,78 36,78 36,88 L 32,150 Z" fill="#18181b" />
+                <rect x="-24" y="85" width="48" height="20" rx="2" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                <text x="0" y="98" font-family="'DM Sans', sans-serif" font-size="7" font-weight="700" fill="${cw.badgeText}" text-anchor="middle" letter-spacing="1">
+                  ${sneaker.brand.split(" ")[0]}
+                </text>
+                <g stroke="${cw.laces}" stroke-width="4.5" stroke-linecap="round">
+                  <line x1="-28" y1="145" x2="28" y2="135" /><line x1="28" y1="145" x2="-28" y2="135" />
+                  <line x1="-29" y1="130" x2="29" y2="120" /><line x1="29" y1="130" x2="-29" y2="120" />
+                  <line x1="-30" y1="115" x2="30" y2="105" /><line x1="30" y1="115" x2="-30" y2="105" />
+                </g>
+                <path d="M -72,198 C -74,160 -50,110 -35,95 L -26,145 Z" fill="${cw.upper}" stroke="rgba(0,0,0,0.15)" stroke-width="1" />
+                <path d="M 72,198 C 74,160 50,110 35,95 L 26,145 Z" fill="${cw.upper}" stroke="rgba(0,0,0,0.15)" stroke-width="1" />
+              </g>
+            </svg>
+          `;
+        }
+
+        // FRONT 3/4 (23? to 67?)
+        if (norm >= 23 && norm <= 67) {
+          return `
+            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="threeQGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="${cw.upper}" />
+                  <stop offset="60%" stop-color="${cw.upper}" />
+                  <stop offset="100%" stop-color="${cw.suede}" />
+                </linearGradient>
+                <linearGradient id="threeQSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(60, 10)">
+                <path d="M 50,195 Q 180,185 360,192 Q 400,196 410,210 Q 380,222 250,225 Q 70,225 45,212 Z" fill="url(#threeQSole)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                <path d="M 55,185 Q 180,175 360,182 L 360,195 Q 180,185 50,195 Z" fill="${cw.sole}" />
+                <path d="M 55,185 C 50,140 70,95 120,90 C 150,90 170,120 240,135 C 310,150 365,160 360,182 Q 180,175 55,185 Z" fill="url(#threeQGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+                <path d="M 55,185 C 50,140 70,95 105,92 L 115,182 Z" fill="${cw.heel}" />
+                <rect x="62" y="125" width="38" height="18" rx="2" fill="${cw.badgeBg}" />
+                <path d="M 125,180 Q 180,140 280,150 Q 230,130 195,135 Q 260,115 310,138 Q 230,120 160,140 Z" fill="${cw.flame}" />
+                <path d="M 280,150 C 330,155 370,165 360,182 Q 320,180 280,175 Z" fill="${cw.suede}" />
+                <path d="M 105,92 C 110,80 150,80 155,94 L 195,125 L 140,115 Z" fill="#141418" />
+                <path d="M 140,90 L 175,70 L 210,115 L 175,128 Z" fill="#1f2026" />
+                <g stroke="${cw.laces}" stroke-width="4" stroke-linecap="round">
+                  <line x1="160" y1="110" x2="195" y2="128" /><line x1="180" y1="100" x2="215" y2="120" />
+                  <line x1="200" y1="92" x2="235" y2="114" />
+                </g>
+              </g>
+            </svg>
+          `;
+        }
+
+        // MEDIAL (158? to 202?)
+        if (norm >= 158 && norm <= 202) {
+          const isRick = sneaker.id === "rick-owens";
+          return `
+            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="medialSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="85%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(480, 0) scale(-1, 1)">
+                <path d="M 70,192 C 150,190 220,182 300,188 C 380,194 440,195 445,190 C 445,212 430,222 390,224 C 280,226 150,225 65,218 Z" fill="url(#medialSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M 72,192 C 65,140 85,85 145,82 C 185,82 205,120 290,135 C 370,150 435,165 440,188 C 390,184 270,182 72,192 Z" fill="${cw.upper}" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+                <path d="M 360,158 C 410,165 442,175 440,188 C 400,186 360,184 350,175 Z" fill="${cw.suede}" />
+                <path d="M 72,192 C 65,140 85,85 125,84 L 132,190 Z" fill="${cw.heel}" />
+                ${isRick ? `
+                  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
+                    <line x1="140" y1="90" x2="160" y2="188" />
+                    <line x1="136" y1="100" x2="144" y2="100" /><line x1="140" y1="115" x2="148" y2="115" />
+                    <circle cx="138" cy="95" r="4" fill="#64748b" />
+                  </g>
+                ` : `
+                  <path d="M 160,188 Q 220,150 310,155 Q 260,140 220,150 Z" fill="${cw.flame}" opacity="0.85" />
+                `}
+                <path d="M 125,84 C 130,72 170,72 180,85 L 210,118 L 155,108 Z" fill="#121318" />
+              </g>
+            </svg>
+          `;
+        }
+
+        // REAR 3/4 (306? to 337?)
+        if (norm > 305 && norm <= 337) {
+          return `
+            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="rear3QSole" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${cw.sole}" />
+                  <stop offset="100%" stop-color="${cw.soleBottom}" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(100, 10)">
+                <path d="M 70,188 C 110,182 220,175 350,186 C 360,205 340,222 240,225 C 140,227 60,224 55,205 Z" fill="url(#rear3QSole)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                <path d="M 65,188 C 55,130 90,85 140,84 C 200,84 250,115 320,150 C 355,168 355,185 350,186 Z" fill="${cw.upper}" />
+                <path d="M 65,188 C 55,130 90,85 140,84 L 165,185 Z" fill="${cw.heel}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                <rect x="75" y="125" width="60" height="22" rx="3" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                <text x="105" y="139" font-family="Georgia, serif" font-size="9" font-weight="900" fill="${cw.badgeText}" text-anchor="middle">
+                  ${sneaker.id === "palm-angels" ? "Palm Angels" : sneaker.brand.split(" ")[0]}
+                </text>
+                <path d="M 160,182 Q 220,140 310,155 Q 260,135 220,145 Z" fill="${cw.flame}" />
+                <ellipse cx="150" cy="85" rx="30" ry="16" fill="#141418" stroke="${cw.heel}" stroke-width="2" />
+              </g>
+            </svg>
+          `;
+        }
+
+        // DEFAULT: LATERAL PROFILE SIDE VIEW (Around 0? / 360?)
+        const isPalm = sneaker.id === "palm-angels";
+        const isBalenciaga = sneaker.id === "balenciaga";
+        const isMargiela = sneaker.id === "margiela";
+        const isRick = sneaker.id === "rick-owens";
+        const isOffWhite = sneaker.id === "off-white";
+        const isBottega = sneaker.id === "bottega";
+
+        return `
+          <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="latSoleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="${cw.sole}" />
+                <stop offset="85%" stop-color="${cw.sole}" />
+                <stop offset="100%" stop-color="${cw.soleBottom}" />
+              </linearGradient>
+              <linearGradient id="flameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="${cw.flameLight}" />
+                <stop offset="100%" stop-color="${cw.flame}" />
+              </linearGradient>
+              <linearGradient id="latUpperGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="${cw.upper}" />
+                <stop offset="75%" stop-color="${cw.upper}" />
+                <stop offset="100%" stop-color="${cw.suede}" />
+              </linearGradient>
+            </defs>
+
+            <ellipse cx="260" cy="226" rx="200" ry="10" fill="rgba(0,0,0,0.55)" filter="blur(4px)" />
+
+            <!-- Outsole Construction -->
+            ${isBalenciaga ? `
+              <path d="M 52,204 Q 40,195 48,185 L 68,185 L 90,195 L 140,194 L 180,188 L 260,188 L 330,194 L 410,196 C 452,198 460,208 450,222 C 435,230 380,228 290,226 C 180,228 100,230 65,225 C 48,220 48,212 52,204 Z" fill="url(#latSoleGrad)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" />
+              <path d="M 46,188 L 82,188 L 74,206 L 40,200 Z" fill="#1e293b" />
+            ` : isRick ? `
+              <path d="M 64,190 L 440,190 C 455,190 460,202 452,216 L 440,225 C 380,226 220,226 65,225 C 55,220 54,200 64,190 Z" fill="url(#latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+              <g fill="#18181c">
+                <polygon points="120,225 130,225 125,232" /><polygon points="150,225 160,225 155,232" />
+                <polygon points="180,225 190,225 185,232" /><polygon points="210,225 220,225 215,232" />
+                <polygon points="240,225 250,225 245,232" /><polygon points="270,225 280,225 275,232" />
+                <polygon points="300,225 310,225 305,232" /><polygon points="330,225 340,225 335,232" />
+              </g>
+            ` : `
+              <path d="M 68,190 C 60,192 60,210 68,222 C 120,225 280,226 420,224 C 445,222 452,212 448,195 C 445,188 410,188 380,188 C 280,188 180,188 68,190 Z" fill="url(#latSoleGrad)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+              <line x1="68" y1="198" x2="445" y2="198" stroke="rgba(0,0,0,0.12)" stroke-width="1.5" />
+              <path d="M 425,190 C 445,190 452,198 448,212 L 436,212 C 438,202 435,195 425,190 Z" fill="${cw.soleBottom}" opacity="0.6" />
+            `}
+
+            <!-- Main Upper Calfskin Hull -->
+            <path d="M 72,190 C 65,145 82,92 138,88 C 175,86 195,115 270,132 C 345,148 425,160 445,188 C 390,186 280,186 72,190 Z" fill="url(#latUpperGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+
+            <!-- MODEL-SPECIFIC ICONIC ARTWORK -->
+            ${isPalm ? `
+              <path d="M 72,190 C 65,145 82,92 120,90 L 126,190 Z" fill="${cw.heel}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+              <rect x="66" y="145" width="10" height="24" rx="2" fill="${cw.badgeBg}" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />
+              <path d="M 370,165 C 415,170 445,178 445,188 C 410,188 370,186 360,178 Z" fill="${cw.suede}" stroke="rgba(0,0,0,0.1)" stroke-width="1" />
+              <path d="M 126,172 
+                       C 160,162 180,135 220,138 C 190,128 175,140 155,148
+                       C 185,130 225,115 285,130 C 240,118 200,128 175,138
+                       C 220,115 270,105 340,135 C 290,120 230,130 190,150
+                       C 235,142 290,145 355,165 C 310,158 240,162 180,175 Z" 
+                    fill="url(#flameGrad)" stroke="rgba(0,0,0,0.18)" stroke-width="1" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.3))" />
+              <path d="M 132,168 C 170,158 215,125 280,128" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="0.8" stroke-dasharray="2 2" />
+            ` : isBalenciaga ? `
+              <path d="M 120,188 L 190,135 L 230,145 L 180,188 Z" fill="${cw.flame}" opacity="0.8" />
+              <path d="M 220,142 L 310,135 L 340,165 L 260,188 Z" fill="#334155" opacity="0.7" />
+              <path d="M 320,145 L 380,155 L 420,180 L 360,188 Z" fill="${cw.suede}" />
+              <text x="430" y="185" font-family="'DM Sans', sans-serif" font-size="8" font-weight="900" fill="#ffffff" letter-spacing="1">43</text>
+            ` : isMargiela ? `
+              <path d="M 345,152 C 390,160 435,170 445,188 C 400,186 350,184 335,170 Z" fill="${cw.suede}" stroke="rgba(0,0,0,0.1)" stroke-width="1" />
+              <path d="M 210,118 L 305,138 L 295,155 L 205,135 Z" fill="${cw.suede}" opacity="0.9" />
+              <line x1="90" y1="120" x2="108" y2="120" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+            ` : isRick ? `
+              <path d="M 110,188 C 110,130 150,110 240,125 C 190,130 160,150 155,188 Z" fill="${cw.flame}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+            ` : isOffWhite ? `
+              <path d="M 180,158 L 280,150 L 260,138 L 295,148 L 260,158 L 280,148 L 180,158 Z" fill="${cw.flame}" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+              <rect x="220" y="105" width="8" height="18" rx="2" fill="#059669" transform="rotate(25 220 105)" />
+            ` : `
+              <g stroke="${cw.flame}" stroke-width="2" opacity="0.85">
+                <line x1="160" y1="170" x2="240" y2="130" /><line x1="190" y1="180" x2="270" y2="140" />
+                <line x1="220" y1="185" x2="300" y2="145" /><line x1="250" y1="185" x2="330" y2="150" />
+                <line x1="240" y1="130" x2="160" y2="185" /><line x1="270" y1="140" x2="190" y2="188" />
+                <line x1="300" y1="145" x2="220" y2="188" />
+              </g>
+            `}
+
+            <path d="M 118,90 C 122,76 172,76 182,90 L 215,120 L 155,110 Z" fill="#121316" />
+            ${isRick ? `
+              <path d="M 160,88 L 195,45 C 205,45 225,55 225,70 L 255,125 Z" fill="#16161a" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+            ` : `
+              <path d="M 172,90 L 210,75 C 218,75 225,82 225,90 L 255,125 Z" fill="#1a1b20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+            `}
+
+            <g fill="none" stroke="${cw.laces}" stroke-width="3.5" stroke-linecap="round">
+              <line x1="195" y1="112" x2="230" y2="126" /><line x1="215" y1="102" x2="250" y2="118" />
+              <line x1="235" y1="94" x2="270" y2="110" /><line x1="255" y1="88" x2="290" y2="104" />
+            </g>
+            <g fill="#71717a" stroke="#ffffff" stroke-width="0.5">
+              <circle cx="195" cy="112" r="2.2" /><circle cx="215" cy="102" r="2.2" />
+              <circle cx="235" cy="94" r="2.2" /><circle cx="255" cy="88" r="2.2" />
+            </g>
+          </svg>
+        `;
+      }
+
+      // ----------------------------------------------------
+      // UI Update & Synchronization Function
+      // ----------------------------------------------------
+      function updateSneakerView() {
+        const sneaker = SNEAKERS[activeSneakerIdx];
+        const colorway = sneaker.colorways[activeColorwayIdx];
+
+        if (renderBox) {
+          renderBox.innerHTML = renderSneakerSvg(sneaker, colorway, currentAngle, isAerialView);
+        }
+
+        const normAngle = (Math.round(currentAngle) % 360 + 360) % 360;
+        let angleName = "PROFILE";
+        if (isAerialView) {
+          angleName = "AERIAL LACE";
+        } else if (normAngle >= 235 && normAngle <= 305) {
+          angleName = "HEEL ARCHIVE (REF)";
+        } else if (normAngle >= 68 && normAngle <= 112) {
+          angleName = "DIRECT TOE";
+        } else if (normAngle >= 23 && normAngle <= 67) {
+          angleName = "3/4 FRONT";
+        } else if (normAngle >= 158 && normAngle <= 202) {
+          angleName = "MEDIAL PROFILE";
+        } else if (normAngle > 305 && normAngle <= 337) {
+          angleName = "3/4 REAR";
+        }
+
+        if (degreeVal) {
+          degreeVal.textContent = isAerialView ? "TOP // AERIAL LACE" : normAngle + "? // " + angleName;
+        }
+
+        anglePills.forEach(pill => {
+          const pAngle = pill.getAttribute("data-angle");
+          if (pAngle === "top") {
+            pill.classList.toggle("active", isAerialView);
+          } else {
+            const deg = parseInt(pAngle, 10);
+            const isActive = !isAerialView && Math.abs(normAngle - deg) <= 22.5;
+            pill.classList.toggle("active", isActive);
+          }
+        });
+
+        if (renderBox) {
+          const zoomScale = isZoomed ? 1.38 : 1.0;
+          const rotY = isAerialView ? 0 : Math.sin(normAngle * Math.PI / 180) * 8;
+          renderBox.style.transform = "scale(" + zoomScale + ") rotateY(" + rotY + "deg)";
+        }
+        if (groundShadow) {
+          const shadowScale = isAerialView ? 1.1 : (0.85 + Math.abs(Math.sin(normAngle * Math.PI / 180)) * 0.25);
+          groundShadow.style.transform = "scale(" + shadowScale + ", " + (0.9 + Math.abs(Math.cos(normAngle * Math.PI / 180)) * 0.2) + ")";
+        }
+
+        if (brandTagEl) brandTagEl.textContent = sneaker.brandTag;
+        if (productTitleEl) productTitleEl.textContent = sneaker.model;
+        if (priceValEl) priceValEl.textContent = sneaker.currency + sneaker.price;
+        if (colorNameEl) colorNameEl.textContent = colorway.name;
+        if (editorialDescEl) editorialDescEl.textContent = sneaker.desc;
+        if (certBadge) certBadge.textContent = sneaker.badge;
+
+        if (stockTextEl) {
+          stockTextEl.textContent = "Size EU " + selectedSize + " in stock ? Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
+        }
+
+        modelTabs.forEach((tab, i) => {
+          tab.classList.toggle("active", i === activeSneakerIdx);
+        });
+
+        if (swatchesListEl) {
+          swatchesListEl.innerHTML = "";
+          sneaker.colorways.forEach((cw, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "snk-swatch-disc" + (idx === activeColorwayIdx ? " active" : "");
+            btn.title = cw.name;
+            btn.innerHTML = "<span class='snk-swatch-half' style='background:" + cw.dot1 + "'></span><span class='snk-swatch-half' style='background:" + cw.dot2 + "'></span>";
+            btn.addEventListener("click", () => {
+              activeColorwayIdx = idx;
+              playSwatchPluck(220 + idx * 40);
+              updateSneakerView();
+            });
+            swatchesListEl.appendChild(btn);
+          });
+        }
+
+        if (accDetailsEl) {
+          accDetailsEl.innerHTML = "<ul>" + sneaker.details.map(d => "<li>" + d + "</li>").join("") + "</ul>";
+        }
+        if (accMaterialEl) accMaterialEl.textContent = sneaker.craftsmanship;
+        if (accShippingEl) accShippingEl.textContent = sneaker.shipping;
+        if (accReviewsEl) {
+          if (accReviewsTitle) {
+            accReviewsTitle.textContent = "Reviews (" + sneaker.reviews.count + ") ? " + sneaker.reviews.rating;
+          }
+          accReviewsEl.innerHTML = sneaker.reviews.items.map(r => `
+            <div class="snk-review-entry">
+              <div class="snk-review-stars">${r.stars}</div>
+              <div class="snk-review-quote">"${r.quote}"</div>
+              <div class="snk-review-author">— ${r.author}</div>
+            </div>
+          `).join("");
+        }
+      }
+
+      // ----------------------------------------------------
+      // Interactive 360 Turntable Drag & Physics
+      // ----------------------------------------------------
+      function stopInertia() {
+        if (inertiaAnimationId) {
+          cancelAnimationFrame(inertiaAnimationId);
+          inertiaAnimationId = null;
+        }
+      }
+
+      function onPointerDown(e) {
+        isDragging = true;
+        isAerialView = false;
+        stopInertia();
+        stopAutoSpin();
+        if (tiltCard) tiltCard.classList.add("grabbing");
+        dragStartX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        lastDragX = dragStartX;
+        dragStartAngle = currentAngle;
+        lastDragTime = performance.now();
+        dragVelocity = 0;
+      }
+
+      let lastClickThreshold = 0;
+      function onPointerMove(e) {
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+
+        if (lightSpot && tiltCard) {
+          const rect = tiltCard.getBoundingClientRect();
+          lightSpot.style.left = (clientX - rect.left) + "px";
+          lightSpot.style.top = (clientY - rect.top) + "px";
+        }
+
+        if (!isDragging) {
+          if (renderBox && tiltCard && !isZoomed) {
+            const rect = tiltCard.getBoundingClientRect();
+            const relX = (clientX - rect.left) / rect.width - 0.5;
+            const relY = (clientY - rect.top) / rect.height - 0.5;
+            renderBox.style.transform = "perspective(1000px) rotateY(" + (relX * 14) + "deg) rotateX(" + (-relY * 10) + "deg)";
+          }
+          return;
+        }
+
+        const now = performance.now();
+        const dt = now - lastDragTime || 16;
+        const dx = clientX - lastDragX;
+        dragVelocity = dx / dt;
+        lastDragX = clientX;
+        lastDragTime = now;
+
+        const totalDelta = clientX - dragStartX;
+        currentAngle = dragStartAngle + totalDelta * 0.72;
+
+        const currentMilestone = Math.floor(currentAngle / 45);
+        if (currentMilestone !== lastClickThreshold) {
+          lastClickThreshold = currentMilestone;
+          playUiTick(1100, 0.02, 0.05);
+        }
+
+        updateSneakerView();
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        if (tiltCard) tiltCard.classList.remove("grabbing");
+
+        let velocity = dragVelocity * 18;
+        function stepInertia() {
+          if (Math.abs(velocity) < 0.15) {
+            stopInertia();
+            return;
+          }
+          currentAngle += velocity;
+          velocity *= 0.88;
+          updateSneakerView();
+          inertiaAnimationId = requestAnimationFrame(stepInertia);
+        }
+        stepInertia();
+      }
+
+      if (tiltCard) {
+        tiltCard.addEventListener("mousedown", onPointerDown);
+        window.addEventListener("mousemove", onPointerMove);
+        window.addEventListener("mouseup", onPointerUp);
+
+        tiltCard.addEventListener("touchstart", onPointerDown, { passive: true });
+        window.addEventListener("touchmove", onPointerMove, { passive: true });
+        window.addEventListener("touchend", onPointerUp);
+      }
+
+      function startAutoSpin() {
+        isAutoSpinning = true;
+        isAerialView = false;
+        if (autospinBtn) autospinBtn.classList.add("active");
+        if (autospinText) autospinText.textContent = "PAUSE";
+        stopInertia();
+
+        function spinLoop() {
+          if (!isAutoSpinning) return;
+          currentAngle += 0.45;
+          updateSneakerView();
+          autoSpinTimer = requestAnimationFrame(spinLoop);
+        }
+        spinLoop();
+      }
+
+      function stopAutoSpin() {
+        isAutoSpinning = false;
+        if (autoSpinTimer) {
+          cancelAnimationFrame(autoSpinTimer);
+          autoSpinTimer = null;
+        }
+        if (autospinBtn) autospinBtn.classList.remove("active");
+        if (autospinText) autospinText.textContent = "SPIN 360?";
+      }
+
+      if (autospinBtn) {
+        autospinBtn.addEventListener("click", () => {
+          playUiTick(1000, 0.03, 0.08);
+          if (isAutoSpinning) stopAutoSpin();
+          else startAutoSpin();
+        });
+      }
+
+      anglePills.forEach(pill => {
+        pill.addEventListener("click", () => {
+          playUiTick(900, 0.03, 0.07);
+          stopAutoSpin();
+          stopInertia();
+          const pAngle = pill.getAttribute("data-angle");
+          if (pAngle === "top") {
+            isAerialView = true;
+          } else {
+            isAerialView = false;
+            currentAngle = parseInt(pAngle, 10);
+          }
+          updateSneakerView();
+        });
+      });
+
+      if (zoomBtn) {
+        zoomBtn.addEventListener("click", () => {
+          isZoomed = !isZoomed;
+          zoomBtn.classList.toggle("active", isZoomed);
+          if (zoomText) zoomText.textContent = isZoomed ? "RESET 1X" : "ZOOM 1.4X";
+          playUiTick(isZoomed ? 1300 : 800, 0.04, 0.09);
+          updateSneakerView();
+        });
+      }
+
+      modelTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          playUiTick(850, 0.04, 0.08);
+          activeSneakerIdx = parseInt(tab.getAttribute("data-idx"), 10) || 0;
+          activeColorwayIdx = 0;
+          isAerialView = false;
+          updateSneakerView();
+        });
+      });
+
+      sizePills.forEach(pill => {
+        pill.addEventListener("click", () => {
+          sizePills.forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+          selectedSize = parseInt(pill.getAttribute("data-size"), 10) || 43;
+          playUiTick(1200, 0.035, 0.09);
+          const sneaker = SNEAKERS[activeSneakerIdx];
+          if (stockTextEl) {
+            stockTextEl.textContent = "Size EU " + selectedSize + " in stock ? Only 2 pairs left in " + sneaker.brand.split(" ")[0] + " atelier";
+          }
+        });
+      });
+
+      if (wishlistBtn) {
+        wishlistBtn.addEventListener("click", () => {
+          isWishlisted = !isWishlisted;
+          wishlistBtn.classList.toggle("active", isWishlisted);
+          wishlistCount = isWishlisted ? 1 : 0;
+          if (wishlistBadge) {
+            wishlistBadge.textContent = wishlistCount;
+            wishlistBadge.style.transform = "scale(1.4)";
+            setTimeout(() => { wishlistBadge.style.transform = "scale(1)"; }, 250);
+          }
+          playSwatchPluck(isWishlisted ? 440 : 220);
+        });
+      }
+
+      const accItems = Array.from(document.querySelectorAll(".snk-acc-item"));
+      accItems.forEach(item => {
+        const trigger = item.querySelector(".snk-acc-trigger");
+        if (trigger) {
+          trigger.addEventListener("click", () => {
+            playUiTick(900, 0.02, 0.05);
+            item.classList.toggle("active");
+          });
+        }
+      });
+
+      function updateCartUI() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        if (cartCountEl) {
+          cartCountEl.textContent = totalItems;
+          cartCountEl.style.transform = "scale(1.4)";
+          setTimeout(() => { cartCountEl.style.transform = "scale(1)"; }, 260);
+        }
+        if (cartTotalItemsEl) cartTotalItemsEl.textContent = "(" + totalItems + " ITEMS)";
+        if (cartSubtotalEl) cartSubtotalEl.textContent = "$" + subtotal.toLocaleString();
+        if (cartFinalTotalEl) cartFinalTotalEl.textContent = "$" + subtotal.toLocaleString();
+
+        if (cartItemsListEl) {
+          if (cart.length === 0) {
+            cartItemsListEl.innerHTML = `
+              <div class="snk-cart-empty-state">
+                <p>YOUR SHOPPING BAG IS CURRENTLY EMPTY</p>
+                <span style="font-size:7.5px;color:#888;">Discover exclusive atelier releases</span>
+              </div>
+            `;
+          } else {
+            cartItemsListEl.innerHTML = cart.map((item, idx) => `
+              <div class="snk-cart-item">
+                <div class="snk-cart-thumb">
+                  ${item.svgThumb}
+                </div>
+                <div class="snk-cart-item-info">
+                  <span class="snk-cart-item-brand">${item.brand}</span>
+                  <div class="snk-cart-item-title">${item.model}</div>
+                  <div class="snk-cart-item-meta">${item.colorwayName} · Size EU ${item.size}</div>
+                  <div class="snk-cart-item-price-row">
+                    <span class="snk-cart-item-price">$${(item.price * item.quantity).toLocaleString()}</span>
+                    <div class="snk-cart-qty-btns">
+                      <button class="snk-cart-qty-btn" data-action="dec" data-idx="${idx}">−</button>
+                      <span class="snk-cart-qty-val">${item.quantity}</span>
+                      <button class="snk-cart-qty-btn" data-action="inc" data-idx="${idx}">+</button>
+                    </div>
+                    <button class="snk-cart-item-remove" data-action="remove" data-idx="${idx}" title="Remove">✕</button>
+                  </div>
+                </div>
+              </div>
+            `).join("");
+
+            const qtyBtns = cartItemsListEl.querySelectorAll(".snk-cart-qty-btn");
+            qtyBtns.forEach(btn => {
+              btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const action = btn.getAttribute("data-action");
+                const itemIdx = parseInt(btn.getAttribute("data-idx"), 10);
+                if (action === "inc") {
+                  cart[itemIdx].quantity += 1;
+                  playUiTick(1100, 0.03, 0.06);
+                } else if (action === "dec") {
+                  cart[itemIdx].quantity -= 1;
+                  if (cart[itemIdx].quantity <= 0) cart.splice(itemIdx, 1);
+                  playUiTick(800, 0.03, 0.06);
+                }
+                updateCartUI();
+              });
+            });
+
+            const removeBtns = cartItemsListEl.querySelectorAll(".snk-cart-item-remove");
+            removeBtns.forEach(btn => {
+              btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const itemIdx = parseInt(btn.getAttribute("data-idx"), 10);
+                cart.splice(itemIdx, 1);
+                playUiTick(700, 0.04, 0.08);
+                updateCartUI();
+              });
+            });
+          }
+        }
+      }
+
+      function triggerFlyingShoeAnimation() {
+        if (!tiltCard || !cartTrigger) return;
+        const cardRect = tiltCard.getBoundingClientRect();
+        const cartRect = cartTrigger.getBoundingClientRect();
+
+        const flyer = document.createElement("div");
+        flyer.className = "snk-fly-item";
+        flyer.innerHTML = `<svg viewBox="0 0 24 24" fill="${SNEAKERS[activeSneakerIdx].colorways[activeColorwayIdx].flame}"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>`;
+        document.body.appendChild(flyer);
+
+        const startX = cardRect.left + cardRect.width / 2 - 20;
+        const startY = cardRect.top + cardRect.height / 2 - 20;
+        const endX = cartRect.left + cartRect.width / 2 - 10;
+        const endY = cartRect.top + cartRect.height / 2 - 10;
+
+        flyer.style.left = startX + "px";
+        flyer.style.top = startY + "px";
+        flyer.style.opacity = "1";
+        flyer.style.transform = "scale(1.2)";
+
+        const startTime = performance.now();
+        const duration = 600;
+
+        function animateFly(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const t = 1 - Math.pow(1 - progress, 3);
+          const curX = startX + (endX - startX) * t;
+          const arcHeight = -80 * Math.sin(progress * Math.PI);
+          const curY = startY + (endY - startY) * t + arcHeight;
+          const scale = 1.2 - 0.7 * t;
+
+          flyer.style.left = curX + "px";
+          flyer.style.top = curY + "px";
+          flyer.style.transform = "scale(" + scale + ") rotate(" + (t * 360) + "deg)";
+          flyer.style.opacity = (1 - progress * 0.2).toString();
+
+          if (progress < 1) {
+            requestAnimationFrame(animateFly);
+          } else {
+            if (flyer.parentNode) flyer.parentNode.removeChild(flyer);
+            updateCartUI();
+          }
+        }
+        requestAnimationFrame(animateFly);
+      }
+
+      if (addCartBtn) {
+        addCartBtn.addEventListener("click", () => {
+          const sneaker = SNEAKERS[activeSneakerIdx];
+          const colorway = sneaker.colorways[activeColorwayIdx];
+
+          playCartChime();
+
+          const existing = cart.find(item => item.id === sneaker.id && item.colorwayName === colorway.name && item.size === selectedSize);
+          if (existing) {
+            existing.quantity += 1;
+          } else {
+            cart.push({
+              id: sneaker.id,
+              brand: sneaker.brand,
+              model: sneaker.model,
+              price: sneaker.price,
+              colorwayName: colorway.name,
+              size: selectedSize,
+              quantity: 1,
+              svgThumb: renderSneakerSvg(sneaker, colorway, 0, false)
+            });
+          }
+
+          triggerFlyingShoeAnimation();
+
+          addCartBtn.classList.add("added");
+          if (addCartText) addCartText.textContent = "ADDED TO BAG ✓";
+          setTimeout(() => {
+            addCartBtn.classList.remove("added");
+            if (addCartText) addCartText.textContent = "ADD TO CART";
+          }, 1800);
+        });
+      }
+
+      function openCart() {
+        if (cartDrawer && cartBackdrop) {
+          cartDrawer.classList.add("open");
+          cartBackdrop.classList.add("open");
+          playDrawerSwoosh();
+        }
+      }
+
+      function closeCart() {
+        if (cartDrawer && cartBackdrop) {
+          cartDrawer.classList.remove("open");
+          cartBackdrop.classList.remove("open");
+          playDrawerSwoosh();
+        }
+      }
+
+      if (cartTrigger) cartTrigger.addEventListener("click", openCart);
+      if (cartCloseBtn) cartCloseBtn.addEventListener("click", closeCart);
+      if (cartBackdrop) cartBackdrop.addEventListener("click", closeCart);
+
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener("click", () => {
+          if (cart.length === 0) return;
+          closeCart();
+          if (modalBackdrop) {
+            modalBackdrop.classList.add("open");
+            if (trackIdEl) {
+              const randCode = Math.floor(100000 + Math.random() * 900000);
+              trackIdEl.textContent = "DHL-EXPRESS-SSN-" + randCode;
+            }
+            playCheckoutSuccess();
+          }
+        });
+      }
+
+      if (modalCloseBtn) {
+        modalCloseBtn.addEventListener("click", () => {
+          if (modalBackdrop) modalBackdrop.classList.remove("open");
+          cart = [];
+          updateCartUI();
+          playUiTick(900, 0.03, 0.07);
+        });
+      }
+
+      updateSneakerView();
+      updateCartUI();
     })();
 
     /* Resize */
