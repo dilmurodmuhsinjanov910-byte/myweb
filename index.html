@@ -195,7 +195,7 @@
         linear-gradient(180deg,#080808,#060606);
     }
     #orb-canvas{
-      position:absolute;inset:0;z-index:1;width:100%;height:100%;cursor:grab;touch-action:none;
+      position:absolute;inset:0;z-index:1;width:100%;height:100%;cursor:grab;touch-action:pan-y;
     }
     #orb-canvas:active{
       cursor:grabbing;
@@ -2533,7 +2533,7 @@
       .nav-link:nth-child(2),.nav-link:nth-child(3){display:none}
       #hero{height:175vh}
       .hero-name{font-size:clamp(56px,16vw,94px);width:95vw}
-      .hero-shell{width:80vw;right:-14vw;top:15vh;opacity:.7}
+      .hero-shell{width:min(54vw,310px);right:2vw;top:18vh;opacity:.55}
       .hero-tagline{margin-left:0;max-width:300px}
       .hero-meta{display:none}
       .statement-copy{font-size:clamp(38px,11vw,65px)}
@@ -4566,26 +4566,32 @@
     function getResponsiveConfig() {
       const w = window.innerWidth;
       const isMobile = w < 768;
+      const isSmallMobile = w < 480;
       const isTablet = w >= 768 && w < 1024;
       let baseX, baseY, baseZ, scale;
-      if (isMobile) {
-        // Positioned gracefully behind headline as a luxury celestial watermark
-        baseX = 0.22;
-        baseY = -0.10;
-        baseZ = -0.10;
-        scale = 0.90;
+      if (isSmallMobile) {
+        // Refined, compact celestial emblem scaled harmoniously for mobile viewports
+        baseX = 0.10;
+        baseY = 0.08;
+        baseZ = -0.15;
+        scale = 0.45;
+      } else if (isMobile) {
+        baseX = 0.14;
+        baseY = 0.06;
+        baseZ = -0.15;
+        scale = 0.54;
       } else if (isTablet) {
-        baseX = 0.85;
-        baseY = 0.02;
+        baseX = 0.75;
+        baseY = 0.04;
         baseZ = -0.20;
-        scale = 1.05;
+        scale = 0.88;
       } else {
         baseX = 1.45;
         baseY = 0.05;
         baseZ = -0.25;
         scale = 1.16;
       }
-      return { baseX, baseY, baseZ, scale, isMobile, isTablet };
+      return { baseX, baseY, baseZ, scale, isMobile, isTablet, isSmallMobile };
     }
 
     let config = getResponsiveConfig();
@@ -4962,7 +4968,52 @@
     let prevPointerX = 0, prevPointerY = 0;
     let dragVelX = 0, dragVelY = 0;
 
+    // Intelligent Hit-Testing: only grab when pointer is actually on the 3D globe sphere
+    function isPointerOnGlobe(clientX, clientY) {
+      if (!globeRoot || !camera) return false;
+      const v = globeRoot.position.clone().project(camera);
+      const cx = (v.x * 0.5 + 0.5) * window.innerWidth;
+      const cy = (-v.y * 0.5 + 0.5) * window.innerHeight;
+
+      const fovRad = (camera.fov * Math.PI) / 180;
+      const dist = Math.abs(camera.position.z - globeRoot.position.z) || 5.3;
+      const visibleH = 2 * Math.tan(fovRad / 2) * dist;
+      const pxPerUnit = window.innerHeight / (visibleH || 1);
+      const curScale = globeRoot.scale.x || config.scale;
+      // Globe radius R=1.15 with corona halo ~1.22
+      const radiusPx = 1.22 * curScale * pxPerUnit;
+
+      const dx = clientX - cx;
+      const dy = clientY - cy;
+      return (dx * dx + dy * dy) <= (radiusPx * radiusPx);
+    }
+
+    let touchTracking = false;
+    let touchStartX = 0, touchStartY = 0;
+    let touchLockedToRotate = false;
+
     canvas.addEventListener("pointerdown", (e) => {
+      const onGlobe = isPointerOnGlobe(e.clientX, e.clientY);
+
+      if (e.pointerType === "touch") {
+        // If touch is outside the globe hitbox, do nothing so browser scrolls smoothly
+        if (!onGlobe) return;
+
+        touchTracking = true;
+        touchStartX = e.clientX;
+        touchStartY = e.clientY;
+        prevPointerX = e.clientX;
+        prevPointerY = e.clientY;
+        dragVelX = 0;
+        dragVelY = 0;
+        touchLockedToRotate = false;
+        isDragging = false;
+        // Do NOT call setPointerCapture yet to preserve native vertical scrolling
+        return;
+      }
+
+      // Mouse pointer interaction on desktop
+      if (!onGlobe) return;
       isDragging = true;
       prevPointerX = e.clientX;
       prevPointerY = e.clientY;
@@ -4978,7 +5029,36 @@
       mouse.tx = (e.clientX / innerWidth - 0.5) * 2;
       mouse.ty = -(e.clientY / innerHeight - 0.5) * 2;
 
-      if(isDragging) {
+      // Touch gesture arbitration: distinguish between vertical page scroll and horizontal globe spin
+      if (e.pointerType === "touch" && touchTracking) {
+        if (!touchLockedToRotate) {
+          const deltaX = Math.abs(e.clientX - touchStartX);
+          const deltaY = Math.abs(e.clientY - touchStartY);
+
+          if (deltaX > 8 || deltaY > 8) {
+            if (deltaY > deltaX) {
+              // User intends to scroll down/up! Yield immediately to native browser scroll
+              touchTracking = false;
+              isDragging = false;
+              return;
+            } else {
+              // User intentionally swiped horizontally on the globe! Lock to 3D rotation
+              touchLockedToRotate = true;
+              isDragging = true;
+              prevPointerX = e.clientX;
+              prevPointerY = e.clientY;
+              if (canvas.setPointerCapture) {
+                try { canvas.setPointerCapture(e.pointerId); } catch(_) {}
+              }
+              canvas.style.cursor = "grabbing";
+            }
+          } else {
+            return;
+          }
+        }
+      }
+
+      if (isDragging) {
         const dx = e.clientX - prevPointerX;
         const dy = e.clientY - prevPointerY;
         prevPointerX = e.clientX;
@@ -4993,6 +5073,8 @@
     });
 
     const stopDrag = (e) => {
+      touchTracking = false;
+      touchLockedToRotate = false;
       if (!isDragging) return;
       isDragging = false;
       canvas.style.cursor = "grab";
