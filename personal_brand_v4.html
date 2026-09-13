@@ -2527,13 +2527,14 @@
     }
 
     @media (max-width:850px){
+      #orb-canvas{pointer-events:none !important;touch-action:pan-y !important;}
       body,a,button{cursor:auto}
       .cursor-dot,.cursor-ring{display:none}
       .nav-right{gap:14px}
       .nav-link:nth-child(2),.nav-link:nth-child(3){display:none}
       #hero{height:175vh}
       .hero-name{font-size:clamp(56px,16vw,94px);width:95vw}
-      .hero-shell{width:min(54vw,310px);right:2vw;top:18vh;opacity:.55}
+      .hero-shell{width:min(36vw,170px);right:5vw;top:14vh;opacity:.35}
       .hero-tagline{margin-left:0;max-width:300px}
       .hero-meta{display:none}
       .statement-copy{font-size:clamp(38px,11vw,65px)}
@@ -4570,16 +4571,16 @@
       const isTablet = w >= 768 && w < 1024;
       let baseX, baseY, baseZ, scale;
       if (isSmallMobile) {
-        // Refined, compact celestial emblem scaled harmoniously for mobile viewports
-        baseX = 0.10;
-        baseY = 0.08;
-        baseZ = -0.15;
-        scale = 0.45;
+        // Refined celestial emblem: compact luxury jewel framed in upper-right space without occluding typography
+        baseX = 0.28;
+        baseY = 0.58;
+        baseZ = -0.22;
+        scale = 0.24;
       } else if (isMobile) {
-        baseX = 0.14;
-        baseY = 0.06;
-        baseZ = -0.15;
-        scale = 0.54;
+        baseX = 0.32;
+        baseY = 0.52;
+        baseZ = -0.22;
+        scale = 0.28;
       } else if (isTablet) {
         baseX = 0.75;
         baseY = 0.04;
@@ -4993,26 +4994,10 @@
     let touchLockedToRotate = false;
 
     canvas.addEventListener("pointerdown", (e) => {
+      // On mobile or touch devices: 100% native scroll without any touch hijacking
+      if (e.pointerType === "touch" || config.isMobile) return;
+
       const onGlobe = isPointerOnGlobe(e.clientX, e.clientY);
-
-      if (e.pointerType === "touch") {
-        // If touch is outside the globe hitbox, do nothing so browser scrolls smoothly
-        if (!onGlobe) return;
-
-        touchTracking = true;
-        touchStartX = e.clientX;
-        touchStartY = e.clientY;
-        prevPointerX = e.clientX;
-        prevPointerY = e.clientY;
-        dragVelX = 0;
-        dragVelY = 0;
-        touchLockedToRotate = false;
-        isDragging = false;
-        // Do NOT call setPointerCapture yet to preserve native vertical scrolling
-        return;
-      }
-
-      // Mouse pointer interaction on desktop
       if (!onGlobe) return;
       isDragging = true;
       prevPointerX = e.clientX;
@@ -5026,37 +5011,9 @@
     });
 
     addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch" || config.isMobile) return;
       mouse.tx = (e.clientX / innerWidth - 0.5) * 2;
       mouse.ty = -(e.clientY / innerHeight - 0.5) * 2;
-
-      // Touch gesture arbitration: distinguish between vertical page scroll and horizontal globe spin
-      if (e.pointerType === "touch" && touchTracking) {
-        if (!touchLockedToRotate) {
-          const deltaX = Math.abs(e.clientX - touchStartX);
-          const deltaY = Math.abs(e.clientY - touchStartY);
-
-          if (deltaX > 8 || deltaY > 8) {
-            if (deltaY > deltaX) {
-              // User intends to scroll down/up! Yield immediately to native browser scroll
-              touchTracking = false;
-              isDragging = false;
-              return;
-            } else {
-              // User intentionally swiped horizontally on the globe! Lock to 3D rotation
-              touchLockedToRotate = true;
-              isDragging = true;
-              prevPointerX = e.clientX;
-              prevPointerY = e.clientY;
-              if (canvas.setPointerCapture) {
-                try { canvas.setPointerCapture(e.pointerId); } catch(_) {}
-              }
-              canvas.style.cursor = "grabbing";
-            }
-          } else {
-            return;
-          }
-        }
-      }
 
       if (isDragging) {
         const dx = e.clientX - prevPointerX;
@@ -5151,11 +5108,11 @@
       });
 
       // Seamless responsive position interpolation with scroll & gentle mouse parallax
-      const scrollShiftX = config.isMobile ? 0.06 : 0.27;
-      const scrollShiftY = 0.05;
-      const targetX = config.baseX + scrollState.progress * scrollShiftX + (isDragging ? 0 : mouse.x * (config.isMobile ? 0.05 : 0.16));
-      const targetY = config.baseY + scrollState.progress * scrollShiftY + (isDragging ? 0 : mouse.y * (config.isMobile ? 0.03 : 0.08));
-      const targetScale = config.scale * (1.0 + scrollState.progress * 0.15);
+      const scrollShiftX = config.isMobile ? 0.03 : 0.27;
+      const scrollShiftY = config.isMobile ? -0.12 : 0.05;
+      const targetX = config.baseX + scrollState.progress * scrollShiftX + (isDragging ? 0 : mouse.x * (config.isMobile ? 0.02 : 0.16));
+      const targetY = config.baseY + scrollState.progress * scrollShiftY + (isDragging ? 0 : mouse.y * (config.isMobile ? 0.02 : 0.08));
+      const targetScale = config.scale * (1.0 + scrollState.progress * (config.isMobile ? 0.04 : 0.15));
 
       globeRoot.position.x += (targetX - globeRoot.position.x) * 0.035;
       globeRoot.position.y += (targetY - globeRoot.position.y) * 0.035;
