@@ -35,13 +35,22 @@
     }
 
     *{box-sizing:border-box}
-    html{background:var(--bg);scroll-behavior:auto}
+    html{
+      background:var(--bg);
+      scroll-behavior:auto;
+      overflow-x:hidden;
+      max-width:100vw;
+      width:100%;
+    }
     body{
       margin:0;
       background:var(--bg);
       color:var(--white);
       font-family:var(--sans);
       overflow-x:hidden;
+      max-width:100vw;
+      width:100%;
+      position:relative;
       cursor:none;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
@@ -81,7 +90,7 @@
     }
 
     .ambient{
-      position:fixed;inset:-20%;z-index:-1;pointer-events:none;
+      position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;z-index:-1;pointer-events:none;
       background:
         radial-gradient(circle at 72% 18%,rgba(223,183,108,.065) 0%,rgba(201,168,106,.02) 28%,transparent 55%),
         radial-gradient(circle at 16% 76%,rgba(216,219,224,.045) 0%,rgba(185,189,194,.015) 25%,transparent 50%);
@@ -366,7 +375,7 @@
       margin:22px 0 0;font-family:var(--serif);font-size:clamp(62px,8.8vw,145px);line-height:.84;font-weight:400;letter-spacing:-.052em;
     }
 
-    .project{position:relative;height:145vh;border-top:1px solid var(--line)}
+    .project{position:relative;height:145vh;border-top:1px solid var(--line);overflow:hidden;max-width:100vw;contain:paint}
     .project-stage{
       position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;background:#070707;
     }
@@ -2448,12 +2457,12 @@
 
     /* contact */
     #contact{
-      min-height:100vh;padding:13vh var(--pad) 30px;display:flex;flex-direction:column;justify-content:space-between;
-      border-top:1px solid var(--line);overflow:hidden;
+      position:relative;min-height:100vh;padding:13vh var(--pad) 30px;display:flex;flex-direction:column;justify-content:space-between;
+      border-top:1px solid var(--line);overflow:hidden;max-width:100vw;contain:paint;
     }
     .contact-orb-line{
-      position:absolute;right:-10vw;top:10%;width:45vw;aspect-ratio:1;border-radius:50%;
-      border:1px solid rgba(223,183,108,.2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 0 60px rgba(223,183,108,.06);opacity:.8;
+      position:absolute;right:-10vw;top:10%;width:45vw;max-width:45vw;aspect-ratio:1;border-radius:50%;
+      border:1px solid rgba(223,183,108,.2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 0 60px rgba(223,183,108,.06);opacity:.8;pointer-events:none;
     }
     .contact-heading{
       margin:40px 0;max-width:1080px;font-family:var(--serif);font-size:clamp(58px,8.4vw,135px);
@@ -2492,9 +2501,10 @@
       position:fixed;inset:0;z-index:7000;background:rgba(0,0,0,.68);backdrop-filter:blur(0);opacity:0;visibility:hidden;
     }
     .contact-sheet{
-      position:fixed;left:0;bottom:0;z-index:7001;width:100%;background:#0b0b0b;border-top:1px solid var(--line);
-      padding:28px var(--pad) 34px;transform:translateY(105%);
+      position:fixed;left:0;bottom:0;z-index:7001;width:100%;max-width:100vw;background:#0b0b0b;border-top:1px solid var(--line);
+      padding:28px var(--pad) 34px;transform:translateY(105%);visibility:hidden;transition:transform .45s cubic-bezier(.16,1,.3,1), visibility .45s;
     }
+    .contact-sheet.open{transform:translateY(0);visibility:visible}
     .sheet-head{
       display:flex;justify-content:space-between;align-items:center;padding-bottom:21px;border-bottom:1px solid var(--line)
     }
@@ -2787,8 +2797,15 @@
     @media (max-width: 768px) {
       #project-03 .solar-planet-dock {
         bottom: 12px !important;
+        left: 8px !important;
+        right: 8px !important;
+        transform: none !important;
+        margin: 0 auto !important;
+        width: fit-content !important;
         padding: 4px 8px !important;
         max-width: calc(100% - 16px) !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
         z-index: 25 !important;
       }
       #project-03 .solar-watermark {
@@ -2837,6 +2854,7 @@
         transform: translateX(calc(-100% - 10px)) !important;
         opacity: 0 !important;
         pointer-events: none !important;
+        visibility: hidden !important;
       }
       #project-03 #solar-info-open-btn:not(.is-hidden) {
         display: inline-flex !important;
@@ -2875,6 +2893,8 @@
         margin: 0 !important;
         transform: none !important;
         border-radius: 12px !important;
+        overflow: hidden !important;
+        contain: paint !important;
       }
       #project-01 .project-visual,
       #project-02 .project-visual {
@@ -5403,6 +5423,8 @@
     function openSheet(){
       lenis?.stop();
       gsap.set(backdrop,{visibility:"visible"});
+      gsap.set(sheet,{visibility:"visible"});
+      sheet?.classList.add("open");
       gsap.to(backdrop,{opacity:1,backdropFilter:"blur(10px)",duration:.42});
       gsap.to(sheet,{y:0,duration:.76,ease:"expo.out"});
       gsap.from(".channel",{
@@ -5411,7 +5433,15 @@
     }
 
     function closeSheet(){
-      gsap.to(sheet,{y:"105%",duration:.56,ease:"power3.inOut"});
+      sheet?.classList.remove("open");
+      gsap.to(sheet,{
+        y:"105%",
+        duration:.56,
+        ease:"power3.inOut",
+        onComplete(){
+          gsap.set(sheet,{visibility:"hidden"});
+        }
+      });
       gsap.to(backdrop,{
         opacity:0,
         backdropFilter:"blur(0px)",
