@@ -9,3 +9,7 @@ node_modules/**
 tests
 tests/**
 *.log
+.performance-review
+.performance-review/**
+chat_backup
+chat_backup/**

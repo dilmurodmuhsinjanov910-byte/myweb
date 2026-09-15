@@ -985,7 +985,7 @@
       perspective: 1100px;
       transform-style: preserve-3d;
       cursor: grab;
-      touch-action: none;
+      touch-action: pan-y;
     }
     .snk-tilt-card.grabbing {
       cursor: grabbing;
@@ -1963,9 +1963,11 @@
       width: 100%;
       height: 100%;
       cursor: grab;
+      touch-action: pan-y;
       outline: none;
       z-index: 1;
     }
+    #solar-app:fullscreen #solar-canvas { touch-action: none; }
     #solar-canvas:active {
       cursor: grabbing;
     }
@@ -3969,7 +3971,7 @@
                   <!-- Dock buttons generated dynamically via JS -->
                 </nav>
 
-                <div class="solar-watermark">DRAG TO ORBIT // SCROLL TO ZOOM // CLICK CELESTIAL BODY TO INSPECT</div>
+                <div class="solar-watermark">DRAG TO ORBIT // CTRL + SCROLL TO ZOOM // CLICK TO INSPECT</div>
               </div>
             </div>
           </div>
@@ -4080,13 +4082,16 @@
 
   <script type="module">
     import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js";
+    import { createVisibleLoop, initializeNearViewport } from "./assets/animation-runtime.mjs";
 
     gsap.registerPlugin(ScrollTrigger);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compactDevice = window.matchMedia("(pointer: coarse)").matches || innerWidth < 768;
+    const sceneFPS = reduced ? 15 : compactDevice ? 30 : 60;
 
     /* Lenis */
     let lenis;
-    if(!reduced){
+    if(!reduced && !compactDevice){
       lenis = new Lenis({
         duration:1.15,
         easing:(t)=>Math.min(1,1.001-Math.pow(2,-10*t)),
@@ -4576,7 +4581,7 @@
       alpha: true,
       powerPreference: "high-performance"
     });
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.35));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, compactDevice ? 1 : 1.35));
     renderer.setSize(innerWidth, innerHeight);
 
     const scene = new THREE.Scene();
@@ -5062,29 +5067,13 @@
     addEventListener("pointerup", stopDrag);
     addEventListener("pointercancel", stopDrag);
 
-    let isHeroVisible = true;
-    let heroRafId = null;
-    const heroObserver = new IntersectionObserver(([entry]) => {
-      isHeroVisible = entry.isIntersecting;
-      if (isHeroVisible) {
-        if (!heroRafId) heroRafId = requestAnimationFrame(render);
-      } else if (heroRafId) {
-        cancelAnimationFrame(heroRafId);
-        heroRafId = null;
-      }
-    }, { threshold: 0.02 });
     const heroEl = document.querySelector("#hero");
-    if(heroEl) heroObserver.observe(heroEl);
 
     // Scroll state decoupled from render loop to eliminate frame fighting
     const scrollState = { progress: 0 };
 
-    function render(t){
-      if (!isHeroVisible) {
-        heroRafId = null;
-        return;
-      }
-
+    function render(t, delta){
+      const step = delta * 60;
       const sec = t * 0.001;
 
       mouse.x += (mouse.tx - mouse.x) * 0.045;
@@ -5104,12 +5093,12 @@
         tiltGroup.rotation.x = Math.max(-0.48, Math.min(0.48, tiltGroup.rotation.x + dragVelY));
 
         // Majestic slow axial rotation
-        earthSpinGroup.rotation.y += 0.0010;
+        earthSpinGroup.rotation.y += reduced ? 0 : 0.0010 * step;
       }
 
       // Celestial coordinate rings and stars drift independently
-      orbitRing.rotation.z += 0.0006;
-      stars.rotation.y += 0.00018;
+      orbitRing.rotation.z += reduced ? 0 : 0.0006 * step;
+      stars.rotation.y += reduced ? 0 : 0.00018 * step;
 
       // Pulse packets along 3D geodesic arcs
       arcPackets.forEach(p => {
@@ -5143,9 +5132,8 @@
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
-      heroRafId = requestAnimationFrame(render);
     }
-    heroRafId = requestAnimationFrame(render);
+    createVisibleLoop(heroEl, render, { fps: sceneFPS });
 
     /* Preloader */
     const load = {v:0};
@@ -5228,24 +5216,41 @@
         }
       });
     }
-    wrapText("#statement-copy","statement-word");
-    wrapText("#closing-text","closing-word");
-
-    /* Statement reveal */
-    if(!reduced){
-      gsap.utils.toArray("#statement-copy .statement-word").forEach((word,i)=>{
-        gsap.to(word,{
-          opacity:1,
-          y:0,
-          scrollTrigger:{
-            trigger:"#statement",
-            start:`${6+i*.7}% 75%`,
-            end:`${16+i*.7}% 55%`,
-            scrub:true
-          }
+    // Translations replace innerHTML; rebuild their word animations and dispose
+    // old ScrollTriggers instead of leaving detached nodes in the animation graph.
+    let localizedTextMotion;
+    let languageRefreshFrame;
+    function refreshLocalizedTextMotion() {
+      localizedTextMotion?.revert();
+      wrapText("#statement-copy", "statement-word");
+      wrapText("#closing-text", "closing-word");
+      localizedTextMotion = gsap.context(() => {
+        if (reduced) {
+          gsap.set(".statement-word,.closing-word", { opacity: 1, y: 0 });
+          return;
+        }
+        gsap.utils.toArray("#statement-copy .statement-word").forEach((word, i) => {
+          gsap.to(word, { opacity: 1, y: 0, scrollTrigger: {
+            trigger: "#statement", start: `${6+i*.7}% 75%`,
+            end: `${16+i*.7}% 55%`, scrub: true
+          }});
+        });
+        gsap.to(".closing-word", { opacity: 1, y: 0, stagger: .035,
+          scrollTrigger: { trigger: "#closing", start: "top 66%", end: "bottom 56%", scrub: 1 }
         });
       });
+    }
+    refreshLocalizedTextMotion();
+    window.addEventListener("languageChanged", () => {
+      cancelAnimationFrame(languageRefreshFrame);
+      languageRefreshFrame = requestAnimationFrame(() => {
+        refreshLocalizedTextMotion();
+        ScrollTrigger.refresh();
+      });
+    });
 
+    /* Section reveals */
+    if(!reduced){
       gsap.fromTo(".about-image-wrap",
         {clipPath:"inset(7% 0 7% 0)"},
         {
@@ -5377,19 +5382,6 @@
 
     /* Closing */
     if(!reduced){
-      const closingWords=gsap.utils.toArray(".closing-word");
-      gsap.to(closingWords,{
-        opacity:1,
-        y:0,
-        stagger:.035,
-        scrollTrigger:{
-          trigger:"#closing",
-          start:"top 66%",
-          end:"bottom 56%",
-          scrub:1
-        }
-      });
-
       gsap.fromTo(".closing-orb",
         {scale:.48,opacity:0},
         {
@@ -5468,16 +5460,20 @@
 
       addEventListener("mousemove",e=>{
         mx=e.clientX; my=e.clientY;
+        if (!cursorRafId) cursorRafId = requestAnimationFrame(cursorLoop);
       },{passive:true});
 
       function cursorLoop(){
+        cursorRafId = null;
+        if (document.hidden) return;
         rx += (mx-rx)*.15;
         ry += (my-ry)*.15;
         dot.style.transform = `translate3d(${mx}px,${my}px,0)`;
         ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
-        cursorRafId = requestAnimationFrame(cursorLoop);
+        if (Math.abs(mx-rx) + Math.abs(my-ry) > 0.1) {
+          cursorRafId = requestAnimationFrame(cursorLoop);
+        }
       }
-      cursorRafId = requestAnimationFrame(cursorLoop);
 
       document.querySelectorAll("a,button,.magnetic").forEach(el=>{
         el.addEventListener("mouseenter",()=>ring.classList.add("active"), {passive:true});
@@ -5491,7 +5487,7 @@
           const r = elRect || el.getBoundingClientRect();
           const x=e.clientX-r.left-r.width/2;
           const y=e.clientY-r.top-r.height/2;
-          gsap.to(el,{x:x*.12,y:y*.12,duration:.30,ease:"power3.out"});
+          gsap.to(el,{x:x*.12,y:y*.12,duration:.30,ease:"power3.out",overwrite:"auto"});
         }, {passive:true});
       });
     }
@@ -5546,22 +5542,7 @@
       const soundBtn = document.getElementById("portal-sound-toggle");
       const soundText = document.getElementById("portal-sound-text");
 
-      // Visibility Guard via IntersectionObserver: 0% CPU when offscreen
-      let isPortalVisible = true;
-      if (window.IntersectionObserver) {
-        const portalObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            isPortalVisible = entry.isIntersecting;
-            if (isPortalVisible) {
-              if (!portalRafId) portalRafId = requestAnimationFrame(animLoop);
-            } else if (portalRafId) {
-              cancelAnimationFrame(portalRafId);
-              portalRafId = null;
-            }
-          });
-        }, { threshold: 0.04 });
-        portalObserver.observe(portalApp);
-      }
+      let isPortalVisible = false;
 
       // Dirty-check flags for static layers (eliminates 1MB photo decoding & redraw per frame)
       let needsSkyRedraw = true;
@@ -5625,10 +5606,10 @@
       }
 
       // Unlock AudioContext on initial gesture
-      ["click", "pointerdown", "touchstart", "keydown"].forEach(evt => {
-        window.addEventListener(evt, () => {
-          initAudioContext();
-        }, { once: true, passive: true });
+      ["pointerdown", "keydown"].forEach(evt => {
+        portalApp.addEventListener(evt, () => {
+          if (soundEnabled) initAudioContext();
+        }, { passive: true });
       });
 
       function ensureGateHumNodes() {
@@ -5921,7 +5902,7 @@
           if (threadsCanvas) cachedThreadsRect = threadsCanvas.getBoundingClientRect();
         }
         window.addEventListener("resize", refreshP1Rects, { passive: true });
-        window.addEventListener("scroll", refreshP1Rects, { passive: true });
+        window.addEventListener("scroll", () => { cachedVpRect = null; cachedThreadsRect = null; }, { passive: true });
         viewport.addEventListener("mouseenter", refreshP1Rects, { passive: true });
 
         viewport.addEventListener("mousemove", (e) => {
@@ -6075,7 +6056,10 @@
         }
       }
 
+      let glyphDestination = -1;
+      let threadGlyphs = [];
       function getThreadGlyphs(threadIndex) {
+        if (glyphDestination === currentIndex) return threadGlyphs[threadIndex % threadGlyphs.length];
         const nextIdx = (currentIndex + 1) % destinations.length;
         const next = destinations[nextIdx];
         const stringData = [
@@ -6093,6 +6077,8 @@
           `✦ QUANTUM ENTANGLEMENT // ACTIVE`,
           `❖ RESONANCE // 432 HZ`
         ];
+        glyphDestination = currentIndex;
+        threadGlyphs = stringData;
         return stringData[threadIndex % stringData.length];
       }
 
@@ -6206,6 +6192,26 @@
         threadMouse.lastY = curY;
       }
 
+      // Rasterize each letter once; re-use the small bitmap during thread motion.
+      const glyphSprites = new Map();
+      function drawThreadGlyph(char, fontSize, glowing) {
+        const key = `${char}:${fontSize}:${glowing}`;
+        let sprite = glyphSprites.get(key);
+        if (!sprite) {
+          sprite = document.createElement("canvas");
+          sprite.width = sprite.height = Math.ceil(fontSize * 3);
+          const ctx = sprite.getContext("2d");
+          ctx.font = `400 ${fontSize}px 'DM Sans', sans-serif, monospace`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = glowing ? "#fffce8" : "rgba(230, 205, 155, 0.78)";
+          ctx.fillText(char, sprite.width / 2, sprite.height / 2);
+          glyphSprites.set(key, sprite);
+        }
+        threadsCtx.drawImage(sprite, -sprite.width / 2, -sprite.height / 2);
+      }
+      document.fonts?.ready.then(() => glyphSprites.clear());
+
       function renderHangingThreads() {
         if (!threadsCtx || !threadsCanvas) return;
         const w = threadsCanvas.width;
@@ -6240,7 +6246,7 @@
           threadsCtx.lineWidth = (isGlowing ? 0.85 : 0.45) * dpr;
           if (isGlowing) {
             threadsCtx.shadowColor = "rgba(255, 230, 150, 0.85)";
-            threadsCtx.shadowBlur = 4 * dpr;
+            threadsCtx.shadowBlur = 0;
           } else {
             threadsCtx.shadowColor = "transparent";
             threadsCtx.shadowBlur = 0;
@@ -6280,7 +6286,7 @@
               threadsCtx.rotate(-Math.atan2(dx, dy));
             }
 
-            threadsCtx.fillText(char, 0, 0);
+            drawThreadGlyph(char, fontSize, isGlowing);
             threadsCtx.restore();
           });
         });
@@ -6768,17 +6774,16 @@
       // ----------------------------------------------------
       // Main 60+ FPS Animation Frame Loop (Zero Jank / Zero Freezing)
       // ----------------------------------------------------
-      let portalRafId = null;
+      let lastParallaxX = Infinity, lastParallaxY = Infinity;
       function animLoop() {
-        if (!isPortalVisible) {
-          portalRafId = null;
-          return;
-        }
-
         // Differential Physics Parallax Lerp
         mouse.x += (mouse.targetX - mouse.x) * 0.08;
         mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
+        // Avoid invalidating seven composited layers after the pointer settles.
+        if (Math.abs(mouse.x - lastParallaxX) + Math.abs(mouse.y - lastParallaxY) > 0.0005) {
+        lastParallaxX = mouse.x;
+        lastParallaxY = mouse.y;
         // Hardware-accelerated CSS 3D transforms
         if (skyCanvas) {
           skyCanvas.style.transform = `translate3d(${-mouse.x * 12}px, ${-mouse.y * 8}px, -60px) scale(1.06)`;
@@ -6806,6 +6811,8 @@
           portalCue.style.transform = `translate3d(calc(-50% + ${mouse.x * 22}px), ${mouse.y * 12}px, 90px)`;
         }
 
+        }
+
         const d = destinations[currentIndex];
         const w = worldCanvas ? worldCanvas.width : 800;
         const h = worldCanvas ? worldCanvas.height : 600;
@@ -6829,9 +6836,14 @@
         updateHangingThreadsPhysics(cosmicTick);
         renderHangingThreads();
         renderPortalAtmosphere(w, h, cosmicTick, d);
-        portalRafId = requestAnimationFrame(animLoop);
       }
-      portalRafId = requestAnimationFrame(animLoop);
+      createVisibleLoop(portalApp, animLoop, {
+        fps: sceneFPS,
+        onVisibilityChange(visible) {
+          isPortalVisible = visible;
+          if (!visible && audioCtx?.state === "running") audioCtx.suspend().catch(() => {});
+        }
+      });
 
       // Transition to Destination with Quantum Warp FX
       function setDestination(newIndex, direction = 1) {
@@ -7001,14 +7013,7 @@
       const sneakerApp = document.getElementById("sneaker-app");
       if (!sneakerApp) return;
 
-      // Visibility Guard for Project 2: Halts RAF particles when offscreen
-      let isSneakerVisible = true;
-      if (window.IntersectionObserver) {
-        const snkObs = new IntersectionObserver(([entry]) => {
-          isSneakerVisible = entry.isIntersecting;
-        }, { threshold: 0.04 });
-        snkObs.observe(sneakerApp);
-      }
+      let isSneakerVisible = false;
 
       const SNEAKERS = [
         {
@@ -7916,8 +7921,7 @@
       }));
 
       function renderSnkParticles() {
-        requestAnimationFrame(renderSnkParticles);
-        if (!isSneakerVisible) return;
+
         if (!snkParticlesCanvas || !snkParticlesCtx) return;
         const w = snkCanvasW;
         const h = snkCanvasH;
@@ -7945,7 +7949,10 @@
           snkLightSpot.style.top = `${snkSpot.y.toFixed(1)}px`;
         }
       }
-      requestAnimationFrame(renderSnkParticles);
+      createVisibleLoop(sneakerApp, renderSnkParticles, {
+        fps: sceneFPS,
+        onVisibilityChange(visible) { isSneakerVisible = visible; }
+      });
 
       // Smooth 3D Mouse / Touch Parallax Tilt with Specular Spot Tracking
       if (tiltCard && renderBox) {
@@ -8258,6 +8265,7 @@
           playClothSwatchPluck(480);
           if (isAutoSpinning) {
             autoSpinInterval = setInterval(() => {
+              if (!isSneakerVisible || document.hidden) return;
               seqIdx = (seqIdx + 1) % angleSequence.length;
               activeAngle = angleSequence[seqIdx];
               isAerialView = (activeAngle === "top");
@@ -8284,7 +8292,7 @@
 /* ============================================================
    PROJECT 03: THE NEXT LEVEL // 3D SOLAR SYSTEM ENGINE (S-TIER HYPER-REALISTIC)
    ============================================================ */
-    (function initSolarSystemApp() {
+    initializeNearViewport(document.getElementById("solar-app"), function initSolarSystemApp() {
       const appContainer = document.getElementById("solar-app");
       const canvas = document.getElementById("solar-canvas");
       if (!appContainer || !canvas) return;
@@ -8365,11 +8373,13 @@
         alpha: false,
         powerPreference: "high-performance"
       });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, compactDevice ? 1 : 1.35));
       renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.35;
-      renderer.shadowMap.enabled = true;
+      // Planet day/night shading comes from the sun light. Cube shadow maps
+      // add six scene renders per frame without useful detail at this scale.
+      renderer.shadowMap.enabled = false;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
       // Master Celestial Root Group
@@ -8430,7 +8440,7 @@
       // Central Solar Light (Primary light source illuminating all planets realistically)
       const sunLight = new THREE.PointLight(0xfffaee, 5.0, 3000, 0.25);
       sunLight.position.set(0, 0, 0);
-      sunLight.castShadow = true;
+      sunLight.castShadow = false;
       sunLight.shadow.mapSize.width = 2048;
       sunLight.shadow.mapSize.height = 2048;
       sunLight.shadow.camera.near = 1;
@@ -9035,7 +9045,7 @@
       });
 
       // 3. Asteroid Belt (Rocky Debris Field)
-      const asteroidCount = 520;
+      const asteroidCount = compactDevice ? 260 : 520;
       const asteroidGeo = new THREE.DodecahedronGeometry(0.36, 0);
       const asteroidMat = new THREE.MeshStandardMaterial({
         color: 0x7c7368,
@@ -9076,9 +9086,11 @@
       let selectedBody = "sun";
       let isFocusMode = false;
       let timeSpeed = 1.0;
-      let isPaused = false;
+      let isPaused = reduced;
       const cameraTarget = new THREE.Vector3(0, 0, 0);
       const currentLookAt = new THREE.Vector3(0, 0, 0);
+      const focusTarget = new THREE.Vector3();
+      const desiredCamera = new THREE.Vector3();
 
       // Camera Drag Interaction & Spherical Coordinates
       let isDragging = false;
@@ -9088,6 +9100,7 @@
       let focusOrbitOffsetTheta = 0.55; // 32° offset from Sun vector for dramatic 3/4 sunlit framing
 
       canvas.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "touch" && !document.fullscreenElement) return;
         isDragging = true;
         prevMouseX = e.clientX;
         prevMouseY = e.clientY;
@@ -9097,6 +9110,7 @@
 
       window.addEventListener("pointermove", (e) => {
         if (!isDragging) {
+          if (e.target !== canvas || !isVisible || document.hidden) return;
           const rect = canvas.getBoundingClientRect();
           mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
           mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -9128,9 +9142,13 @@
         try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
       });
 
-      // Mouse Wheel Zoom
+      window.addEventListener("pointercancel", () => { isDragging = false; });
+
+      // Ordinary scrolling always belongs to the page, even over the 3D scene.
       canvas.addEventListener("wheel", (e) => {
+        if (!e.ctrlKey && !e.metaKey && document.fullscreenElement !== appContainer) return;
         e.preventDefault();
+        e.stopPropagation();
         const zoomDelta = e.deltaY * 0.15;
         if (isFocusMode) {
           const body = CELESTIAL_CATALOG[selectedBody];
@@ -9500,45 +9518,18 @@
         ro.observe(appContainer);
       }
 
-      // Performance Optimization via IntersectionObserver
-      let isVisible = true;
-      if (window.IntersectionObserver) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            isVisible = entry.isIntersecting;
-            if (isVisible) {
-              clock.getDelta(); // flush delta
-              if (!solarRafId) solarRafId = requestAnimationFrame(animate);
-            } else if (solarRafId) {
-              cancelAnimationFrame(solarRafId);
-              solarRafId = null;
-            }
-          });
-        }, { threshold: 0.05 });
-        observer.observe(appContainer);
-      }
-
-      // Initialize Telemetry HUD
+      let isVisible = false;
       updateTelemetryHUD("sun");
-
-      // Main Animation Loop
-      let clock = new THREE.Clock();
-
-      let solarRafId = null;
-      function animate() {
-        if (!isVisible) {
-          solarRafId = null;
-          return;
-        }
-
-        const delta = clock.getDelta();
+      let simulationTime = 0;
+      function animate(now, delta) {
         const simDelta = isPaused ? 0 : delta * timeSpeed;
+        simulationTime += simDelta;
 
         // 1. Sun Rotation & Corona Glow Pulse
         if (celestialBodies["sun"]) {
-          celestialBodies["sun"].mesh.rotation.y += 0.003;
-          coronaMesh1.scale.setScalar(1.0 + Math.sin(clock.getElapsedTime() * 2.2) * 0.04);
-          coronaMesh2.scale.setScalar(1.0 + Math.cos(clock.getElapsedTime() * 1.8) * 0.05);
+          celestialBodies["sun"].mesh.rotation.y += simDelta * 0.18;
+          coronaMesh1.scale.setScalar(1.0 + Math.sin(simulationTime * 2.2) * 0.04);
+          coronaMesh2.scale.setScalar(1.0 + Math.cos(simulationTime * 1.8) * 0.05);
         }
 
         // 2. Planets Orbital & Axial Spin Animation
@@ -9554,7 +9545,7 @@
 
           // Axial self-spin
           if (body.mesh && body.data.rotSpeed) {
-            body.mesh.rotation.y += (simDelta * body.data.rotSpeed * 2.5) + (isPaused ? 0.002 : 0);
+            body.mesh.rotation.y += simDelta * body.data.rotSpeed * 2.5;
           }
 
           // Moons orbital revolution
@@ -9562,35 +9553,27 @@
             body.moons.forEach(m => {
               m.angle += simDelta * (m.data.orbitSpeed * 0.25);
               m.pivot.rotation.y = m.angle;
-              m.mesh.rotation.y += 0.02;
+              m.mesh.rotation.y += simDelta * 1.2;
             });
           }
         });
 
         // 3. Independent Earth Clouds Rotation
         rotatingClouds.forEach(c => {
-          c.mesh.rotation.y += (simDelta * c.speed) + 0.001;
+          c.mesh.rotation.y += simDelta * (c.speed + 0.06);
         });
 
         // 4. Asteroid Belt Orbital Drift
         if (asteroidInstanced && !isPaused) {
-          for (let i = 0; i < asteroidCount; i++) {
-            const ad = asteroidData[i];
-            ad.angle += simDelta * (ad.speed * 0.04);
-            dummy.position.set(Math.cos(ad.angle) * ad.radius, ad.yOffset, Math.sin(ad.angle) * ad.radius);
-            dummy.scale.set(ad.scale, ad.scale, ad.scale);
-            dummy.rotation.y += 0.01;
-            dummy.updateMatrix();
-            asteroidInstanced.setMatrixAt(i, dummy.matrix);
-          }
-          asteroidInstanced.instanceMatrix.needsUpdate = true;
+          // Instance transforms are static; one group rotation moves the belt.
+          asteroidInstanced.rotation.y += simDelta * 0.018;
         }
 
         // 5. Focus Camera Tracking (Keeps Planet Sunlit During Orbital Revolution)
         if (isFocusMode && selectedBody !== "sun") {
           const body = celestialBodies[selectedBody];
           if (body && body.group) {
-            const targetPos = new THREE.Vector3();
+            const targetPos = focusTarget;
             body.group.getWorldPosition(targetPos);
 
             cameraTarget.copy(targetPos);
@@ -9602,7 +9585,7 @@
             const desiredCamY = targetPos.y + sphericalAngles.radius * Math.cos(sphericalAngles.phi);
             const desiredCamZ = targetPos.z + sphericalAngles.radius * Math.sin(sphericalAngles.phi) * Math.cos(effectiveTheta);
 
-            camera.position.lerp(new THREE.Vector3(desiredCamX, desiredCamY, desiredCamZ), 0.08);
+            camera.position.lerp(desiredCamera.set(desiredCamX, desiredCamY, desiredCamZ), 1 - Math.exp(-5 * delta));
           }
         }
 
@@ -9612,22 +9595,32 @@
 
         // Render High-Performance Frame
         renderer.render(scene, camera);
-        solarRafId = requestAnimationFrame(animate);
       }
-
-      // Kick off render loop
-      solarRafId = requestAnimationFrame(animate);
-    })();
+      createVisibleLoop(appContainer, animate, {
+        fps: sceneFPS,
+        onVisibilityChange(visible) {
+          isVisible = visible;
+          if (!visible) {
+            isDragging = false;
+            if (audioCtx?.state === "running") audioCtx.suspend().catch(() => {});
+          }
+        }
+      });
+    });
 
     /* Resize */
+    let viewportResizeTimer;
     addEventListener("resize",()=>{
+      clearTimeout(viewportResizeTimer);
+      viewportResizeTimer = setTimeout(() => {
       camera.aspect = innerWidth / innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(innerWidth, innerHeight);
-      renderer.setPixelRatio(Math.min(devicePixelRatio, 1.35));
+      renderer.setPixelRatio(Math.min(devicePixelRatio, compactDevice ? 1 : 1.35));
       config = getResponsiveConfig();
       ScrollTrigger.refresh();
-    });
+      }, 150);
+    }, { passive: true });
   </script>
 
   <!-- Multilingual i18n Engine (UZ / RU / EN) -->
@@ -9829,7 +9822,7 @@
     function setLanguage(lang) {
       if (!I18N[lang]) lang = 'uz';
       currentLang = lang;
-      localStorage.setItem('preferred_lang', lang);
+      try { localStorage.setItem('preferred_lang', lang); } catch (_) {}
       document.documentElement.lang = lang;
 
       // Update active state on buttons
@@ -9855,7 +9848,8 @@
 
     // Initialize Language Switcher
     document.addEventListener('DOMContentLoaded', () => {
-      const savedLang = localStorage.getItem('preferred_lang') || 'uz';
+      let savedLang = 'uz';
+      try { savedLang = localStorage.getItem('preferred_lang') || 'uz'; } catch (_) {}
       setLanguage(savedLang);
 
       document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -9878,6 +9872,7 @@
                 osc.connect(gain);
                 gain.connect(ctx.destination);
                 osc.start();
+                osc.onended = () => ctx.close().catch(() => {});
                 osc.stop(ctx.currentTime + 0.05);
               }
             } catch(err) {}
